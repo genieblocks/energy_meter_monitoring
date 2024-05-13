@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html class="loading" lang="en" data-textdirection="ltr">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+  <meta name="description" content="GenieBlocks Cloud Platform is flexable IoT platform that manage your devices.">
+  <meta name="keywords" content="GenieBlocks, IoT Platform, cloud, IoT device, edge device, ota, secure, aiot">
+  <meta name="author" content="GenieBlocks">
+  <title>GenieBlocks Cloud Platform</title>
+  <link rel="apple-touch-icon" href="../app-assets/images/ico/apple-icon-120.png">
+  <link rel="shortcut icon" type="image/x-icon" href="../app-assets/images/ico/favicon.ico">
+  <link
+    href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i%7CMuli:300,400,500,700"
+    rel="stylesheet">
+  <!-- BEGIN VENDOR CSS-->
+  <link rel="stylesheet" type="text/css" href="../app-assets/css/vendors.css">
+  <link rel="stylesheet" type="text/css" href="../app-assets/vendors/css/tables/datatable/jquery.dataTables.min.css">
+  <!-- END VENDOR CSS-->
+  <!-- BEGIN TEMPLATE CSS-->
+  <link rel="stylesheet" type="text/css" href="../app-assets/css/app.css">
+  <link rel="stylesheet" type="text/css" href="../assets/css/style.css">
+  <!-- END TEMPLATE CSS-->
+  <!-- BEGIN Page Level CSS-->
+  <link rel="stylesheet" type="text/css" href="../app-assets/css/core/menu/menu-types/vertical-menu.css">
+  <!-- END Page Level CSS-->
+  <!-- BEGIN Custom CSS-->
+  <link rel="stylesheet" type="text/css" href="../assets/css/style.css">
+  <!-- END Custom CSS-->
+</head>
+
+<body class="vertical-layout vertical-menu 2-columns menu-expanded" data-open="click" data-menu="vertical-menu"
+  data-col="2-columns">
+
+  <!-- ////////////////////////////////////////////////////////////////////////////-->
+
+
+  <div class="main-menu menu-fixed menu-dark menu-accordion menu-shadow" data-scroll-to-active="true">
+    <div class="main-menu-content">
+      <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
+        <li class="nav-item"><a style="padding-left: 9px" href="#">
+            <img class="brand-logo" alt="GenieBlocks logo" src="../app-assets/images/logo/logo-light-sm.png">
+            <span class="mt-1" data-i18n="">
+              <h3 class="brand-text"><span class="white">&nbsp;&nbsp;&nbsp;&nbsp;Genie</span><span
+                  class="font-weight-bold blue accent-4">Blocks</span></h3>
+            </span>
+          </a>
+        </li>
+        <li class="nav-item"><a href="devices-device-list.html"><i class="fa fa-superpowers"></i><span
+              class="menu-title" data-i18n="">Sayaçlar</span></a>
+        </li>
+        <li class="nav-item"><a href="#"><i class="fa fa-floppy-o"></i><span class="menu-title" data-i18n="">Firmware
+              Management</span></a>
+          <ul class="menu-content">
+            <li class="navigation-divider"></li>
+            <li class="menu-item"><a class="menu-item" href="firmware-management-devices.html"
+                data-i18n="nav.starter_kit.semi_dark_layout">Devices</a>
+            </li>
+            <li class="menu-item"><a class="menu-item" href="firmware-management-device-group.html"
+                data-i18n="nav.starter_kit.semi_dark_layout">Device Group</a>
+            </li>
+            <li class="menu-item"><a class="menu-item" href="firmware-management-firmware-images.html"
+                data-i18n="nav.starter_kit.semi_dark_layout">Firmware Images</a>
+            </li>
+            <li class="menu-item"><a class="menu-item" href="firmware-management-ota-jobs.html"
+                data-i18n="nav.starter_kit.semi_dark_layout">OTA Jobs</a>
+            </li>
+          </ul>
+        </li>
+        <li class="nav-item"><a href="#"><i class="fa fa-stethoscope"></i><span class="menu-title"
+              data-i18n="">Insight</span></a>
+          <ul class="menu-content">
+            <li class="navigation-divider"></li>
+            <li class="menu-item"><a class="menu-item" href="insight-dashboard.html"
+                data-i18n="nav.starter_kit.semi_dark_layout">Dashboard</a>
+            </li>
+            <li class="menu-item"><a class="menu-item" href="insight-devices.html"
+                data-i18n="nav.starter_kit.semi_dark_layout">Devices</a>
+            </li>
+            <li class="menu-item"><a class="menu-item" href="insight-firmware-packages.html"
+                data-i18n="nav.starter_kit.semi_dark_layout">Firmware Packages</a>
+            </li>
+            <li class="menu-item"><a class="menu-item" href="insight-auth-keys.html"
+                data-i18n="nav.starter_kit.semi_dark_layout">Auth Keys</a>
+            </li>
+          </ul>
+        </li>
+        <li class="nav-item"><a href="../workflows"><i class="fa fa-random"></i><span class="menu-title"
+              data-i18n="">FlowApp</span></a>
+        </li>
+        <li class="nav-item"><a href="dashboard.html"><i class="fa fa-area-chart"></i><span class="menu-title"
+              data-i18n="">Dashboard</span></a>
+        </li>
+        <li class="active"><a href="project.html"><i class="fa fa-clipboard"></i><span class="menu-title"
+              data-i18n="">Project</span></a>
+        </li>
+        <li class="nav-item"><a href="#"><i class="fa fa-exchange"></i><span class="menu-title" data-i18n="">Data
+              Sources</span></a>
+          <ul class="menu-content">
+            <li class="navigation-divider"></li>
+            <li class="menu-item"><a class="menu-item" href="data-tables.html"
+                data-i18n="nav.starter_kit.semi_dark_layout">Data Tables</a>
+            </li>
+            <li class="menu-item"><a class="menu-item" href="data-connectors.html"
+                data-i18n="nav.starter_kit.semi_dark_layout">Connectors</a>
+            </li>
+          </ul>
+        </li>
+        <li class="nav-item"><a href="#"><i class="fa fa-shopping-cart"></i><span class="menu-title"
+              data-i18n="">Marketplace</span></a>
+          <ul class="menu-content">
+            <li class="navigation-divider"></li>
+            <li class="menu-item"><a class="menu-item" href="marketplace-app.html"
+                data-i18n="nav.starter_kit.semi_dark_layout">App Marketplace</a>
+            </li>
+            <li class="menu-item"><a class="menu-item" href="marketplace-device.html"
+                data-i18n="nav.starter_kit.semi_dark_layout">Device App Marketplace</a>
+            </li>
+            <li class="menu-item"><a class="menu-item" href="marketplace-block.html"
+                data-i18n="nav.starter_kit.semi_dark_layout">Blocks App Marketplace</a>
+            </li>
+          </ul>
+        </li>
+        <li class="nav-item"><a href="#"><i class="fa fa-user-circle-o"></i><span class="menu-title"
+              data-i18n="">Account Settings</span></a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="app-content content bg-white">
+
+    <div class="content-body">
+      <nav
+        class="header-navbar navbar-expand-md navbar navbar-with-menu navbar-light navbar-border navbar-brand-center">
+        <div class="navbar-wrapper">
+          <div class="navbar-header">
+            <ul class="nav navbar-nav flex-row">
+              <li class="nav-item mobile-menu d-md-none mr-auto"><a
+                  class="nav-link nav-menu-main menu-toggle hidden-xs is-active" href="#"><i
+                    class="ft-menu font-large-1"></i></a></li>
+              <li class="nav-item d-md-none"><a class="navbar-brand" href="#"><img class="brand-logo"
+                    alt="genieblocks logo" src="../app-assets/images/logo/logo-light-sm.png">
+                </a></li>
+              <li class="nav-item d-md-none"><a class="nav-link open-navbar-container collapsed" data-toggle="collapse"
+                  data-target="#navbar-mobile" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a></li>
+            </ul>
+          </div>
+          <div class="navbar-container content">
+            <div class="collapse navbar-collapse" id="navbar-mobile">
+              <ul class="nav navbar-nav mr-auto float-left">
+                <li class="nav-item d-none d-md-block"><a class="nav-link nav-menu-main menu-toggle hidden-xs"
+                    href="#"><i class="ft-menu"></i></a></li>
+                <li class="nav-item"><a class="nav-link" href="#" role="button" aria-haspopup="true"
+                    aria-expanded="false">Project</a></li>
+              </ul>
+              <ul class="nav navbar-nav float-right">
+              </ul>
+            </div>
+          </div>
+        </div>
+      </nav>
+      <div class="content-header row">
+        <div class="content-header-left col-md-6 col-12">
+          <h5 class="content-header-title mb-0">ID: 7354723436236</h5>
+        </div>
+        <div class="content-header-right breadcrumbs-right col-md-6 col-12">
+        </div>
+      </div>
+      <ul class="nav nav-tabs nav-underline no-hover-bg">
+        <li class="nav-item">
+          <a class="nav-link active" id="base-tab31" data-toggle="tab" aria-controls="tab31" href="#tab31"
+            aria-expanded="true">Information</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="base-tab32" data-toggle="tab" aria-controls="tab32" href="#tab32"
+            aria-expanded="false">Users</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="base-tab33" data-toggle="tab" aria-controls="tab33" href="#tab33"
+            aria-expanded="false">Usage</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="base-tab34" data-toggle="tab" aria-controls="tab34" href="#tab34"
+            aria-expanded="false">API Tokens</a>
+        </li>
+      </ul>
+      <div class="tab-content px-1 pt-1">
+        <div role="tabpanel" class="tab-pane active" id="tab31" aria-expanded="true" aria-labelledby="base-tab31">
+          <div class="row">
+            <div class="col-md-5 col-sm-12 text-center text-md-left">
+              <div class="table-responsive">
+                <table class="table table-borderless dataTable">
+                  <tbody>
+                    <tr>
+                      <td>Project Name</td>
+                      <td>: Energy Demo</td>
+                    </tr>
+                    <tr>
+                      <td>Owner</td>
+                      <td>: GenieBlocks</td>
+                    </tr>
+                    <tr>
+                      <td>Description</td>
+                      <td>: Demo Project</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="tab-pane" id="tab32" aria-labelledby="base-tab32">
+          <div class="row mb-1">
+            <div class="cal-9 col-xl-9">
+              <h5 class="content-header-title mb-0 genie">User List</h5>
+            </div>
+            <div class="cal-2 col-xl-2">
+              <input type="text" class="global_filter mr-2" id="global_filter" placeholder=" Search User">
+            </div>
+            <div class="cal-1 col-xl-1">
+              <button class="btn btn-sm btn-genie white" type="button" data-toggle="modal" data-target="#iconModal">Add
+                User</button>
+            </div>
+          </div>
+          <table class="table table-hover table-bordered zero-configuration dataTable" id="DataTables_Table_0"
+            role="grid" aria-describedby="DataTables_Table_0_info">
+            <thead>
+              <tr>
+                <th>User Name</th>
+                <th>User Mail</th>
+                <th>User Role</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>David Stonage</td>
+                <td>david.stonage@gmail.com</td>
+                <td>Administrator</td>
+              </tr>
+              <tr>
+                <td>John Brown</td>
+                <td>john.brown@hotmail.com</td>
+                <td>Viewer</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="tab-pane" id="tab33" aria-labelledby="base-tab33">
+          <div class="row">
+            <div class="col-md-5 col-sm-12 text-center text-md-left">
+              <div class="table-responsive">
+                <table class="table table-borderless dataTable">
+                  <tbody>
+                    <tr>
+                      <td>Account Plan</td>
+                      <td>Free</td>
+                      <td>$0.00</td>
+                    </tr>
+                    <tr>
+                      <td>Data Input</td>
+                      <td>1.000.000 transactions per month</td>
+                      <td>$0.00</td>
+                    </tr>
+                    <tr>
+                      <td>Data Output</td>
+                      <td>3.000.000 transactions per month</td>
+                      <td>$0.00</td>
+                    </tr>
+                    <tr>
+                      <td>Analysis</td>
+                      <td>3.000 minutes per month</td>
+                      <td>$0.00</td>
+                    </tr>
+                    <tr>
+                      <td>Data Storage</td>
+                      <td>800.000 registers</td>
+                      <td>$0.00</td>
+                    </tr>
+                    <tr>
+                      <td>SMS</td>
+                      <td>10 SMS per month</td>
+                      <td>$0.00</td>
+                    </tr>
+                    <tr>
+                      <td>E-mail</td>
+                      <td>100 E-mails per month</td>
+                      <td>$0.00</td>
+                    </tr>
+                    <tr>
+                      <td>Run Users</td>
+                      <td>10 Users</td>
+                      <td>$0.00</td>
+                    </tr>
+                    <tr>
+                      <td>Push Notification</td>
+                      <td>100 Notifications per month</td>
+                      <td>$0.00</td>
+                    </tr>
+                    <tr>
+                      <td>File Storage</td>
+                      <td>200 MB</td>
+                      <td>$0.00</td>
+                    </tr>
+                    <tr>
+                      <td>Custom Domain</td>
+                      <td>0 Domain</td>
+                      <td>$0.00</td>
+                    </tr>
+                    <tr>
+                      <td>Custom Mobile App</td>
+                      <td>0 Mobile App</td>
+                      <td>$0.00</td>
+                    </tr>
+                    <tr>
+                      <td class="bold">Total</td>
+                      <td></td>
+                      <td class="bold"> $0</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="tab-pane" id="tab34" aria-labelledby="base-tab34">
+          <div class="row mb-1">
+            <div class="cal-11 col-xl-11">
+              <h5 class="content-header-title mb-0 genie">API Token List</h5>
+            </div>
+            <div class="cal-1 col-xl-1">
+              <button class="btn btn-sm btn-genie white" type="button" data-toggle="modal" data-target="#iconModal2">Add
+                Token</button>
+            </div>
+          </div>
+          <table class="table table-hover table-bordered zero-configuration dataTable" id="DataTables_Table_1"
+            role="grid" aria-describedby="DataTables_Table_1_info">
+            <thead>
+              <tr>
+                <th>Token ID</th>
+                <th>Name</th>
+                <th>Permission</th>
+                <th>Connected at</th>
+                <th>Expires at</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>2363465773</td>
+                <td>Full Permission</td>
+                <td>Full</td>
+                <td>33 days ago</td>
+                <td>In 1 month</td>
+              </tr>
+              <tr>
+                <td>7547347343</td>
+                <td>Full Permission</td>
+                <td>Full</td>
+                <td>54 days ago</td>
+                <td>In 2 months</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal fade text-left" id="iconModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2"
+    aria-hidden="true">
+    <div class="modal-dialog modal-sm" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title text-bold-600" id="myModalLabel1"><i class="fa fa-road2"></i> Add User</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form>
+          <div class="modal-body">
+            <fieldset class="form-group floating-label-form-group">
+              <label for="name">User Name</label>
+              <input type="text" class="form-control" id="imagename1" placeholder="Enter user name">
+            </fieldset>
+            <fieldset class="form-group floating-label-form-group">
+              <label for="type">User Mail</label>
+              <input type="text" class="form-control" id="imagetype" placeholder="Enter user mail">
+            </fieldset>
+            <fieldset class="form-group floating-label-form-group">
+              <label for="type">User Role</label>
+              <select class="custom-select" id="userRoleSelect">
+                <option selected="">Select role</option>
+                <option value="1">Administrator</option>
+                <option value="2">Viewer</option>
+              </select>
+            </fieldset>
+          </div>
+          <div class="modal-footer">
+            <input type="reset" class="btn btn-light btn-lg" data-dismiss="modal" value="close">
+            <input type="submit" class="btn btn-genie white btn-lg" value="Add User">
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-- Modal -->
+  <div class="modal fade text-left" id="iconModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2"
+    aria-hidden="true">
+    <div class="modal-dialog modal-sm" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title text-bold-600" id="myModalLabel2"><i class="fa fa-road2"></i> Add API Token</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form>
+          <div class="modal-body">
+            <fieldset class="form-group floating-label-form-group">
+              <label for="name">Tokan Name *</label>
+              <input type="text" class="form-control" id="imagename2" placeholder="Enter token name">
+            </fieldset>
+            <fieldset class="form-group floating-label-form-group">
+              <label for="type">Permission</label>
+              <select class="custom-select" id="permissionSelect">
+                <option selected="">Select permission</option>
+                <option value="1">Full access</option>
+                <option value="2">Read only</option>
+              </select>
+            </fieldset>
+            <fieldset class="form-group floating-label-form-group">
+              <label for="type">Expires in</label>
+              <select class="custom-select" id="expiresSelect">
+                <option selected="">Select permission period</option>
+                <option value="1">1 month</option>
+                <option value="2">3 months</option>
+                <option value="3">6 months</option>
+                <option value="4">12 months</option>
+              </select>
+            </fieldset>
+          </div>
+          <div class="modal-footer">
+            <input type="reset" class="btn btn-light btn-lg" data-dismiss="modal" value="close">
+            <input type="submit" class="btn btn-genie white btn-lg" value="Add Token">
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-- ////////////////////////////////////////////////////////////////////////////-->
+
+  <footer class="footer footer-static footer-light navbar-border">
+    <p class="clearfix blue-grey lighten-2 text-sm-center mb-0 px-2">
+      <span class="float-md-left d-block d-md-inline-block">Copyright &copy; 2022 <a class="text-bold-800 darken-2"
+          href="http://www.genieblocks.com" target="_blank">GenieBlocks </a>, All rights reserved. </span>
+      <span class="float-md-none d-block d-md-inline-block red">Production</span>
+      <span class="float-md-right d-block d-md-inline-blockd-none d-lg-block">Made with <i
+          class="ft-heart pink"></i></span></p>
+  </footer>
+
+  <!-- BEGIN VENDOR JS-->
+  <script src="../app-assets/js/core/libraries/jquery.min.js"></script>
+  <script src="../app-assets/vendors/js/ui/popper.min.js"></script>
+  <script src="../app-assets/js/core/libraries/bootstrap.min.js"></script>
+  <script src="../app-assets/vendors/js/ui/perfect-scrollbar.jquery.min.js"></script>
+  <script src="../app-assets/vendors/js/ui/unison.min.js"></script>
+  <script src="../app-assets/vendors/js/ui/blockUI.min.js"></script>
+  <script src="../app-assets/vendors/js/ui/jquery-sliding-menu.js"></script>
+  <!-- END VENDOR JS-->
+  <!-- BEGIN PAGE VENDOR JS-->
+  <script src="../app-assets/vendors/js/tables/datatable/datatables.min.js"></script>
+  <script src="../app-assets/vendors/js/tables/datatable/dataTables.buttons.min.js"></script>
+  <!-- END PAGE VENDOR JS-->
+  <!-- BEGIN TEMPLATE JS-->
+  <script src="../app-assets/js/core/app-menu.js"></script>
+  <script src="../app-assets/js/core/app.js"></script>
+  <!-- END TEMPLATE JS-->
+  <!-- BEGIN PAGE LEVEL JS-->
+  <script src="../app-assets/js/scripts/tables/datatables/datatable-basic.js"></script>
+  <script src="../app-assets/js/scripts/modal/components-modal.js"></script>
+  <!-- END PAGE LEVEL JS-->
+</body>
+
+</html>

@@ -1,0 +1,266 @@
+/*================================================================================
+	Item Name: Robust - Responsive Admin Template
+	Version: 2.0
+	Author: PIXINVENT
+	Author URL: http://www.themeforest.net/user/pixinvent
+================================================================================
+
+NOTE:
+------
+PLACE HERE YOUR OWN SCSS CODES AND IF NEEDED, OVERRIDE THE STYLES FROM THE OTHER STYLESHEETS.
+WE WILL RELEASE FUTURE UPDATES SO IN ORDER TO NOT OVERWRITE YOUR STYLES IT'S BETTER LIKE THIS.  */
+.genie
+{
+    color: #2962ff !important;
+}
+
+.bg-genie
+{
+    background-color: #2962ff !important;
+}
+.bg-genie.bg-glow
+{
+    -webkit-box-shadow: 0 1px 20px 1px rgba(41, 98, 255, .6);
+            box-shadow: 0 1px 20px 1px rgba(41, 98, 255, .6);
+}
+
+/* .btn-genie
+{
+    border-color: #1976d2 !important;
+    background-color: #2962ff !important;
+}
+.btn-genie:hover
+{
+    border-color: #1976d2 !important;
+    background-color: #1565c0 !important;
+}
+.btn-genie:focus,
+.btn-genie:active
+{
+    border-color: #1565c0 !important;
+    background-color: #0d47a1 !important;
+} */
+
+.btn-outline-genie
+{
+    color: #2962ff !important; 
+    border-color: #2962ff !important;
+}
+.btn-outline-genie:hover
+{
+    background-color: #2962ff !important;
+}
+
+/* input:focus ~ .bg-blue
+{
+    -webkit-box-shadow: 0 0 0 .075rem #fff, 0 0 0 .21rem #2962ff !important;
+            box-shadow: 0 0 0 .075rem #fff, 0 0 0 .21rem #2962ff !important;
+} */
+
+.border-genie
+{
+    border: 1px solid #2962ff !important;
+}
+
+.border-top-genie
+{
+    border-top: 1px solid #2962ff !important;
+}
+
+.border-bottom-genie
+{
+    border-bottom: 1px solid #2962ff !important;
+}
+
+.border-left-genie
+{
+    border-left: 1px solid #2962ff !important;
+}
+
+.border-right-genie
+{
+    border-right: 1px solid #2962ff !important;
+}
+
+.overlay-genie
+{
+    background: #2962ff;
+    /* The Fallback */
+    background: rgba(41, 98, 255, .8);
+}
+
+.btn-genie { 
+	color: #FFFFFF; 
+	background-color: #2962FF; 
+	border-color: #2962FF; 
+  } 
+   
+.btn-genie:hover, 
+.btn-genie:focus, 
+.btn-genie:active, 
+.btn-genie.active, 
+.open .dropdown-toggle.btn-genie { 
+color: #FFFFFF; 
+background-color: #255CF5; 
+border-color: #2962FF; 
+} 
+
+.btn-genie:active, 
+.btn-genie.active, 
+.open .dropdown-toggle.btn-genie { 
+background-image: none; 
+} 
+
+.btn-genie.disabled, 
+.btn-genie[disabled], 
+fieldset[disabled] .btn-genie, 
+.btn-genie.disabled:hover, 
+.btn-genie[disabled]:hover, 
+fieldset[disabled] .btn-genie:hover, 
+.btn-genie.disabled:focus, 
+.btn-genie[disabled]:focus, 
+fieldset[disabled] .btn-genie:focus, 
+.btn-genie.disabled:active, 
+.btn-genie[disabled]:active, 
+fieldset[disabled] .btn-genie:active, 
+.btn-genie.disabled.active, 
+.btn-genie[disabled].active, 
+fieldset[disabled] .btn-genie.active { 
+background-color: #2962FF; 
+border-color: #2962FF; 
+} 
+
+.btn-genie .badge { 
+color: #2962FF; 
+background-color: #FFFFFF; 
+}
+
+.main-menu.menu-dark .navigation > li.active > a
+{
+    font-weight: 700;
+
+    color: #dcdcdc;
+    border-right: 4px solid #2962ff; 
+    background: #121b22;
+}
+.main-menu.menu-dark .navigation > li .active
+{
+    background: #121b22;
+}
+.main-menu.menu-dark .navigation > li .active > a
+{
+    font-weight: 700;
+
+    color: #f6f6f6;
+    border-right: 4px solid #2962ff; 
+    background: #121b22;
+}
+.main-menu.menu-dark .navigation > li .active .hover > a
+{
+    background: #162029;
+}
+
+.nav.nav-tabs.nav-underline
+{
+    position: relative;
+
+    border-bottom: 1px solid #2962ff; 
+    background: #fff;
+}
+
+.nav.nav-tabs.nav-underline .nav-item.open a .nav-link:focus,
+.nav.nav-tabs.nav-underline .nav-item.open a .nav-link:hover
+{
+    color: #2962ff; 
+    background-color: transparent;
+}
+.nav.nav-tabs.nav-underline .nav-item a.nav-link
+{
+    line-height: 2rem;
+
+    position: relative;
+
+    display: block;
+    overflow: hidden;
+
+    padding: .5rem 1rem;
+
+    -webkit-transition: color .2s;
+       -moz-transition: color .2s;
+         -o-transition: color .2s;
+            transition: color .2s;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+
+    color: #2962ff;
+    border: none;
+}
+
+.nav.nav-tabs.nav-underline .nav-item a.nav-link:hover,
+.nav.nav-tabs.nav-underline .nav-item a.nav-link:focus
+{
+    color: #2962ff;
+}
+
+.nav.nav-tabs.nav-underline .nav-item a.nav-link:before
+{
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+
+    width: 100%;
+    height: 4px;
+
+    content: '';
+    -webkit-transition: -webkit-transform .3s;
+       -moz-transition:         transform .3s, -moz-transform .3s;
+         -o-transition:      -o-transform .3s;
+            transition: -webkit-transform .3s;
+            transition:         transform .3s;
+            transition:         transform .3s, -webkit-transform .3s, -moz-transform .3s, -o-transform .3s;
+    -webkit-transform: translate3d(0, 150%, 0);
+       -moz-transform: translate3d(0, 150%, 0);
+            transform: translate3d(0, 150%, 0); 
+
+    background: #2962ff;
+}
+
+.pagination .page-item.active .page-link {
+    border-color: #2962ff;
+}
+
+.page-item.active .page-link {
+    background-color: #2962ff !important;
+    border: 1px solid #2962ff;
+}
+
+.main-menu.menu-fixed
+{
+    position: fixed;
+    /* fallback if needed */
+    top: 0rem;
+
+    height: 100%;
+    height: -webkit-calc(100%);
+    height:    -moz-calc(100%);
+    height:         calc(100%);
+}
+
+/*=========================== venue side content button ==========================*/
+.rotate-button-closed{
+    /* transform:rotate(-90deg); */
+    position:absolute;
+    z-index: 10;
+    top:700px;
+    left:104px;
+    /* margin-left:-50px; */
+}
+
+.rotate-button-opened{
+    /* transform:rotate(-90deg); */
+    position:absolute;
+    z-index: 10;
+    top:700px;
+    left:14px;
+    /* margin-left:-50px; */
+}
