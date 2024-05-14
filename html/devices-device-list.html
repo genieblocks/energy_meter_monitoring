@@ -33,8 +33,8 @@
 <body class="vertical-layout vertical-menu 2-columns menu-expanded" data-open="click" data-menu="vertical-menu"
   data-col="2-columns">
 
-  <!-- Modal -->
-  <div class="modal fade text-left" id="iconModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2"
+  <!-- Modal Electricity Meter-->
+  <div class="modal fade text-left" id="iconModalElectricity" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2"
     aria-hidden="true">
     <div class="modal-dialog modal-sm" role="document">
       <div class="modal-content">
@@ -68,7 +68,98 @@
                 <option value="COM01">B Blok Kuzen Bağlantı</option>
                 <option value="COM07">B Blok Güney Bağlantı</option>
                 <option value="COM08">C Blok Elektrik Sayaçları</option>
-                <option value="COM10">D Blok m-bus</option>
+                <option value="COM10">D Blok M-BUS</option>
+                <option value="COM13">D Blok Su Sayaçları</option>
+              </select>
+            </fieldset>
+          </div>
+          <div class="modal-footer">
+            <input type="reset" class="btn btn-light btn-lg" data-dismiss="modal" value="close">
+            <input type="submit" class="btn btn-genie white btn-lg" value="Add Device">
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-- Modal Water Meter -->
+  <div class="modal fade text-left" id="iconModalWater" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2"
+    aria-hidden="true">
+    <div class="modal-dialog modal-sm" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title text-bold-600" id="myModalLabel2"><i class="fa fa-road2"></i> Sayaç Ekleme</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form>
+          <div class="modal-body">
+            <fieldset class="form-group floating-label-form-group">
+              <label for="name">Sayaç Seri Numarası</label>
+              <input type="text" class="form-control" id="devicename" placeholder="Seri Numarası">
+            </fieldset>
+            <fieldset class="form-group floating-label-form-group">
+              <label for="name">Sayaç Markası</label>
+              <select id="projectinput5" name="interested" class="form-control">
+                <option value="none" selected disabled>Sayaç Markası Seçiniz.</option>
+                <option value="UniCocoder">UniCocoder</option>
+                <option value="FNF-Teknoloji">FNF Teknoloji</option>
+                <option value="Mueller-electronic">Mueller-electronic</option>
+                <option value="Kohler">Baylan</option>
+              </select>
+            </fieldset>
+            <fieldset class="form-group floating-label-form-group">
+              <label for="name">Bağlantı Noktası</label>
+              <select id="projectinput5" name="interested" class="form-control">
+                <option value="none" selected="" disabled="">Bağlantı Noktası Seçiniz.</option>
+                <option value="COM01">B Blok Kuzen Bağlantı</option>
+                <option value="COM07">B Blok Güney Bağlantı</option>
+                <option value="COM08">C Blok Elektrik Sayaçları</option>
+                <option value="COM10">D Blok M-BUS</option>
+                <option value="COM13">D Blok Su Sayaçları</option>
+              </select>
+            </fieldset>
+          </div>
+          <div class="modal-footer">
+            <input type="reset" class="btn btn-light btn-lg" data-dismiss="modal" value="close">
+            <input type="submit" class="btn btn-genie white btn-lg" value="Add Device">
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-- Modal Heat Meter -->
+  <div class="modal fade text-left" id="iconModalHeat" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2"
+    aria-hidden="true">
+    <div class="modal-dialog modal-sm" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title text-bold-600" id="myModalLabel2"><i class="fa fa-road2"></i> Sayaç Ekleme</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form>
+          <div class="modal-body">
+            <fieldset class="form-group floating-label-form-group">
+              <label for="name">Sayaç Seri Numarası</label>
+              <input type="text" class="form-control" id="devicename" placeholder="Seri Numarası">
+            </fieldset>
+            <fieldset class="form-group floating-label-form-group">
+              <label for="name">Sayaç Markası</label>
+              <select id="projectinput5" name="interested" class="form-control">
+                <option value="none" selected disabled>Sayaç Markası Seçiniz.</option>
+                <option value="Landis+Gyr">Landis+Gyr</option>
+              </select>
+            </fieldset>
+            <fieldset class="form-group floating-label-form-group">
+              <label for="name">Bağlantı Noktası</label>
+              <select id="projectinput5" name="interested" class="form-control">
+                <option value="none" selected="" disabled="">Bağlantı Noktası Seçiniz.</option>
+                <option value="COM01">B Blok Kuzen Bağlantı</option>
+                <option value="COM07">B Blok Güney Bağlantı</option>
+                <option value="COM08">C Blok Elektrik Sayaçları</option>
+                <option value="COM10">D Blok M-BUS</option>
                 <option value="COM13">D Blok Su Sayaçları</option>
               </select>
             </fieldset>
@@ -243,7 +334,7 @@
               <input type="text" class="global_filter mr-2" id="global_filter" placeholder=" Sayaç Ara">
             </div>
             <div class="cal-1 col-xl-1">
-              <button class="btn btn-sm btn-genie white" type="button" data-toggle="modal" data-target="#iconModal">Sayaç Ekle</button>
+              <button class="btn btn-sm btn-genie white" type="button" data-toggle="modal" data-target="#iconModalElectricity">Sayaç Ekle</button>
             </div>
           </div>
           <table class="table table-hover table-bordered zero-configuration dataTable" id="DataTables_Table_Electricity_Meter_List"
@@ -262,7 +353,7 @@
                 <td>34574783</td>
                 <td>Makel</td>
                 <td>ModBus</td>
-                <td>COM07</td>
+                <td>C Blok Elektrik Sayaçları</td>
                 <td>
                   <button type="button" class="btn btn-sm btn-outline-danger" id="table-delete-button">
                     <i class="fa fa-trash-o"></i>
@@ -273,7 +364,7 @@
                 <td>57837375</td>
                 <td>Köhler</td>
                 <td>ModBus</td>
-                <td>COM07</td>
+                <td>C Blok Elektrik Sayaçları</td>
                 <td>
                   <button type="button" class="btn btn-sm btn-outline-danger" id="table-delete-button">
                     <i class="fa fa-trash-o"></i>
@@ -292,7 +383,7 @@
               <input type="text" class="global_filter mr-2" id="global_filter" placeholder=" Sayaç Ara">
             </div>
             <div class="cal-1 col-xl-1">
-              <button class="btn btn-sm btn-genie white" type="button" data-toggle="modal" data-target="#iconModal">Sayaç Ekle</button>
+              <button class="btn btn-sm btn-genie white" type="button" data-toggle="modal" data-target="#iconModalWater">Sayaç Ekle</button>
             </div>
           </div>
           <table class="table table-hover table-bordered zero-configuration dataTable" id="DataTables_Table_Water_Meter_List"
@@ -308,10 +399,10 @@
             </thead>
             <tbody>
               <tr>
-                <td>34574783</td>
-                <td>Makel</td>
-                <td>ModBus</td>
-                <td>COM07</td>
+                <td>16230519</td>
+                <td>UniCocoder</td>
+                <td>M-BUS</td>
+                <td>D Blok Su Sayaçları</td>
                 <td>
                   <button type="button" class="btn btn-sm btn-outline-danger" id="table-delete-button">
                     <i class="fa fa-trash-o"></i>
@@ -319,10 +410,87 @@
                 </td>
               </tr>
               <tr>
-                <td>57837375</td>
-                <td>Köhler</td>
-                <td>ModBus</td>
-                <td>COM07</td>
+                <td>70013378</td>
+                <td>FNF Teknoloji</td>
+                <td>M-BUS</td>
+                <td>D Blok Su Sayaçları</td>
+                <td>
+                  <button type="button" class="btn btn-sm btn-outline-danger" id="table-delete-button">
+                    <i class="fa fa-trash-o"></i>
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>16160703</td>
+                <td>Mueller-electronic</td>
+                <td>M-BUS</td>
+                <td>D Blok Su Sayaçları</td>
+                <td>
+                  <button type="button" class="btn btn-sm btn-outline-danger" id="table-delete-button">
+                    <i class="fa fa-trash-o"></i>
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>00016795</td>
+                <td>BAYLAN</td>
+                <td>M-BUS</td>
+                <td>D Blok Su Sayaçları</td>
+                <td>
+                  <button type="button" class="btn btn-sm btn-outline-danger" id="table-delete-button">
+                    <i class="fa fa-trash-o"></i>
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>00016721</td>
+                <td>BAYLAN</td>
+                <td>M-BUS</td>
+                <td>D Blok Su Sayaçları</td>
+                <td>
+                  <button type="button" class="btn btn-sm btn-outline-danger" id="table-delete-button">
+                    <i class="fa fa-trash-o"></i>
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>00016738</td>
+                <td>BAYLAN</td>
+                <td>M-BUS</td>
+                <td>D Blok Su Sayaçları</td>
+                <td>
+                  <button type="button" class="btn btn-sm btn-outline-danger" id="table-delete-button">
+                    <i class="fa fa-trash-o"></i>
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>00016708</td>
+                <td>BAYLAN</td>
+                <td>M-BUS</td>
+                <td>D Blok Su Sayaçları</td>
+                <td>
+                  <button type="button" class="btn btn-sm btn-outline-danger" id="table-delete-button">
+                    <i class="fa fa-trash-o"></i>
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>00016723</td>
+                <td>BAYLAN</td>
+                <td>M-BUS</td>
+                <td>D Blok Su Sayaçları</td>
+                <td>
+                  <button type="button" class="btn btn-sm btn-outline-danger" id="table-delete-button">
+                    <i class="fa fa-trash-o"></i>
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>00016712</td>
+                <td>BAYLAN</td>
+                <td>M-BUS</td>
+                <td>D Blok Su Sayaçları</td>
                 <td>
                   <button type="button" class="btn btn-sm btn-outline-danger" id="table-delete-button">
                     <i class="fa fa-trash-o"></i>
@@ -341,7 +509,7 @@
               <input type="text" class="global_filter mr-2" id="global_filter" placeholder=" Sayaç Ara">
             </div>
             <div class="cal-1 col-xl-1">
-              <button class="btn btn-sm btn-genie white" type="button" data-toggle="modal" data-target="#iconModal">Sayaç Ekle</button>
+              <button class="btn btn-sm btn-genie white" type="button" data-toggle="modal" data-target="#iconModalHeat">Sayaç Ekle</button>
             </div>
           </div>
           <table class="table table-hover table-bordered zero-configuration dataTable" id="DataTables_Table_Calorimeter_Hot_Meter_List"
@@ -357,10 +525,10 @@
             </thead>
             <tbody>
               <tr>
-                <td>34574783</td>
-                <td>Makel</td>
-                <td>ModBus</td>
-                <td>COM07</td>
+                <td>67256000</td>
+                <td>Landis+Gyr</td>
+                <td>M-BUS</td>
+                <td>D Blok M-BUS</td>
                 <td>
                   <button type="button" class="btn btn-sm btn-outline-danger" id="table-delete-button">
                     <i class="fa fa-trash-o"></i>
@@ -368,10 +536,54 @@
                 </td>
               </tr>
               <tr>
-                <td>57837375</td>
-                <td>Köhler</td>
-                <td>ModBus</td>
-                <td>COM07</td>
+                <td>67256054</td>
+                <td>Landis+Gyr</td>
+                <td>M-BUS</td>
+                <td>D Blok M-BUS</td>
+                <td>
+                  <button type="button" class="btn btn-sm btn-outline-danger" id="table-delete-button">
+                    <i class="fa fa-trash-o"></i>
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>67256034</td>
+                <td>Landis+Gyr</td>
+                <td>M-BUS</td>
+                <td>D Blok M-BUS</td>
+                <td>
+                  <button type="button" class="btn btn-sm btn-outline-danger" id="table-delete-button">
+                    <i class="fa fa-trash-o"></i>
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>67256024</td>
+                <td>Landis+Gyr</td>
+                <td>M-BUS</td>
+                <td>D Blok M-BUS</td>
+                <td>
+                  <button type="button" class="btn btn-sm btn-outline-danger" id="table-delete-button">
+                    <i class="fa fa-trash-o"></i>
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>67256039</td>
+                <td>Landis+Gyr</td>
+                <td>M-BUS</td>
+                <td>D Blok M-BUS</td>
+                <td>
+                  <button type="button" class="btn btn-sm btn-outline-danger" id="table-delete-button">
+                    <i class="fa fa-trash-o"></i>
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>67256016</td>
+                <td>Landis+Gyr</td>
+                <td>M-BUS</td>
+                <td>D Blok M-BUS</td>
                 <td>
                   <button type="button" class="btn btn-sm btn-outline-danger" id="table-delete-button">
                     <i class="fa fa-trash-o"></i>
@@ -390,7 +602,7 @@
               <input type="text" class="global_filter mr-2" id="global_filter" placeholder=" Sayaç Ara">
             </div>
             <div class="cal-1 col-xl-1">
-              <button class="btn btn-sm btn-genie white" type="button" data-toggle="modal" data-target="#iconModal">Sayaç Ekle</button>
+              <button class="btn btn-sm btn-genie white" type="button" data-toggle="modal" data-target="#iconModalHeat">Sayaç Ekle</button>
             </div>
           </div>
           <table class="table table-hover table-bordered zero-configuration dataTable" id="DataTables_Table_Calorimeter_Cold_Meter_List"
@@ -406,10 +618,10 @@
             </thead>
             <tbody>
               <tr>
-                <td>34574783</td>
-                <td>Makel</td>
-                <td>ModBus</td>
-                <td>COM07</td>
+                <td>67256024</td>
+                <td>Landis+Gyr</td>
+                <td>M-BUS</td>
+                <td>D Blok M-BUS</td>
                 <td>
                   <button type="button" class="btn btn-sm btn-outline-danger" id="table-delete-button">
                     <i class="fa fa-trash-o"></i>
@@ -417,10 +629,43 @@
                 </td>
               </tr>
               <tr>
-                <td>57837375</td>
-                <td>Köhler</td>
-                <td>ModBus</td>
-                <td>COM07</td>
+                <td>67256084</td>
+                <td>Landis+Gyr</td>
+                <td>M-BUS</td>
+                <td>D Blok M-BUS</td>
+                <td>
+                  <button type="button" class="btn btn-sm btn-outline-danger" id="table-delete-button">
+                    <i class="fa fa-trash-o"></i>
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>67256058</td>
+                <td>Landis+Gyr</td>
+                <td>M-BUS</td>
+                <td>D Blok M-BUS</td>
+                <td>
+                  <button type="button" class="btn btn-sm btn-outline-danger" id="table-delete-button">
+                    <i class="fa fa-trash-o"></i>
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>67256067</td>
+                <td>Landis+Gyr</td>
+                <td>M-BUS</td>
+                <td>D Blok M-BUS</td>
+                <td>
+                  <button type="button" class="btn btn-sm btn-outline-danger" id="table-delete-button">
+                    <i class="fa fa-trash-o"></i>
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>67256095</td>
+                <td>Landis+Gyr</td>
+                <td>M-BUS</td>
+                <td>D Blok M-BUS</td>
                 <td>
                   <button type="button" class="btn btn-sm btn-outline-danger" id="table-delete-button">
                     <i class="fa fa-trash-o"></i>
