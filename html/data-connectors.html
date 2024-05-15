@@ -21,7 +21,9 @@
   <link rel="stylesheet" type="text/css" href="../app-assets/fonts/flag-icon-css/css/flag-icon.min.css">
   <link rel="stylesheet" type="text/css" href="../app-assets/vendors/css/sliders/slick/slick.css">
   <link rel="stylesheet" type="text/css" href="../app-assets/vendors/css/extensions/pace.css">
-  <link rel="stylesheet" type="text/css" href="../app-assets/css/vendors.css">
+  <link rel="stylesheet" type="text/css" href="../app-assets/fonts/feather/style.min.css">
+  <link rel="stylesheet" type="text/css" href="../app-assets/fonts/font-awesome/css/font-awesome.min.css">
+
   <!-- END VENDOR CSS-->
   <!-- BEGIN TEMPLATE CSS-->
   <link rel="stylesheet" type="text/css" href="../app-assets/css/bootstrap-extended.css">
@@ -167,7 +169,7 @@
               </ul>
               <ul class="nav navbar-nav float-right">
                 <li class="input-group nav-item">
-                  <input type="text" class="form-control" id="inlineFormInput" placeholder="Search Connector">
+                  <input type="text" class="form-control" id="inlineFormInput" placeholder="Bağlantı Ara">
                 </li>
               </ul>
             </div>
@@ -185,6 +187,8 @@
                   <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
                   <div class="heading-elements">
                     <ul class="list-inline mb-0">
+                      <!-- <li><a data-action="reload"><button type="button" class="btn btn-sm bg-blue-grey white block-default-message"> Seri Portları Yeniden Tara </i> </button></a></li> -->
+                      <li><a><button type="button" class="btn btn-sm bg-blue-grey white block-rescan-msgs-1"> Seri Portları Yeniden Tara </i> </button></a></li>
                       <li><a data-action="expand"><i class="icon-expand2"></i></a></li>
                     </ul>
                   </div>
@@ -196,14 +200,14 @@
                         <div data-repeater-item>
                           <form class="form row">
                             <div class="form-group mb-1 col-sm-12 col-md-2">
-                              <label for="m-bus_name">Bağlantı İsmi</label>
+                              <label for="m-bus_name" class="font-small-3">Bağlantı İsmi</label>
                               <br>
-                              <input type="text" class="form-control" id="m-bus_name" placeholder="İsim giriniz">
+                              <input type="text" class="form-control input-sm" id="m-bus_name" placeholder="İsim giriniz">
                             </div>
                             <div class="form-group mb-1 col-sm-12 col-md-1">
-                              <label for="serial_port">Seri Port</label>
+                              <label for="serial_port" class="font-small-3">Seri Port</label>
                               <br>
-                              <select class="form-control" id="serial_port">
+                              <select class="form-control input-sm" id="serial_port">
                                 <option>Seri Port Seçiniz</option>
                                 <option>COM 1</option>
                                 <option>COM 2</option>
@@ -213,9 +217,9 @@
                               </select>
                             </div>
                             <div class="form-group mb-1 col-sm-12 col-md-1">
-                              <label for="baud_rate">Baud Rate</label>
+                              <label for="baud_rate" class="font-small-3">Baud Rate</label>
                               <br>
-                              <select class="form-control" id="serial_port">
+                              <select class="form-control input-sm" id="serial_port">
                                 <option>Baud Rate Seçiniz</option>
                                 <option>300</option>
                                 <option>600</option>
@@ -231,9 +235,9 @@
                               </select>
                             </div>
                             <div class="form-group mb-1 col-sm-12 col-md-1">
-                              <label for="serial_port">Data</label>
+                              <label for="serial_port" class="font-small-3">Data</label>
                               <br>
-                              <select class="form-control" id="serial_port">
+                              <select class="form-control input-sm" id="serial_port">
                                 <option>Data Uzunluğu Seçiniz</option>
                                 <option>8 bits</option>
                                 <option>7 bits</option>
@@ -242,9 +246,9 @@
                               </select>
                             </div>
                             <div class="form-group mb-1 col-sm-12 col-md-1">
-                              <label for="serial_port">Parity</label>
+                              <label for="serial_port" class="font-small-3">Parity</label>
                               <br>
-                              <select class="form-control" id="serial_port">
+                              <select class="form-control input-sm" id="serial_port">
                                 <option>Parity Bit Seçiniz</option>
                                 <option>None</option>
                                 <option>Odd</option>
@@ -254,18 +258,18 @@
                               </select>
                             </div>
                             <div class="form-group mb-1 col-sm-12 col-md-1">
-                              <label for="baud_rate">Stop Bits</label>
+                              <label for="baud_rate" class="font-small-3">Stop Bits</label>
                               <br>
-                              <select class="form-control" id="serial_port">
+                              <select class="form-control input-sm" id="serial_port">
                                 <option>Stop Bits Seçiniz</option>
                                 <option>1 bit</option>
                                 <option>2 bits</option>
                               </select>
                             </div>
                             <div class="form-group mb-1 col-sm-12 col-md-2">
-                              <label for="retry">Tekrar Deneme Sayısı</label>
+                              <label for="retry" class="font-small-3">Tekrar Deneme Sayısı</label>
                               <br>
-                              <select class="form-control" id="retry">
+                              <select class="form-control input-sm" id="retry">
                                 <option>Tekrar Deneme Sayısı Seçiniz</option>
                                 <option>0</option>
                                 <option>1</option>
@@ -275,18 +279,26 @@
                               </select>
                             </div>
                             <div class="form-group mb-1 col-sm-12 col-md-2">
-                              <label for="time_out">Zaman Aşımı</label>
+                              <label for="time_out" class="font-small-3">Zaman Aşımı</label>
                               <br>
-                              <select class="form-control" id="time_out">
-                                <option>Zaman Aşımı Seçiniz</option>
+                              <select class="form-control input-sm" id="time_out">
+                                <option>Zaman Aşımı</option>
                                 <option>500 milisaniye</option>
                                 <option>1000 milisaniye</option>
                                 <option>1500 milisaniye</option>
                                 <option>2000 milisaniye</option>
                               </select>
                             </div>
-                            <div class="form-group col-sm-12 col-md-1 text-xs-center mt-2">
-                              <button type="button" class="btn btn-danger" data-repeater-delete> <i class="icon-cross2"></i> Delete</button>
+                            <div class="form-group col-sm-12 col-md-1 text-xs-center mt-1">
+                              <button type="button" class="btn btn-success btn-sm block-save-msgs"> <i class="icon-save"></i> Kaydet</button>
+                              <div class="multiple-msgs" style="display:none; padding: 15px 0;">
+                                <div class="text-bold-600">
+                                    <span class="ft-refresh-cw icon-spin text-left"></span>&nbsp; Kaydediliyor ...
+                                </div>
+                              </div>
+                            </div>
+                            <div class="form-group col-sm-12 col-md-1 text-xs-center mt-1">
+                              <button type="button" class="btn btn-danger btn-sm" data-repeater-delete> <i class="icon-cross2"></i> Sil</button>
                             </div>
                           </form>
                           <hr>
@@ -316,6 +328,7 @@
                   <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
                   <div class="heading-elements">
                     <ul class="list-inline mb-0">
+                      <li><a><button type="button" class="btn btn-sm bg-blue-grey white"> Seri Portları Yeniden Tara </i> </button></a></li>
                       <li><a data-action="expand"><i class="icon-expand2"></i></a></li>
                     </ul>
                   </div>
@@ -327,14 +340,14 @@
                         <div data-repeater-item>
                           <form class="form row">
                             <div class="form-group mb-1 col-sm-12 col-md-2">
-                              <label for="m-bus_name">Bağlantı İsmi</label>
+                              <label for="m-bus_name" class="font-small-3">Bağlantı İsmi</label>
                               <br>
-                              <input type="text" class="form-control" id="m-bus_name" placeholder="İsim giriniz">
+                              <input type="text" class="form-control input-sm" id="m-bus_name" placeholder="İsim giriniz">
                             </div>
                             <div class="form-group mb-1 col-sm-12 col-md-1">
-                              <label for="serial_port">Seri Port</label>
+                              <label for="serial_port" class="font-small-3">Seri Port</label>
                               <br>
-                              <select class="form-control" id="serial_port">
+                              <select class="form-control input-sm" id="serial_port">
                                 <option>Seri Port</option>
                                 <option>COM 1</option>
                                 <option>COM 2</option>
@@ -344,9 +357,9 @@
                               </select>
                             </div>
                             <div class="form-group mb-1 col-sm-12 col-md-1">
-                              <label for="baud_rate">Baud Rate</label>
+                              <label for="baud_rate" class="font-small-3">Baud Rate</label>
                               <br>
-                              <select class="form-control" id="serial_port">
+                              <select class="form-control input-sm" id="serial_port">
                                 <!-- <option>Baud Rate</option>
                                 <option>300</option>
                                 <option>600</option>
@@ -357,9 +370,9 @@
                               </select>
                             </div>
                             <div class="form-group mb-1 col-sm-12 col-md-1">
-                              <label for="serial_port">Data</label>
+                              <label for="serial_port" class="font-small-3">Data</label>
                               <br>
-                              <select class="form-control" id="serial_port">
+                              <select class="form-control input-sm" id="serial_port">
                                 <!-- <option>Data</option> -->
                                 <option>8 bits</option>
                                 <!-- <option>7 bits</option>
@@ -368,9 +381,9 @@
                               </select>
                             </div>
                             <div class="form-group mb-1 col-sm-12 col-md-1">
-                              <label for="serial_port">Parity</label>
+                              <label for="serial_port" class="font-small-3">Parity</label>
                               <br>
-                              <select class="form-control" id="serial_port">
+                              <select class="form-control input-sm" id="serial_port">
                                 <!-- <option>Parity Bit</option>
                                 <option>None</option>
                                 <option>Odd</option> -->
@@ -378,18 +391,18 @@
                               </select>
                             </div>
                             <div class="form-group mb-1 col-sm-12 col-md-1">
-                              <label for="baud_rate">Stop Bits</label>
+                              <label for="baud_rate" class="font-small-3">Stop Bits</label>
                               <br>
-                              <select class="form-control" id="serial_port">
+                              <select class="form-control input-sm" id="serial_port">
                                 <!-- <option>Stop Bits</option> -->
                                 <option>1 bit</option>
                                 <!-- <option>2 bits</option> -->
                               </select>
                             </div>
                             <div class="form-group mb-1 col-sm-12 col-md-2">
-                              <label for="retry">Tekrar Deneme Sayısı</label>
+                              <label for="retry" class="font-small-3">Tekrar Deneme Sayısı</label>
                               <br>
-                              <select class="form-control" id="retry">
+                              <select class="form-control input-sm" id="retry">
                                 <option>Tekrar Deneme Sayısı</option>
                                 <option>0</option>
                                 <option>1</option>
@@ -399,9 +412,9 @@
                               </select>
                             </div>
                             <div class="form-group mb-1 col-sm-12 col-md-2">
-                              <label for="time_out">Zaman Aşımı</label>
+                              <label for="time_out" class="font-small-3">Zaman Aşımı</label>
                               <br>
-                              <select class="form-control" id="time_out">
+                              <select class="form-control input-sm" id="time_out">
                                 <option>Zaman Aşımı</option>
                                 <option>500 milisaniye</option>
                                 <option>1000 milisaniye</option>
@@ -409,8 +422,16 @@
                                 <option>2000 milisaniye</option>
                               </select>
                             </div>
+                            <div class="form-group col-sm-12 col-md-1 text-xs-center mt-1">
+                              <button type="button" class="btn btn-success btn-sm"> <i class="icon-save"></i> Kaydet</button>
+                              <div class="multiple-msgs" style="display:none; padding: 15px 0;">
+                                <div class="text-bold-600">
+                                    <span class="ft-refresh-cw icon-spin text-left"></span>&nbsp; Kaydediliyor ...
+                                </div>
+                              </div>
+                            </div>
                             <div class="form-group col-sm-12 col-md-1 text-xs-center mt-2">
-                              <button type="button" class="btn btn-danger" data-repeater-delete> <i class="icon-cross2"></i> Delete</button>
+                              <button type="button" class="btn btn-danger" data-repeater-delete> <i class="icon-cross2"></i> Sil</button>
                             </div>
                           </form>
                           <hr>
@@ -480,6 +501,8 @@
   <!-- END TEMPLATE JS-->
   <!-- BEGIN PAGE LEVEL JS-->
   <script src="../app-assets/js/scripts/forms/form-repeater.js" type="text/javascript"></script>
+  <script src="../app-assets/js/scripts/extensions/block-ui.js"></script>
+
   <!-- END PAGE LEVEL JS-->
 </body>
 

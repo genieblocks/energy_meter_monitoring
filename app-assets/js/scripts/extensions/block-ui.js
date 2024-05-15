@@ -190,7 +190,7 @@ $(document).ready(function(){
         }, 2000);
 
         window.setTimeout(function () {
-			message.addClass('bg-success').html('<div class="semibold"><span class="icon-thumbs-o-up text-left"></span>&nbsp; Success</div>');
+			message.addClass('bg-success').html('<div class="semibold"><span class="icon-thumbs-o-up text-left"></span>&nbsp; Succes</div>');
         }, 4000);
 
         window.setTimeout(function () {
@@ -199,6 +199,135 @@ $(document).ready(function(){
                     message.removeClass('bg-success');
                 }
            });
+        }, 6000);
+    });
+
+    // Multiple messages (kaydetme)
+    $('.block-save-msgs').on('click', function() {
+        var message = $('.multiple-msgs');
+        var block_ele = $(this).closest('.card');
+        $(block_ele).block({
+            message: message,
+            overlayCSS: {
+                backgroundColor: '#fff',
+                opacity: 0.8,
+                cursor: 'wait'
+            },
+            css: {
+				// width: 200,
+                border: 0,
+                padding: 0,
+                backgroundColor: 'transparent'
+            },
+            onBlock: function(){
+				clearTimeout();
+			}
+        });
+
+        window.setTimeout(function () {
+			message.html('<div class="semibold"><span class="ft-refresh-cw icon-spin text-left"></span>&nbsp; Kaydediliyor ...</div>');
+        }, 0);
+
+        // window.setTimeout(function () {
+		// 	message.html('<div class="semibold">Just a minute...</div>');
+        // }, 2000);
+
+        window.setTimeout(function () {
+			message.addClass('bg-success').html('<div class="semibold"><span class="icon-thumbs-o-up text-left"></span>&nbsp; Kaydedildi.</div>');
+        }, 2000);
+
+        window.setTimeout(function () {
+           $(block_ele).unblock({
+                onUnblock: function(){
+                    message.removeClass('bg-success');
+                }
+           });
+        }, 6000);
+    });
+
+    // Multiple messages (port tarama 1)
+    $('.block-rescan-msgs-1').on('click', function() {
+        var message = $('.multiple-msgs');
+        var block_ele = $(this).closest('.card');
+        $(block_ele).block({
+            message: message,
+            overlayCSS: {
+                backgroundColor: '#fff',
+                opacity: 0.8,
+                cursor: 'wait'
+            },
+            css: {
+                // width: 200,
+                border: 0,
+                padding: 0,
+                backgroundColor: 'transparent'
+            },
+            onBlock: function(){
+                clearTimeout();
+            }
+        });
+
+        window.setTimeout(function () {
+            message.html('<div class="semibold"><span class="ft-refresh-cw icon-spin text-left"></span>&nbsp; Taranıyor ...</div>');
+        }, 0);
+
+        // window.setTimeout(function () {
+        // 	message.html('<div class="semibold">Just a minute...</div>');
+        // }, 2000);
+
+        window.setTimeout(function () {
+            message.addClass('bg-success').html('<div class="semibold"><span class="icon-thumbs-o-up text-left"></span>&nbsp; Tarama tamamlandı.</div>');
+        }, 2000);
+
+        window.setTimeout(function () {
+            $(block_ele).unblock({
+                onUnblock: function(){
+                    message.removeClass('bg-success');
+                }
+            });
+        }, 6000);
+    });
+
+    // Multiple messages (port tarama 2)
+    $('.block-rescan-msgs-2').on('click', function() {
+        var message = $('.multiple-msgs');
+        var block_ele = $(this).closest('.card');
+        $(block_ele).block({
+            message: message,
+            overlayCSS: {
+                backgroundColor: '#fff',
+                opacity: 0.8,
+                cursor: 'wait'
+            },
+            css: {
+                // width: 200,
+                border: 0,
+                padding: 0,
+                backgroundColor: 'transparent'
+            },
+            onBlock: function(){
+                clearTimeout();
+            }
+        });
+
+        window.setTimeout(function () {
+            message.html('<div class="semibold"><span class="ft-refresh-cw icon-spin text-left"></span>&nbsp; Taranıyor ...</div>');
+        }, 0);
+
+        // window.setTimeout(function () {
+        // 	message.html('<div class="semibold">Just a minute...</div>');
+        // }, 2000);
+
+        window.setTimeout(function () {
+            message.addClass('bg-success').html('<div class="semibold"><span class="icon-thumbs-o-up text-left"></span>&nbsp; Tarama tamamlandı.</div>');
+        }, 2000);
+
+        window.setTimeout(function () {
+            $(block_ele).unblock({
+                onUnblock: function(){
+                    message.removeClass('bg-success');
+                }
+            });
         }, 6000);
     });
 
