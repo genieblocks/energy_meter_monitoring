@@ -204,19 +204,19 @@
                               <br>
                               <input type="text" class="form-control input-sm" id="m-bus_name" placeholder="İsim giriniz">
                             </div>
-                            <div class="form-group mb-1 col-sm-12 col-md-1">
+                            <div class="form-group mb-1 col-sm-12 col-md-2">
                               <label for="serial_port" class="font-small-3">Seri Port</label>
                               <br>
                               <select class="form-control input-sm" id="serial_port">
                                 <option>Seri Port Seçiniz</option>
-                                <option>COM 1</option>
+                                <option disabled>COM 1 (kullanımda)</option>
                                 <option>COM 2</option>
-                                <option>COM 3</option>
+                                <option disabled>COM 3 (kullanımda)</option>
                                 <option>COM 4</option>
                                 <option>COM 5</option>
                               </select>
                             </div>
-                            <div class="form-group mb-1 col-sm-12 col-md-1">
+                            <div class="form-group mb-1 col-sm-12 col-md-2">
                               <label for="baud_rate" class="font-small-3">Baud Rate</label>
                               <br>
                               <select class="form-control input-sm" id="serial_port">
@@ -227,45 +227,24 @@
                                 <option>2400</option>
                                 <option>4800</option>
                                 <option>9600</option>
-                                <option>14400</option>
                                 <option>19200</option>
-                                <option>38400</option>
-                                <option>57600</option>
-                                <option>115200</option>
                               </select>
                             </div>
-                            <div class="form-group mb-1 col-sm-12 col-md-1">
+                            <!-- <div class="form-group mb-1 col-sm-12 col-md-1">
                               <label for="serial_port" class="font-small-3">Data</label>
                               <br>
-                              <select class="form-control input-sm" id="serial_port">
-                                <option>Data Uzunluğu Seçiniz</option>
-                                <option>8 bits</option>
-                                <option>7 bits</option>
-                                <option>6 bits</option>
-                                <option>5 bits</option>
-                              </select>
+                              <p class="form-control-static" id="serial_port">7 bits</p>
                             </div>
                             <div class="form-group mb-1 col-sm-12 col-md-1">
                               <label for="serial_port" class="font-small-3">Parity</label>
                               <br>
-                              <select class="form-control input-sm" id="serial_port">
-                                <option>Parity Bit Seçiniz</option>
-                                <option>None</option>
-                                <option>Odd</option>
-                                <option>Even</option>
-                                <option>Mark</option>
-                                <option>Space</option>
-                              </select>
+                              <p class="form-control-static" id="serial_port">Even</p>
                             </div>
                             <div class="form-group mb-1 col-sm-12 col-md-1">
                               <label for="baud_rate" class="font-small-3">Stop Bits</label>
                               <br>
-                              <select class="form-control input-sm" id="serial_port">
-                                <option>Stop Bits Seçiniz</option>
-                                <option>1 bit</option>
-                                <option>2 bits</option>
-                              </select>
-                            </div>
+                              <p class="form-control-static" id="serial_port">1 bit</p>
+                            </div> -->
                             <div class="form-group mb-1 col-sm-12 col-md-2">
                               <label for="retry" class="font-small-3">Tekrar Deneme Sayısı</label>
                               <br>
@@ -344,11 +323,11 @@
                               <br>
                               <input type="text" class="form-control input-sm" id="m-bus_name" placeholder="İsim giriniz">
                             </div>
-                            <div class="form-group mb-1 col-sm-12 col-md-1">
+                            <div class="form-group mb-1 col-sm-12 col-md-2">
                               <label for="serial_port" class="font-small-3">Seri Port</label>
                               <br>
                               <select class="form-control input-sm" id="serial_port">
-                                <option>Seri Port</option>
+                                <option>Seri Port Seçiniz</option>
                                 <option>COM 1</option>
                                 <option>COM 2</option>
                                 <option>COM 3</option>
@@ -356,49 +335,30 @@
                                 <option>COM 5</option>
                               </select>
                             </div>
-                            <div class="form-group mb-1 col-sm-12 col-md-1">
+                            <div class="form-group mb-1 col-sm-12 col-md-2">
                               <label for="baud_rate" class="font-small-3">Baud Rate</label>
                               <br>
                               <select class="form-control input-sm" id="serial_port">
-                                <!-- <option>Baud Rate</option>
-                                <option>300</option>
-                                <option>600</option>
-                                <option>1200</option> -->
+                                <option>Baud Rate Seçiniz</option>
                                 <option>2400</option>
-                                <!-- <option>4800</option> -->
                                 <option>9600</option>
                               </select>
                             </div>
-                            <div class="form-group mb-1 col-sm-12 col-md-1">
+                            <!-- <div class="form-group mb-1 col-sm-12 col-md-1">
                               <label for="serial_port" class="font-small-3">Data</label>
                               <br>
-                              <select class="form-control input-sm" id="serial_port">
-                                <!-- <option>Data</option> -->
-                                <option>8 bits</option>
-                                <!-- <option>7 bits</option>
-                                <option>6 bits</option>
-                                <option>5 bits</option> -->
-                              </select>
+                              <p class="form-control-static" id="serial_port">8 bits</p>
                             </div>
                             <div class="form-group mb-1 col-sm-12 col-md-1">
                               <label for="serial_port" class="font-small-3">Parity</label>
                               <br>
-                              <select class="form-control input-sm" id="serial_port">
-                                <!-- <option>Parity Bit</option>
-                                <option>None</option>
-                                <option>Odd</option> -->
-                                <option>Even</option>
-                              </select>
+                              <p class="form-control-static" id="serial_port">Even</p>
                             </div>
                             <div class="form-group mb-1 col-sm-12 col-md-1">
                               <label for="baud_rate" class="font-small-3">Stop Bits</label>
                               <br>
-                              <select class="form-control input-sm" id="serial_port">
-                                <!-- <option>Stop Bits</option> -->
-                                <option>1 bit</option>
-                                <!-- <option>2 bits</option> -->
-                              </select>
-                            </div>
+                              <p class="form-control-static" id="serial_port">1 bit</p>
+                            </div> -->
                             <div class="form-group mb-1 col-sm-12 col-md-2">
                               <label for="retry" class="font-small-3">Tekrar Deneme Sayısı</label>
                               <br>
@@ -430,8 +390,8 @@
                                 </div>
                               </div>
                             </div>
-                            <div class="form-group col-sm-12 col-md-1 text-xs-center mt-2">
-                              <button type="button" class="btn btn-danger" data-repeater-delete> <i class="icon-cross2"></i> Sil</button>
+                            <div class="form-group col-sm-12 col-md-1 text-xs-center mt-1">
+                              <button type="button" class="btn btn-danger btn-sm" data-repeater-delete> <i class="icon-cross2"></i> Sil</button>
                             </div>
                           </form>
                           <hr>
