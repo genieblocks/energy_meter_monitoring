@@ -701,37 +701,38 @@
 
     // Cihazı silmek için fonksiyon
     function deleteDevice(ip) {
-      fetch('http://192.168.1.146:5678/webhook/9Nqv3El1T13RJ6rZ/webhook/scan-devices', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ ip: ip })
-      })
-      // fetch('http://192.168.1.146:5678/webhook-test/9Nqv3El1T13RJ6rZ/webhook/scan-devices', {
-      //   method: 'POST',
-      //   headers: {
-      //     'Content-Type': 'application/json'
-      //   },
-      //   body: JSON.stringify({ ip: ip })
-      // })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok ' + response.statusText);
-        }
-        return response.json();
-      })
-      .then(data => {
-        // Silme işlemi başarılı olduğunda cihaz listesini yeniden yükle
-        $('#deviceSetupModal').on('hidden.bs.modal', function () {
-          $(this).off('hidden.bs.modal');
-          $('#deviceSetupModal').modal('show');
-        });
-        $('#deviceSetupModal').modal('hide');
-      })
-      .catch(error => console.error('Error:', error));
+      if (confirm('Cihazı silmek istediğinizden emin misiniz?')) {
+        fetch('http://192.168.1.146:5678/webhook/9Nqv3El1T13RJ6rZ/webhook/scan-devices', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ ip: ip })
+        })
+        // fetch('http://192.168.1.146:5678/webhook-test/9Nqv3El1T13RJ6rZ/webhook/scan-devices', {
+        //   method: 'POST',
+        //   headers: {
+        //     'Content-Type': 'application/json'
+        //   },
+        //   body: JSON.stringify({ ip: ip })
+        // })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok ' + response.statusText);
+          }
+          return response.json();
+        })
+        .then(data => {
+          // Silme işlemi başarılı olduğunda cihaz listesini yeniden yükle
+          $('#deviceSetupModal').on('hidden.bs.modal', function () {
+            $(this).off('hidden.bs.modal');
+            $('#deviceSetupModal').modal('show');
+          });
+          $('#deviceSetupModal').modal('hide');
+        })
+        .catch(error => console.error('Error:', error));
+      }
     }
-
     // addDeviceModal kapandığında deviceSetupModal'ı aç
     $('#addDeviceModal').on('hidden.bs.modal', function () {
       $('#deviceSetupModal').modal('show');
