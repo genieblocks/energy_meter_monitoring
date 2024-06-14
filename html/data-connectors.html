@@ -615,7 +615,7 @@
               <td>${device.model || 'N/A'}</td>
               <td>${device.mac || 'N/A'}</td>
               <td>${device.serial || 'N/A'}</td>
-              <td><span class="badge badge-info">${isDefined ? 'Tanımlı' : (device.status || 'N/A')}</span></td>
+              <td><span class="badge ${isDefined ? 'badge-info' : 'badge-success'}">${isDefined ? 'Tanımlı' : 'Tanımlanabilir'}</span></td>
             `;
             tableBody.appendChild(row);
           });
