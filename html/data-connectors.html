@@ -769,18 +769,56 @@
           return response.json();
         })
         .then(data => {
-          // Silme işlemi başarılı olduğunda cihaz listesini yeniden yükle
-          $('#deviceSetupModal').on('hidden.bs.modal', function () {
-            $(this).off('hidden.bs.modal');
-            $('#deviceSetupModal').modal('show');
-          });
-          $('#deviceSetupModal').modal('hide');
+      // Silme işlemi başarılı olduğunda cihaz listesini yeniden sorgula ve güncelle
+      fetch('http://192.168.1.146:5678/webhook/A9fBFKyNo8JKJhpQ/webhook/scan-devices', {
+        method: 'GET'
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok ' + response.statusText);
+        }
+        return response.json();
+      })
+      .then(data => {
+          const tableBody = document.querySelector('#DataTables_Table_Electricity_Meter_Report tbody');
+          tableBody.innerHTML = ''; // Mevcut satırları temizle
+
+          const noDefinedDevicesMessage = document.getElementById('noDefinedDevicesMessage');
+          if (!data.devices || !Array.isArray(data.devices) || data.devices.length === 0) {
+            noDefinedDevicesMessage.style.display = 'block';
+          } else {
+            noDefinedDevicesMessage.style.display = 'none';
+            data.devices.forEach((device, index) => {
+              const row = document.createElement('tr');
+              row.innerHTML = `
+                <td>${device.no || 'N/A'}</td>
+                <td>${device.minor || 'N/A'}</td>
+                <td>${device.address || 'N/A'}</td>
+                <td>${device.data || 'N/A'}</td>
+                <td>${device.cmd || 'N/A'}</td>
+                <td>${device.ttyName || 'N/A'}</td>
+                <td>${device.coutName || 'N/A'}</td>
+                <td>${device.name || 'N/A'}</td>
+                <td>${device.model || 'N/A'}</td>
+                <td>${device.mac || 'N/A'}</td>
+                <td>${device.serial || 'N/A'}</td>
+                <td>
+                  <button type="button" class="btn btn-sm btn-outline-danger" onclick="deleteDevice('${device.address}')">
+                    <i class="fa fa-trash-o"></i>
+                  </button>
+                </td>
+              `;
+              tableBody.appendChild(row);
+            });
+          }
         })
         .catch(error => console.error('Error:', error))
         .finally(() => {
           // Modalı aç ve bekleme işaretini kaldır
           $('#deviceSetupModal .modal-content').unblock();
         });
+        })
+        .catch(error => console.error('Error:', error));
       }
     }
     // addDeviceModal kapandığında deviceSetupModal'ı aç
