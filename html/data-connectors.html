@@ -747,6 +747,24 @@
       });
     });
 
+    // Add Device Modal Kapatma İşlemi
+    document.querySelector('#addDeviceModal .close').addEventListener('click', function() {
+      $('#addDeviceModal').modal('hide');
+      $('#addDeviceModal').on('hidden.bs.modal', function () {
+        $(this).off('hidden.bs.modal');
+        $('#deviceSetupModal').modal('show');
+      });
+    });
+
+    // Ayrıca "Kapat" düğmesi için benzer işlemi ekleyelim
+    document.querySelector('#addDeviceModal input[data-dismiss="modal"]').addEventListener('click', function() {
+      $('#addDeviceModal').modal('hide');
+      $('#addDeviceModal').on('hidden.bs.modal', function () {
+        $(this).off('hidden.bs.modal');
+        $('#deviceSetupModal').modal('show');
+      });
+    });
+
     // Cihazı silmek için fonksiyon
     function deleteDevice(ip) {
       if (confirm('Cihazı silmek istediğinizden emin misiniz?')) {
