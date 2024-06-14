@@ -564,13 +564,10 @@
   <script src="../app-assets/js/scripts/modal/components-modal.js"></script>
   <!-- END PAGE LEVEL JS-->
   <script>
-    document.getElementById('scanDevicesButton').addEventListener('click', function() {
-      fetch('http://192.168.1.146:5678/webhook/txkV43PU482NoXgR/webhook/scan-devices', {
+  function scanDevices() {
+    fetch('http://192.168.1.146:5678/webhook/txkV43PU482NoXgR/webhook/scan-devices', {
         method: 'POST'
       })
-      // fetch('http://192.168.1.146:5678/webhook-test/txkV43PU482NoXgR/webhook/scan-devices', {
-      //   method: 'POST'
-      // })
       .then(response => {
         if (!response.ok) {
           throw new Error('Network response was not ok ' + response.statusText);
@@ -580,11 +577,11 @@
       .then(data => {
         const tableBody = document.querySelector('#deviceTable tbody');
         tableBody.innerHTML = ''; // Mevcut satırları temizle
-  
+
         if (!data.devices || !Array.isArray(data.devices)) {
           throw new Error('Invalid data format');
         }
-  
+
         data.devices.forEach(device => {
           const row = document.createElement('tr');
           row.innerHTML = `
@@ -601,13 +598,20 @@
         });
       })
       .catch(error => console.error('Error:', error));
+    }
+
+    // Modal açıldığında cihazları tarar
+    $('#addDeviceModal').on('shown.bs.modal', function () {
+      scanDevices();
     });
+
+    document.getElementById('scanDevicesButton').addEventListener('click', scanDevices);
 
     // Seçilen cihazları ekleme işlemi
     document.getElementById('addSelectedDevicesButton').addEventListener('click', function() {
       const checkboxes = document.querySelectorAll('.device-checkbox:checked');
       const selectedIPs = Array.from(checkboxes).map(checkbox => checkbox.value);
-      
+
       if (selectedIPs.length > 0) {
         // fetch('http://192.168.1.146:5678/webhook-test/CtuDoJzaH8FFPQlZ/webhook/scan-devices', {
         //   method: 'POST',
