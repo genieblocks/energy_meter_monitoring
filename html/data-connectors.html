@@ -679,6 +679,13 @@
     });
 
     $('#deviceSetupModal').on('shown.bs.modal', function () {
+      // Modalı kilitle ve bekleme işareti göster
+      $('#deviceSetupModal .modal-content').block({ 
+        message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
+        overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
+        css: { border: 0, padding: 0, backgroundColor: 'transparent' }
+      });
+
       fetch('http://192.168.1.146:5678/webhook/A9fBFKyNo8JKJhpQ/webhook/scan-devices', {
         method: 'GET'
       })
@@ -724,7 +731,11 @@
           });
         }
       })
-      .catch(error => console.error('Error:', error));
+      .catch(error => console.error('Error:', error))
+      .finally(() => {
+        // Modalı aç ve bekleme işaretini kaldır
+        $('#deviceSetupModal .modal-content').unblock();
+      });
     });
 
     // Cihazı silmek için fonksiyon
