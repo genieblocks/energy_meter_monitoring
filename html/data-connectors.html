@@ -438,12 +438,13 @@
                 </button>
               </div>
               <div class="modal-body">
+                <div id="noDefinedDevicesMessage" class="alert alert-warning" style="display: none;">Kayıtlı cihaz yok.</div>
                 <table class="table table-hover table-bordered zero-configuration dataTable w-auto" id="DataTables_Table_Electricity_Meter_Report"
                 role="grid" aria-describedby="DataTables_Table_0_info">
                   <thead>
                     <tr>
                       <th>No</th>
-                      <th>minor</th>
+                      <th>Minor</th>
                       <th>Adresi</th>
                       <th>data</th>
                       <th>cmd</th>
@@ -481,6 +482,7 @@
                 </button>
               </div>
               <div class="modal-body">
+                <div id="noDevicesMessage" class="alert alert-warning" style="display: none;">Cihaz bulunamadı.</div>
                 <table class="table table-hover table-bordered zero-configuration dataTable w-auto" id="deviceTable"
                 role="grid" aria-describedby="DataTables_Table_0_info">
                   <thead>
@@ -496,18 +498,17 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <!-- Dynamic content will be added here -->
+                    <!-- Dinamik içerik buraya eklenecek -->
                   </tbody>
                 </table>
               </div>
               <div class="modal-footer d-flex justify-content-between">
                 <div>
-                  <button class="btn btn-round btn-outline-info" id="scanDevicesButton"><i class="icon-search7 ml-1"> </i>Cihazları Bul</i>
-                  </button>
+                  <button class="btn btn-round btn-outline-info" id="scanDevicesButton"><i class="icon-search7 ml-1"> </i>Cihazları Bul</button>
                 </div>
                 <div>
                   <input type="reset" class="btn btn-light" data-dismiss="modal" value="Kapat">
-                  <input type="button" class="btn btn-genie white" data-toggle="modal" id="addSelectedDevicesButton" value="Seçilenleri Ekle">
+                  <input type="button" class="btn btn-genie white" id="addSelectedDevicesButton" value="Seçilenleri Ekle">
                 </div>
               </div>
             </div>
@@ -578,24 +579,26 @@
         const tableBody = document.querySelector('#deviceTable tbody');
         tableBody.innerHTML = ''; // Mevcut satırları temizle
 
-        if (!data.devices || !Array.isArray(data.devices)) {
-          throw new Error('Invalid data format');
+        const noDevicesMessage = document.getElementById('noDevicesMessage');
+        if (!data.devices || !Array.isArray(data.devices) || data.devices.length === 0) {
+          noDevicesMessage.style.display = 'block';
+        } else {
+          noDevicesMessage.style.display = 'none';
+          data.devices.forEach(device => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+              <td><input type="checkbox" class="device-checkbox" value="${device.address}"></td>
+              <td>${device.id || 'N/A'}</td>
+              <td>${device.address || 'N/A'}</td>
+              <td>${device.name || 'N/A'}</td>
+              <td>${device.model || 'N/A'}</td>
+              <td>${device.mac || 'N/A'}</td>
+              <td>${device.serial || 'N/A'}</td>
+              <td><span class="badge badge-info">${device.status || 'N/A'}</span></td>
+            `;
+            tableBody.appendChild(row);
+          });
         }
-
-        data.devices.forEach(device => {
-          const row = document.createElement('tr');
-          row.innerHTML = `
-            <td><input type="checkbox" class="device-checkbox" value="${device.address}"></td>
-            <td>${device.id || 'N/A'}</td>
-            <td>${device.address || 'N/A'}</td>
-            <td>${device.name || 'N/A'}</td>
-            <td>${device.model || 'N/A'}</td>
-            <td>${device.mac || 'N/A'}</td>
-            <td>${device.serial || 'N/A'}</td>
-            <td><span class="badge badge-info">${device.status || 'N/A'}</span></td>
-          `;
-          tableBody.appendChild(row);
-        });
       })
       .catch(error => console.error('Error:', error));
     }
@@ -653,41 +656,43 @@
       //   method: 'GET'
       // })
       .then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok ' + response.statusText);
-        }
-        return response.json();
+      if (!response.ok) {
+        throw new Error('Network response was not ok ' + response.statusText);
+      }
+      return response.json();
       })
       .then(data => {
         const tableBody = document.querySelector('#DataTables_Table_Electricity_Meter_Report tbody');
         tableBody.innerHTML = ''; // Mevcut satırları temizle
 
-        if (!data.devices || !Array.isArray(data.devices)) {
-          throw new Error('Invalid data format');
+        const noDefinedDevicesMessage = document.getElementById('noDefinedDevicesMessage');
+        if (!data.devices || !Array.isArray(data.devices) || data.devices.length === 0) {
+          noDefinedDevicesMessage.style.display = 'block';
+        } else {
+          noDefinedDevicesMessage.style.display = 'none';
+          data.devices.forEach((device, index) => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+              <td>${device.no || 'N/A'}</td>
+              <td>${device.minor || 'N/A'}</td>
+              <td>${device.address || 'N/A'}</td>
+              <td>${device.data || 'N/A'}</td>
+              <td>${device.cmd || 'N/A'}</td>
+              <td>${device.ttyName || 'N/A'}</td>
+              <td>${device.coutName || 'N/A'}</td>
+              <td>${device.name || 'N/A'}</td>
+              <td>${device.model || 'N/A'}</td>
+              <td>${device.mac || 'N/A'}</td>
+              <td>${device.serial || 'N/A'}</td>
+              <td>
+                <button type="button" class="btn btn-sm btn-outline-danger" onclick="deleteDevice('${device.address}')">
+                  <i class="fa fa-trash-o"></i>
+                </button>
+              </td>
+            `;
+            tableBody.appendChild(row);
+          });
         }
-
-        data.devices.forEach((device, index) => {
-          const row = document.createElement('tr');
-          row.innerHTML = `
-            <td>${device.no || 'N/A'}</td>
-            <td>${device.minor || 'N/A'}</td>
-            <td>${device.address || 'N/A'}</td>
-            <td>${device.data || 'N/A'}</td>
-            <td>${device.cmd || 'N/A'}</td>
-            <td>${device.ttyName || 'N/A'}</td>
-            <td>${device.coutName || 'N/A'}</td>
-            <td>${device.name || 'N/A'}</td>
-            <td>${device.model || 'N/A'}</td>
-            <td>${device.mac || 'N/A'}</td>
-            <td>${device.serial || 'N/A'}</td>
-            <td>
-              <button type="button" class="btn btn-sm btn-outline-danger" onclick="deleteDevice('${device.address}')">
-                <i class="fa fa-trash-o"></i>
-              </button>
-            </td>
-          `;
-          tableBody.appendChild(row);
-        });
       })
       .catch(error => console.error('Error:', error));
     });
@@ -715,6 +720,7 @@
         return response.json();
       })
       .then(data => {
+        // Silme işlemi başarılı olduğunda cihaz listesini yeniden yükle
         $('#deviceSetupModal').on('hidden.bs.modal', function () {
           $(this).off('hidden.bs.modal');
           $('#deviceSetupModal').modal('show');
