@@ -729,6 +729,11 @@
       })
       .catch(error => console.error('Error:', error));
     }
+
+    // addDeviceModal kapandığında deviceSetupModal'ı aç
+    $('#addDeviceModal').on('hidden.bs.modal', function () {
+      $('#deviceSetupModal').modal('show');
+    });
   </script>
 </body>
 
