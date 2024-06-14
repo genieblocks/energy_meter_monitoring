@@ -426,80 +426,48 @@
     </div>
   </div>
 
-    <!-- Device Setup Modal -->
-    <div class="modal fade text-left" id="deviceSetupModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2"
-    aria-hidden="true">
-      <div class="modal-dialog modal-xl" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h4 class="modal-title text-bold-600" id="myModalLabel1"><i class="fa fa-road2"></i> Tanımlı Cihaz Listesi</h4>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <table class="table table-hover table-bordered zero-configuration dataTable w-auto" id="DataTables_Table_Electricity_Meter_Report"
-            role="grid" aria-describedby="DataTables_Table_0_info">
-              <thead>
-                <tr>
-                  <th>No</th>
-                  <th>Adresi</th>
-                  <th>data</th>
-                  <th>cmd</th>
-                  <th>ttyName</th>
-                  <th>coutName</th>
-                  <th>Cihaz ismi</th>
-                  <th>Cihaz modeli</th>
-                  <th>MAC Adresi</th>
-                  <th>seri No</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>1</td>
-                  <td>192.168.1.202</td>
-                  <td>950</td>
-                  <td>966</td>
-                  <td>ttyr02</td>
-                  <td>cur02</td>
-                  <td>NP5210A_1601</thd>
-                  <td>521a</td>
-                  <td>00:90:e8:35:a3:62</thd>
-                  <td>1601</td>
-                  <td>
-                    <button type="button" class="btn btn-sm btn-outline-danger" id="table-delete-button">
-                      <i class="fa fa-trash-o"></i>
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>2</td>
-                  <td>192.168.1.202</td>
-                  <td>951</td>
-                  <td>967</td>
-                  <td>ttyr03</td>
-                  <td>cur03</td>
-                  <td>NP5210A_1601</td>
-                  <td>521a</td>
-                  <td>00:90:e8:35:a3:62</td>
-                  <td>1601</td>
-                  <td>
-                    <button type="button" class="btn btn-sm btn-outline-danger" id="table-delete-button">
-                      <i class="fa fa-trash-o"></i>
-                    </button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <div class="modal-footer">
-            <input type="reset" class="btn btn-light" data-dismiss="modal" value="Kapat">
-            <input type="button" class="btn btn-genie white" data-toggle="modal" data-dismiss="modal" data-target="#addDeviceModal"  value="Yeni Cihaz Tanımla">
+        <!-- Device Setup Modal -->
+        <div class="modal fade text-left" id="deviceSetupModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2"
+        aria-hidden="true">
+          <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h4 class="modal-title text-bold-600" id="myModalLabel1"><i class="fa fa-road2"></i> Tanımlı Cihaz Listesi</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <table class="table table-hover table-bordered zero-configuration dataTable w-auto" id="DataTables_Table_Electricity_Meter_Report"
+                role="grid" aria-describedby="DataTables_Table_0_info">
+                  <thead>
+                    <tr>
+                      <th>No</th>
+                      <th>minor</th>
+                      <th>Adresi</th>
+                      <th>data</th>
+                      <th>cmd</th>
+                      <th>ttyName</th>
+                      <th>coutName</th>
+                      <th>Cihaz ismi</th>
+                      <th>Cihaz modeli</th>
+                      <th>MAC Adresi</th>
+                      <th>seri No</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <!-- Dinamik içerik buraya eklenecek -->
+                  </tbody>
+                </table>
+              </div>
+              <div class="modal-footer">
+                <input type="reset" class="btn btn-light" data-dismiss="modal" value="Kapat">
+                <input type="button" class="btn btn-genie white" data-toggle="modal" data-dismiss="modal" data-target="#addDeviceModal" value="Yeni Cihaz Tanımla">
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
 
         <!-- Add Device Modal -->
         <div class="modal fade text-left" id="addDeviceModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2"
@@ -513,7 +481,7 @@
                 </button>
               </div>
               <div class="modal-body">
-                <table class="table table-hover table-bordered zero-configuration dataTable w-auto" id="DataTables_Table_Electricity_Meter_Report"
+                <table class="table table-hover table-bordered zero-configuration dataTable w-auto" id="deviceTable"
                 role="grid" aria-describedby="DataTables_Table_0_info">
                   <thead>
                     <tr>
@@ -528,37 +496,18 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td><input type="checkbox" value="" checked=""></td>
-                      <td>1</td>
-                      <td>192.168.1.202</td>
-                      <td>NP5210A_1601</thd>
-                      <td>521a</td>
-                      <td>00:90:e8:35:a3:62</thd>
-                      <td>1601</td>
-                      <td><div class="badge badge-success">Yeni</div></td>
-                    </tr>
-                    <tr>
-                      <td><input type="checkbox" value="" checked=""></td>
-                      <td>2</td>
-                      <td>192.168.1.201</td>
-                      <td>NP5210A_1601</td>
-                      <td>521a</td>
-                      <td>00:90:e8:35:a3:62</td>
-                      <td>1601</td>
-                      <td><span class="badge badge-info">Tanımlı</span></td>
-                    </tr>
+                    <!-- Dynamic content will be added here -->
                   </tbody>
                 </table>
               </div>
               <div class="modal-footer d-flex justify-content-between">
                 <div>
-                  <button class="btn btn-round btn-outline-info" data-toggle="modal" data-dismiss="modal" data-target="#deviceSetupModal"><i class="icon-search7 ml-1"> </i>Cihazları Bul</i>
+                  <button class="btn btn-round btn-outline-info" id="scanDevicesButton"><i class="icon-search7 ml-1"> </i>Cihazları Bul</i>
                   </button>
                 </div>
                 <div>
                   <input type="reset" class="btn btn-light" data-dismiss="modal" value="Kapat">
-                  <input type="button" class="btn btn-genie white" data-toggle="modal" data-dismiss="modal" data-target="#deviceSetupModal" value="Seçilenleri Ekle">
+                  <input type="button" class="btn btn-genie white" data-toggle="modal" id="addSelectedDevicesButton" value="Seçilenleri Ekle">
                 </div>
               </div>
             </div>
@@ -614,6 +563,163 @@
   <script src="../app-assets/js/scripts/extensions/block-ui.js"></script>
   <script src="../app-assets/js/scripts/modal/components-modal.js"></script>
   <!-- END PAGE LEVEL JS-->
+  <script>
+    document.getElementById('scanDevicesButton').addEventListener('click', function() {
+      fetch('http://192.168.1.146:5678/webhook/txkV43PU482NoXgR/webhook/scan-devices', {
+        method: 'POST'
+      })
+      // fetch('http://192.168.1.146:5678/webhook-test/txkV43PU482NoXgR/webhook/scan-devices', {
+      //   method: 'POST'
+      // })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok ' + response.statusText);
+        }
+        return response.json();
+      })
+      .then(data => {
+        const tableBody = document.querySelector('#deviceTable tbody');
+        tableBody.innerHTML = ''; // Mevcut satırları temizle
+  
+        if (!data.devices || !Array.isArray(data.devices)) {
+          throw new Error('Invalid data format');
+        }
+  
+        data.devices.forEach(device => {
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td><input type="checkbox" class="device-checkbox" value="${device.address}"></td>
+            <td>${device.id || 'N/A'}</td>
+            <td>${device.address || 'N/A'}</td>
+            <td>${device.name || 'N/A'}</td>
+            <td>${device.model || 'N/A'}</td>
+            <td>${device.mac || 'N/A'}</td>
+            <td>${device.serial || 'N/A'}</td>
+            <td><span class="badge badge-info">${device.status || 'N/A'}</span></td>
+          `;
+          tableBody.appendChild(row);
+        });
+      })
+      .catch(error => console.error('Error:', error));
+    });
+
+    // Seçilen cihazları ekleme işlemi
+    document.getElementById('addSelectedDevicesButton').addEventListener('click', function() {
+      const checkboxes = document.querySelectorAll('.device-checkbox:checked');
+      const selectedIPs = Array.from(checkboxes).map(checkbox => checkbox.value);
+      
+      if (selectedIPs.length > 0) {
+        // fetch('http://192.168.1.146:5678/webhook-test/CtuDoJzaH8FFPQlZ/webhook/scan-devices', {
+        //   method: 'POST',
+        //   headers: {
+        //     'Content-Type': 'application/json'
+        //   },
+        //   body: JSON.stringify({ ips: selectedIPs })
+        // })
+        fetch('http://192.168.1.146:5678/webhook/CtuDoJzaH8FFPQlZ/webhook/scan-devices', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ ips: selectedIPs })
+        })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok ' + response.statusText);
+          }
+          return response.json();
+        })
+        .then(data => {
+          // Seçilen cihazlar eklendikten sonra modalları yönet
+          $('#addDeviceModal').modal('hide');
+          $('#addDeviceModal').on('hidden.bs.modal', function () {
+            $(this).off('hidden.bs.modal');
+            $('#deviceSetupModal').modal('show');
+          });
+        })
+        .catch(error => console.error('Error:', error));
+      }
+    });
+
+    $('#deviceSetupModal').on('shown.bs.modal', function () {
+      fetch('http://192.168.1.146:5678/webhook/A9fBFKyNo8JKJhpQ/webhook/scan-devices', {
+        method: 'GET'
+      })
+      // fetch('http://192.168.1.146:5678/webhook-test/A9fBFKyNo8JKJhpQ/webhook/scan-devices', {
+      //   method: 'GET'
+      // })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok ' + response.statusText);
+        }
+        return response.json();
+      })
+      .then(data => {
+        const tableBody = document.querySelector('#DataTables_Table_Electricity_Meter_Report tbody');
+        tableBody.innerHTML = ''; // Mevcut satırları temizle
+
+        if (!data.devices || !Array.isArray(data.devices)) {
+          throw new Error('Invalid data format');
+        }
+
+        data.devices.forEach((device, index) => {
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td>${device.no || 'N/A'}</td>
+            <td>${device.minor || 'N/A'}</td>
+            <td>${device.address || 'N/A'}</td>
+            <td>${device.data || 'N/A'}</td>
+            <td>${device.cmd || 'N/A'}</td>
+            <td>${device.ttyName || 'N/A'}</td>
+            <td>${device.coutName || 'N/A'}</td>
+            <td>${device.name || 'N/A'}</td>
+            <td>${device.model || 'N/A'}</td>
+            <td>${device.mac || 'N/A'}</td>
+            <td>${device.serial || 'N/A'}</td>
+            <td>
+              <button type="button" class="btn btn-sm btn-outline-danger" onclick="deleteDevice('${device.address}')">
+                <i class="fa fa-trash-o"></i>
+              </button>
+            </td>
+          `;
+          tableBody.appendChild(row);
+        });
+      })
+      .catch(error => console.error('Error:', error));
+    });
+
+    // Cihazı silmek için fonksiyon
+    function deleteDevice(ip) {
+      fetch('http://192.168.1.146:5678/webhook/9Nqv3El1T13RJ6rZ/webhook/scan-devices', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ ip: ip })
+      })
+      // fetch('http://192.168.1.146:5678/webhook-test/9Nqv3El1T13RJ6rZ/webhook/scan-devices', {
+      //   method: 'POST',
+      //   headers: {
+      //     'Content-Type': 'application/json'
+      //   },
+      //   body: JSON.stringify({ ip: ip })
+      // })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok ' + response.statusText);
+        }
+        return response.json();
+      })
+      .then(data => {
+        $('#deviceSetupModal').on('hidden.bs.modal', function () {
+          $(this).off('hidden.bs.modal');
+          $('#deviceSetupModal').modal('show');
+        });
+        $('#deviceSetupModal').modal('hide');
+      })
+      .catch(error => console.error('Error:', error));
+    }
+  </script>
 </body>
 
 </html>
