@@ -567,19 +567,25 @@
   <script>
   function scanDevices() {
     // Modalı kilitle ve bekleme işareti göster
-    // $('#addDeviceModal .modal-content').block({ 
-    //   message: '<div class="spinner-border text-primary" role="status"><span class="sr-only">Loading...</span></div>',
-    //   css: { border: 'none', backgroundColor: 'transparent' },
-    //   overlayCSS: { backgroundColor: '#fff', opacity: 0.6 }
-    // });  
-    // Modalı kilitle ve bekleme işareti göster
     $('#addDeviceModal .modal-content').block({ 
       message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
       overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
       css: { border: 0, padding: 0, backgroundColor: 'transparent' }
     });
 
-    fetch('http://192.168.1.146:5678/webhook/txkV43PU482NoXgR/webhook/scan-devices', {
+    // Tanımlı cihazları çağır
+    fetch('http://192.168.1.146:5678/webhook/A9fBFKyNo8JKJhpQ/webhook/scan-devices', {
+      method: 'GET'
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok ' + response.statusText);
+      }
+      return response.json();
+    })
+    .then(definedData => {
+      // Bulunan cihazları çağır
+      return fetch('http://192.168.1.146:5678/webhook/txkV43PU482NoXgR/webhook/scan-devices', {
         method: 'POST'
       })
       .then(response => {
@@ -589,6 +595,7 @@
         return response.json();
       })
       .then(data => {
+        const definedIPs = definedData.devices.map(device => device.address);
         const tableBody = document.querySelector('#deviceTable tbody');
         tableBody.innerHTML = ''; // Mevcut satırları temizle
 
@@ -598,21 +605,23 @@
         } else {
           noDevicesMessage.style.display = 'none';
           data.devices.forEach(device => {
+            const isDefined = definedIPs.includes(device.address);
             const row = document.createElement('tr');
             row.innerHTML = `
-              <td><input type="checkbox" class="device-checkbox" value="${device.address}"></td>
+              <td><input type="checkbox" class="device-checkbox" value="${device.address}" ${isDefined ? 'disabled' : ''}></td>
               <td>${device.id || 'N/A'}</td>
               <td>${device.address || 'N/A'}</td>
               <td>${device.name || 'N/A'}</td>
               <td>${device.model || 'N/A'}</td>
               <td>${device.mac || 'N/A'}</td>
               <td>${device.serial || 'N/A'}</td>
-              <td><span class="badge badge-info">${device.status || 'N/A'}</span></td>
+              <td><span class="badge badge-info">${isDefined ? 'Tanımlı' : (device.status || 'N/A')}</span></td>
             `;
             tableBody.appendChild(row);
           });
         }
-      })
+      });
+    })
       .catch(error => console.error('Error:', error))
       .finally(() => {
         // Modalı aç ve bekleme işaretini kaldır
