@@ -558,6 +558,55 @@
       }
   }
   </script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  // Initialize the table
+  fetchTableData();
+
+  // Add event listener for delete buttons
+  document.addEventListener('click', function (event) {
+      if (event.target && event.target.id === 'table-delete-button') {
+          const tableRow = event.target.closest('tr');
+          const tableName = tableRow.querySelector('td:first-child').textContent;
+          if (confirm('Bu tabloyu silmek istediğinizden emin misiniz?')) {
+              deleteTable(tableName);
+          }
+      }
+  });
+});
+
+function deleteTable(tableName) {
+  $.blockUI({
+      message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
+      overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
+      css: { border: 0, padding: 0, backgroundColor: 'transparent' }
+  });
+
+  fetch('http://192.168.1.146:5678/webhook/delete-table', {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ tableName: tableName })
+  })
+  .then(response => response.json())
+  .then(data => {
+      $.unblockUI();
+
+      if (data.success) {
+          alert('Tablo başarıyla silindi.');
+          location.reload(); // Sayfayı yenile
+      } else {
+          alert('Tablo silinirken bir hata oluştu.');
+      }
+  })
+  .catch(error => {
+      $.unblockUI();
+      alert('Tablo silinirken bir hata oluştu.');
+      console.error('Error:', error);
+  });
+}
+</script>
 </body>
 
 </html>
