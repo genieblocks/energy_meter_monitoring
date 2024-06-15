@@ -254,7 +254,7 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <form>
+        <form id="addTableForm" onsubmit="return validateForm()">
           <div class="modal-body">
             <fieldset class="form-group floating-label-form-group">
               <label for="tableName">Tablo İsmi</label>
@@ -264,7 +264,7 @@
               <label for="primaryKey">Birincil Anahtar Sütun Adı ve Veri Tipi</label>
               <div class="input-group">
                 <input type="text" class="form-control" id="primaryKey" placeholder="Birincil anahtar sütun adı" required oninvalid="this.setCustomValidity('Lütfen birincil anahtar sütun adı girin')" oninput="setCustomValidity('')">
-                <select class="custom-select">
+                <select class="custom-select" id="primaryKeyType">
                   <option value="VARCHAR(15)" selected>VARCHAR(15)</option>
                   <option value="VARCHAR(50)">VARCHAR(50)</option>
                   <option value="VARCHAR(100)">VARCHAR(100)</option>
@@ -291,8 +291,8 @@
               <div data-repeater-list="repeater-group">
                 <!-- Initial hidden repeater item -->
                 <div class="input-group mb-1" data-repeater-item="" style="display: none;">
-                  <input type="text" placeholder="Sütun Adı" class="form-control" id="new-columnName" required oninvalid="this.setCustomValidity('Lütfen sütun adı girin')" oninput="setCustomValidity('')">
-                  <select class="custom-select">
+                  <input type="text" placeholder="Sütun Adı" class="form-control columnName" required oninvalid="this.setCustomValidity('Lütfen sütun adı girin')" oninput="setCustomValidity('')">
+                  <select class="custom-select columnType">
                     <option value="VARCHAR(15)" selected>VARCHAR(15)</option>
                     <option value="VARCHAR(50)">VARCHAR(50)</option>
                     <option value="VARCHAR(100)">VARCHAR(100)</option>
@@ -385,6 +385,60 @@
       }
     });
   })(window, document, jQuery);
+
+  function validateForm() {
+    // Check table name validity according to Microsoft SQL Server standards
+    var tableName = document.getElementById('tableName').value;
+    var tableNamePattern = /^[a-zA-Z_][a-zA-Z0-9_]*$/;
+    if (!tableNamePattern.test(tableName)) {
+      alert('Lütfen geçerli bir tablo ismi girin (sadece harfler, rakamlar ve alt çizgi, ve rakamla başlamaz).');
+      return false;
+    }
+
+    // Validate primary key column
+    var primaryKey = document.getElementById('primaryKey').value;
+    var primaryKeyType = document.getElementById('primaryKeyType').value;
+    if (!validateColumnType(primaryKey, primaryKeyType)) {
+      alert('Birincil anahtar sütun adı ve veri tipi uyumsuz.');
+      return false;
+    }
+
+    // Validate each column
+    var columnNames = document.getElementsByClassName('columnName');
+    var columnTypes = document.getElementsByClassName('columnType');
+    for (var i = 0; i < columnNames.length; i++) {
+      var columnName = columnNames[i].value;
+      var columnType = columnTypes[i].value;
+      if (!validateColumnType(columnName, columnType)) {
+        alert('Sütun adı ve veri tipi uyumsuz: ' + columnName + ' - ' + columnType);
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  function validateColumnType(columnName, columnType) {
+    var varcharPattern = /^VARCHAR\((\d+)\)$/;
+    var intPattern = /^-?\d+$/;
+    var decimalPattern = /^\d+\.\d+$/;
+
+    if (varcharPattern.test(columnType)) {
+      var length = parseInt(varcharPattern.exec(columnType)[1]);
+      return columnName.length <= length;
+    } else if (columnType === 'INT' || columnType === 'BIGINT' || columnType === 'SMALLINT' || columnType === 'TINYINT') {
+      return intPattern.test(columnName);
+    } else if (columnType === 'DECIMAL' || columnType === 'NUMERIC' || columnType === 'FLOAT' || columnType === 'REAL') {
+      return decimalPattern.test(columnName);
+    } else if (columnType === 'BIT') {
+      return columnName === '0' || columnName === '1';
+    } else if (columnType === 'DATE' || columnType === 'TIME' || columnType === 'DATETIME' || columnType === 'TIMESTAMP') {
+      return !isNaN(Date.parse(columnName));
+    } else if (columnType === 'CHAR' || columnType === 'TEXT') {
+      return true;
+    }
+    return false;
+  }
   </script>
 </body>
 
