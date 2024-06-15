@@ -264,7 +264,7 @@
             <label for="primaryKey">Birincil Anahtar Sütun Adı ve Veri Tipi</label>
             <div class="input-group">
               <input type="text" class="form-control" id="primaryKey" name="primaryKey" placeholder="Birincil anahtar sütun adı" required oninvalid="this.setCustomValidity('Lütfen birincil anahtar sütun adı girin')" oninput="setCustomValidity('')">
-              <select class="custom-select" id="primaryKeyType" name="primaryKeyType" required>
+              <select class="custom-select" id="primaryKeyType" name="primaryKeyType" required oninvalid="this.setCustomValidity('Lütfen bir veri tipi seçin')" oninput="setCustomValidity('')">
                 <option value="" selected>Veri tipi seçiniz</option>
                 <option value="VARCHAR(15)">VARCHAR(15)</option>
                 <option value="VARCHAR(50)">VARCHAR(50)</option>
@@ -293,7 +293,7 @@
               <!-- Initial hidden repeater item -->
               <div class="input-group mb-1" data-repeater-item="" style="display: none;">
                 <input type="text" placeholder="Sütun Adı" class="form-control columnName" name="columnName" required oninvalid="this.setCustomValidity('Lütfen sütun adı girin')" oninput="setCustomValidity('')">
-                <select class="custom-select columnType" name="columnType" required>
+                <select class="custom-select columnType" name="columnType" required oninvalid="this.setCustomValidity('Lütfen bir veri tipi seçin')" oninput="setCustomValidity('')">
                   <option value="" selected>Veri tipi seçiniz</option>
                   <option value="VARCHAR(15)">VARCHAR(15)</option>
                   <option value="VARCHAR(50)">VARCHAR(50)</option>
@@ -379,6 +379,12 @@
           show: function() {
               $(this).slideDown();
               $(this).find('input, select').attr('required', true); // Add required attribute when shown
+              $(this).find('select').on('invalid', function() {
+                  this.setCustomValidity('Lütfen bir veri tipi seçin');
+              });
+              $(this).find('select').on('input', function() {
+                  this.setCustomValidity('');
+              });
           },
           hide: function(remove) {
               $(this).slideUp(remove);
