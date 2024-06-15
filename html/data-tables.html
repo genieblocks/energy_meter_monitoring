@@ -244,7 +244,7 @@
     </div>
   </div>
 
-  <!-- Modal -->
+<!-- Repeating form modal -->
   <div class="modal fade text-left" id="addTableModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel3" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
@@ -369,7 +369,7 @@
 
   <!-- Repeater Script -->
   <script>
- (function(window, document, $) {
+(function(window, document, $) {
 	'use strict';
 
 	// Custom Show / Hide Configurations
@@ -392,10 +392,18 @@ function validateForm() {
     alert('Lütfen geçerli bir tablo ismi girin (sadece harfler, rakamlar ve alt çizgi, ve rakamla başlamaz).');
     return false;
   }
+  if (tableName.length > 128) {
+    alert('Tablo ismi en fazla 128 karakter olabilir.');
+    return false;
+  }
 
   // Validate primary key column
   var primaryKey = document.getElementById('primaryKey').value;
   var primaryKeyType = document.getElementById('primaryKeyType').value;
+  if (primaryKey.length > 128) {
+    alert('Birincil anahtar sütun adı en fazla 128 karakter olabilir.');
+    return false;
+  }
   if (!validateColumnType(primaryKey, primaryKeyType)) {
     alert('Birincil anahtar sütun adı ve veri tipi uyumsuz.');
     return false;
@@ -407,6 +415,10 @@ function validateForm() {
   for (var i = 0; i < columnNames.length; i++) {
     var columnName = columnNames[i].value;
     var columnType = columnTypes[i].value;
+    if (columnName.length > 128) {
+      alert('Sütun adı en fazla 128 karakter olabilir: ' + columnName);
+      return false;
+    }
     if (!validateColumnType(columnName, columnType)) {
       alert('Sütun adı ve veri tipi uyumsuz: ' + columnName + ' - ' + columnType);
       return false;
