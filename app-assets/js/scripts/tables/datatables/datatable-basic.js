@@ -19,6 +19,10 @@ $(document).ready(function() {
 /****************************************
 *    configure dom elements (show hide) *
 ****************************************/
+$('#DataTables_Table_0').DataTable({
+    dom: '<"top">rt<"bottom"p>',
+});
+
 $('#DataTables_Table_Electricity_Meter_List').DataTable({
     dom: '<"top">rt<"bottom"p>',
 });

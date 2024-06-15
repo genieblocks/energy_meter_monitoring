@@ -159,8 +159,7 @@
               </ul>
               <ul class="nav navbar-nav float-right">
                 <li class="input-group nav-item">
-                  <button class="nav-link btn btn-sm btn-genie white" type="button" data-toggle="modal"
-                    data-target="#iconModal">Add Table</button>
+                  <button class="nav-link btn btn-sm btn-genie white" type="button" data-toggle="modal" data-target="#addTableModal">Tablo Ekle</button>
                 </li>
               </ul>
             </div>
@@ -239,12 +238,11 @@
   </div>
 
   <!-- Modal -->
-  <div class="modal fade text-left" id="iconModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2"
-    aria-hidden="true">
-    <div class="modal-dialog modal-sm" role="document">
+  <div class="modal fade text-left" id="addTableModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel3" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h4 class="modal-title text-bold-600" id="myModalLabel2"><i class="fa fa-road2"></i> Add Data Table</h4>
+          <h4 class="modal-title text-bold-600" id="myModalLabel3"><i class="fa fa-plus-circle"></i> Tablo Ekle</h4>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -252,13 +250,30 @@
         <form>
           <div class="modal-body">
             <fieldset class="form-group floating-label-form-group">
-              <label for="name">Data Table Name</label>
-              <input type="text" class="form-control" id="imagename" placeholder="Enter table name">
+              <label for="tableName">Tablo İsmi</label>
+              <input type="text" class="form-control" id="tableName" placeholder="Enter table name" required>
             </fieldset>
+            <fieldset class="form-group floating-label-form-group">
+              <label for="primaryKey">Birincil Anahtar Sütun Adı</label>
+              <input type="text" class="form-control" id="primaryKey" placeholder="Enter primary key column name" required>
+            </fieldset>
+            <div class="form-group col-xs-12 mb-2 contact-repeater">
+              <div data-repeater-list="repeater-group">
+                <div class="input-group mb-1" data-repeater-item="">
+                  <input type="text" placeholder="Sütun Adı" class="form-control" id="new-columnName">
+                  <span class="input-group-btn" id="button-addon2">
+                    <button class="btn btn-danger" type="button" data-repeater-delete=""><i class="icon-cross2"></i></button>
+                  </span>
+                </div>
+              </div>
+              <button type="button" data-repeater-create="" class="btn btn-info">
+                <i class="icon-plus4"></i> Yeni sütun ekle
+              </button>
+            </div>
           </div>
           <div class="modal-footer">
-            <input type="reset" class="btn btn-light btn-lg" data-dismiss="modal" value="close">
-            <input type="submit" class="btn btn-genie white btn-lg" value="Add Table">
+            <input type="reset" class="btn btn-light btn-lg" data-dismiss="modal" value="Close">
+            <input type="submit" class="btn btn-genie white btn-lg" value="Tablo Ekle">
           </div>
         </form>
       </div>
@@ -277,7 +292,7 @@
 
   <!-- BEGIN VENDOR JS-->
   <script src="../app-assets/js/core/libraries/jquery.min.js"></script>
-  <script src="../app-assets/vendors/js/ui/popper.min.js"></script>
+  <!-- <script src="../app-assets/vendors/js/ui/popper.min.js"></script> -->
   <script src="../app-assets/js/core/libraries/bootstrap.min.js"></script>
   <script src="../app-assets/vendors/js/ui/perfect-scrollbar.jquery.min.js"></script>
   <script src="../app-assets/vendors/js/ui/unison.min.js"></script>
