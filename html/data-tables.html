@@ -368,14 +368,27 @@
             const form = event.target;
             const formData = new FormData(form);
             const jsonData = {
-                tableName: formData.get('tableName'),
-                primaryKey: formData.get('primaryKey'),
-                primaryKeyType: formData.get('primaryKeyType'),
-                columns: Array.from(document.querySelectorAll('[data-repeater-item]')).map(item => ({
-                    columnName: item.querySelector('input[name="columnName"]').value,
-                    columnType: item.querySelector('select[name="columnType"]').value
-                }))
-            };
+                  tableName: formData.get('tableName'),
+                  primaryKey: formData.get('primaryKey'),
+                  primaryKeyType: formData.get('primaryKeyType'),
+                  columns: Array.from(document.querySelectorAll('[data-repeater-item]')).map(item => {
+                      const columnNameInput = item.querySelector('input[name="columnName"]');
+                      const columnTypeSelect = item.querySelector('select[name="columnType"]');
+
+                      // Hata kontrolü ve gerekli elemanların varlığını doğrulama
+                      if (!columnNameInput || !columnTypeSelect) {
+                          console.error('Sütun adı veya veri tipi eksik.');
+                          return null;
+                      }
+
+                      return {
+                          columnName: columnNameInput.value,
+                          columnType: columnTypeSelect.value
+                      };
+                  }).filter(column => column !== null) // Geçersiz sütunları filtreleme
+              };
+
+              console.log(jsonData); // JSON verisini kontrol etmek için
 
             $.blockUI({
                 message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
