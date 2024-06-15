@@ -289,7 +289,34 @@
             </fieldset>
             <div class="form-group col-xs-12 mb-2 contact-repeater">
               <div data-repeater-list="repeater-group">
-                <!-- No initial hidden repeater item -->
+                <!-- Initial hidden repeater item -->
+                <div class="input-group mb-1" data-repeater-item="" style="display: none;">
+                  <input type="text" placeholder="Sütun Adı" class="form-control columnName" name="columnName" required oninvalid="this.setCustomValidity('Lütfen sütun adı girin')" oninput="setCustomValidity('')">
+                  <select class="custom-select columnType" name="columnType">
+                    <option value="VARCHAR(15)" selected>VARCHAR(15)</option>
+                    <option value="VARCHAR(50)">VARCHAR(50)</option>
+                    <option value="VARCHAR(100)">VARCHAR(100)</option>
+                    <option value="VARCHAR(255)">VARCHAR(255)</option>
+                    <option value="INT">INT</option>
+                    <option value="BIGINT">BIGINT</option>
+                    <option value="SMALLINT">SMALLINT</option>
+                    <option value="TINYINT">TINYINT</option>
+                    <option value="BIT">BIT</option>
+                    <option value="DECIMAL">DECIMAL</option>
+                    <option value="NUMERIC">NUMERIC</option>
+                    <option value="FLOAT">FLOAT</option>
+                    <option value="REAL">REAL</option>
+                    <option value="DATE">DATE</option>
+                    <option value="TIME">TIME</option>
+                    <option value="DATETIME">DATETIME</option>
+                    <option value="TIMESTAMP">TIMESTAMP</option>
+                    <option value="CHAR">CHAR</option>
+                    <option value="TEXT">TEXT</option>
+                  </select>
+                  <span class="input-group-btn" id="button-addon2">
+                    <button class="btn btn-danger" type="button" data-repeater-delete=""><i class="icon-cross2"></i></button>
+                  </span>
+                </div>
               </div>
               <button type="button" data-repeater-create="" class="btn btn-info">
                 <i class="icon-plus4"></i> Yeni sütun ekle
@@ -346,7 +373,7 @@
     'use strict';
 
     // Custom Show / Hide Configurations
-    $('.file-repeater, .contact-repeater').repeater({
+    $('.contact-repeater').repeater({
       show: function () {
         $(this).slideDown();
       },
