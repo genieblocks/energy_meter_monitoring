@@ -258,13 +258,13 @@
           <div class="modal-body">
             <fieldset class="form-group floating-label-form-group">
               <label for="tableName">Tablo İsmi</label>
-              <input type="text" class="form-control" id="tableName" placeholder="Tablo ismi girin" required oninvalid="this.setCustomValidity('Lütfen tablo ismi girin')" oninput="setCustomValidity('')">
+              <input type="text" class="form-control" id="tableName" name="tableName" placeholder="Tablo ismi girin" required oninvalid="this.setCustomValidity('Lütfen tablo ismi girin')" oninput="setCustomValidity('')">
             </fieldset>
             <fieldset class="form-group floating-label-form-group">
               <label for="primaryKey">Birincil Anahtar Sütun Adı ve Veri Tipi</label>
               <div class="input-group">
-                <input type="text" class="form-control" id="primaryKey" placeholder="Birincil anahtar sütun adı" required oninvalid="this.setCustomValidity('Lütfen birincil anahtar sütun adı girin')" oninput="setCustomValidity('')">
-                <select class="custom-select" id="primaryKeyType">
+                <input type="text" class="form-control" id="primaryKey" name="primaryKey" placeholder="Birincil anahtar sütun adı" required oninvalid="this.setCustomValidity('Lütfen birincil anahtar sütun adı girin')" oninput="setCustomValidity('')">
+                <select class="custom-select" id="primaryKeyType" name="primaryKeyType">
                   <option value="VARCHAR(15)" selected>VARCHAR(15)</option>
                   <option value="VARCHAR(50)">VARCHAR(50)</option>
                   <option value="VARCHAR(100)">VARCHAR(100)</option>
@@ -291,8 +291,8 @@
               <div data-repeater-list="repeater-group">
                 <!-- Initial hidden repeater item -->
                 <div class="input-group mb-1" data-repeater-item="" style="display: none;">
-                  <input type="text" placeholder="Sütun Adı" class="form-control columnName" required oninvalid="this.setCustomValidity('Lütfen sütun adı girin')" oninput="setCustomValidity('')">
-                  <select class="custom-select columnType">
+                  <input type="text" placeholder="Sütun Adı" class="form-control columnName" name="columnName" required oninvalid="this.setCustomValidity('Lütfen sütun adı girin')" oninput="setCustomValidity('')">
+                  <select class="custom-select columnType" name="columnType">
                     <option value="VARCHAR(15)" selected>VARCHAR(15)</option>
                     <option value="VARCHAR(50)">VARCHAR(50)</option>
                     <option value="VARCHAR(100)">VARCHAR(100)</option>
