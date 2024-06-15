@@ -18,6 +18,13 @@
   <link rel="stylesheet" type="text/css" href="../app-assets/css/vendors.css">
   <link rel="stylesheet" type="text/css" href="../app-assets/vendors/css/tables/datatable/jquery.dataTables.min.css">
   <link rel="stylesheet" type="text/css" href="../app-assets/vendors/css/extensions/sweetalert.css">
+    <!-- font icons-->
+    <link rel="stylesheet" type="text/css" href="../app-assets/fonts/icomoon.css">
+    <link rel="stylesheet" type="text/css" href="../app-assets/fonts/flag-icon-css/css/flag-icon.min.css">
+    <link rel="stylesheet" type="text/css" href="../app-assets/vendors/css/sliders/slick/slick.css">
+    <link rel="stylesheet" type="text/css" href="../app-assets/vendors/css/extensions/pace.css">
+    <link rel="stylesheet" type="text/css" href="../app-assets/fonts/feather/style.min.css">
+    <link rel="stylesheet" type="text/css" href="../app-assets/fonts/font-awesome/css/font-awesome.min.css">
   <!-- END VENDOR CSS-->
   <!-- BEGIN TEMPLATE CSS-->
   <link rel="stylesheet" type="text/css" href="../app-assets/css/app.css">
@@ -251,16 +258,60 @@
           <div class="modal-body">
             <fieldset class="form-group floating-label-form-group">
               <label for="tableName">Tablo İsmi</label>
-              <input type="text" class="form-control" id="tableName" placeholder="Enter table name" required>
+              <input type="text" class="form-control" id="tableName" placeholder="Tablo ismi girin" required>
             </fieldset>
             <fieldset class="form-group floating-label-form-group">
-              <label for="primaryKey">Birincil Anahtar Sütun Adı</label>
-              <input type="text" class="form-control" id="primaryKey" placeholder="Enter primary key column name" required>
+              <label for="primaryKey">Birincil Anahtar Sütun Adı ve Veri Tipi</label>
+              <div class="input-group">
+                <input type="text" class="form-control" id="primaryKey" placeholder="Birincil anahtar sütun adı" required>
+                <select class="custom-select">
+                  <option selected>VARCHAR(15)</option>
+                  <option value="VARCHAR(50)">VARCHAR(50)</option>
+                  <option value="VARCHAR(100)">VARCHAR(100)</option>
+                  <option value="VARCHAR(255)">VARCHAR(255)</option>
+                  <option value="INT">INT</option>
+                  <option value="BIGINT">BIGINT</option>
+                  <option value="SMALLINT">SMALLINT</option>
+                  <option value="TINYINT">TINYINT</option>
+                  <option value="BIT">BIT</option>
+                  <option value="DECIMAL">DECIMAL</option>
+                  <option value="NUMERIC">NUMERIC</option>
+                  <option value="FLOAT">FLOAT</option>
+                  <option value="REAL">REAL</option>
+                  <option value="DATE">DATE</option>
+                  <option value="TIME">TIME</option>
+                  <option value="DATETIME">DATETIME</option>
+                  <option value="TIMESTAMP">TIMESTAMP</option>
+                  <option value="CHAR">CHAR</option>
+                  <option value="TEXT">TEXT</option>
+                </select>
+              </div>
             </fieldset>
             <div class="form-group col-xs-12 mb-2 contact-repeater">
               <div data-repeater-list="repeater-group">
                 <div class="input-group mb-1" data-repeater-item="">
                   <input type="text" placeholder="Sütun Adı" class="form-control" id="new-columnName">
+                  <select class="custom-select">
+                    <option selected>VARCHAR(15)</option>
+                    <option value="VARCHAR(50)">VARCHAR(50)</option>
+                    <option value="VARCHAR(100)">VARCHAR(100)</option>
+                    <option value="VARCHAR(255)">VARCHAR(255)</option>
+                    <option value="INT">INT</option>
+                    <option value="BIGINT">BIGINT</option>
+                    <option value="SMALLINT">SMALLINT</option>
+                    <option value="TINYINT">TINYINT</option>
+                    <option value="BIT">BIT</option>
+                    <option value="DECIMAL">DECIMAL</option>
+                    <option value="NUMERIC">NUMERIC</option>
+                    <option value="FLOAT">FLOAT</option>
+                    <option value="REAL">REAL</option>
+                    <option value="DATE">DATE</option>
+                    <option value="TIME">TIME</option>
+                    <option value="DATETIME">DATETIME</option>
+                    <option value="TIMESTAMP">TIMESTAMP</option>
+                    <option value="CHAR">CHAR</option>
+                    <option value="TEXT">TEXT</option>
+                  </select>
                   <span class="input-group-btn" id="button-addon2">
                     <button class="btn btn-danger" type="button" data-repeater-delete=""><i class="icon-cross2"></i></button>
                   </span>
@@ -272,7 +323,7 @@
             </div>
           </div>
           <div class="modal-footer">
-            <input type="reset" class="btn btn-light btn-lg" data-dismiss="modal" value="Close">
+            <input type="reset" class="btn btn-light btn-lg" data-dismiss="modal" value="Kapat">
             <input type="submit" class="btn btn-genie white btn-lg" value="Tablo Ekle">
           </div>
         </form>
@@ -300,6 +351,7 @@
   <script src="../app-assets/vendors/js/ui/jquery-sliding-menu.js"></script>
   <!-- END VENDOR JS-->
   <!-- BEGIN PAGE VENDOR JS-->
+  <script src="../app-assets/vendors/js/forms/repeater/jquery.repeater.min.js" type="text/javascript"></script>
   <script src="../app-assets/vendors/js/tables/datatable/datatables.min.js"></script>
   <script src="../app-assets/vendors/js/tables/datatable/dataTables.buttons.min.js"></script>
   <script src="../app-assets/vendors/js/extensions/sweetalert.min.js"></script>
@@ -313,6 +365,28 @@
   <script src="../app-assets/js/scripts/modal/components-modal.js"></script>
   <script src="../app-assets/js/scripts/extensions/sweet-alerts.js"></script>
   <!-- END PAGE LEVEL JS-->
+
+  <!-- Repeater Script -->
+  <script>
+    (function(window, document, $) {
+      'use strict';
+
+      // Default
+      $('.repeater-default').repeater();
+
+      // Custom Show / Hide Configurations
+      $('.file-repeater, .contact-repeater').repeater({
+        show: function () {
+          $(this).slideDown();
+        },
+        hide: function(remove) {
+          if (confirm('Bu öğeyi kaldırmak istediğinizden emin misiniz?')) {
+            $(this).slideUp(remove);
+          }
+        }
+      });
+    })(window, document, jQuery);
+    </script>
 </body>
 
 </html>
