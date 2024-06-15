@@ -258,14 +258,14 @@
           <div class="modal-body">
             <fieldset class="form-group floating-label-form-group">
               <label for="tableName">Tablo İsmi</label>
-              <input type="text" class="form-control" id="tableName" placeholder="Tablo ismi girin" required>
+              <input type="text" class="form-control" id="tableName" placeholder="Tablo ismi girin" required oninvalid="this.setCustomValidity('Lütfen tablo ismi girin')" oninput="setCustomValidity('')">
             </fieldset>
             <fieldset class="form-group floating-label-form-group">
               <label for="primaryKey">Birincil Anahtar Sütun Adı ve Veri Tipi</label>
               <div class="input-group">
-                <input type="text" class="form-control" id="primaryKey" placeholder="Birincil anahtar sütun adı" required>
+                <input type="text" class="form-control" id="primaryKey" placeholder="Birincil anahtar sütun adı" required oninvalid="this.setCustomValidity('Lütfen birincil anahtar sütun adı girin')" oninput="setCustomValidity('')">
                 <select class="custom-select">
-                  <option selected>VARCHAR(15)</option>
+                  <option value="VARCHAR(15)" selected>VARCHAR(15)</option>
                   <option value="VARCHAR(50)">VARCHAR(50)</option>
                   <option value="VARCHAR(100)">VARCHAR(100)</option>
                   <option value="VARCHAR(255)">VARCHAR(255)</option>
@@ -292,7 +292,7 @@
                 <div class="input-group mb-1" data-repeater-item="">
                   <input type="text" placeholder="Sütun Adı" class="form-control" id="new-columnName">
                   <select class="custom-select">
-                    <option selected>VARCHAR(15)</option>
+                    <option value="VARCHAR(15)" selected>VARCHAR(15)</option>
                     <option value="VARCHAR(50)">VARCHAR(50)</option>
                     <option value="VARCHAR(100)">VARCHAR(100)</option>
                     <option value="VARCHAR(255)">VARCHAR(255)</option>
@@ -380,9 +380,7 @@
           $(this).slideDown();
         },
         hide: function(remove) {
-          if (confirm('Bu öğeyi kaldırmak istediğinizden emin misiniz?')) {
-            $(this).slideUp(remove);
-          }
+          $(this).slideUp(remove);
         }
       });
     })(window, document, jQuery);
