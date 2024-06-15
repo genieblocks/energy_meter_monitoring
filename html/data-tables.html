@@ -387,7 +387,18 @@
               });
           },
           hide: function(remove) {
-              $(this).slideUp(remove);
+              $(this).slideUp(remove, function() {
+                  $(this).find('input, select').removeAttr('required'); // Remove required attribute when hidden
+                  remove();
+              });
+          }
+      });
+  
+      // Validate form on submit
+      $('#addTableForm').on('submit', function(event) {
+          var isValid = validateForm();
+          if (!isValid) {
+              event.preventDefault();
           }
       });
   })(window, document, jQuery);
@@ -460,7 +471,7 @@
           return columnName === '0' || columnName === '1';
       } else if (columnType === 'DATE' || columnType === 'TIME' || columnType === 'DATETIME' || columnType === 'TIMESTAMP') {
           return !isNaN(Date.parse(columnName));
-      } else if (columnType === 'CHAR' || columnType === 'TEXT') {
+      } else if (columnType === 'CHAR' or columnType === 'TEXT') {
           return true;
       }
       return false;
