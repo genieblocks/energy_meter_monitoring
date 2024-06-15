@@ -23,6 +23,10 @@ $('#DataTables_Table_0').DataTable({
     dom: '<"top">rt<"bottom"p>',
 });
 
+$('#dataTablesTable').DataTable({
+    dom: '<"top">rt<"bottom"p>',
+});
+
 $('#DataTables_Table_Electricity_Meter_List').DataTable({
     dom: '<"top">rt<"bottom"p>',
 });

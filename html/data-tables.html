@@ -141,28 +141,36 @@
 
   <div class="app-content content bg-white">
     <div class="content-body">
-      <nav
-        class="header-navbar navbar-expand-md navbar navbar-with-menu navbar-light navbar-border navbar-brand-center">
+      <nav class="header-navbar navbar-expand-md navbar navbar-with-menu navbar-light navbar-border navbar-brand-center">
         <div class="navbar-wrapper">
           <div class="navbar-header">
             <ul class="nav navbar-nav flex-row">
-              <li class="nav-item mobile-menu d-md-none mr-auto"><a
-                  class="nav-link nav-menu-main menu-toggle hidden-xs is-active" href="#"><i
-                    class="ft-menu font-large-1"></i></a></li>
-              <li class="nav-item d-md-none"><a class="navbar-brand" href="#"><img class="brand-logo"
-                    alt="genieblocks logo" src="../app-assets/images/logo/logo-light-sm.png">
-                </a></li>
-              <li class="nav-item d-md-none"><a class="nav-link open-navbar-container collapsed" data-toggle="collapse"
-                  data-target="#navbar-mobile" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a></li>
+              <li class="nav-item mobile-menu d-md-none mr-auto">
+                <a class="nav-link nav-menu-main menu-toggle hidden-xs is-active" href="#">
+                  <i class="ft-menu font-large-1"></i>
+                </a>
+              </li>
+              <li class="nav-item d-md-none">
+                <a class="navbar-brand" href="#"><img class="brand-logo" alt="genieblocks logo" src="../app-assets/images/logo/logo-light-sm.png"></a>
+              </li>
+              <li class="nav-item d-md-none">
+                <a class="nav-link open-navbar-container collapsed" data-toggle="collapse" data-target="#navbar-mobile" aria-expanded="false">
+                  <i class="fa fa-ellipsis-v"></i>
+                </a>
+              </li>
             </ul>
           </div>
           <div class="navbar-container content">
             <div class="collapse navbar-collapse" id="navbar-mobile">
               <ul class="nav navbar-nav mr-auto float-left">
-                <li class="nav-item d-none d-md-block"><a class="nav-link nav-menu-main menu-toggle hidden-xs"
-                    href="#"><i class="ft-menu"></i></a></li>
-                <li class="nav-item"><a class="nav-link" href="#" role="button" aria-haspopup="true"
-                    aria-expanded="false">Veri Tabloları</a></li>
+                <li class="nav-item d-none d-md-block">
+                  <a class="nav-link nav-menu-main menu-toggle hidden-xs" href="#">
+                    <i class="ft-menu"></i>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#" role="button" aria-haspopup="true" aria-expanded="false">Veri Tabloları</a>
+                </li>
               </ul>
               <ul class="nav navbar-nav float-right">
                 <li class="input-group nav-item">
@@ -173,8 +181,10 @@
           </div>
         </div>
       </nav>
-      <table class="table table-hover table-bordered zero-configuration dataTable" id="DataTables_Table_0" role="grid"
-        aria-describedby="DataTables_Table_0_info">
+      
+      <div id="tableStatusMessage" class="text-center mt-4"></div>
+      
+      <table class="table table-hover table-bordered zero-configuration dataTable" id="dataTablesTable" role="grid" aria-describedby="dataTablesTable_info">
         <thead>
           <tr>
             <th>Table Name</th>
@@ -187,152 +197,109 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>Temperature</td>
-            <td>1 month</td>
-            <td>23.06.2020</td>
-            <td>25.02.2021</td>
-            <td>18</td>
-            <td>345 bytes</td>
-            <td>
-              <button type="button" class="btn btn-sm btn-outline-danger" id="table-delete-button">
-                <i class="fa fa-trash-o"></i>
-              </button>
-            </td>
-          </tr>
-          <tr>
-            <td>Device Online</td>
-            <td>3 months</td>
-            <td>18.09.2020</td>
-            <td>01.09.2021</td>
-            <td>33</td>
-            <td>18 KB</td>
-            <td>
-              <button type="button" class="btn btn-sm btn-outline-danger" id="table-delete-button">
-                <i class="fa fa-trash-o"></i>
-              </button>
-            </td>
-          </tr>
-          <tr>
-            <td>Accelerometer</td>
-            <td>1 months</td>
-            <td>21.02.2021</td>
-            <td>14.11.2021</td>
-            <td>92</td>
-            <td>424 KB</td>
-            <td>
-              <button type="button" class="btn btn-sm btn-outline-danger" id="table-delete-button">
-                <i class="fa fa-trash-o"></i>
-              </button>
-            </td>
-          </tr>
-          <tr>
-            <td>Alerts</td>
-            <td>1 year</td>
-            <td>03.06.2020</td>
-            <td>12.05.2021</td>
-            <td>112</td>
-            <td>18 bytes</td>
-            <td>
-              <button type="button" class="btn btn-sm btn-outline-danger" id="table-delete-button">
-                <i class="fa fa-trash-o"></i>
-              </button>
-            </td>
-          </tr>
+          <!-- Dynamic content will be inserted here -->
         </tbody>
       </table>
     </div>
   </div>
 
-<!-- Repeating form modal -->
-<div class="modal fade text-left" id="addTableModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel3" aria-hidden="true">
-  <div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title text-bold-600" id="myModalLabel3"><i class="fa fa-plus-circle"></i> Tablo Ekle</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <form id="addTableForm" onsubmit="return validateForm()">
-        <div class="modal-body">
-          <fieldset class="form-group floating-label-form-group">
-            <label for="tableName">Tablo İsmi</label>
-            <input type="text" class="form-control" id="tableName" name="tableName" placeholder="Tablo ismi girin" required oninvalid="this.setCustomValidity('Lütfen tablo ismi girin')" oninput="setCustomValidity('')">
-          </fieldset>
-          <fieldset class="form-group floating-label-form-group">
-            <label for="primaryKey">Birincil Anahtar Sütun Adı ve Veri Tipi</label>
-            <div class="input-group">
-              <input type="text" class="form-control" id="primaryKey" name="primaryKey" placeholder="Birincil anahtar sütun adı" required oninvalid="this.setCustomValidity('Lütfen birincil anahtar sütun adı girin')" oninput="setCustomValidity('')">
-              <select class="custom-select" id="primaryKeyType" name="primaryKeyType" required oninvalid="this.setCustomValidity('Lütfen bir veri tipi seçin')" oninput="setCustomValidity('')">
-                <option value="" selected>Veri tipi seçiniz</option>
-                <option value="VARCHAR(15)">VARCHAR(15)</option>
-                <option value="VARCHAR(50)">VARCHAR(50)</option>
-                <option value="VARCHAR(100)">VARCHAR(100)</option>
-                <option value="VARCHAR(255)">VARCHAR(255)</option>
-                <option value="INT">INT</option>
-                <option value="BIGINT">BIGINT</option>
-                <option value="SMALLINT">SMALLINT</option>
-                <option value="TINYINT">TINYINT</option>
-                <option value="BIT">BIT</option>
-                <option value="DECIMAL">DECIMAL</option>
-                <option value="NUMERIC">NUMERIC</option>
-                <option value="FLOAT">FLOAT</option>
-                <option value="REAL">REAL</option>
-                <option value="DATE">DATE</option>
-                <option value="TIME">TIME</option>
-                <option value="DATETIME">DATETIME</option>
-                <option value="TIMESTAMP">TIMESTAMP</option>
-                <option value="CHAR">CHAR</option>
-                <option value="TEXT">TEXT</option>
-              </select>
-            </div>
-          </fieldset>
-          <div class="form-group col-xs-12 mb-2 contact-repeater">
-            <div data-repeater-list="repeater-group">
-              <!-- Initial hidden repeater item -->
-              <div class="input-group mb-1" data-repeater-item="" style="display: none;">
-                <input type="text" placeholder="Sütun Adı" class="form-control columnName" name="columnName" required oninvalid="this.setCustomValidity('Lütfen sütun adı girin')" oninput="setCustomValidity('')">
-                <select class="custom-select columnType" name="columnType" required oninvalid="this.setCustomValidity('Lütfen bir veri tipi seçin')" oninput="setCustomValidity('')">
-                  <option value="" selected>Veri tipi seçiniz</option>
-                  <option value="VARCHAR(15)">VARCHAR(15)</option>
-                  <option value="VARCHAR(50)">VARCHAR(50)</option>
-                  <option value="VARCHAR(100)">VARCHAR(100)</option>
-                  <option value="VARCHAR(255)">VARCHAR(255)</option>
-                  <option value="INT">INT</option>
-                  <option value="BIGINT">BIGINT</option>
-                  <option value="SMALLINT">SMALLINT</option>
-                  <option value="TINYINT">TINYINT</option>
-                  <option value="BIT">BIT</option>
-                  <option value="DECIMAL">DECIMAL</option>
-                  <option value="NUMERIC">NUMERIC</option>
-                  <option value="FLOAT">FLOAT</option>
-                  <option value="REAL">REAL</option>
-                  <option value="DATE">DATE</option>
-                  <option value="TIME">TIME</option>
-                  <option value="DATETIME">DATETIME</option>
-                  <option value="TIMESTAMP">TIMESTAMP</option>
-                  <option value="CHAR">CHAR</option>
-                  <option value="TEXT">TEXT</option>
-                </select>
-                <span class="input-group-btn" id="button-addon2">
-                  <button class="btn btn-danger" type="button" data-repeater-delete=""><i class="icon-cross2"></i></button>
-                </span>
+    <!-- Modal for adding new table -->
+    <div class="modal fade text-left" id="addTableModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel3" aria-hidden="true">
+      <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h4 class="modal-title text-bold-600" id="myModalLabel3"><i class="fa fa-plus-circle"></i> Tablo Ekle</h4>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                  </button>
               </div>
-            </div>
-            <button type="button" data-repeater-create="" class="btn btn-info">
-              <i class="icon-plus4"></i> Yeni sütun ekle
-            </button>
+              <form id="addTableForm" onsubmit="return validateForm()">
+                  <div class="modal-body">
+                      <fieldset class="form-group floating-label-form-group">
+                          <label for="tableName">Tablo İsmi</label>
+                          <input type="text" class="form-control" id="tableName" name="tableName" placeholder="Tablo ismi girin" required oninvalid="this.setCustomValidity('Lütfen tablo ismi girin')" oninput="setCustomValidity('')">
+                      </fieldset>
+                      <fieldset class="form-group floating-label-form-group">
+                          <label for="primaryKey">Birincil Anahtar Sütun Adı ve Veri Tipi</label>
+                          <div class="input-group">
+                              <input type="text" class="form-control" id="primaryKey" name="primaryKey" placeholder="Birincil anahtar sütun adı" required oninvalid="this.setCustomValidity('Lütfen birincil anahtar sütun adı girin')" oninput="setCustomValidity('')">
+                              <select class="custom-select" id="primaryKeyType" name="primaryKeyType" required oninvalid="this.setCustomValidity('Lütfen bir veri tipi seçin')" oninput="setCustomValidity('')">
+                                  <option value="" selected>Veri tipi seçiniz</option>
+                                  <option value="VARCHAR(15)">VARCHAR(15)</option>
+                                  <option value="VARCHAR(50)">VARCHAR(50)</option>
+                                  <option value="VARCHAR(100)">VARCHAR(100)</option>
+                                  <option value="VARCHAR(255)">VARCHAR(255)</option>
+                                  <option value="INT">INT</option>
+                                  <option value="BIGINT">BIGINT</option>
+                                  <option value="SMALLINT">SMALLINT</option>
+                                  <option value="TINYINT">TINYINT</option>
+                                  <option value="BIT">BIT</option>
+                                  <option value="DECIMAL">DECIMAL</option>
+                                  <option value="NUMERIC">NUMERIC</option>
+                                  <option value="FLOAT">FLOAT</option>
+                                  <option value="REAL">REAL</option>
+                                  <option value="DATE">DATE</option>
+                                  <option value="TIME">TIME</option>
+                                  <option value="DATETIME">DATETIME</option>
+                                  <option value="TIMESTAMP">TIMESTAMP</option>
+                                  <option value="CHAR">CHAR</option>
+                                  <option value="TEXT">TEXT</option>
+                              </select>
+                          </div>
+                      </fieldset>
+                      <div class="form-group col-xs-12 mb-2 contact-repeater">
+                        <label for="primaryKey">Sütun Adı ve Veri Tipi</label>
+                          <div data-repeater-list="repeater-group">
+                              <div data-repeater-item>
+                                  <div class="row mb-2">
+                                      <div class="col-6">
+                                          <input type="text" name="columnName" class="form-control columnName" placeholder="Sütun adı" required oninvalid="this.setCustomValidity('Lütfen sütun adı girin')" oninput="setCustomValidity('')">
+                                      </div>
+                                      <div class="col-4">
+                                          <select name="columnType" class="custom-select columnType" required oninvalid="this.setCustomValidity('Lütfen bir veri tipi seçin')" oninput="setCustomValidity('')">
+                                              <option value="" selected>Veri tipi seçiniz</option>
+                                              <option value="VARCHAR(15)">VARCHAR(15)</option>
+                                              <option value="VARCHAR(50)">VARCHAR(50)</option>
+                                              <option value="VARCHAR(100)">VARCHAR(100)</option>
+                                              <option value="VARCHAR(255)">VARCHAR(255)</option>
+                                              <option value="INT">INT</option>
+                                              <option value="BIGINT">BIGINT</option>
+                                              <option value="SMALLINT">SMALLINT</option>
+                                              <option value="TINYINT">TINYINT</option>
+                                              <option value="BIT">BIT</option>
+                                              <option value="DECIMAL">DECIMAL</option>
+                                              <option value="NUMERIC">NUMERIC</option>
+                                              <option value="FLOAT">FLOAT</option>
+                                              <option value="REAL">REAL</option>
+                                              <option value="DATE">DATE</option>
+                                              <option value="TIME">TIME</option>
+                                              <option value="DATETIME">DATETIME</option>
+                                              <option value="TIMESTAMP">TIMESTAMP</option>
+                                              <option value="CHAR">CHAR</option>
+                                              <option value="TEXT">TEXT</option>
+                                          </select>
+                                      </div>
+                                      <div class="col-2">
+                                          <button type="button" data-repeater-delete class="btn btn-danger">
+                                              <i class="fa fa-trash"></i>
+                                          </button>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                          <button type="button" data-repeater-create class="btn btn-info">
+                              <i class="icon-plus4"></i> Yeni sütun ekle
+                          </button>
+                      </div>
+                  </div>
+                  <div class="modal-footer">
+                      <input type="reset" class="btn btn-light btn-lg" data-dismiss="modal" value="Kapat">
+                      <input type="submit" class="btn btn-genie white btn-lg" value="Tablo Ekle">
+                  </div>
+              </form>
           </div>
-        </div>
-        <div class="modal-footer">
-          <input type="reset" class="btn btn-light btn-lg" data-dismiss="modal" value="Kapat">
-          <input type="submit" class="btn btn-genie white btn-lg" value="Tablo Ekle">
-        </div>
-      </form>
-    </div>
+      </div>
   </div>
-</div>
   <!-- ////////////////////////////////////////////////////////////////////////////-->
 
   <footer class="footer footer-static footer-light navbar-border">
@@ -369,112 +336,179 @@
   <script src="../app-assets/js/scripts/extensions/sweet-alerts.js"></script>
   <!-- END PAGE LEVEL JS-->
 
-<!-- Repeater Script -->
+  <script>
+    $(document).ready(function () {
+        // Initialize the repeater
+        $('.contact-repeater').repeater({
+            show: function () {
+                $(this).slideDown();
+                $(this).find('input, select').attr('required', true); // Add required attribute when shown
+                $(this).find('select').on('invalid', function () {
+                    this.setCustomValidity('Lütfen bir veri tipi seçin');
+                });
+                $(this).find('select').on('input', function () {
+                    this.setCustomValidity('');
+                });
+            },
+            hide: function (remove) {
+                $(this).slideUp(remove);
+            },
+            defaultValues: {
+                'columnName': '',
+                'columnType': ''
+            },
+            ready: function (setIndexes) {
+                console.log('Repeater ready');
+            }
+        });
+    
+        // Validate the form before submission
+        $('#addTableForm').on('submit', function (event) {
+            console.log('Form submission started');
+            var isValid = validateForm();
+    
+            if (!isValid) {
+                console.log('Form validation failed');
+                event.preventDefault();
+            } else {
+                console.log('Form validation passed');
+            }
+        });
+    });
+    
+    function validateForm() {
+        var tableName = document.getElementById('tableName').value;
+        var tableNamePattern = /^[a-zA-Z_][a-zA-Z0-9_]*$/;
+        if (!tableNamePattern.test(tableName)) {
+            console.log('Invalid table name:', tableName);
+            alert('Lütfen geçerli bir tablo ismi girin (sadece harfler, rakamlar ve alt çizgi, ve rakamla başlamaz).');
+            return false;
+        }
+        if (tableName.length > 128) {
+            console.log('Table name too long:', tableName);
+            alert('Tablo ismi en fazla 128 karakter olabilir.');
+            return false;
+        }
+    
+        var primaryKey = document.getElementById('primaryKey').value;
+        var primaryKeyType = document.getElementById('primaryKeyType').value;
+        if (!primaryKeyType) {
+            console.log('Primary key type not selected');
+            alert('Birincil anahtar sütun için veri tipi seçiniz.');
+            return false;
+        }
+        if (primaryKey.length > 128) {
+            console.log('Primary key name too long:', primaryKey);
+            alert('Birincil anahtar sütun adı en fazla 128 karakter olabilir.');
+            return false;
+        }
+        if (!validateColumnType(primaryKey, primaryKeyType)) {
+            console.log('Invalid primary key type:', primaryKey, primaryKeyType);
+            alert('Birincil anahtar sütun adı ve veri tipi uyumsuz.');
+            return false;
+        }
+    
+        var columnNames = document.getElementsByClassName('columnName');
+        var columnTypes = document.getElementsByClassName('columnType');
+        for (var i = 0; i < columnNames.length; i++) {
+            var columnName = columnNames[i].value;
+            var columnType = columnTypes[i].value;
+            if (!columnType) {
+                console.log('Column type not selected for column:', columnName);
+                alert('Veri tipi seçiniz: ' + columnName);
+                return false;
+            }
+            if (columnName.length > 128) {
+                console.log('Column name too long:', columnName);
+                alert('Sütun adı en fazla 128 karakter olabilir: ' + columnName);
+                return false;
+            }
+            if (!validateColumnType(columnName, columnType)) {
+                console.log('Invalid column type:', columnName, columnType);
+                alert('Sütun adı ve veri tipi uyumsuz: ' + columnName + ' - ' + columnType);
+                return false;
+            }
+        }
+    
+        return true;
+    }
+    
+    function validateColumnType(columnName, columnType) {
+        var varcharPattern = /^VARCHAR\((\d+)\)$/;
+        var intPattern = /^-?\d+$/;
+        var decimalPattern = /^\d+\.\d+$/;
+    
+        if (varcharPattern.test(columnType)) {
+            var length = parseInt(varcharPattern.exec(columnType)[1]);
+            return columnName.length <= length;
+        } else if (columnType === 'INT' || columnType === 'BIGINT' || columnType === 'SMALLINT' || columnType === 'TINYINT') {
+            return intPattern.test(columnName);
+        } else if (columnType === 'DECIMAL' || columnType === 'NUMERIC' || columnType === 'FLOAT' || columnType === 'REAL') {
+            return decimalPattern.test(columnName);
+        } else if (columnType === 'BIT') {
+            return columnName === '0' || columnName === '1';
+        } else if (columnType === 'DATE' || columnType === 'TIME' || columnType === 'DATETIME' || columnType === 'TIMESTAMP') {
+            return !isNaN(Date.parse(columnName));
+        } else if (columnType === 'CHAR' || columnType === 'TEXT') {
+            return true;
+        }
+        return false;
+    }
+    </script>
 <script>
-  (function(window, document, $) {
-      'use strict';
+  document.addEventListener('DOMContentLoaded', function () {
+      // Initialize the table
+      fetchTableData();
+  });
   
-      // Custom Show / Hide Configurations
-      $('.contact-repeater').repeater({
-          show: function() {
-              $(this).slideDown();
-              $(this).find('input, select').attr('required', true); // Add required attribute when shown
-              $(this).find('select').on('invalid', function() {
-                  this.setCustomValidity('Lütfen bir veri tipi seçin');
-              });
-              $(this).find('select').on('input', function() {
-                  this.setCustomValidity('');
-              });
-          },
-          hide: function(remove) {
-              $(this).slideUp(remove, function() {
-                  $(this).find('input, select').removeAttr('required'); // Remove required attribute when hidden
-                  remove();
-              });
-          }
-      });
-  
-      // Validate form on submit
-      $('#addTableForm').on('submit', function(event) {
-          var isValid = validateForm();
-          if (!isValid) {
-              event.preventDefault();
-          }
-      });
-  })(window, document, jQuery);
-  
-  function validateForm() {
-      // Check table name validity according to Microsoft SQL Server standards
-      var tableName = document.getElementById('tableName').value;
-      var tableNamePattern = /^[a-zA-Z_][a-zA-Z0-9_]*$/;
-      if (!tableNamePattern.test(tableName)) {
-          alert('Lütfen geçerli bir tablo ismi girin (sadece harfler, rakamlar ve alt çizgi, ve rakamla başlamaz).');
-          return false;
-      }
-      if (tableName.length > 128) {
-          alert('Tablo ismi en fazla 128 karakter olabilir.');
-          return false;
-      }
-  
-      // Validate primary key column
-      var primaryKey = document.getElementById('primaryKey').value;
-      var primaryKeyType = document.getElementById('primaryKeyType').value;
-      if (!primaryKeyType) {
-          alert('Birincil anahtar sütun için veri tipi seçiniz.');
-          return false;
-      }
-      if (primaryKey.length > 128) {
-          alert('Birincil anahtar sütun adı en fazla 128 karakter olabilir.');
-          return false;
-      }
-      if (!validateColumnType(primaryKey, primaryKeyType)) {
-          alert('Birincil anahtar sütun adı ve veri tipi uyumsuz.');
-          return false;
-      }
-  
-      // Validate each column
-      var columnNames = document.getElementsByClassName('columnName');
-      var columnTypes = document.getElementsByClassName('columnType');
-      for (var i = 0; i < columnNames.length; i++) {
-          var columnName = columnNames[i].value;
-          var columnType = columnTypes[i].value;
-          if (!columnType) {
-              alert('Veri tipi seçiniz: ' + columnName);
-              return false;
-          }
-          if (columnName.length > 128) {
-              alert('Sütun adı en fazla 128 karakter olabilir: ' + columnName);
-              return false;
-          }
-          if (!validateColumnType(columnName, columnType)) {
-              alert('Sütun adı ve veri tipi uyumsuz: ' + columnName + ' - ' + columnType);
-              return false;
-          }
-      }
-  
-      return true;
+  function fetchTableData() {
+      fetch('http://192.168.1.146:5678/webhook-test/get-tables-status')
+          .then(response => response.json())
+          .then(data => {
+              console.log("Received response from webhook:", JSON.stringify(data, null, 2));
+              updateTable(data);
+          })
+          .catch(error => {
+              console.error("Error fetching data:", error);
+              document.getElementById('tableStatusMessage').innerHTML = '<p class="text-danger">Veri tabloları yüklenirken hata oluştu.</p>';
+          });
   }
   
-  function validateColumnType(columnName, columnType) {
-      var varcharPattern = /^VARCHAR\((\d+)\)$/;
-      var intPattern = /^-?\d+$/;
-      var decimalPattern = /^\d+\.\d+$/;
+  function updateTable(data) {
+      var tableBody = document.getElementById('dataTablesTable').getElementsByTagName('tbody')[0];
+      tableBody.innerHTML = ''; // Clear existing rows
   
-      if (varcharPattern.test(columnType)) {
-          var length = parseInt(varcharPattern.exec(columnType)[1]);
-          return columnName.length <= length;
-      } else if (columnType === 'INT' || columnType === 'BIGINT' || columnType === 'SMALLINT' || columnType === 'TINYINT') {
-          return intPattern.test(columnName);
-      } else if (columnType === 'DECIMAL' || columnType === 'NUMERIC' || columnType === 'FLOAT' || columnType === 'REAL') {
-          return decimalPattern.test(columnName);
-      } else if (columnType === 'BIT') {
-          return columnName === '0' || columnName === '1';
-      } else if (columnType === 'DATE' || columnType === 'TIME' || columnType === 'DATETIME' || columnType === 'TIMESTAMP') {
-          return !isNaN(Date.parse(columnName));
-      } else if (columnType === 'CHAR' or columnType === 'TEXT') {
-          return true;
+      // Check if data is an array and has elements
+      if (!Array.isArray(data)) {
+          data = [data]; // Ensure data is an array
       }
-      return false;
+  
+      if (data.length === 0) {
+          document.getElementById('tableStatusMessage').innerHTML = '<p class="text-warning">Kayıtlı tablo yoktur. Tablo oluşturun.</p>';
+          document.getElementById('dataTablesTable').style.display = 'none';
+      } else {
+          document.getElementById('tableStatusMessage').innerHTML = '';
+          document.getElementById('dataTablesTable').style.display = 'table';
+  
+          data.forEach(function (table) {
+              var row = `
+                  <tr>
+                      <td>${table.name}</td>
+                      <td>${table.dataRetention}</td>
+                      <td>${table.createdAt}</td>
+                      <td>${table.lastUpdated}</td>
+                      <td>${table.rows}</td>
+                      <td>${table.size}</td>
+                      <td>
+                          <button type="button" class="btn btn-sm btn-outline-danger" id="table-delete-button">
+                              <i class="fa fa-trash-o"></i>
+                          </button>
+                      </td>
+                  </tr>
+              `;
+              tableBody.insertAdjacentHTML('beforeend', row);
+          });
+      }
   }
   </script>
 </body>
