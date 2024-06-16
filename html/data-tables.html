@@ -207,34 +207,51 @@
 <!-- Table Content Modal -->
 <div class="modal fade text-left" id="tableContentModal" tabindex="-1" role="dialog" aria-labelledby="tableContentModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-xl" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title text-bold-600" id="tableContentModalLabel"></h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title text-bold-600" id="tableContentModalLabel"></h4>
+          <button type="button" class="btn btn-primary" id="newDataButton">Yeni Veri Ekle</button>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+          </button>
       </div>
       <div class="modal-body">
-        <form id="tableContentForm">
           <table class="table table-hover table-bordered zero-configuration dataTable w-auto" id="tableContentDataTable" role="grid">
-            <thead>
-              <tr></tr>
-            </thead>
-            <tbody>
-              <!-- Dinamik içerik buraya eklenecek -->
-            </tbody>
+              <thead>
+                  <tr></tr>
+              </thead>
+              <tbody>
+                  <!-- Dinamik içerik buraya eklenecek -->
+              </tbody>
           </table>
           <div id="noContentMessage" class="alert alert-warning" style="display: none;">Tablo içeriği bulunamadı.</div>
-          <div id="dataEntryFields" style="display: none;">
-            <!-- Dynamic data entry fields will be inserted here -->
-          </div>
-        </form>
       </div>
       <div class="modal-footer">
-        <input type="reset" class="btn btn-light" data-dismiss="modal" value="Kapat">
-        <input type="button" class="btn btn-genie white" onclick="submitTableContent()" value="Veri Ekle">
+          <input type="reset" class="btn btn-light" data-dismiss="modal" value="Kapat">
       </div>
-    </div>
+  </div>
+</div>
+</div>
+<!-- New Data Modal -->
+<div class="modal fade text-left" id="newDataModal" tabindex="-1" role="dialog" aria-labelledby="newDataModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h4 class="modal-title text-bold-600" id="newDataModalLabel">Yeni Veri Ekle</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+          <div class="modal-body">
+              <form id="newDataForm">
+                  <!-- Dinamik form alanları buraya eklenecek -->
+              </form>
+          </div>
+          <div class="modal-footer">
+              <input type="reset" class="btn btn-light" data-dismiss="modal" value="Kapat">
+              <input type="button" class="btn btn-genie white" value="Veri Ekle" onclick="submitTableContent()">
+          </div>
+      </div>
   </div>
 </div>
 
@@ -609,8 +626,10 @@
   </script>
 <script>
 document.addEventListener('DOMContentLoaded', function () {
+    // Initialize the table
     fetchTableData();
 
+    // Add event listener for table name clicks
     document.addEventListener('click', function (event) {
         if (event.target && event.target.classList.contains('table-name')) {
             const tableName = event.target.textContent;
@@ -618,6 +637,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
+    // Add event listener for delete buttons
     document.addEventListener('click', function (event) {
         if (event.target && event.target.id === 'table-delete-button') {
             const tableRow = event.target.closest('tr');
@@ -626,6 +646,12 @@ document.addEventListener('DOMContentLoaded', function () {
                 deleteTable(tableName);
             }
         }
+    });
+
+    // Add event listener for new data button
+    document.getElementById('newDataButton').addEventListener('click', function () {
+        const tableName = $('#tableContentModal .modal-title').text();
+        showNewDataForm(tableName);
     });
 });
   
@@ -655,8 +681,9 @@ function updateTable(data) {
     var tableBody = document.getElementById('dataTablesTable').getElementsByTagName('tbody')[0];
     tableBody.innerHTML = ''; // Clear existing rows
 
+    // Check if data is an array and has elements
     if (!Array.isArray(data)) {
-        data = [data];
+        data = [data]; // Ensure data is an array
     }
 
     if (data.length === 0) {
@@ -701,18 +728,18 @@ function showTableContent(tableName) {
         },
         body: JSON.stringify({ tableName: tableName })
     })
-    .then(response => response.json())
-    .then(data => {
-        $.unblockUI();
-        console.log("Received data: ", data);
-        updateModalWithData(data, tableName);
-        $('#tableContentModal').modal('show');
-    })
-    .catch(error => {
-        $.unblockUI();
-        alert('Tablo içeriği getirilirken bir hata oluştu.');
-        console.error('Error:', error);
-    });
+        .then(response => response.json())
+        .then(data => {
+            $.unblockUI();
+            console.log("Received data: ", data); // Add logging for debugging
+            updateModalWithData(data, tableName);
+            $('#tableContentModal').modal('show');
+        })
+        .catch(error => {
+            $.unblockUI();
+            alert('Tablo içeriği getirilirken bir hata oluştu.');
+            console.error('Error:', error);
+        });
 }
   
 function updateModalWithData(data, tableName) {
@@ -721,13 +748,13 @@ function updateModalWithData(data, tableName) {
     tableBody.innerHTML = ''; // Clear existing rows
     tableHead.innerHTML = ''; // Clear existing headers
 
+    $('#tableContentModal .modal-title').text(tableName); // Update modal title with table name
+
     if (!data || !data[0]) {
         console.error('Invalid data format:', data);
         alert('Beklenmedik veri formatı.');
         return;
     }
-
-    $('#tableContentModal .modal-title').text(tableName); // Update modal title with table name
 
     if (data[0].success) {
         const rows = data[0].data;
@@ -754,22 +781,58 @@ function updateModalWithData(data, tableName) {
             tableBody.insertAdjacentHTML('beforeend', '<tr><td colspan="100%">Tablo içeriği bulunamadı.</td></tr>');
         }
     }
+}
+function showNewDataForm(tableName) {
+    const modal = $('#newDataModal');
+    const form = document.getElementById('newDataForm');
+    form.innerHTML = ''; // Clear existing form fields
 
-    $('#tableContentModal').modal('show');
+    $.blockUI({
+        message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
+        overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
+        css: { border: 0, padding: 0, backgroundColor: 'transparent' }
+    });
+
+    fetch('http://192.168.1.146:5678/webhook/get-table-columns', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ tableName: tableName })
+    })
+    .then(response => response.json())
+    .then(data => {
+        $.unblockUI();
+
+        if (Array.isArray(data) && data.length > 0) {
+            data.forEach(column => {
+                form.insertAdjacentHTML('beforeend', `
+                    <div class="form-group">
+                        <label for="${column.COLUMN_NAME}">${column.COLUMN_NAME}</label>
+                        <input type="text" class="form-control" id="${column.COLUMN_NAME}" name="${column.COLUMN_NAME}">
+                    </div>
+                `);
+            });
+        } else {
+            alert('Sütun bilgileri getirilirken bir hata oluştu.');
+        }
+    })
+    .catch(error => {
+        $.unblockUI();
+        console.error('Error:', error);
+        alert('Form oluşturulurken bir hata oluştu.');
+    });
+
+    modal.modal('show');
 }
 
 
 function submitTableContent() {
-    const form = document.getElementById('tableContentForm');
+    const form = document.getElementById('newDataForm');
     const formData = new FormData(form);
-    const tableName = $('#tableContentModal .modal-title').text();
-    const jsonData = {
-        tableName: tableName,
-        data: {}
-    };
-
+    const jsonData = {};
     formData.forEach((value, key) => {
-        jsonData.data[key] = value;
+        jsonData[key] = value;
     });
 
     $.blockUI({
@@ -778,29 +841,28 @@ function submitTableContent() {
         css: { border: 0, padding: 0, backgroundColor: 'transparent' }
     });
 
-    fetch('http://192.168.1.146:5678/webhook/insert-table-data', {
+    fetch('http://192.168.1.146:5678/webhook-test/insert-table-content', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(jsonData)
     })
-    .then(response => response.json())
-    .then(data => {
-        $.unblockUI();
-        if (data.success) {
-            alert('Veri başarıyla eklendi.');
-            $('#tableContentModal').modal('hide');
-            fetchTableData(); // Refresh the table list
-        } else {
+        .then(response => response.json())
+        .then(data => {
+            $.unblockUI();
+            if (data.success) {
+                $('#newDataModal').modal('hide');
+                showTableContent($('#tableContentModal .modal-title').text());
+            } else {
+                alert('Veri eklenirken bir hata oluştu: ' + data.message);
+            }
+        })
+        .catch(error => {
+            $.unblockUI();
             alert('Veri eklenirken bir hata oluştu.');
-        }
-    })
-    .catch(error => {
-        $.unblockUI();
-        alert('Veri eklenirken bir hata oluştu.');
-        console.error('Error:', error);
-    });
+            console.error('Error:', error);
+        });
 }
 
 
