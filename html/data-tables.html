@@ -206,31 +206,35 @@
 
 <!-- Table Content Modal -->
 <div class="modal fade text-left" id="tableContentModal" tabindex="-1" role="dialog" aria-labelledby="tableContentModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg" role="document">
-      <div class="modal-content">
-          <div class="modal-header">
-              <h4 class="modal-title text-bold-600" id="tableContentModalLabel"><i class="fa fa-table"></i> Tablo İçeriği</h4>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-              </button>
-          </div>
-          <div class="modal-body">
-              <table class="table table-hover table-bordered zero-configuration dataTable" role="grid">
-                  <thead>
-                      <tr>
-                          <!-- Dynamic headers will be inserted here -->
-                      </tr>
-                  </thead>
-                  <tbody>
-                      <!-- Dynamic content will be inserted here -->
-                  </tbody>
-              </table>
-              <div id="noTableContentMessage" class="alert alert-warning" style="display: none;">Tablo içeriği bulunamadı.</div>
-          </div>
-          <div class="modal-footer">
-              <input type="reset" class="btn btn-light" data-dismiss="modal" value="Kapat">
-          </div>
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title text-bold-600" id="tableContentModalLabel"></h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
       </div>
+      <div class="modal-body">
+        <form id="tableContentForm">
+          <table class="table table-hover table-bordered zero-configuration dataTable w-auto" id="tableContentDataTable" role="grid">
+            <thead>
+              <tr></tr>
+            </thead>
+            <tbody>
+              <!-- Dinamik içerik buraya eklenecek -->
+            </tbody>
+          </table>
+          <div id="noContentMessage" class="alert alert-warning" style="display: none;">Tablo içeriği bulunamadı.</div>
+          <div id="dataEntryFields" style="display: none;">
+            <!-- Dynamic data entry fields will be inserted here -->
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <input type="reset" class="btn btn-light" data-dismiss="modal" value="Kapat">
+        <input type="button" class="btn btn-genie white" onclick="submitTableContent()" value="Veri Ekle">
+      </div>
+    </div>
   </div>
 </div>
 
@@ -604,190 +608,234 @@
   }
   </script>
 <script>
-  document.addEventListener('DOMContentLoaded', function () {
-      // Initialize the table
-      fetchTableData();
-  
-      // Add event listener for table name clicks
-      document.addEventListener('click', function (event) {
-          if (event.target && event.target.classList.contains('table-name')) {
-              const tableName = event.target.textContent;
-              showTableContent(tableName);
-          }
-      });
-  
-      // Add event listener for delete buttons
-      document.addEventListener('click', function (event) {
-          if (event.target && event.target.id === 'table-delete-button') {
-              const tableRow = event.target.closest('tr');
-              const tableName = tableRow.querySelector('td:first-child').textContent;
-              if (confirm('Bu tabloyu silmek istediğinizden emin misiniz?')) {
-                  deleteTable(tableName);
-              }
-          }
-      });
-  });
-  
-  function fetchTableData() {
-    $.blockUI({
-      message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
-      overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
-      css: { border: 0, padding: 0, backgroundColor: 'transparent' }
+document.addEventListener('DOMContentLoaded', function () {
+    fetchTableData();
+
+    document.addEventListener('click', function (event) {
+        if (event.target && event.target.classList.contains('table-name')) {
+            const tableName = event.target.textContent;
+            showTableContent(tableName);
+        }
     });
+
+    document.addEventListener('click', function (event) {
+        if (event.target && event.target.id === 'table-delete-button') {
+            const tableRow = event.target.closest('tr');
+            const tableName = tableRow.querySelector('td:first-child').textContent;
+            if (confirm('Bu tabloyu silmek istediğinizden emin misiniz?')) {
+                deleteTable(tableName);
+            }
+        }
+    });
+});
   
+function fetchTableData() {
+    $.blockUI({
+        message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
+        overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
+        css: { border: 0, padding: 0, backgroundColor: 'transparent' }
+    });
+
     fetch('http://192.168.1.146:5678/webhook/get-tables-status')
-      .then(response => response.json())
-      .then(data => {
-        console.log("Received response from webhook:", JSON.stringify(data, null, 2));
-        updateTable(data);
-      })
-      .catch(error => {
-        console.error("Error fetching data:", error);
-        document.getElementById('tableStatusMessage').innerHTML = '<p class="text-danger">Veri tabloları yüklenirken hata oluştu.</p>';
-      })
-      .finally(() => {
-        $.unblockUI();
-      });
-  }
+        .then(response => response.json())
+        .then(data => {
+            console.log("Received response from webhook:", JSON.stringify(data, null, 2));
+            updateTable(data);
+        })
+        .catch(error => {
+            console.error("Error fetching data:", error);
+            document.getElementById('tableStatusMessage').innerHTML = '<p class="text-danger">Veri tabloları yüklenirken hata oluştu.</p>';
+        })
+        .finally(() => {
+            $.unblockUI();
+        });
+}
   
-  function updateTable(data) {
+function updateTable(data) {
     var tableBody = document.getElementById('dataTablesTable').getElementsByTagName('tbody')[0];
     tableBody.innerHTML = ''; // Clear existing rows
-  
-    // Check if data is an array and has elements
+
     if (!Array.isArray(data)) {
-      data = [data]; // Ensure data is an array
+        data = [data];
     }
-  
+
     if (data.length === 0) {
-      document.getElementById('tableStatusMessage').innerHTML = '<p class="text-warning">Kayıtlı tablo yoktur. Tablo oluşturun.</p>';
-      document.getElementById('dataTablesTable').style.display = 'none';
+        document.getElementById('tableStatusMessage').innerHTML = '<p class="text-warning">Kayıtlı tablo yoktur. Tablo oluşturun.</p>';
+        document.getElementById('dataTablesTable').style.display = 'none';
     } else {
-      document.getElementById('tableStatusMessage').innerHTML = '';
-      document.getElementById('dataTablesTable').style.display = 'table';
-  
-      data.forEach(function (table) {
-        var row = `
-            <tr>
-                <td class="table-name">${table.name}</td>
-                <td>${table.dataRetention}</td>
-                <td>${table.createdAt}</td>
-                <td>${table.lastUpdated}</td>
-                <td>${table.rows}</td>
-                <td>${table.size}</td>
-                <td>
-                    <button type="button" class="btn btn-sm btn-outline-danger" id="table-delete-button">
-                        <i class="fa fa-trash-o"></i>
-                    </button>
-                </td>
-            </tr>
-        `;
-        tableBody.insertAdjacentHTML('beforeend', row);
-      });
+        document.getElementById('tableStatusMessage').innerHTML = '';
+        document.getElementById('dataTablesTable').style.display = 'table';
+
+        data.forEach(function (table) {
+            var row = `
+                <tr>
+                    <td class="table-name">${table.name}</td>
+                    <td>${table.dataRetention}</td>
+                    <td>${table.createdAt}</td>
+                    <td>${table.lastUpdated}</td>
+                    <td>${table.rows}</td>
+                    <td>${table.size}</td>
+                    <td>
+                        <button type="button" class="btn btn-sm btn-outline-danger" id="table-delete-button">
+                            <i class="fa fa-trash-o"></i>
+                        </button>
+                    </td>
+                </tr>
+            `;
+            tableBody.insertAdjacentHTML('beforeend', row);
+        });
     }
-  }
+}
   
-  function showTableContent(tableName) {
-      $.blockUI({
-          message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
-          overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
-          css: { border: 0, padding: 0, backgroundColor: 'transparent' }
-      });
+function showTableContent(tableName) {
+    $.blockUI({
+        message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
+        overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
+        css: { border: 0, padding: 0, backgroundColor: 'transparent' }
+    });
+
+    fetch('http://192.168.1.146:5678/webhook/get-table-content', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ tableName: tableName })
+    })
+    .then(response => response.json())
+    .then(data => {
+        $.unblockUI();
+        console.log("Received data: ", data);
+        updateModalWithData(data, tableName);
+        $('#tableContentModal').modal('show');
+    })
+    .catch(error => {
+        $.unblockUI();
+        alert('Tablo içeriği getirilirken bir hata oluştu.');
+        console.error('Error:', error);
+    });
+}
   
-      fetch('http://192.168.1.146:5678/webhook/get-table-content', {
-          method: 'POST',
-          headers: {
-              'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ tableName: tableName })
-      })
-      .then(response => response.json())
-      .then(data => {
-          $.unblockUI();
-          console.log("Received data: ", data); // Add logging for debugging
-          updateModalWithData(data, tableName); // Pass tableName to update the modal title
-          $('#tableContentModal').modal('show');
-      })
-      .catch(error => {
-          $.unblockUI();
-          alert('Tablo içeriği getirilirken bir hata oluştu.');
-          console.error('Error:', error);
-      });
-  }
+function updateModalWithData(data, tableName) {
+    const tableBody = document.querySelector('#tableContentModal tbody');
+    const tableHead = document.querySelector('#tableContentModal thead tr');
+    tableBody.innerHTML = ''; // Clear existing rows
+    tableHead.innerHTML = ''; // Clear existing headers
+
+    if (!data || !data[0]) {
+        console.error('Invalid data format:', data);
+        alert('Beklenmedik veri formatı.');
+        return;
+    }
+
+    $('#tableContentModal .modal-title').text(tableName); // Update modal title with table name
+
+    if (data[0].success) {
+        const rows = data[0].data;
+        if (rows && rows.length > 0) {
+            const headers = Object.keys(rows[0]);
+            headers.forEach(header => {
+                tableHead.insertAdjacentHTML('beforeend', `<th>${header}</th>`);
+            });
+            rows.forEach(row => {
+                const rowHtml = `<tr>${Object.values(row).map(value => `<td>${value}</td>`).join('')}</tr>`;
+                tableBody.insertAdjacentHTML('beforeend', rowHtml);
+            });
+        } else {
+            tableBody.insertAdjacentHTML('beforeend', '<tr><td colspan="100%">Tablo içeriği bulunamadı.</td></tr>');
+        }
+    } else {
+        const columns = data[0].data;
+        if (columns && columns.length > 0) {
+            columns.forEach(col => {
+                tableHead.insertAdjacentHTML('beforeend', `<th>${col.COLUMN_NAME}</th>`);
+            });
+            tableBody.insertAdjacentHTML('beforeend', '<tr><td colspan="100%">Tablo içeriği bulunamadı.</td></tr>');
+        } else {
+            tableBody.insertAdjacentHTML('beforeend', '<tr><td colspan="100%">Tablo içeriği bulunamadı.</td></tr>');
+        }
+    }
+
+    $('#tableContentModal').modal('show');
+}
+
+
+function submitTableContent() {
+    const form = document.getElementById('tableContentForm');
+    const formData = new FormData(form);
+    const tableName = $('#tableContentModal .modal-title').text();
+    const jsonData = {
+        tableName: tableName,
+        data: {}
+    };
+
+    formData.forEach((value, key) => {
+        jsonData.data[key] = value;
+    });
+
+    $.blockUI({
+        message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
+        overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
+        css: { border: 0, padding: 0, backgroundColor: 'transparent' }
+    });
+
+    fetch('http://192.168.1.146:5678/webhook/insert-table-data', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(jsonData)
+    })
+    .then(response => response.json())
+    .then(data => {
+        $.unblockUI();
+        if (data.success) {
+            alert('Veri başarıyla eklendi.');
+            $('#tableContentModal').modal('hide');
+            fetchTableData(); // Refresh the table list
+        } else {
+            alert('Veri eklenirken bir hata oluştu.');
+        }
+    })
+    .catch(error => {
+        $.unblockUI();
+        alert('Veri eklenirken bir hata oluştu.');
+        console.error('Error:', error);
+    });
+}
+
+
   
-  function updateModalWithData(data, tableName) {
-      const tableBody = document.querySelector('#tableContentModal tbody');
-      const tableHead = document.querySelector('#tableContentModal thead tr');
-      const modalTitle = document.querySelector('#tableContentModal .modal-title'); // Select the modal title element
-      tableBody.innerHTML = ''; // Clear existing rows
-      tableHead.innerHTML = ''; // Clear existing headers
-  
-      modalTitle.textContent = `${tableName} İçeriği`; // Update modal title with the table name
-  
-      if (!data || !data[0]) {
-          console.error('Invalid data format:', data);
-          alert('Beklenmedik veri formatı.');
-          return;
-      }
-  
-      if (data[0].success) {
-          const rows = data[0].data;
-          if (rows && rows.length > 0) {
-              const headers = Object.keys(rows[0]);
-              headers.forEach(header => {
-                  tableHead.insertAdjacentHTML('beforeend', `<th>${header}</th>`);
-              });
-              rows.forEach(row => {
-                  const rowHtml = `<tr>${Object.values(row).map(value => `<td>${value}</td>`).join('')}</tr>`;
-                  tableBody.insertAdjacentHTML('beforeend', rowHtml);
-              });
-          } else {
-              tableBody.insertAdjacentHTML('beforeend', '<tr><td colspan="100%">Tablo içeriği bulunamadı.</td></tr>');
-          }
-      } else {
-          const columns = data[0].data;
-          if (columns && columns.length > 0) {
-              columns.forEach(col => {
-                  tableHead.insertAdjacentHTML('beforeend', `<th>${col.COLUMN_NAME}</th>`);
-              });
-              tableBody.insertAdjacentHTML('beforeend', '<tr><td colspan="100%">Tablo içeriği bulunamadı.</td></tr>');
-          } else {
-              tableBody.insertAdjacentHTML('beforeend', '<tr><td colspan="100%">Tablo içeriği bulunamadı.</td></tr>');
-          }
-      }
-  }
-  
-  function deleteTable(tableName) {
-      $.blockUI({
-          message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
-          overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
-          css: { border: 0, padding: 0, backgroundColor: 'transparent' }
-      });
-  
-      fetch('http://192.168.1.146:5678/webhook/delete-table', {
-          method: 'POST',
-          headers: {
-              'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ tableName: tableName })
-      })
-      .then(response => response.json())
-      .then(data => {
-          $.unblockUI();
-  
-          if (data.success) {
-              alert('Tablo başarıyla silindi.');
-              location.reload(); // Sayfayı yenile
-          } else {
-              alert('Tablo silinirken bir hata oluştu.');
-          }
-      })
-      .catch(error => {
-          $.unblockUI();
-          alert('Tablo silinirken bir hata oluştu.');
-          console.error('Error:', error);
-      });
-  }
+function deleteTable(tableName) {
+    $.blockUI({
+        message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
+        overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
+        css: { border: 0, padding: 0, backgroundColor: 'transparent' }
+    });
+
+    fetch('http://192.168.1.146:5678/webhook/delete-table', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ tableName: tableName })
+    })
+    .then(response => response.json())
+    .then(data => {
+        $.unblockUI();
+
+        if (data.success) {
+            alert('Tablo başarıyla silindi.');
+            location.reload(); // Sayfayı yenile
+        } else {
+            alert('Tablo silinirken bir hata oluştu.');
+        }
+    })
+    .catch(error => {
+        $.unblockUI();
+        alert('Tablo silinirken bir hata oluştu.');
+        console.error('Error:', error);
+    });
+}
   </script>
 </body>
 
