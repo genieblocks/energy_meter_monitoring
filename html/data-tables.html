@@ -243,9 +243,9 @@
               </button>
           </div>
           <div class="modal-body">
-              <form id="newDataForm">
-                  <!-- Dinamik form alanları buraya eklenecek -->
-              </form>
+            <form id="newDataForm">
+                <!-- Dinamik form alanları buraya eklenecek -->
+            </form>
           </div>
           <div class="modal-footer">
               <input type="reset" class="btn btn-light" data-dismiss="modal" value="Kapat">
@@ -633,6 +633,7 @@ document.addEventListener('DOMContentLoaded', function () {
     document.addEventListener('click', function (event) {
         if (event.target && event.target.classList.contains('table-name')) {
             const tableName = event.target.textContent;
+            console.log(`Table name clicked: ${tableName}`); // Debug
             showTableContent(tableName);
         }
     });
@@ -642,15 +643,17 @@ document.addEventListener('DOMContentLoaded', function () {
         if (event.target && event.target.id === 'table-delete-button') {
             const tableRow = event.target.closest('tr');
             const tableName = tableRow.querySelector('td:first-child').textContent;
+            console.log(`Delete button clicked for table: ${tableName}`); // Debug
             if (confirm('Bu tabloyu silmek istediğinizden emin misiniz?')) {
                 deleteTable(tableName);
             }
         }
     });
 
-    // Add event listener for new data button
-    document.getElementById('newDataButton').addEventListener('click', function () {
+    // Add event listener for the new data button
+    document.getElementById('newDataButton').addEventListener('click', function() {
         const tableName = $('#tableContentModal .modal-title').text();
+        console.log(`New data button clicked for table: ${tableName}`); // Debug
         showNewDataForm(tableName);
     });
 });
@@ -750,14 +753,17 @@ function updateModalWithData(data, tableName) {
 
     $('#tableContentModal .modal-title').text(tableName); // Update modal title with table name
 
+    console.log("Data received for updating modal:", data); // Debug log
+
     if (!data || !data[0]) {
         console.error('Invalid data format:', data);
         alert('Beklenmedik veri formatı.');
         return;
     }
 
-    if (data[0].success) {
-        const rows = data[0].data;
+    const firstEntry = data[0];
+    if (firstEntry.success) {
+        const rows = firstEntry.data;
         if (rows && rows.length > 0) {
             const headers = Object.keys(rows[0]);
             headers.forEach(header => {
@@ -771,7 +777,7 @@ function updateModalWithData(data, tableName) {
             tableBody.insertAdjacentHTML('beforeend', '<tr><td colspan="100%">Tablo içeriği bulunamadı.</td></tr>');
         }
     } else {
-        const columns = data[0].data;
+        const columns = firstEntry.data;
         if (columns && columns.length > 0) {
             columns.forEach(col => {
                 tableHead.insertAdjacentHTML('beforeend', `<th>${col.COLUMN_NAME}</th>`);
@@ -784,8 +790,13 @@ function updateModalWithData(data, tableName) {
 }
 function showNewDataForm(tableName) {
     const modal = $('#newDataModal');
-    const form = document.getElementById('newDataForm');
-    form.innerHTML = ''; // Clear existing form fields
+    modal.data('tableName', tableName); // Set the tableName as a data attribute on the modal
+    modal.find('.modal-title').text(`${tableName} - Yeni Veri Ekle`);
+    const form = modal.find('form')[0];
+    const formBody = modal.find('.modal-body > form')[0]; // Düzeltilmiş kısım
+
+    // Clear previous form fields
+    formBody.innerHTML = '';
 
     $.blockUI({
         message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
@@ -803,37 +814,43 @@ function showNewDataForm(tableName) {
     .then(response => response.json())
     .then(data => {
         $.unblockUI();
-
-        if (Array.isArray(data) && data.length > 0) {
+        if (data && Array.isArray(data)) {
+            console.log(`Received columns for table ${tableName}:`, data); // Debug log
             data.forEach(column => {
-                form.insertAdjacentHTML('beforeend', `
-                    <div class="form-group">
-                        <label for="${column.COLUMN_NAME}">${column.COLUMN_NAME}</label>
-                        <input type="text" class="form-control" id="${column.COLUMN_NAME}" name="${column.COLUMN_NAME}">
-                    </div>
-                `);
+                const formGroup = document.createElement('div');
+                formGroup.className = 'form-group';
+                formGroup.innerHTML = `
+                    <label for="${column.COLUMN_NAME}">${column.COLUMN_NAME}</label>
+                    <input type="text" class="form-control" id="${column.COLUMN_NAME}" name="${column.COLUMN_NAME}" required>
+                `;
+                formBody.appendChild(formGroup);
             });
+            modal.modal('show');
         } else {
             alert('Sütun bilgileri getirilirken bir hata oluştu.');
         }
     })
     .catch(error => {
         $.unblockUI();
+        alert('Sütun bilgileri getirilirken bir hata oluştu.');
         console.error('Error:', error);
-        alert('Form oluşturulurken bir hata oluştu.');
     });
-
-    modal.modal('show');
 }
 
-
 function submitTableContent() {
-    const form = document.getElementById('newDataForm');
+    const form = document.querySelector('#newDataForm'); // Form elementini doğru seçin
+    if (!form || !(form instanceof HTMLFormElement)) {
+        console.error('Form element not found or incorrect type');
+        return;
+    }
+
     const formData = new FormData(form);
-    const jsonData = {};
+    const jsonData = { tableName: $('#newDataModal').data('tableName') }; // Add tableName from the modal data attribute
     formData.forEach((value, key) => {
         jsonData[key] = value;
     });
+
+    console.log("Submitting new data:", jsonData); // Debug log
 
     $.blockUI({
         message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
@@ -841,28 +858,29 @@ function submitTableContent() {
         css: { border: 0, padding: 0, backgroundColor: 'transparent' }
     });
 
-    fetch('http://192.168.1.146:5678/webhook-test/insert-table-content', {
+    fetch('http://192.168.1.146:5678/webhook/insert-table-content', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(jsonData)
     })
-        .then(response => response.json())
-        .then(data => {
-            $.unblockUI();
-            if (data.success) {
-                $('#newDataModal').modal('hide');
-                showTableContent($('#tableContentModal .modal-title').text());
-            } else {
-                alert('Veri eklenirken bir hata oluştu: ' + data.message);
-            }
-        })
-        .catch(error => {
-            $.unblockUI();
-            alert('Veri eklenirken bir hata oluştu.');
-            console.error('Error:', error);
-        });
+    .then(response => response.json())
+    .then(data => {
+        $.unblockUI();
+        console.log("Received response from insert-table-content:", data); // Debug log
+        if (data[0].success) {
+            $('#newDataModal').modal('hide');
+            showTableContent($('#tableContentModal .modal-title').text());
+        } else {
+            alert('Veri eklenirken bir hata oluştu: ' + data[0].message);
+        }
+    })
+    .catch(error => {
+        $.unblockUI();
+        alert('Veri eklenirken bir hata oluştu.');
+        console.error('Error:', error);
+    });
 }
 
 
