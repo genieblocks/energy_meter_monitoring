@@ -193,7 +193,8 @@
             <th>Last Updated</th>
             <th>Rows</th>
             <th>Size</th>
-            <th></th>
+            <th>Edit</th>
+            <th>Delete</th>
           </tr>
         </thead>
         <tbody>
@@ -653,6 +654,16 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
+    // Add event listener for edit buttons
+    document.addEventListener('click', function (event) {
+        if (event.target && event.target.id === 'table-edit-button') {
+            const tableRow = event.target.closest('tr');
+            const tableName = tableRow.querySelector('td:first-child').textContent;
+            console.log(`Edit button clicked for table: ${tableName}`); // Debug
+            editTableName(tableName, tableRow);
+        }
+    });
+
     // Add event listener for the new data button
     document.getElementById('newDataButton').addEventListener('click', function() {
         const tableName = $('#tableContentModal .modal-title').text();
@@ -708,6 +719,11 @@ function updateTable(data) {
                     <td>${table.lastUpdated}</td>
                     <td>${table.rows}</td>
                     <td>${table.size}</td>
+                    <td>
+                        <button type="button" class="btn btn-sm btn-outline-primary" id="table-edit-button">
+                            <i class="fa fa-edit"></i>
+                        </button>
+                    </td>
                     <td>
                         <button type="button" class="btn btn-sm btn-outline-danger" id="table-delete-button">
                             <i class="fa fa-trash-o"></i>
@@ -839,18 +855,6 @@ function deleteTableRow(tableName, primaryKey, primaryKeyValue) {
             console.log("2-Received data: ", data); // Add logging for debugging
         }
     })
-    // .then(data => {
-    // $.unblockUI();
-    // console.log("Received data: ", data); // Add logging for debugging
-    // if (data && Array.isArray(data) && data[0] && data[0].success) {
-    //     console.log("1-Received data: ", data); // Add logging for debugging
-    //     alert('Veri başarıyla silindi.');
-    //     showTableContent(tableName); // Refresh table content
-    // } else {
-    //     alert('Veri silinirken bir hata oluştu.');
-    //     console.log("2-Received data: ", data); // Add logging for debugging
-    // }
-// })
     .catch(error => {
         $.unblockUI();
         alert('Veri silinirken bir hata oluştu.');
@@ -953,7 +957,42 @@ function submitTableContent() {
     });
 }
 
+function editTableName(oldTableName, tableRow) {
+    const newTableName = prompt("Yeni tablo ismini girin:", oldTableName);
+    if (newTableName === null || newTableName === "") {
+        alert("Tablo ismi boş olamaz.");
+        return;
+    }
 
+    $.blockUI({
+        message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
+        overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
+        css: { border: 0, padding: 0, backgroundColor: 'transparent' }
+    });
+
+    fetch('http://192.168.1.146:5678/webhook/edit-table-name', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ oldTableName: oldTableName, newTableName: newTableName })
+    })
+    .then(response => response.json())
+    .then(data => {
+        $.unblockUI();
+        if (data.success) {
+            alert('Tablo ismi başarıyla güncellendi.');
+            tableRow.querySelector('td:first-child').textContent = newTableName;
+        } else {
+            alert('Tablo ismi güncellenirken bir hata oluştu.');
+        }
+    })
+    .catch(error => {
+        $.unblockUI();
+        alert('Tablo ismi güncellenirken bir hata oluştu.');
+        console.error('Error:', error);
+    });
+}
   
 function deleteTable(tableName) {
     $.blockUI({
