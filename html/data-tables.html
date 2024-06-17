@@ -776,7 +776,7 @@ function updateModalWithData(data, tableName) {
             rows.forEach(row => {
                 const rowHtml = `<tr>${Object.values(row).map(value => `<td>${value}</td>`).join('')}
                     <td>
-                        <button type="button" class="btn btn-sm btn-outline-danger" id="table-delete-button">
+                        <button type="button" class="btn btn-sm btn-outline-danger" id="row-delete-button">
                             <i class="fa fa-trash-o"></i>
                         </button>
                     </td>
@@ -800,19 +800,20 @@ function updateModalWithData(data, tableName) {
     }
 
     // Add event listener for delete buttons
-    document.querySelectorAll('#table-delete-button').forEach(button => {
+    document.querySelectorAll('#row-delete-button').forEach(button => {
         button.addEventListener('click', function() {
             const tableRow = this.closest('tr');
             const rowData = Array.from(tableRow.children).slice(0, -1).map(td => td.textContent);
+            const primaryKey = tableHead.children[0].textContent; // Silinecek sütunun başlığı
             console.log(`Delete button clicked for row: ${rowData}`); // Debug log
             if (confirm('Bu veriyi silmek istediğinizden emin misiniz?')) {
-                deleteTableRow(tableName, rowData);
+                deleteTableRow(tableName, primaryKey, rowData[0]); // İlk sütun birincil anahtar olarak varsayıldı
             }
         });
     });
 }
 
-function deleteTableRow(tableName, rowData) {
+function deleteTableRow(tableName, primaryKey, primaryKeyValue) {
     $.blockUI({
         message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
         overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
@@ -824,7 +825,7 @@ function deleteTableRow(tableName, rowData) {
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ tableName: tableName, rowData: rowData })
+        body: JSON.stringify({ tableName: tableName, primaryKey: primaryKey, primaryKeyValue: primaryKeyValue })
     })
     .then(response => response.json())
     .then(data => {
