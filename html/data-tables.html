@@ -210,7 +210,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h4 class="modal-title text-bold-600" id="tableContentModalLabel"></h4>
-          <button type="button" class="btn btn-primary" id="newDataButton">Yeni Veri Ekle</button>
+          <button type="button" class="ml-auto col-4 btn-sm btn-genie" id="newDataButton">Yeni Veri Ekle</button>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
           </button>
@@ -218,7 +218,9 @@
       <div class="modal-body">
           <table class="table table-hover table-bordered zero-configuration dataTable w-auto" id="tableContentDataTable" role="grid">
               <thead>
-                  <tr></tr>
+                  <tr>
+                      <!-- Başlıklar dinamik olarak eklenecek -->
+                  </tr>
               </thead>
               <tbody>
                   <!-- Dinamik içerik buraya eklenecek -->
@@ -232,6 +234,7 @@
   </div>
 </div>
 </div>
+
 <!-- New Data Modal -->
 <div class="modal fade text-left" id="newDataModal" tabindex="-1" role="dialog" aria-labelledby="newDataModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -769,8 +772,15 @@ function updateModalWithData(data, tableName) {
             headers.forEach(header => {
                 tableHead.insertAdjacentHTML('beforeend', `<th>${header}</th>`);
             });
+            tableHead.insertAdjacentHTML('beforeend', `<th>Sil</th>`); // Sil sütunu başlığı ekleyin
             rows.forEach(row => {
-                const rowHtml = `<tr>${Object.values(row).map(value => `<td>${value}</td>`).join('')}</tr>`;
+                const rowHtml = `<tr>${Object.values(row).map(value => `<td>${value}</td>`).join('')}
+                    <td>
+                        <button type="button" class="btn btn-sm btn-outline-danger" id="table-delete-button">
+                            <i class="fa fa-trash-o"></i>
+                        </button>
+                    </td>
+                </tr>`;
                 tableBody.insertAdjacentHTML('beforeend', rowHtml);
             });
         } else {
@@ -782,12 +792,57 @@ function updateModalWithData(data, tableName) {
             columns.forEach(col => {
                 tableHead.insertAdjacentHTML('beforeend', `<th>${col.COLUMN_NAME}</th>`);
             });
+            tableHead.insertAdjacentHTML('beforeend', `<th>Sil</th>`); // Sil sütunu başlığı ekleyin
             tableBody.insertAdjacentHTML('beforeend', '<tr><td colspan="100%">Tablo içeriği bulunamadı.</td></tr>');
         } else {
             tableBody.insertAdjacentHTML('beforeend', '<tr><td colspan="100%">Tablo içeriği bulunamadı.</td></tr>');
         }
     }
+
+    // Add event listener for delete buttons
+    document.querySelectorAll('#table-delete-button').forEach(button => {
+        button.addEventListener('click', function() {
+            const tableRow = this.closest('tr');
+            const rowData = Array.from(tableRow.children).slice(0, -1).map(td => td.textContent);
+            console.log(`Delete button clicked for row: ${rowData}`); // Debug log
+            if (confirm('Bu veriyi silmek istediğinizden emin misiniz?')) {
+                deleteTableRow(tableName, rowData);
+            }
+        });
+    });
 }
+
+function deleteTableRow(tableName, rowData) {
+    $.blockUI({
+        message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
+        overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
+        css: { border: 0, padding: 0, backgroundColor: 'transparent' }
+    });
+
+    fetch('http://192.168.1.146:5678/webhook/delete-table-row', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ tableName: tableName, rowData: rowData })
+    })
+    .then(response => response.json())
+    .then(data => {
+        $.unblockUI();
+        if (data.success) {
+            alert('Veri başarıyla silindi.');
+            showTableContent(tableName); // Refresh table content
+        } else {
+            alert('Veri silinirken bir hata oluştu.');
+        }
+    })
+    .catch(error => {
+        $.unblockUI();
+        alert('Veri silinirken bir hata oluştu.');
+        console.error('Error:', error);
+    });
+}
+
 function showNewDataForm(tableName) {
     const modal = $('#newDataModal');
     modal.data('tableName', tableName); // Set the tableName as a data attribute on the modal
