@@ -482,10 +482,9 @@
     
     function validateForm() {
     var tableName = document.getElementById('tableName').value;
-    var tableNamePattern = /^[a-zA-Z_][a-zA-Z0-9_]*$/;
-    if (!tableNamePattern.test(tableName)) {
+    if (!validateName(tableName)) {
         console.log('Invalid table name:', tableName);
-        alert('Lütfen geçerli bir tablo ismi girin (sadece harfler, rakamlar ve alt çizgi, ve rakamla başlamaz).');
+        alert('Lütfen geçerli bir tablo ismi girin (sadece harfler, rakamlar, alt çizgi, dolar işareti ve diyez işareti içerebilir, sayı veya özel bir karakterle başlayamaz).');
         return false;
     }
     if (tableName.length > 128) {
@@ -495,20 +494,14 @@
     }
 
     var primaryKey = document.getElementById('primaryKey').value;
-    var primaryKeyType = document.getElementById('primaryKeyType').value;
-    if (!primaryKeyType) {
-        console.log('Primary key type not selected');
-        alert('Birincil anahtar sütun için veri tipi seçiniz.');
-        return false;
-    }
     if (primaryKey.length > 128) {
         console.log('Primary key name too long:', primaryKey);
         alert('Birincil anahtar sütun adı en fazla 128 karakter olabilir.');
         return false;
     }
-    if (!validateColumnName(primaryKey)) {
+    if (!validateName(primaryKey)) {
         console.log('Invalid primary key name:', primaryKey);
-        alert('Birincil anahtar sütun adı geçersiz.');
+        alert('Lütfen geçerli bir birincil anahtar sütun adı girin (sadece harfler, rakamlar, alt çizgi, dolar işareti ve diyez işareti içerebilir, sayı veya özel bir karakterle başlayamaz).');
         return false;
     }
 
@@ -520,25 +513,23 @@
             alert('Sütun adı en fazla 128 karakter olabilir: ' + columnName);
             return false;
         }
-        if (!validateColumnName(columnName)) {
+        if (!validateName(columnName)) {
             console.log('Invalid column name:', columnName);
-            alert('Geçersiz sütun adı: ' + columnName);
+            alert('Lütfen geçerli bir sütun adı girin (sadece harfler, rakamlar, alt çizgi, dolar işareti ve diyez işareti içerebilir, sayı veya özel bir karakterle başlayamaz): ' + columnName);
             return false;
         }
     }
 
     return true;
 }
-    
-function validateColumnName(columnName) {
-    var columnNamePattern = /^[a-zA-Z_][a-zA-Z0-9_$#]*$/;
-    var reservedKeywords = ['SELECT', 'INSERT', 'TABLE', 'WHERE', 'DELETE', 'UPDATE']; // Add other reserved keywords as needed
 
-    // Check column name length and pattern
-    if (columnName.length > 128 || !columnNamePattern.test(columnName) || reservedKeywords.includes(columnName.toUpperCase())) {
+function validateName(name) {
+    var namePattern = /^[a-zA-Z_][a-zA-Z0-9_$#]*$/;
+    var reservedKeywords = ["SELECT", "INSERT", "TABLE", /* diğer rezerve kelimeler burada */];
+
+    if (!namePattern.test(name) || reservedKeywords.includes(name.toUpperCase())) {
         return false;
     }
-
     return true;
 }
     </script>
