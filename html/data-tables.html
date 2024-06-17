@@ -394,93 +394,95 @@
   <!-- END PAGE LEVEL JS-->
 
   <script>
-    $(document).ready(function () {
-        // Initialize the repeater
-        $('.contact-repeater').repeater({
-            show: function () {
-                $(this).slideDown();
-                $(this).find('input, select').attr('required', true); // Add required attribute when shown
-                $(this).find('select').on('invalid', function () {
-                    this.setCustomValidity('Lütfen bir veri tipi seçin');
-                });
-                $(this).find('select').on('input', function () {
-                    this.setCustomValidity('');
-                });
-            },
-            hide: function (remove) {
-                $(this).slideUp(remove);
-            },
-            defaultValues: {
-                'columnName': '',
-                'columnType': ''
-            },
-            ready: function (setIndexes) {
-                console.log('Repeater ready');
+ $(document).ready(function () {
+    // Initialize the repeater
+    $('.contact-repeater').repeater({
+        show: function () {
+            $(this).slideDown();
+            $(this).find('input, select').attr('required', true); // Add required attribute when shown
+            $(this).find('select').on('invalid', function () {
+                this.setCustomValidity('Lütfen bir veri tipi seçin');
+            });
+            $(this).find('select').on('input', function () {
+                this.setCustomValidity('');
+            });
+            console.log('Repeater show: Added new column'); // Debug log
+        },
+        hide: function (remove) {
+            $(this).slideUp(remove);
+        },
+        defaultValues: {
+            'columnName': '',
+            'columnType': ''
+        },
+        ready: function (setIndexes) {
+            console.log('Repeater ready'); // Debug log
+        }
+    });
+
+    // Validate the form before submission
+    document.getElementById('addTableForm').addEventListener('submit', function (event) {
+        event.preventDefault();
+        const form = event.target;
+        const formData = new FormData(form);
+
+        // Manually collect repeater data
+        const columns = [];
+        $('[data-repeater-item]').each(function () {
+            const columnName = $(this).find('input[name$="[columnName]"]').val();
+            const columnType = $(this).find('select[name$="[columnType]"]').val();
+            if (columnName && columnType) {
+                console.log('Collected column:', columnName, columnType); // Debug log
+                columns.push({ columnName, columnType });
+            } else {
+                console.error('Sütun adı veya veri tipi eksik.');
             }
         });
-    
-        // Validate the form before submission
-        document.getElementById('addTableForm').addEventListener('submit', function (event) {
-            event.preventDefault();
-            const form = event.target;
-            const formData = new FormData(form);
-            const jsonData = {
-                  tableName: formData.get('tableName'),
-                  primaryKey: formData.get('primaryKey'),
-                  primaryKeyType: formData.get('primaryKeyType'),
-                  columns: Array.from(document.querySelectorAll('[data-repeater-item]')).map(item => {
-                      const columnNameInput = item.querySelector('input[name="columnName"]');
-                      const columnTypeSelect = item.querySelector('select[name="columnType"]');
 
-                      // Hata kontrolü ve gerekli elemanların varlığını doğrulama
-                      if (!columnNameInput || !columnTypeSelect) {
-                          console.error('Sütun adı veya veri tipi eksik.');
-                          return null;
-                      }
+        const jsonData = {
+            tableName: formData.get('tableName'),
+            primaryKey: formData.get('primaryKey'),
+            primaryKeyType: formData.get('primaryKeyType'),
+            columns: columns
+        };
 
-                      return {
-                          columnName: columnNameInput.value,
-                          columnType: columnTypeSelect.value
-                      };
-                  }).filter(column => column !== null) // Geçersiz sütunları filtreleme
-              };
+        console.log('Form Data:', formData); // Debug log
+        console.log('JSON Data:', JSON.stringify(jsonData)); // Debug log
 
-              console.log(jsonData); // JSON verisini kontrol etmek için
-
-            $.blockUI({
-                message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
-                overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
-                css: { border: 0, padding: 0, backgroundColor: 'transparent' }
-            });
-
-            fetch('http://192.168.1.146:5678/webhook/create-table', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(jsonData)
-            })
-                .then(response => response.json())
-                .then(data => {
-                    $.unblockUI();
-
-                    if (data.success) {
-                        $('#addTableModal').modal('hide');
-                        alert('Tablo başarıyla oluşturuldu.');
-                        location.reload(); // Sayfayı yenile
-                    } else {
-                        alert('Mevcut tablo var. Lütfen tablo ismini değiştirin.');
-                    }
-                })
-                .catch(error => {
-                    $.unblockUI();
-                    alert('Tablo oluşturulurken bir hata oluştu.');
-                    console.error('Error:', error);
-                });
+        $.blockUI({
+            message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
+            overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
+            css: { border: 0, padding: 0, backgroundColor: 'transparent' }
         });
+
+        fetch('http://192.168.1.146:5678/webhook/create-table', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(jsonData)
+        })
+            .then(response => response.json())
+            .then(data => {
+                $.unblockUI();
+
+                if (data.success) {
+                    $('#addTableModal').modal('hide');
+                    alert('Tablo başarıyla oluşturuldu.');
+                    location.reload(); // Sayfayı yenile
+                } else {
+                    alert('Mevcut tablo var. Lütfen tablo ismini değiştirin.');
+                }
+            })
+            .catch(error => {
+                $.unblockUI();
+                alert('Tablo oluşturulurken bir hata oluştu.');
+                console.error('Error:', error);
+            });
     });
+});
     
-    function validateForm() {
+function validateForm() {
     var tableName = document.getElementById('tableName').value;
     if (!validateName(tableName)) {
         console.log('Invalid table name:', tableName);
