@@ -735,29 +735,6 @@ function updateTable(data) {
             `;
             tableBody.insertAdjacentHTML('beforeend', row);
         });
-
-        // Add event listeners for edit buttons
-        document.querySelectorAll('#table-edit-button').forEach(button => {
-            button.addEventListener('click', function() {
-                const tableRow = this.closest('tr');
-                const tableName = tableRow.querySelector('.table-name').textContent;
-                const newTableName = prompt('Yeni tablo ismini girin:', tableName);
-                if (newTableName && newTableName !== tableName) {
-                    updateTableName(tableName, newTableName, tableRow);
-                }
-            });
-        });
-
-        // Add event listeners for delete buttons
-        document.querySelectorAll('#table-delete-button').forEach(button => {
-            button.addEventListener('click', function() {
-                const tableRow = this.closest('tr');
-                const tableName = tableRow.querySelector('.table-name').textContent;
-                if (confirm('Bu tabloyu silmek istediğinizden emin misiniz?')) {
-                    deleteTable(tableName);
-                }
-            });
-        });
     }
 }
   
