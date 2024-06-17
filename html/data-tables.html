@@ -830,13 +830,27 @@ function deleteTableRow(tableName, primaryKey, primaryKeyValue) {
     .then(response => response.json())
     .then(data => {
         $.unblockUI();
-        if (data.success) {
+        if (data[0].success) {
+          console.log("1-Received data: ", data); // Add logging for debugging
             alert('Veri başarıyla silindi.');
             showTableContent(tableName); // Refresh table content
         } else {
             alert('Veri silinirken bir hata oluştu.');
+            console.log("2-Received data: ", data); // Add logging for debugging
         }
     })
+    // .then(data => {
+    // $.unblockUI();
+    // console.log("Received data: ", data); // Add logging for debugging
+    // if (data && Array.isArray(data) && data[0] && data[0].success) {
+    //     console.log("1-Received data: ", data); // Add logging for debugging
+    //     alert('Veri başarıyla silindi.');
+    //     showTableContent(tableName); // Refresh table content
+    // } else {
+    //     alert('Veri silinirken bir hata oluştu.');
+    //     console.log("2-Received data: ", data); // Add logging for debugging
+    // }
+// })
     .catch(error => {
         $.unblockUI();
         alert('Veri silinirken bir hata oluştu.');
