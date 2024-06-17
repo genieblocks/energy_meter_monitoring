@@ -682,15 +682,14 @@ function fetchTableData() {
     fetch('http://192.168.1.146:5678/webhook/get-tables-status')
         .then(response => response.json())
         .then(data => {
+            $.unblockUI();
             console.log("Received response from webhook:", JSON.stringify(data, null, 2));
             updateTable(data);
         })
         .catch(error => {
+            $.unblockUI();
             console.error("Error fetching data:", error);
             document.getElementById('tableStatusMessage').innerHTML = '<p class="text-danger">Veri tabloları yüklenirken hata oluştu.</p>';
-        })
-        .finally(() => {
-            $.unblockUI();
         });
 }
   
@@ -698,19 +697,22 @@ function updateTable(data) {
     var tableBody = document.getElementById('dataTablesTable').getElementsByTagName('tbody')[0];
     tableBody.innerHTML = ''; // Clear existing rows
 
-    // Check if data is an array and has elements
-    if (!Array.isArray(data)) {
-        data = [data]; // Ensure data is an array
+    if (!data || !data[0].success) {
+        document.getElementById('tableStatusMessage').innerHTML = '<p class="text-danger">Veri tabloları yüklenirken hata oluştu.</p>';
+        document.getElementById('dataTablesTable').style.display = 'none';
+        return;
     }
 
-    if (data.length === 0) {
+    const tableData = data[0].data;
+    
+    if (tableData.length === 0) {
         document.getElementById('tableStatusMessage').innerHTML = '<p class="text-warning">Kayıtlı tablo yoktur. Tablo oluşturun.</p>';
         document.getElementById('dataTablesTable').style.display = 'none';
     } else {
         document.getElementById('tableStatusMessage').innerHTML = '';
         document.getElementById('dataTablesTable').style.display = 'table';
 
-        data.forEach(function (table) {
+        tableData.forEach(function (table) {
             var row = `
                 <tr>
                     <td class="table-name">${table.name}</td>
@@ -732,6 +734,29 @@ function updateTable(data) {
                 </tr>
             `;
             tableBody.insertAdjacentHTML('beforeend', row);
+        });
+
+        // Add event listeners for edit buttons
+        document.querySelectorAll('#table-edit-button').forEach(button => {
+            button.addEventListener('click', function() {
+                const tableRow = this.closest('tr');
+                const tableName = tableRow.querySelector('.table-name').textContent;
+                const newTableName = prompt('Yeni tablo ismini girin:', tableName);
+                if (newTableName && newTableName !== tableName) {
+                    updateTableName(tableName, newTableName, tableRow);
+                }
+            });
+        });
+
+        // Add event listeners for delete buttons
+        document.querySelectorAll('#table-delete-button').forEach(button => {
+            button.addEventListener('click', function() {
+                const tableRow = this.closest('tr');
+                const tableName = tableRow.querySelector('.table-name').textContent;
+                if (confirm('Bu tabloyu silmek istediğinizden emin misiniz?')) {
+                    deleteTable(tableName);
+                }
+            });
         });
     }
 }
