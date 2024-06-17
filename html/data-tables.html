@@ -980,7 +980,7 @@ function editTableName(oldTableName, tableRow) {
     .then(response => response.json())
     .then(data => {
         $.unblockUI();
-        if (data.success) {
+        if (data[0].success) {
             alert('Tablo ismi başarıyla güncellendi.');
             tableRow.querySelector('td:first-child').textContent = newTableName;
         } else {
