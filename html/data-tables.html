@@ -874,7 +874,7 @@ function showNewDataForm(tableName) {
                 const formGroup = document.createElement('div');
                 formGroup.className = 'form-group';
                 formGroup.innerHTML = `
-                    <label for="${column.COLUMN_NAME}">${column.COLUMN_NAME}</label>
+                    <label for="${column.COLUMN_NAME}">${column.COLUMN_NAME} - (${column.DATA_TYPE.toUpperCase()})</label>
                     <input type="text" class="form-control" id="${column.COLUMN_NAME}" name="${column.COLUMN_NAME}" required>
                 `;
                 formBody.appendChild(formGroup);
