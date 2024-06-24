@@ -873,10 +873,17 @@ function showNewDataForm(tableName) {
             data.forEach(column => {
                 const formGroup = document.createElement('div');
                 formGroup.className = 'form-group';
-                formGroup.innerHTML = `
-                    <label for="${column.COLUMN_NAME}">${column.COLUMN_NAME} - (${column.DATA_TYPE.toUpperCase()})</label>
-                    <input type="text" class="form-control" id="${column.COLUMN_NAME}" name="${column.COLUMN_NAME}" required>
-                `;
+                if (column.DATA_TYPE.toUpperCase() === 'UNIQUEIDENTIFIER') {
+                    formGroup.innerHTML = `
+                        <label for="${column.COLUMN_NAME}">${column.COLUMN_NAME} - (${column.DATA_TYPE.toUpperCase()})</label>
+                        <input type="text" class="form-control" id="${column.COLUMN_NAME}" name="${column.COLUMN_NAME}" readonly="readonly" value="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx">
+                    `;
+                } else {
+                    formGroup.innerHTML = `
+                        <label for="${column.COLUMN_NAME}">${column.COLUMN_NAME} - (${column.DATA_TYPE.toUpperCase()})</label>
+                        <input type="text" class="form-control" id="${column.COLUMN_NAME}" name="${column.COLUMN_NAME}" required>
+                    `;
+                }
                 formBody.appendChild(formGroup);
             });
             modal.modal('show');
