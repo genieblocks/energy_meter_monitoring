@@ -639,9 +639,19 @@
     // Seçilen cihazları ekleme işlemi
     document.getElementById('addSelectedDevicesButton').addEventListener('click', function() {
       const checkboxes = document.querySelectorAll('.device-checkbox:checked');
-      const selectedIPs = Array.from(checkboxes).map(checkbox => checkbox.value);
+      const selectedDevices = Array.from(checkboxes).map(checkbox => {
+        const row = checkbox.closest('tr');
+        return {
+          id: row.cells[1].innerText,
+          address: row.cells[2].innerText,
+          name: row.cells[3].innerText,
+          model: row.cells[4].innerText,
+          mac: row.cells[5].innerText,
+          serial: row.cells[6].innerText
+        };
+      });
 
-      if (selectedIPs.length > 0) {
+      if (selectedDevices.length > 0) {
         // Modalı kilitle ve bekleme işareti göster
         $('#addDeviceModal .modal-content').block({ 
           message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
@@ -649,19 +659,12 @@
           css: { border: 0, padding: 0, backgroundColor: 'transparent' }
         });
 
-        // fetch('http://192.168.1.146:5678/webhook-test/CtuDoJzaH8FFPQlZ/webhook/scan-devices', {
-        //   method: 'POST',
-        //   headers: {
-        //     'Content-Type': 'application/json'
-        //   },
-        //   body: JSON.stringify({ ips: selectedIPs })
-        // })
         fetch('http://192.168.1.146:5678/webhook/CtuDoJzaH8FFPQlZ/webhook/scan-devices', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify({ ips: selectedIPs })
+          body: JSON.stringify({ devices: selectedDevices })
         })
         .then(response => {
           if (!response.ok) {
