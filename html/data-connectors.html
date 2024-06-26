@@ -574,7 +574,7 @@
     });
 
     // Tanımlı cihazları çağır
-    fetch('http://192.168.1.146:5678/webhook/A9fBFKyNo8JKJhpQ/webhook/scan-devices', {
+    fetch('http://192.168.1.146:5678/webhook/driver-device-list', {
       method: 'GET'
     })
     .then(response => {
@@ -585,7 +585,7 @@
     })
     .then(definedData => {
       // Bulunan cihazları çağır
-      return fetch('http://192.168.1.146:5678/webhook/txkV43PU482NoXgR/webhook/scan-devices', {
+      return fetch('http://192.168.1.146:5678/webhook/scan-devices', {
         method: 'POST'
       })
       .then(response => {
@@ -659,7 +659,7 @@
           css: { border: 0, padding: 0, backgroundColor: 'transparent' }
         });
 
-        fetch('http://192.168.1.146:5678/webhook/CtuDoJzaH8FFPQlZ/webhook/scan-devices', {
+        fetch('http://192.168.1.146:5678/webhook/driver-device-add', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -698,12 +698,9 @@
         css: { border: 0, padding: 0, backgroundColor: 'transparent' }
       });
 
-      fetch('http://192.168.1.146:5678/webhook/A9fBFKyNo8JKJhpQ/webhook/scan-devices', {
+      fetch('http://192.168.1.146:5678/webhook/driver-device-list', {
         method: 'GET'
       })
-      // fetch('http://192.168.1.146:5678/webhook-test/A9fBFKyNo8JKJhpQ/webhook/scan-devices', {
-      //   method: 'GET'
-      // })
       .then(response => {
       if (!response.ok) {
         throw new Error('Network response was not ok ' + response.statusText);
@@ -778,20 +775,13 @@
           css: { border: 0, padding: 0, backgroundColor: 'transparent' }
         });
           
-        fetch('http://192.168.1.146:5678/webhook/9Nqv3El1T13RJ6rZ/webhook/scan-devices', {
+        fetch('http://192.168.1.146:5678/webhook/driver-device-remove', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({ ip: ip })
         })
-        // fetch('http://192.168.1.146:5678/webhook-test/9Nqv3El1T13RJ6rZ/webhook/scan-devices', {
-        //   method: 'POST',
-        //   headers: {
-        //     'Content-Type': 'application/json'
-        //   },
-        //   body: JSON.stringify({ ip: ip })
-        // })
         .then(response => {
           if (!response.ok) {
             throw new Error('Network response was not ok ' + response.statusText);
@@ -800,7 +790,7 @@
         })
         .then(data => {
       // Silme işlemi başarılı olduğunda cihaz listesini yeniden sorgula ve güncelle
-      fetch('http://192.168.1.146:5678/webhook/A9fBFKyNo8JKJhpQ/webhook/scan-devices', {
+      fetch('http://192.168.1.146:5678/webhook/driver-device-list', {
         method: 'GET'
       })
       .then(response => {
