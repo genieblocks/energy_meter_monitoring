@@ -188,126 +188,52 @@
         </div>
       </nav>
       <div class="content-wrapper">
-        <!-- IEC 62056-21 section start -->
-        <section id="form-repeater">
-          <div class="row">
-            <div class="col-xs-12 col-md-12">
-              <div class="card border-genie">
-                <div class="card-header">
-                  <h4 class="card-title" id="repeat-form">IEC 62056-21</h4>
-                  <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
-                  <div class="heading-elements">
-                    <ul class="list-inline mb-0">
-                      <!-- <li><a data-action="reload"><button type="button" class="btn btn-sm bg-blue-grey white block-default-message"> Seri Portları Yeniden Tara </i> </button></a></li> -->
-                      <li><a><button type="button" class="btn btn-sm bg-blue-grey white block-rescan-msgs-1"> Seri Portları Yeniden Tara </i> </button></a></li>
-                      <li><a data-action="expand"><i class="icon-expand2"></i></a></li>
-                    </ul>
-                  </div>
-                </div>
-                <div class="card-body">
-                  <div class="card-block">
-                    <div class="repeater-default">
-                      <div data-repeater-list="car">
-                        <div data-repeater-item>
-                          <form class="form row">
-                            <div class="form-group mb-1 col-sm-12 col-md-2">
-                              <label for="m-bus_name" class="font-small-3">Bağlantı İsmi</label>
-                              <br>
-                              <input type="text" class="form-control input-sm" id="m-bus_name" placeholder="İsim giriniz">
-                            </div>
-                            <div class="form-group mb-1 col-sm-12 col-md-2">
-                              <label for="serial_port" class="font-small-3">Seri Port</label>
-                              <br>
-                              <select class="form-control input-sm" id="serial_port">
-                                <option>Seri Port Seçiniz</option>
-                                <option disabled>COM 1 (kullanımda)</option>
-                                <option>COM 2</option>
-                                <option disabled>COM 3 (kullanımda)</option>
-                                <option>COM 4</option>
-                                <option>COM 5</option>
-                              </select>
-                            </div>
-                            <div class="form-group mb-1 col-sm-12 col-md-2">
-                              <label for="baud_rate" class="font-small-3">Baud Rate</label>
-                              <br>
-                              <select class="form-control input-sm" id="serial_port">
-                                <option>Baud Rate Seçiniz</option>
-                                <option>300</option>
-                                <option>600</option>
-                                <option>1200</option>
-                                <option>2400</option>
-                                <option>4800</option>
-                                <option>9600</option>
-                                <option>19200</option>
-                              </select>
-                            </div>
-                            <!-- <div class="form-group mb-1 col-sm-12 col-md-1">
-                              <label for="serial_port" class="font-small-3">Data</label>
-                              <br>
-                              <p class="form-control-static" id="serial_port">7 bits</p>
-                            </div>
-                            <div class="form-group mb-1 col-sm-12 col-md-1">
-                              <label for="serial_port" class="font-small-3">Parity</label>
-                              <br>
-                              <p class="form-control-static" id="serial_port">Even</p>
-                            </div>
-                            <div class="form-group mb-1 col-sm-12 col-md-1">
-                              <label for="baud_rate" class="font-small-3">Stop Bits</label>
-                              <br>
-                              <p class="form-control-static" id="serial_port">1 bit</p>
-                            </div> -->
-                            <div class="form-group mb-1 col-sm-12 col-md-2">
-                              <label for="retry" class="font-small-3">Tekrar Deneme Sayısı</label>
-                              <br>
-                              <select class="form-control input-sm" id="retry">
-                                <option>Tekrar Deneme Sayısı Seçiniz</option>
-                                <option>0</option>
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                              </select>
-                            </div>
-                            <div class="form-group mb-1 col-sm-12 col-md-2">
-                              <label for="time_out" class="font-small-3">Zaman Aşımı</label>
-                              <br>
-                              <select class="form-control input-sm" id="time_out">
-                                <option>Zaman Aşımı</option>
-                                <option>500 milisaniye</option>
-                                <option>1000 milisaniye</option>
-                                <option>1500 milisaniye</option>
-                                <option>2000 milisaniye</option>
-                              </select>
-                            </div>
-                            <div class="form-group col-sm-12 col-md-1 text-xs-center mt-1">
-                              <button type="button" class="btn btn-success btn-sm block-save-msgs"> <i class="icon-save"></i> Kaydet</button>
-                              <div class="multiple-msgs" style="display:none; padding: 15px 0;">
-                                <div class="text-bold-600">
-                                    <span class="ft-refresh-cw icon-spin text-left"></span>&nbsp; Kaydediliyor ...
-                                </div>
-                              </div>
-                            </div>
-                            <div class="form-group col-sm-12 col-md-1 text-xs-center mt-1">
-                              <button type="button" class="btn btn-danger btn-sm" data-repeater-delete> <i class="icon-cross2"></i> Sil</button>
-                            </div>
-                          </form>
-                          <hr>
-                        </div>
-                      </div>
-                      <div class="form-group overflow-hidden">
-                        <div class="col-xs-12">
-                          <button data-repeater-create class="btn btn-info btn-lg">
-                            <i class="icon-plus4"></i> Add
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+<!-- IEC 62056-21 section start -->
+<section id="form-repeater">
+  <div class="row">
+    <div class="col-xs-12 col-md-12">
+      <div class="card border-genie">
+        <div class="card-header">
+          <h4 class="card-title" id="repeat-form">IEC 62056-21</h4>
+          <a class="heading-elements-toggle"><I class="icon-ellipsis font-medium-3"></I></a>
+          <div class="heading-elements">
+            <ul class="list-inline mb-0">
+              <li><a><button type="button" class="btn btn-sm bg-blue-grey white block-rescan-msgs-1"> Seri Portları Yeniden Tara </I> </button></a></li>
+              <li><a data-action="expand"><I class="icon-expand2"></I></a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="card-block">
+            <table class="table table-hover table-bordered" id="iecTable">
+              <thead>
+                <tr>
+                  <th>Bağlantı İsmi</th>
+                  <th>Seri Port</th>
+                  <th>Baud Rate</th>
+                  <th>Tekrar Deneme Sayısı</th>
+                  <th>Zaman Aşımı</th>
+                  <th>Düzenle</th>
+                  <th>Sil</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- Dynamic content will be inserted here -->
+              </tbody>
+            </table>
+            <div class="form-group overflow-hidden">
+              <div class="col-xs-12">
+                <button id="addRowButton" class="btn btn-info btn-lg" data-toggle="modal" data-target="#addRowModal">
+                  <I class="icon-plus4"></I> Ekle
+                </button>
               </div>
             </div>
           </div>
-        </section>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
         <!-- M-BUS section start -->
         <section id="form-repeater">
           <div class="row">
@@ -425,6 +351,75 @@
       </div>
     </div>
   </div>
+
+<!-- Add Row Modal -->
+<div class="modal fade" id="addRowModal" tabindex="-1" role="dialog" aria-labelledby="addRowModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addRowModalLabel">Yeni IEC 62056-21 Bağlantısı Ekle</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- Form içeriği -->
+        <form id="addRowForm">
+          <div class="form-group">
+            <label for="modal-bus_name">Bağlantı İsmi</label>
+            <input type="text" class="form-control" id="modal-bus_name" placeholder="İsim giriniz">
+          </div>
+          <div class="form-group">
+            <label for="modal-serial_port">Seri Port</label>
+            <select class="form-control" id="modal-serial_port">
+              <option>Seri Port Seçiniz</option>
+              <option>COM 1</option>
+              <option>COM 2</option>
+              <option>COM 3</option>
+              <option>COM 4</option>
+              <option>COM 5</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="modal-baud_rate">Baud Rate</label>
+            <select class="form-control" id="modal-baud_rate">
+              <option>Baud Rate Seçiniz</option>
+              <option>300</option>
+              <option>600</option>
+              <option>1200</option>
+              <option>2400</option>
+              <option>4800</option>
+              <option>9600</option>
+              <option>19200</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="modal-retry">Tekrar Deneme Sayısı</label>
+            <select class="form-control" id="modal-retry">
+              <option>Tekrar Deneme Sayısı Seçiniz</option>
+              <option>0</option>
+              <option>1</option>
+              <option>2</option>
+              <option>3</option>
+              <option>4</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="modal-time_out">Zaman Aşımı</label>
+            <select class="form-control" id="modal-time_out">
+              <option>Zaman Aşımı</option>
+              <option>500 milisaniye</option>
+              <option>1000 milisaniye</option>
+              <option>1500 milisaniye</option>
+              <option>2000 milisaniye</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-primary">Ekle</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 
         <!-- Device Setup Modal -->
         <div class="modal fade text-left" id="deviceSetupModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2"
@@ -565,6 +560,69 @@
   <script src="../app-assets/js/scripts/modal/components-modal.js"></script>
   <!-- END PAGE LEVEL JS-->
   <script>
+document.addEventListener('DOMContentLoaded', function() {
+  const tableBody = document.querySelector('#iecTable tbody');
+
+  document.getElementById('addRowForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const busName = document.getElementById('modal-bus_name').value;
+    const serialPort = document.getElementById('modal-serial_port').value;
+    const baudRate = document.getElementById('modal-baud_rate').value;
+    const retry = document.getElementById('modal-retry').value;
+    const timeOut = document.getElementById('modal-time_out').value;
+
+    const row = document.createElement('tr');
+    row.innerHTML = `
+      <td>${busName}</td>
+      <td>${serialPort}</td>
+      <td>${baudRate}</td>
+      <td>${retry}</td>
+      <td>${timeOut}</td>
+      <td class="text-xs-center">
+        <button type="button" class="btn btn-success btn-sm"> <i class="icon-save"></i> Kaydet</button>
+      </td>
+      <td class="text-xs-center">
+        <button type="button" class="btn btn-danger btn-sm"> <i class="icon-cross2"></i> Sil</button>
+      </td>
+    `;
+    tableBody.appendChild(row);
+
+    // Modal'ı kapat ve formu sıfırla
+    $('#addRowModal').modal('hide');
+    document.getElementById('addRowForm').reset();
+  });
+
+  tableBody.addEventListener('click', function(e) {
+    if (e.target.classList.contains('icon-cross2')) {
+      const row = e.target.closest('tr');
+      row.parentNode.removeChild(row);
+    }
+
+    if (e.target.classList.contains('icon-save')) {
+      const row = e.target.closest('tr');
+      const cells = row.querySelectorAll('td');
+      cells.forEach(cell => cell.contentEditable = false);
+      e.target.classList.remove('icon-save');
+      e.target.classList.add('icon-edit');
+      e.target.closest('button').classList.remove('btn-success');
+      e.target.closest('button').classList.add('btn-warning');
+      e.target.closest('button').innerHTML = '<i class="icon-edit"></i> Düzenle';
+    }
+
+    if (e.target.classList.contains('icon-edit')) {
+      const row = e.target.closest('tr');
+      const cells = row.querySelectorAll('td');
+      cells.forEach(cell => cell.contentEditable = true);
+      e.target.classList.remove('icon-edit');
+      e.target.classList.add('icon-save');
+      e.target.closest('button').classList.remove('btn-warning');
+      e.target.closest('button').classList.add('btn-success');
+      e.target.closest('button').innerHTML = '<i class="icon-save"></i> Kaydet';
+    }
+  });
+});
+
   function scanDevices() {
     // Modalı kilitle ve bekleme işareti göster
     $('#addDeviceModal .modal-content').block({ 
