@@ -222,7 +222,7 @@
             </table>
             <div class="form-group overflow-hidden">
               <div class="col-xs-12">
-                <button id="addRowButton" class="btn btn-info btn-lg" data-toggle="modal" data-target="#addRowModal">
+                <button id="addRowButton" class="btn btn-info btn-lg" data-toggle="modal" data-target="#addRowModalIEC">
                   <I class="icon-plus4"></I> Ekle
                 </button>
               </div>
@@ -346,7 +346,7 @@
 </div>
 
 <!-- Add Row Modal for IEC 62056-21-->
-<div class="modal fade" id="addRowModal" tabindex="-1" role="dialog" aria-labelledby="addRowModalLabel" aria-hidden="true">
+<div class="modal fade" id="addRowModalIEC" tabindex="-1" role="dialog" aria-labelledby="addRowModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -357,25 +357,20 @@
       </div>
       <div class="modal-body">
         <!-- Form içeriği -->
-        <form id="addRowForm">
+        <form id="addRowFormIEC">
           <div class="form-group">
-            <label for="modal-bus_name">Bağlantı İsmi</label>
-            <input type="text" class="form-control" id="modal-bus_name" placeholder="İsim giriniz">
+            <label for="modal-iec-name">Bağlantı İsmi</label>
+            <input type="text" class="form-control" id="modal-iec-name" placeholder="İsim giriniz">
           </div>
           <div class="form-group">
-            <label for="modal-serial_port">Seri Port</label>
-            <select class="form-control" id="modal-serial_port">
+            <label for="modal-serial-port-iec">Seri Port</label>
+            <select class="form-control" id="modal-serial-port-iec">
               <option>Seri Port Seçiniz</option>
-              <option>COM 1</option>
-              <option>COM 2</option>
-              <option>COM 3</option>
-              <option>COM 4</option>
-              <option>COM 5</option>
             </select>
           </div>
           <div class="form-group">
-            <label for="modal-baud_rate">Baud Rate</label>
-            <select class="form-control" id="modal-baud_rate">
+            <label for="modal-baud-rate-iec">Baud Rate</label>
+            <select class="form-control" id="modal-baud-rate-iec">
               <option>Baud Rate Seçiniz</option>
               <option>300</option>
               <option>600</option>
@@ -387,8 +382,8 @@
             </select>
           </div>
           <div class="form-group">
-            <label for="modal-retry">Tekrar Deneme Sayısı</label>
-            <select class="form-control" id="modal-retry">
+            <label for="modal-retry-iec">Tekrar Deneme Sayısı</label>
+            <select class="form-control" id="modal-retry-iec">
               <option>Tekrar Deneme Sayısı Seçiniz</option>
               <option>0</option>
               <option>1</option>
@@ -398,8 +393,8 @@
             </select>
           </div>
           <div class="form-group">
-            <label for="modal-time_out">Zaman Aşımı</label>
-            <select class="form-control" id="modal-time_out">
+            <label for="modal-time-out-iec">Zaman Aşımı</label>
+            <select class="form-control" id="modal-time-out-iec">
               <option>Zaman Aşımı</option>
               <option>500 milisaniye</option>
               <option>1000 milisaniye</option>
@@ -643,16 +638,16 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 document.addEventListener('DOMContentLoaded', function() {
-  const tableBody = document.querySelector('#iecTable tbody');
+  const tableBodyIEC = document.querySelector('#iecTable tbody');
 
-  document.getElementById('addRowForm').addEventListener('submit', function(e) {
+  document.getElementById('addRowFormIEC').addEventListener('submit', function(e) {
     e.preventDefault();
 
-    const busName = document.getElementById('modal-bus_name').value;
-    const serialPort = document.getElementById('modal-serial_port').value;
-    const baudRate = document.getElementById('modal-baud_rate').value;
-    const retry = document.getElementById('modal-retry').value;
-    const timeOut = document.getElementById('modal-time_out').value;
+    const busName = document.getElementById('modal-iec-name').value;
+    const serialPort = document.getElementById('modal-serial-port-iec').value;
+    const baudRate = document.getElementById('modal-baud-rate-iec').value;
+    const retry = document.getElementById('modal-retry-iec').value;
+    const timeOut = document.getElementById('modal-time-out-iec').value;
 
     const row = document.createElement('tr');
     row.innerHTML = `
@@ -668,14 +663,14 @@ document.addEventListener('DOMContentLoaded', function() {
         <button type="button" class="btn btn-danger btn-sm"> <i class="icon-cross2"></i> Sil</button>
       </td>
     `;
-    tableBody.appendChild(row);
+    tableBodyIEC.appendChild(row);
 
     // Modal'ı kapat ve formu sıfırla
-    $('#addRowModal').modal('hide');
-    document.getElementById('addRowForm').reset();
+    $('#addRowModalIEC').modal('hide');
+    document.getElementById('addRowFormIEC').reset();
   });
 
-  tableBody.addEventListener('click', function(e) {
+  tableBodyIEC.addEventListener('click', function(e) {
     if (e.target.classList.contains('icon-cross2')) {
       const row = e.target.closest('tr');
       row.parentNode.removeChild(row);
@@ -702,6 +697,32 @@ document.addEventListener('DOMContentLoaded', function() {
       e.target.closest('button').classList.add('btn-success');
       e.target.closest('button').innerHTML = '<i class="icon-save"></i> Kaydet';
     }
+  });
+
+  // Modal açıldığında TTYPortları yükle
+  $('#addRowModalIEC').on('shown.bs.modal', function() {
+    fetch('http://192.168.1.146:5678/webhook/get-table-content', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ tableName: 'MoxaDefinedSerialPorts' })
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log('Gelen veri:', data); // Debug amaçlı gelen veriyi ekrana bas
+      if (data[0].success && Array.isArray(data[0].data)) {
+        const serialPortDropdown = document.getElementById('modal-serial-port-iec');
+        serialPortDropdown.innerHTML = '<option>Seri Port Seçiniz</option>';
+        data[0].data.forEach(port => {
+          const option = document.createElement('option');
+          option.value = port.TTYPort;
+          option.text = port.TTYPort;
+          serialPortDropdown.appendChild(option);
+        });
+      }
+    })
+    .catch(error => console.error('Error:', error));
   });
 });
 
