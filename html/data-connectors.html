@@ -286,7 +286,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="addRowModalLabelMbus">Yeni Satır Ekle</h5>
+        <h5 class="modal-title" id="addRowModalLabelMbus">Yeni M-BUS Bağlantısı Ekle</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -614,6 +614,31 @@ document.addEventListener('DOMContentLoaded', function() {
       e.target.closest('button').classList.add('btn-success');
       e.target.closest('button').innerHTML = '<i class="icon-save"></i> Kaydet';
     }
+  });
+
+  // Modal açıldığında TTYPortları yükle
+  $('#addRowModalMbus').on('shown.bs.modal', function() {
+    fetch('http://192.168.1.146:5678/webhook/get-table-content', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ tableName: 'MoxaDefinedSerialPorts' })
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data[0].success && Array.isArray(data[0].data)) {
+        const serialPortDropdown = document.getElementById('modal-serial-port-mbus');
+        serialPortDropdown.innerHTML = '<option>Seri Port Seçiniz</option>';
+        data[0].data.forEach(port => {
+          const option = document.createElement('option');
+          option.value = port.TTYPort;
+          option.text = port.TTYPort;
+          serialPortDropdown.appendChild(option);
+        });
+      }
+    })
+    .catch(error => console.error('Error:', error));
   });
 });
 
