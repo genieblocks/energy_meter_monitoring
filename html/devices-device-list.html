@@ -650,6 +650,12 @@
     }
   
     function fetchProtocolDetails(protocolType) {
+      // Modalı kilitle ve bekleme işareti göster
+      $.blockUI({
+        message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
+        overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
+        css: { border: 0, padding: 0, backgroundColor: 'transparent' }
+      });
       console.log("debug_3:", protocolType); // Debug log
       console.log("debug_31:", JSON.stringify({ tableName: 'Protocols', filter: { ProtocolTypes: protocolType } })) // Debug log
 
@@ -701,8 +707,12 @@
         } else {
           console.error('Manufacturer tablosu verileri yüklenemedi:', data[0].message);
         }
+        // Modal kilidini kaldır
+        $.unblockUI();
       })
       .catch(error => console.error('Fetch error:', error));
+      // Modal kilidini kaldır
+      $.unblockUI();
     }
   
     function fetchConnectionPoints(protocolType) {
