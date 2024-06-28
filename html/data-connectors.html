@@ -548,6 +548,92 @@
   <script src="../app-assets/js/scripts/modal/components-modal.js"></script>
   <!-- END PAGE LEVEL JS-->
   <script>
+document.addEventListener('DOMContentLoaded', function() {
+  // UI'yi kilitle ve spinner göster
+  $.blockUI({
+    message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
+    overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
+    css: { border: 0, padding: 0, backgroundColor: 'transparent' }
+  });
+
+  // IEC 62056-21 verilerini çek ve tabloya ekle
+  fetch('http://192.168.1.146:5678/webhook/get-table-content', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ tableName: 'IECProtocolConnections' })
+  })
+  .then(response => response.json())
+  .then(data => {
+    const tableBodyIEC = document.querySelector('#iecTable tbody');
+    tableBodyIEC.innerHTML = ''; // Mevcut satırları temizle
+
+    if (data[0].success && Array.isArray(data[0].data)) {
+      data[0].data.forEach(connection => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${connection.ConnectionName}</td>
+          <td>${connection.PortName}</td>
+          <td>${connection.BaudRate}</td>
+          <td>${connection.RetryCount}</td>
+          <td>${connection.Timeout}</td>
+          <td class="text-xs-center">
+            <button type="button" class="btn btn-success btn-sm"> <i class="icon-save"></i> Kaydet</button>
+          </td>
+          <td class="text-xs-center">
+            <button type="button" class="btn btn-danger btn-sm"> <i class="icon-cross2"></i> Sil</button>
+          </td>
+        `;
+        tableBodyIEC.appendChild(row);
+      });
+    } else {
+      console.error('IECProtocolConnections tablosu verileri yüklenemedi:', data[0].message);
+    }
+  })
+  .catch(error => console.error('Error:', error));
+
+  // M-BUS verilerini çek ve tabloya ekle
+  fetch('http://192.168.1.146:5678/webhook/get-table-content', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ tableName: 'MBusProtocolConnections' })
+  })
+  .then(response => response.json())
+  .then(data => {
+    const tableBodyMbus = document.querySelector('#mBusTable tbody');
+    tableBodyMbus.innerHTML = ''; // Mevcut satırları temizle
+
+    if (data[0].success && Array.isArray(data[0].data)) {
+      data[0].data.forEach(connection => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${connection.ConnectionName}</td>
+          <td>${connection.PortName}</td>
+          <td>${connection.BaudRate}</td>
+          <td>${connection.RetryCount}</td>
+          <td>${connection.Timeout}</td>
+          <td class="text-xs-center">
+            <button type="button" class="btn btn-success btn-sm"> <i class="icon-save"></i> Kaydet</button>
+          </td>
+          <td class="text-xs-center">
+            <button type="button" class="btn btn-danger btn-sm"> <i class="icon-cross2"></i> Sil</button>
+          </td>
+        `;
+        tableBodyMbus.appendChild(row);
+      });
+    } else {
+      console.error('MBusProtocolConnections tablosu verileri yüklenemedi:', data[0].message);
+    }
+  })
+  .catch(error => console.error('Error:', error))
+  .finally(() => {
+    // UI'yi aç ve spinnerı kaldır
+    $.unblockUI();
+  });
+});
 
 document.addEventListener('DOMContentLoaded', function() {
   const tableBodyMbus = document.querySelector('#mBusTable tbody');
