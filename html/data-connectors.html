@@ -630,25 +630,53 @@ document.addEventListener('DOMContentLoaded', function() {
     const retry = document.getElementById('modal-retry-mbus').value;
     const timeOut = document.getElementById('modal-time-out-mbus').value;
 
-    const row = document.createElement('tr');
-    row.innerHTML = `
-      <td>${busName}</td>
-      <td>${serialPort}</td>
-      <td>${baudRate}</td>
-      <td>${retry}</td>
-      <td>${timeOut}</td>
-      <td class="text-xs-center">
-        <button type="button" class="btn btn-success btn-sm"> <i class="icon-save"></i> Kaydet</button>
-      </td>
-      <td class="text-xs-center">
-        <button type="button" class="btn btn-danger btn-sm"> <i class="icon-cross2"></i> Sil</button>
-      </td>
-    `;
-    tableBodyMbus.appendChild(row);
+    const jsonData = {
+      tableName: "MBusProtocolConnections",
+      MBusProtocolConnectionID: 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx', // Örnek UUID değeri, bunu gerektiği şekilde oluştur
+      ConnectionName: busName,
+      PortName: serialPort,
+      BaudRate: baudRate,
+      RetryCount: retry,
+      Timeout: timeOut
+    };
 
-    // Modal'ı kapat ve formu sıfırla
-    $('#addRowModalMbus').modal('hide');
-    document.getElementById('addRowFormMbus').reset();
+    fetch('http://192.168.1.146:5678/webhook/insert-table-content', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(jsonData)
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log("Received response from insert-table-content:", data); // Debug log
+      if (data[0].success) {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${busName}</td>
+          <td>${serialPort}</td>
+          <td>${baudRate}</td>
+          <td>${retry}</td>
+          <td>${timeOut}</td>
+          <td class="text-xs-center">
+            <button type="button" class="btn btn-success btn-sm"> <i class="icon-save"></i> Kaydet</button>
+          </td>
+          <td class="text-xs-center">
+            <button type="button" class="btn btn-danger btn-sm"> <i class="icon-cross2"></i> Sil</button>
+          </td>
+        `;
+        tableBodyMbus.appendChild(row);
+
+        $('#addRowModalMbus').modal('hide');
+        document.getElementById('addRowFormMbus').reset();
+      } else {
+        alert('Veri eklenirken bir hata oluştu: ' + data[0].message);
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      alert('Veri eklenirken bir hata oluştu.');
+    });
   });
 
   tableBodyMbus.addEventListener('click', function(e) {
