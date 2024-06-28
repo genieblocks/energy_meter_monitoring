@@ -209,9 +209,9 @@
                 <tr>
                   <th>Bağlantı İsmi</th>
                   <th>Seri Port</th>
-                  <th>Baud Rate</th>
+                  <th>Baud Rate (bps)</th>
                   <th>Tekrar Deneme Sayısı</th>
-                  <th>Zaman Aşımı</th>
+                  <th>Zaman Aşımı (milisaniye)</th>
                   <th>Düzenle</th>
                   <th>Sil</th>
                 </tr>
@@ -254,9 +254,9 @@
                 <tr>
                   <th>Bağlantı İsmi</th>
                   <th>Seri Port</th>
-                  <th>Baud Rate</th>
+                  <th>Baud Rate (bps)</th>
                   <th>Tekrar Deneme Sayısı</th>
-                  <th>Zaman Aşımı</th>
+                  <th>Zaman Aşımı (milisaniye)</th>
                   <th>Düzenle</th>
                   <th>Sil</th>
                 </tr>
@@ -310,7 +310,7 @@
             </select>
           </div>
           <div class="form-group">
-            <label for="modal-baud-rate-mbus">Baud Rate</label>
+            <label for="modal-baud-rate-mbus">Baud Rate (bps)</label>
             <select class="form-control" id="modal-baud-rate-mbus">
               <option>Baud Rate Seçiniz</option>
               <option>2400</option>
@@ -329,13 +329,13 @@
             </select>
           </div>
           <div class="form-group">
-            <label for="modal-time-out-mbus">Zaman Aşımı</label>
+            <label for="modal-time-out-mbus">Zaman Aşımı (milisaniye)</label>
             <select class="form-control" id="modal-time-out-mbus">
               <option>Zaman Aşımı</option>
-              <option>500 milisaniye</option>
-              <option>1000 milisaniye</option>
-              <option>1500 milisaniye</option>
-              <option>2000 milisaniye</option>
+              <option>500</option>
+              <option>1000</option>
+              <option>1500</option>
+              <option>2000</option>
             </select>
           </div>
           <button type="submit" class="btn btn-primary">Ekle</button>
@@ -369,7 +369,7 @@
             </select>
           </div>
           <div class="form-group">
-            <label for="modal-baud-rate-iec">Baud Rate</label>
+            <label for="modal-baud-rate-iec">Baud Rate (bps)</label>
             <select class="form-control" id="modal-baud-rate-iec">
               <option>Baud Rate Seçiniz</option>
               <option>300</option>
@@ -395,11 +395,11 @@
           <div class="form-group">
             <label for="modal-time-out-iec">Zaman Aşımı</label>
             <select class="form-control" id="modal-time-out-iec">
-              <option>Zaman Aşımı</option>
-              <option>500 milisaniye</option>
-              <option>1000 milisaniye</option>
-              <option>1500 milisaniye</option>
-              <option>2000 milisaniye</option>
+              <option>Zaman Aşımı (milisaniye)</option>
+              <option>500</option>
+              <option>1000</option>
+              <option>1500</option>
+              <option>2000</option>
             </select>
           </div>
           <button type="submit" class="btn btn-primary">Ekle</button>
@@ -548,6 +548,75 @@
   <script src="../app-assets/js/scripts/modal/components-modal.js"></script>
   <!-- END PAGE LEVEL JS-->
   <script>
+document.getElementById('addRowFormIEC').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const busName = document.getElementById('modal-iec-name').value;
+    const serialPort = document.getElementById('modal-serial-port-iec').value;
+    const baudRate = document.getElementById('modal-baud-rate-iec').value;
+    const retry = document.getElementById('modal-retry-iec').value;
+    const timeOut = document.getElementById('modal-time-out-iec').value;
+
+    const iecConnectionID = 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'; // Bu değeri ihtiyaç duyduğunuz GUID ile değiştirebilirsiniz
+
+    const jsonData = {
+        tableName: 'IECProtocolConnections',
+        IECConnectionID: iecConnectionID,
+        ConnectionName: busName,
+        PortName: serialPort,
+        BaudRate: baudRate,
+        RetryCount: retry,
+        Timeout: timeOut
+    };
+
+    // Modalı kilitle ve bekleme işareti göster
+    $.blockUI({
+        message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
+        overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
+        css: { border: 0, padding: 0, backgroundColor: 'transparent' }
+    });
+
+    fetch('http://192.168.1.146:5678/webhook/insert-table-content', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(jsonData)
+    })
+    .then(response => response.json())
+    .then(data => {
+        $.unblockUI();
+        console.log("Received response from insert-table-content:", data); // Debug log
+        if (data[0].success) {
+            $('#addRowModalIEC').modal('hide');
+            // Yeni eklenen veriyi tabloya ekleyin
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${busName}</td>
+                <td>${serialPort}</td>
+                <td>${baudRate}</td>
+                <td>${retry}</td>
+                <td>${timeOut}</td>
+                <td class="text-xs-center">
+                    <button type="button" class="btn btn-success btn-sm"> <i class="icon-save"></i> Kaydet</button>
+                </td>
+                <td class="text-xs-center">
+                    <button type="button" class="btn btn-danger btn-sm"> <i class="icon-cross2"></i> Sil</button>
+                </td>
+            `;
+            document.querySelector('#iecTable tbody').appendChild(row);
+
+            document.getElementById('addRowFormIEC').reset();
+        } else {
+            alert('Veri eklenirken bir hata oluştu: ' + data[0].message);
+        }
+    })
+    .catch(error => {
+        $.unblockUI();
+        alert('Veri eklenirken bir hata oluştu.');
+        console.error('Error:', error);
+    });
+});
 
 document.addEventListener('DOMContentLoaded', function() {
   const tableBodyMbus = document.querySelector('#mBusTable tbody');
