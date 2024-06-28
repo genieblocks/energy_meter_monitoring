@@ -74,7 +74,7 @@
         </div>
         <div class="modal-footer">
           <input type="reset" class="btn btn-light btn-lg" data-dismiss="modal" value="kapat">
-          <input type="submit" class="btn btn-genie white btn-lg" value="Sayaç Ekle" onclick="submitMeterForm()">
+          <input type="submit" class="btn btn-genie white btn-lg" value="Sayaç Ekle">
         </div>
       </form>
     </div>
@@ -591,7 +591,7 @@
             row.innerHTML = `
               <td>${item.SerialNumber || ''}</td>
               <td>${item.Brand || ''}</td>
-              <td>${item.Protocol || ''}</td>
+              <td>${item.CommunicationProtocol || ''}</td>
               <td>${item.ConnectionPoint || ''}</td>
               <td>
                 <button type="button" class="btn btn-sm btn-outline-danger" id="table-delete-button">
@@ -623,6 +623,7 @@
       })
       .then(response => response.json())
       .then(data => {
+        console.log("debug_1:", data); // Debug log
         const protocolTypeSelect = document.querySelector('#protocolType');
         if (data[0].success && Array.isArray(data[0].data)) {
           data[0].data.forEach(protocol => {
@@ -640,6 +641,8 @@
   
     function updateProtocolDetails() {
       const protocolType = document.querySelector('#protocolType').value;
+      console.log("debug_2:", protocolType); // Debug log
+
   
       // Manufacturer ve Connection Point dropdownlarını güncelle
       fetchProtocolDetails(protocolType);
@@ -647,22 +650,27 @@
     }
   
     function fetchProtocolDetails(protocolType) {
+      console.log("debug_3:", protocolType); // Debug log
+      console.log("debug_31:", JSON.stringify({ tableName: 'Protocols', filter: { ProtocolTypes: protocolType } })) // Debug log
+
       fetch('http://192.168.1.146:5678/webhook/get-table-content', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ tableName: 'Protocols', filter: { ProtocolTypes: protocolType } })
+        body: JSON.stringify({ tableName: 'Protocols' })
       })
       .then(response => response.json())
       .then(data => {
+        console.log("debug_4:", data); // Debug log
         const manufacturerSelect = document.querySelector('#manufacturer');
         manufacturerSelect.innerHTML = '<option value="none" selected disabled>Sayaç Markası Seçiniz.</option>';
   
         if (data[0].success && Array.isArray(data[0].data)) {
-          const protocol = data[0].data[0];
+          const protocol = data[0].data.find(item => item.ProtocolType === protocolType);
           const manufacturerTable = protocol.ManufacturerTableName;
-  
+          console.log("debug_5:", manufacturerTable); // Debug log
+
           fetchManufacturers(manufacturerTable);
         } else {
           console.error('Protocols tablosu verileri yüklenemedi:', data[0].message);
@@ -681,6 +689,7 @@
       })
       .then(response => response.json())
       .then(data => {
+        console.log("debug_6:", data); // Debug log
         const manufacturerSelect = document.querySelector('#manufacturer');
         if (data[0].success && Array.isArray(data[0].data)) {
           data[0].data.forEach(manufacturer => {
@@ -702,15 +711,16 @@
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ tableName: 'Protocols', filter: { ProtocolTypes: protocolType } })
+        body: JSON.stringify({ tableName: 'Protocols' })
       })
       .then(response => response.json())
       .then(data => {
+        console.log("debug_7:", data); // Debug log
         const connectionPointSelect = document.querySelector('#connectionPoint');
         connectionPointSelect.innerHTML = '<option value="none" selected disabled>Bağlantı Noktası Seçiniz.</option>';
   
         if (data[0].success && Array.isArray(data[0].data)) {
-          const protocol = data[0].data[0];
+          const protocol = data[0].data.find(item => item.ProtocolType === protocolType);
           const connectionTable = protocol.ConnectionTableName;
   
           fetchConnections(connectionTable);
@@ -731,6 +741,7 @@
       })
       .then(response => response.json())
       .then(data => {
+        console.log("debug_8:", data); // Debug log
         const connectionPointSelect = document.querySelector('#connectionPoint');
         if (data[0].success && Array.isArray(data[0].data)) {
           data[0].data.forEach(connection => {
@@ -746,37 +757,43 @@
       .catch(error => console.error('Fetch error:', error));
     }
   
-    function submitMeterForm() {
-      const serialNumber = document.querySelector('#devicename').value;
-      const protocolType = document.querySelector('#protocolType').value;
-      const manufacturer = document.querySelector('#manufacturer').value;
-      const connectionPoint = document.querySelector('#connectionPoint').value;
-      const tableName = 'ElectricMeters'; // İlgili sayaç tablosu
-  
-      fetch('http://192.168.1.146:5678/webhook/insert-meter', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          tableName: tableName,
-          serialNumber: serialNumber,
-          protocolType: protocolType,
-          manufacturer: manufacturer,
-          connectionPoint: connectionPoint
-        })
+    document.querySelector('#electricityMeterForm').addEventListener('submit', function(event) {
+    event.preventDefault(); // Formun submit olmasını engelle
+
+    const serialNumber = document.querySelector('#devicename').value;
+    const protocolType = document.querySelector('#protocolType').value;
+    const manufacturer = document.querySelector('#manufacturer').value;
+    const connectionPoint = document.querySelector('#connectionPoint').value;
+    const tableName = 'ElectricMeters'; // İlgili sayaç tablosu
+
+    const ElectricMeterID = 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'; 
+
+    fetch('http://192.168.1.146:5678/webhook/insert-table-content', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        tableName: tableName,
+        ElectricMeterID: ElectricMeterID,
+        SerialNumber: serialNumber,
+        CommunicationProtocol: protocolType,
+        Brand: manufacturer,
+        ConnectionPoint: connectionPoint
       })
-      .then(response => response.json())
-      .then(data => {
-        if (data.success) {
-          alert('Sayaç başarıyla eklendi!');
-          location.reload(); // Sayfayı yeniden yükle
-        } else {
-          console.error('Sayaç ekleme hatası:', data.message);
-        }
-      })
-      .catch(error => console.error('Fetch error:', error));
-    }
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log("Received response from insert-table-content:", data); // Debug log
+      if (data[0].success) {
+        alert('Sayaç başarıyla eklendi!');
+        location.reload(); // Sayfayı yeniden yükle
+      } else {
+        console.error('Sayaç ekleme hatası:', data.message);
+      }
+    })
+    .catch(error => console.error('Fetch error:', error));
+  });
   </script>
 </body>
 
