@@ -30,7 +30,7 @@
   <!-- END Custom CSS-->
 </head>
 
-<body class="vertical-layout vertical-menu 2-columns menu-expanded" data-open="click" data-menu="vertical-menu"
+<body onload="initializePage()" class="vertical-layout vertical-menu 2-columns menu-expanded" data-open="click" data-menu="vertical-menu"
   data-col="2-columns">
 
   <!-- Modal Electricity Meter-->
@@ -338,7 +338,7 @@
             </div>
           </div>
           <table class="table table-hover table-bordered zero-configuration dataTable" id="DataTables_Table_Electricity_Meter_List"
-          role="grid" aria-describedby="DataTables_Table_0_info">
+            role="grid" aria-describedby="DataTables_Table_0_info">
             <thead>
               <tr>
                 <th>Sayaç Seri Numarası</th>
@@ -349,28 +349,6 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>34574783</td>
-                <td>Makel</td>
-                <td>ModBus</td>
-                <td>C Blok Elektrik Sayaçları</td>
-                <td>
-                  <button type="button" class="btn btn-sm btn-outline-danger" id="table-delete-button">
-                    <i class="fa fa-trash-o"></i>
-                  </button>
-                </td>
-              </tr>
-              <tr>
-                <td>57837375</td>
-                <td>Köhler</td>
-                <td>ModBus</td>
-                <td>C Blok Elektrik Sayaçları</td>
-                <td>
-                  <button type="button" class="btn btn-sm btn-outline-danger" id="table-delete-button">
-                    <i class="fa fa-trash-o"></i>
-                  </button>
-                </td>
-              </tr>
             </tbody>
           </table>
         </div>
@@ -398,105 +376,6 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>16230519</td>
-                <td>UniCocoder</td>
-                <td>M-BUS</td>
-                <td>D Blok Su Sayaçları</td>
-                <td>
-                  <button type="button" class="btn btn-sm btn-outline-danger" id="table-delete-button">
-                    <i class="fa fa-trash-o"></i>
-                  </button>
-                </td>
-              </tr>
-              <tr>
-                <td>70013378</td>
-                <td>FNF Teknoloji</td>
-                <td>M-BUS</td>
-                <td>D Blok Su Sayaçları</td>
-                <td>
-                  <button type="button" class="btn btn-sm btn-outline-danger" id="table-delete-button">
-                    <i class="fa fa-trash-o"></i>
-                  </button>
-                </td>
-              </tr>
-              <tr>
-                <td>16160703</td>
-                <td>Mueller-electronic</td>
-                <td>M-BUS</td>
-                <td>D Blok Su Sayaçları</td>
-                <td>
-                  <button type="button" class="btn btn-sm btn-outline-danger" id="table-delete-button">
-                    <i class="fa fa-trash-o"></i>
-                  </button>
-                </td>
-              </tr>
-              <tr>
-                <td>00016795</td>
-                <td>BAYLAN</td>
-                <td>M-BUS</td>
-                <td>D Blok Su Sayaçları</td>
-                <td>
-                  <button type="button" class="btn btn-sm btn-outline-danger" id="table-delete-button">
-                    <i class="fa fa-trash-o"></i>
-                  </button>
-                </td>
-              </tr>
-              <tr>
-                <td>00016721</td>
-                <td>BAYLAN</td>
-                <td>M-BUS</td>
-                <td>D Blok Su Sayaçları</td>
-                <td>
-                  <button type="button" class="btn btn-sm btn-outline-danger" id="table-delete-button">
-                    <i class="fa fa-trash-o"></i>
-                  </button>
-                </td>
-              </tr>
-              <tr>
-                <td>00016738</td>
-                <td>BAYLAN</td>
-                <td>M-BUS</td>
-                <td>D Blok Su Sayaçları</td>
-                <td>
-                  <button type="button" class="btn btn-sm btn-outline-danger" id="table-delete-button">
-                    <i class="fa fa-trash-o"></i>
-                  </button>
-                </td>
-              </tr>
-              <tr>
-                <td>00016708</td>
-                <td>BAYLAN</td>
-                <td>M-BUS</td>
-                <td>D Blok Su Sayaçları</td>
-                <td>
-                  <button type="button" class="btn btn-sm btn-outline-danger" id="table-delete-button">
-                    <i class="fa fa-trash-o"></i>
-                  </button>
-                </td>
-              </tr>
-              <tr>
-                <td>00016723</td>
-                <td>BAYLAN</td>
-                <td>M-BUS</td>
-                <td>D Blok Su Sayaçları</td>
-                <td>
-                  <button type="button" class="btn btn-sm btn-outline-danger" id="table-delete-button">
-                    <i class="fa fa-trash-o"></i>
-                  </button>
-                </td>
-              </tr>
-              <tr>
-                <td>00016712</td>
-                <td>BAYLAN</td>
-                <td>M-BUS</td>
-                <td>D Blok Su Sayaçları</td>
-                <td>
-                  <button type="button" class="btn btn-sm btn-outline-danger" id="table-delete-button">
-                    <i class="fa fa-trash-o"></i>
-                  </button>
-                </td>
-              </tr>
             </tbody>
           </table>
         </div>
@@ -513,7 +392,7 @@
             </div>
           </div>
           <table class="table table-hover table-bordered zero-configuration dataTable" id="DataTables_Table_Calorimeter_Hot_Meter_List"
-          role="grid" aria-describedby="DataTables_Table_0_info">
+            role="grid" aria-describedby="DataTables_Table_0_info">
             <thead>
               <tr>
                 <th>Sayaç Seri Numarası</th>
@@ -524,72 +403,6 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>67256000</td>
-                <td>Landis+Gyr</td>
-                <td>M-BUS</td>
-                <td>D Blok M-BUS</td>
-                <td>
-                  <button type="button" class="btn btn-sm btn-outline-danger" id="table-delete-button">
-                    <i class="fa fa-trash-o"></i>
-                  </button>
-                </td>
-              </tr>
-              <tr>
-                <td>67256054</td>
-                <td>Landis+Gyr</td>
-                <td>M-BUS</td>
-                <td>D Blok M-BUS</td>
-                <td>
-                  <button type="button" class="btn btn-sm btn-outline-danger" id="table-delete-button">
-                    <i class="fa fa-trash-o"></i>
-                  </button>
-                </td>
-              </tr>
-              <tr>
-                <td>67256034</td>
-                <td>Landis+Gyr</td>
-                <td>M-BUS</td>
-                <td>D Blok M-BUS</td>
-                <td>
-                  <button type="button" class="btn btn-sm btn-outline-danger" id="table-delete-button">
-                    <i class="fa fa-trash-o"></i>
-                  </button>
-                </td>
-              </tr>
-              <tr>
-                <td>67256024</td>
-                <td>Landis+Gyr</td>
-                <td>M-BUS</td>
-                <td>D Blok M-BUS</td>
-                <td>
-                  <button type="button" class="btn btn-sm btn-outline-danger" id="table-delete-button">
-                    <i class="fa fa-trash-o"></i>
-                  </button>
-                </td>
-              </tr>
-              <tr>
-                <td>67256039</td>
-                <td>Landis+Gyr</td>
-                <td>M-BUS</td>
-                <td>D Blok M-BUS</td>
-                <td>
-                  <button type="button" class="btn btn-sm btn-outline-danger" id="table-delete-button">
-                    <i class="fa fa-trash-o"></i>
-                  </button>
-                </td>
-              </tr>
-              <tr>
-                <td>67256016</td>
-                <td>Landis+Gyr</td>
-                <td>M-BUS</td>
-                <td>D Blok M-BUS</td>
-                <td>
-                  <button type="button" class="btn btn-sm btn-outline-danger" id="table-delete-button">
-                    <i class="fa fa-trash-o"></i>
-                  </button>
-                </td>
-              </tr>
             </tbody>
           </table>
         </div>
@@ -617,61 +430,6 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>67256024</td>
-                <td>Landis+Gyr</td>
-                <td>M-BUS</td>
-                <td>D Blok M-BUS</td>
-                <td>
-                  <button type="button" class="btn btn-sm btn-outline-danger" id="table-delete-button">
-                    <i class="fa fa-trash-o"></i>
-                  </button>
-                </td>
-              </tr>
-              <tr>
-                <td>67256084</td>
-                <td>Landis+Gyr</td>
-                <td>M-BUS</td>
-                <td>D Blok M-BUS</td>
-                <td>
-                  <button type="button" class="btn btn-sm btn-outline-danger" id="table-delete-button">
-                    <i class="fa fa-trash-o"></i>
-                  </button>
-                </td>
-              </tr>
-              <tr>
-                <td>67256058</td>
-                <td>Landis+Gyr</td>
-                <td>M-BUS</td>
-                <td>D Blok M-BUS</td>
-                <td>
-                  <button type="button" class="btn btn-sm btn-outline-danger" id="table-delete-button">
-                    <i class="fa fa-trash-o"></i>
-                  </button>
-                </td>
-              </tr>
-              <tr>
-                <td>67256067</td>
-                <td>Landis+Gyr</td>
-                <td>M-BUS</td>
-                <td>D Blok M-BUS</td>
-                <td>
-                  <button type="button" class="btn btn-sm btn-outline-danger" id="table-delete-button">
-                    <i class="fa fa-trash-o"></i>
-                  </button>
-                </td>
-              </tr>
-              <tr>
-                <td>67256095</td>
-                <td>Landis+Gyr</td>
-                <td>M-BUS</td>
-                <td>D Blok M-BUS</td>
-                <td>
-                  <button type="button" class="btn btn-sm btn-outline-danger" id="table-delete-button">
-                    <i class="fa fa-trash-o"></i>
-                  </button>
-                </td>
-              </tr>
             </tbody>
           </table>
         </div>
@@ -795,6 +553,62 @@
   <script src="../app-assets/js/scripts/modal/components-modal.js"></script>
   <script src="../app-assets/js/scripts/tables/datatables/datatable-basic.js"></script>
   <!-- END PAGE LEVEL JS-->
+
+  <script>
+    function initializePage() {
+      // Sayfa yüklendiğinde UI'yi kilitle ve spinner göster
+      $.blockUI({
+        message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
+        overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
+        css: { border: 0, padding: 0, backgroundColor: 'transparent' }
+      });
+  
+      // Tabloları fetch fonksiyonu ile doldur
+      fetchTableData('ElectricMeters', '#DataTables_Table_Electricity_Meter_List tbody');
+      fetchTableData('WaterMeters', '#DataTables_Table_Water_Meter_List tbody');
+      fetchTableData('HeatingMeters', '#DataTables_Table_Calorimeter_Hot_Meter_List tbody');
+      fetchTableData('CoolingMeters', '#DataTables_Table_Calorimeter_Cold_Meter_List tbody');
+  
+      // İşlemler tamamlandığında UI kilidini kaldır
+      $.unblockUI();
+    }
+  
+    function fetchTableData(tableName, tableBodySelector) {
+      fetch('http://192.168.1.146:5678/webhook/get-table-content', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ tableName: tableName })
+      })
+      .then(response => response.json())
+      .then(data => {
+        const tableBody = document.querySelector(tableBodySelector);
+        tableBody.innerHTML = ''; // Mevcut satırları temizle
+  
+        if (data[0].success && Array.isArray(data[0].data)) {
+          data[0].data.forEach(item => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+              <td>${item.SerialNumber || ''}</td>
+              <td>${item.Brand || ''}</td>
+              <td>${item.Protocol || ''}</td>
+              <td>${item.ConnectionPoint || ''}</td>
+              <td>
+                <button type="button" class="btn btn-sm btn-outline-danger" id="table-delete-button">
+                  <i class="fa fa-trash-o"></i>
+                </button>
+              </td>
+            `;
+            tableBody.appendChild(row);
+          });
+        } else {
+          console.error(tableName + ' tablosu verileri yüklenemedi:', data[0].message);
+        }
+      })
+      .catch(error => console.error('Fetch error:', error));
+    }
+  </script>
 </body>
 
 </html>
