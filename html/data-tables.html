@@ -397,6 +397,8 @@
   <!-- END PAGE LEVEL JS-->
 
   <script>
+// const baseWebhookURL = "http://localhost:5678"; // Değiştirmek istediğiniz temel URL
+const baseWebhookURL = "http://192.168.1.146:5678"; // Değiştirmek istediğiniz temel URL
  $(document).ready(function () {
     // Initialize the repeater
     $('.contact-repeater').repeater({
@@ -458,7 +460,7 @@
             css: { border: 0, padding: 0, backgroundColor: 'transparent' }
         });
 
-        fetch('http://192.168.1.146:5678/webhook/create-table', {
+        fetch(`${baseWebhookURL}/webhook/create-table`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -555,7 +557,7 @@ function validateName(name) {
           css: { border: 0, padding: 0, backgroundColor: 'transparent' }
       });
   
-      fetch('http://192.168.1.146:5678/webhook/get-tables-status')
+      fetch(`${baseWebhookURL}/webhook/get-tables-status`)
           .then(response => response.json())
           .then(data => {
               console.log("Received response from webhook:", JSON.stringify(data, null, 2));
@@ -668,7 +670,7 @@ function fetchTableData() {
         css: { border: 0, padding: 0, backgroundColor: 'transparent' }
     });
 
-    fetch('http://192.168.1.146:5678/webhook/get-tables-status')
+    fetch(`${baseWebhookURL}/webhook/get-tables-status`)
         .then(response => response.json())
         .then(data => {
             $.unblockUI();
@@ -739,7 +741,7 @@ function showTableContent(tableName) {
         css: { border: 0, padding: 0, backgroundColor: 'transparent' }
     });
 
-    fetch('http://192.168.1.146:5678/webhook/get-table-content', {
+    fetch(`${baseWebhookURL}/webhook/get-table-content`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -838,7 +840,7 @@ function deleteTableRow(tableName, primaryKey, primaryKeyValue) {
         css: { border: 0, padding: 0, backgroundColor: 'transparent' }
     });
 
-    fetch('http://192.168.1.146:5678/webhook/delete-table-row', {
+    fetch(`${baseWebhookURL}/webhook/delete-table-row`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -880,7 +882,7 @@ function showNewDataForm(tableName) {
         css: { border: 0, padding: 0, backgroundColor: 'transparent' }
     });
 
-    fetch('http://192.168.1.146:5678/webhook/get-table-columns', {
+    fetch(`${baseWebhookURL}/webhook/get-table-columns`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -941,7 +943,7 @@ function submitTableContent() {
         css: { border: 0, padding: 0, backgroundColor: 'transparent' }
     });
 
-    fetch('http://192.168.1.146:5678/webhook/insert-table-content', {
+    fetch(`${baseWebhookURL}/webhook/insert-table-content`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -979,7 +981,7 @@ function editTableName(oldTableName, tableRow) {
         css: { border: 0, padding: 0, backgroundColor: 'transparent' }
     });
 
-    fetch('http://192.168.1.146:5678/webhook/edit-table-name', {
+    fetch(`${baseWebhookURL}/webhook/edit-table-name`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -1010,7 +1012,7 @@ function deleteTable(tableName) {
         css: { border: 0, padding: 0, backgroundColor: 'transparent' }
     });
 
-    fetch('http://192.168.1.146:5678/webhook/delete-table', {
+    fetch(`${baseWebhookURL}/webhook/delete-table`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

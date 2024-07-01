@@ -604,6 +604,9 @@
   <!-- END PAGE LEVEL JS-->
 
   <script>
+    // const baseWebhookURL = "http://localhost:5678"; // Değiştirmek istediğiniz temel URL
+    const baseWebhookURL = "http://192.168.1.146:5678"; // Değiştirmek istediğiniz temel URL
+
     function initializePage() {
       // Sayfa yüklendiğinde UI'yi kilitle ve spinner göster
       $.blockUI({
@@ -623,7 +626,7 @@
     }
   
     function fetchTableData(tableName, tableBodySelector) {
-      fetch('http://192.168.1.146:5678/webhook/get-table-content', {
+      fetch(`${baseWebhookURL}/webhook/get-table-content`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -672,7 +675,7 @@
     });
   
     function loadProtocolTypes(meterType) {
-      fetch('http://192.168.1.146:5678/webhook/get-table-content', {
+      fetch(`${baseWebhookURL}/webhook/get-table-content`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -715,7 +718,7 @@
       });
       console.log("debug_3:", protocolType); // Debug log
 
-      fetch('http://192.168.1.146:5678/webhook/get-table-content', {
+      fetch(`${baseWebhookURL}/webhook/get-table-content`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -742,7 +745,7 @@
     }
   
     function fetchManufacturers(manufacturerTable, meterType) {
-      fetch('http://192.168.1.146:5678/webhook/get-table-content', {
+      fetch(`${baseWebhookURL}/webhook/get-table-content`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -770,7 +773,7 @@
     }
   
     function fetchConnectionPoints(protocolType, meterType) {
-      fetch('http://192.168.1.146:5678/webhook/get-table-content', {
+      fetch(`${baseWebhookURL}/webhook/get-table-content`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -796,7 +799,7 @@
     }
   
     function fetchConnections(connectionTable, meterType) {
-      fetch('http://192.168.1.146:5678/webhook/get-table-content', {
+      fetch(`${baseWebhookURL}/webhook/get-table-content`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -839,7 +842,7 @@
       css: { border: 0, padding: 0, backgroundColor: 'transparent' }
     });
 
-    fetch('http://192.168.1.146:5678/webhook/insert-table-content', {
+    fetch(`${baseWebhookURL}/webhook/insert-table-content`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -887,7 +890,7 @@
       css: { border: 0, padding: 0, backgroundColor: 'transparent' }
     });
 
-    fetch('http://192.168.1.146:5678/webhook/insert-table-content', {
+    fetch(`${baseWebhookURL}/webhook/insert-table-content`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -935,7 +938,7 @@
       css: { border: 0, padding: 0, backgroundColor: 'transparent' }
     });
 
-    fetch('http://192.168.1.146:5678/webhook/insert-table-content', {
+    fetch(`${baseWebhookURL}/webhook/insert-table-content`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -983,7 +986,7 @@
       css: { border: 0, padding: 0, backgroundColor: 'transparent' }
     });
 
-    fetch('http://192.168.1.146:5678/webhook/insert-table-content', {
+    fetch(`${baseWebhookURL}/webhook/insert-table-content`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

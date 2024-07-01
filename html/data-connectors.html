@@ -548,6 +548,9 @@
   <script src="../app-assets/js/scripts/modal/components-modal.js"></script>
   <!-- END PAGE LEVEL JS-->
   <script>
+// const baseWebhookURL = "http://localhost:5678"; // Değiştirmek istediğiniz temel URL
+const baseWebhookURL = "http://192.168.1.146:5678"; // Değiştirmek istediğiniz temel URL
+
 document.addEventListener('DOMContentLoaded', function() {
   // UI'yi kilitle ve spinner göster
   $.blockUI({
@@ -557,7 +560,7 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
   // IEC 62056-21 verilerini çek ve tabloya ekle
-  fetch('http://192.168.1.146:5678/webhook/get-table-content', {
+  fetch(`${baseWebhookURL}/webhook/get-table-content`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -594,7 +597,7 @@ document.addEventListener('DOMContentLoaded', function() {
   .catch(error => console.error('Error:', error));
 
   // M-BUS verilerini çek ve tabloya ekle
-  fetch('http://192.168.1.146:5678/webhook/get-table-content', {
+  fetch(`${baseWebhookURL}/webhook/get-table-content`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -657,7 +660,7 @@ document.addEventListener('DOMContentLoaded', function() {
       Timeout: timeOut
     };
 
-    fetch('http://192.168.1.146:5678/webhook/insert-table-content', {
+    fetch(`${baseWebhookURL}/webhook/insert-table-content`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -727,7 +730,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Modal açıldığında TTYPortları yükle
   $('#addRowModalMbus').on('shown.bs.modal', function() {
-    fetch('http://192.168.1.146:5678/webhook/get-table-content', {
+    fetch(`${baseWebhookURL}/webhook/get-table-content`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -782,7 +785,7 @@ document.addEventListener('DOMContentLoaded', function() {
     css: { border: 0, padding: 0, backgroundColor: 'transparent' }
     });
 
-    fetch('http://192.168.1.146:5678/webhook/insert-table-content', {
+    fetch(`${baseWebhookURL}/webhook/insert-table-content`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -855,7 +858,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Modal açıldığında TTYPortları yükle
   $('#addRowModalIEC').on('shown.bs.modal', function() {
-    fetch('http://192.168.1.146:5678/webhook/get-table-content', {
+    fetch(`${baseWebhookURL}/webhook/get-table-content`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -889,7 +892,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Tanımlı cihazları çağır
-    fetch('http://192.168.1.146:5678/webhook/driver-device-list', {
+    fetch(`${baseWebhookURL}/webhook/driver-device-list`, {
       method: 'GET'
     })
     .then(response => {
@@ -900,7 +903,7 @@ document.addEventListener('DOMContentLoaded', function() {
     })
     .then(definedData => {
       // Bulunan cihazları çağır
-      return fetch('http://192.168.1.146:5678/webhook/scan-devices', {
+      return fetch(`${baseWebhookURL}/webhook/scan-devices`, {
         method: 'POST'
       })
       .then(response => {
@@ -974,7 +977,7 @@ document.addEventListener('DOMContentLoaded', function() {
           css: { border: 0, padding: 0, backgroundColor: 'transparent' }
         });
 
-        fetch('http://192.168.1.146:5678/webhook/driver-device-add', {
+        fetch(`${baseWebhookURL}/webhook/driver-device-add`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -1013,7 +1016,7 @@ document.addEventListener('DOMContentLoaded', function() {
         css: { border: 0, padding: 0, backgroundColor: 'transparent' }
       });
 
-      fetch('http://192.168.1.146:5678/webhook/driver-device-list', {
+      fetch(`${baseWebhookURL}/webhook/driver-device-list`, {
         method: 'GET'
       })
       .then(response => {
@@ -1090,7 +1093,7 @@ document.addEventListener('DOMContentLoaded', function() {
           css: { border: 0, padding: 0, backgroundColor: 'transparent' }
         });
           
-        fetch('http://192.168.1.146:5678/webhook/driver-device-remove', {
+        fetch(`${baseWebhookURL}/webhook/driver-device-remove`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -1105,7 +1108,7 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .then(data => {
       // Silme işlemi başarılı olduğunda cihaz listesini yeniden sorgula ve güncelle
-      fetch('http://192.168.1.146:5678/webhook/driver-device-list', {
+      fetch(`${baseWebhookURL}/webhook/driver-device-list`, {
         method: 'GET'
       })
       .then(response => {
