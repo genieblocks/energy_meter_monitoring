@@ -33,9 +33,8 @@
 <body onload="initializePage()" class="vertical-layout vertical-menu 2-columns menu-expanded" data-open="click" data-menu="vertical-menu"
   data-col="2-columns">
 
-<!-- Modal Electricity Meter-->
-<div class="modal fade text-left" id="iconModalElectricity" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2"
-  aria-hidden="true">
+<!-- Modal Electricity Meter -->
+<div class="modal fade text-left" id="iconModalElectricity" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
   <div class="modal-dialog modal-sm" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -48,25 +47,25 @@
         <div class="modal-body">
           <fieldset class="form-group floating-label-form-group">
             <label for="devicename">Sayaç Seri Numarası</label>
-            <input type="text" class="form-control" id="devicename" placeholder="Seri Numarası">
+            <input type="text" class="form-control" id="devicenameElectricity" placeholder="Seri Numarası">
           </fieldset>
           <fieldset class="form-group floating-label-form-group">
-            <label for="protocolType">Protokol Tipi</label>
-            <select id="protocolType" name="protocolType" class="form-control" onchange="updateProtocolDetails()">
+            <label for="protocolTypeElectricity">Protokol Tipi</label>
+            <select id="protocolTypeElectricity" name="protocolType" class="form-control" onchange="updateProtocolDetails('Electricity')">
               <option value="none" selected disabled>Protokol Tipi Seçiniz.</option>
               <!-- Dinamik olarak doldurulacak -->
             </select>
           </fieldset>
           <fieldset class="form-group floating-label-form-group">
-            <label for="manufacturer">Sayaç Markası</label>
-            <select id="manufacturer" name="manufacturer" class="form-control">
+            <label for="manufacturerElectricity">Sayaç Markası</label>
+            <select id="manufacturerElectricity" name="manufacturer" class="form-control">
               <option value="none" selected disabled>Sayaç Markası Seçiniz.</option>
               <!-- Dinamik olarak doldurulacak -->
             </select>
           </fieldset>
           <fieldset class="form-group floating-label-form-group">
-            <label for="connectionPoint">Bağlantı Noktası</label>
-            <select id="connectionPoint" name="connectionPoint" class="form-control">
+            <label for="connectionPointElectricity">Bağlantı Noktası</label>
+            <select id="connectionPointElectricity" name="connectionPoint" class="form-control">
               <option value="none" selected disabled>Bağlantı Noktası Seçiniz.</option>
               <!-- Dinamik olarak doldurulacak -->
             </select>
@@ -80,97 +79,144 @@
     </div>
   </div>
 </div>
-  <!-- Modal Water Meter -->
-  <div class="modal fade text-left" id="iconModalWater" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2"
-    aria-hidden="true">
-    <div class="modal-dialog modal-sm" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h4 class="modal-title text-bold-600" id="myModalLabel2"><i class="fa fa-road2"></i> Sayaç Ekleme</h4>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <form>
-          <div class="modal-body">
-            <fieldset class="form-group floating-label-form-group">
-              <label for="name">Sayaç Seri Numarası</label>
-              <input type="text" class="form-control" id="devicename" placeholder="Seri Numarası">
-            </fieldset>
-            <fieldset class="form-group floating-label-form-group">
-              <label for="name">Sayaç Markası</label>
-              <select id="projectinput5" name="interested" class="form-control">
-                <option value="none" selected disabled>Sayaç Markası Seçiniz.</option>
-                <option value="UniCocoder">UniCocoder</option>
-                <option value="FNF-Teknoloji">FNF Teknoloji</option>
-                <option value="Mueller-electronic">Mueller-electronic</option>
-                <option value="Kohler">Baylan</option>
-              </select>
-            </fieldset>
-            <fieldset class="form-group floating-label-form-group">
-              <label for="name">Bağlantı Noktası</label>
-              <select id="projectinput5" name="interested" class="form-control">
-                <option value="none" selected="" disabled="">Bağlantı Noktası Seçiniz.</option>
-                <option value="COM01">B Blok Kuzen Bağlantı</option>
-                <option value="COM07">B Blok Güney Bağlantı</option>
-                <option value="COM08">C Blok Elektrik Sayaçları</option>
-                <option value="COM10">D Blok M-BUS</option>
-                <option value="COM13">D Blok Su Sayaçları</option>
-              </select>
-            </fieldset>
-          </div>
-          <div class="modal-footer">
-            <input type="reset" class="btn btn-light btn-lg" data-dismiss="modal" value="kapat">
-            <input type="submit" class="btn btn-genie white btn-lg" value="Sayaç Ekle">
-          </div>
-        </form>
+<!-- Modal Water Meter -->
+<div class="modal fade text-left" id="iconModalWater" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title text-bold-600" id="myModalLabel2"><i class="fa fa-road2"></i> Sayaç Ekleme</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
       </div>
+      <form id="waterMeterForm">
+        <div class="modal-body">
+          <fieldset class="form-group floating-label-form-group">
+            <label for="devicename">Sayaç Seri Numarası</label>
+            <input type="text" class="form-control" id="devicenameWater" placeholder="Seri Numarası">
+          </fieldset>
+          <fieldset class="form-group floating-label-form-group">
+            <label for="protocolTypeWater">Protokol Tipi</label>
+            <select id="protocolTypeWater" name="protocolType" class="form-control" onchange="updateProtocolDetails('Water')">
+              <option value="none" selected disabled>Protokol Tipi Seçiniz.</option>
+              <!-- Dinamik olarak doldurulacak -->
+            </select>
+          </fieldset>
+          <fieldset class="form-group floating-label-form-group">
+            <label for="manufacturerWater">Sayaç Markası</label>
+            <select id="manufacturerWater" name="manufacturer" class="form-control">
+              <option value="none" selected disabled>Sayaç Markası Seçiniz.</option>
+              <!-- Dinamik olarak doldurulacak -->
+            </select>
+          </fieldset>
+          <fieldset class="form-group floating-label-form-group">
+            <label for="connectionPointWater">Bağlantı Noktası</label>
+            <select id="connectionPointWater" name="connectionPoint" class="form-control">
+              <option value="none" selected disabled>Bağlantı Noktası Seçiniz.</option>
+              <!-- Dinamik olarak doldurulacak -->
+            </select>
+          </fieldset>
+        </div>
+        <div class="modal-footer">
+          <input type="reset" class="btn btn-light btn-lg" data-dismiss="modal" value="kapat">
+          <input type="submit" class="btn btn-genie white btn-lg" value="Sayaç Ekle">
+        </div>
+      </form>
     </div>
   </div>
-  <!-- Modal Heat Meter -->
-  <div class="modal fade text-left" id="iconModalHeat" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2"
-    aria-hidden="true">
-    <div class="modal-dialog modal-sm" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h4 class="modal-title text-bold-600" id="myModalLabel2"><i class="fa fa-road2"></i> Sayaç Ekleme</h4>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <form>
-          <div class="modal-body">
-            <fieldset class="form-group floating-label-form-group">
-              <label for="name">Sayaç Seri Numarası</label>
-              <input type="text" class="form-control" id="devicename" placeholder="Seri Numarası">
-            </fieldset>
-            <fieldset class="form-group floating-label-form-group">
-              <label for="name">Sayaç Markası</label>
-              <select id="projectinput5" name="interested" class="form-control">
-                <option value="none" selected disabled>Sayaç Markası Seçiniz.</option>
-                <option value="Landis+Gyr">Landis+Gyr</option>
-              </select>
-            </fieldset>
-            <fieldset class="form-group floating-label-form-group">
-              <label for="name">Bağlantı Noktası</label>
-              <select id="projectinput5" name="interested" class="form-control">
-                <option value="none" selected="" disabled="">Bağlantı Noktası Seçiniz.</option>
-                <option value="COM01">B Blok Kuzen Bağlantı</option>
-                <option value="COM07">B Blok Güney Bağlantı</option>
-                <option value="COM08">C Blok Elektrik Sayaçları</option>
-                <option value="COM10">D Blok M-BUS</option>
-                <option value="COM13">D Blok Su Sayaçları</option>
-              </select>
-            </fieldset>
-          </div>
-          <div class="modal-footer">
-            <input type="reset" class="btn btn-light btn-lg" data-dismiss="modal" value="kapat">
-            <input type="submit" class="btn btn-genie white btn-lg" value="Sayaç Ekle">
-          </div>
-        </form>
+</div>
+<!-- Modal Heating Meter -->
+<div class="modal fade text-left" id="iconModalHeating" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title text-bold-600" id="myModalLabel2"><i class="fa fa-road2"></i> Sayaç Ekleme</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
       </div>
+      <form id="heatingMeterForm">
+        <div class="modal-body">
+          <fieldset class="form-group floating-label-form-group">
+            <label for="devicename">Sayaç Seri Numarası</label>
+            <input type="text" class="form-control" id="devicenameHeating" placeholder="Seri Numarası">
+          </fieldset>
+          <fieldset class="form-group floating-label-form-group">
+            <label for="protocolTypeHeating">Protokol Tipi</label>
+            <select id="protocolTypeHeating" name="protocolType" class="form-control" onchange="updateProtocolDetails('Heating')">
+              <option value="none" selected disabled>Protokol Tipi Seçiniz.</option>
+              <!-- Dinamik olarak doldurulacak -->
+            </select>
+          </fieldset>
+          <fieldset class="form-group floating-label-form-group">
+            <label for="manufacturerHeating">Sayaç Markası</label>
+            <select id="manufacturerHeating" name="manufacturer" class="form-control">
+              <option value="none" selected disabled>Sayaç Markası Seçiniz.</option>
+              <!-- Dinamik olarak doldurulacak -->
+            </select>
+          </fieldset>
+          <fieldset class="form-group floating-label-form-group">
+            <label for="connectionPointHeating">Bağlantı Noktası</label>
+            <select id="connectionPointHeating" name="connectionPoint" class="form-control">
+              <option value="none" selected disabled>Bağlantı Noktası Seçiniz.</option>
+              <!-- Dinamik olarak doldurulacak -->
+            </select>
+          </fieldset>
+        </div>
+        <div class="modal-footer">
+          <input type="reset" class="btn btn-light btn-lg" data-dismiss="modal" value="kapat">
+          <input type="submit" class="btn btn-genie white btn-lg" value="Sayaç Ekle">
+        </div>
+      </form>
     </div>
   </div>
+</div>
+<!-- Modal Cooling Meter -->
+<div class="modal fade text-left" id="iconModalCooling" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title text-bold-600" id="myModalLabel2"><i class="fa fa-road2"></i> Sayaç Ekleme</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form id="coolingMeterForm">
+        <div class="modal-body">
+          <fieldset class="form-group floating-label-form-group">
+            <label for="devicenameCooling">Sayaç Seri Numarası</label>
+            <input type="text" class="form-control" id="devicenameCooling" placeholder="Seri Numarası">
+          </fieldset>
+          <fieldset class="form-group floating-label-form-group">
+            <label for="protocolTypeCooling">Protokol Tipi</label>
+            <select id="protocolTypeCooling" name="protocolType" class="form-control" onchange="updateProtocolDetails('Cooling')">
+              <option value="none" selected disabled>Protokol Tipi Seçiniz.</option>
+              <!-- Dinamik olarak doldurulacak -->
+            </select>
+          </fieldset>
+          <fieldset class="form-group floating-label-form-group">
+            <label for="manufacturerCooling">Sayaç Markası</label>
+            <select id="manufacturerCooling" name="manufacturer" class="form-control">
+              <option value="none" selected disabled>Sayaç Markası Seçiniz.</option>
+              <!-- Dinamik olarak doldurulacak -->
+            </select>
+          </fieldset>
+          <fieldset class="form-group floating-label-form-group">
+            <label for="connectionPointCooling">Bağlantı Noktası</label>
+            <select id="connectionPointCooling" name="connectionPoint" class="form-control">
+              <option value="none" selected disabled>Bağlantı Noktası Seçiniz.</option>
+              <!-- Dinamik olarak doldurulacak -->
+            </select>
+          </fieldset>
+        </div>
+        <div class="modal-footer">
+          <input type="reset" class="btn btn-light btn-lg" data-dismiss="modal" value="kapat">
+          <input type="submit" class="btn btn-genie white btn-lg" value="Sayaç Ekle">
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
 
   <!-- ////////////////////////////////////////////////////////////////////////////-->
 
@@ -387,7 +433,7 @@
               <input type="text" class="global_filter mr-2" id="global_filter" placeholder=" Sayaç Ara">
             </div>
             <div class="cal-1 col-xl-1">
-              <button class="btn btn-sm btn-genie white" type="button" data-toggle="modal" data-target="#iconModalHeat">Sayaç Ekle</button>
+              <button class="btn btn-sm btn-genie white" type="button" data-toggle="modal" data-target="#iconModalHeating">Sayaç Ekle</button>
             </div>
           </div>
           <table class="table table-hover table-bordered zero-configuration dataTable" id="DataTables_Table_Calorimeter_Hot_Meter_List"
@@ -414,7 +460,7 @@
               <input type="text" class="global_filter mr-2" id="global_filter" placeholder=" Sayaç Ara">
             </div>
             <div class="cal-1 col-xl-1">
-              <button class="btn btn-sm btn-genie white" type="button" data-toggle="modal" data-target="#iconModalHeat">Sayaç Ekle</button>
+              <button class="btn btn-sm btn-genie white" type="button" data-toggle="modal" data-target="#iconModalCooling">Sayaç Ekle</button>
             </div>
           </div>
           <table class="table table-hover table-bordered zero-configuration dataTable" id="DataTables_Table_Calorimeter_Cold_Meter_List"
@@ -610,10 +656,13 @@
   </script>
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      loadProtocolTypes();
+      loadProtocolTypes('electricity');
+      loadProtocolTypes('water');
+      loadProtocolTypes('heating');
+      loadProtocolTypes('cooling');
     });
   
-    function loadProtocolTypes() {
+    function loadProtocolTypes(meterType) {
       fetch('http://192.168.1.146:5678/webhook/get-table-content', {
         method: 'POST',
         headers: {
@@ -624,7 +673,7 @@
       .then(response => response.json())
       .then(data => {
         console.log("debug_1:", data); // Debug log
-        const protocolTypeSelect = document.querySelector('#protocolType');
+        const protocolTypeSelect = document.querySelector(`#protocolType${capitalize(meterType)}`);
         if (data[0].success && Array.isArray(data[0].data)) {
           data[0].data.forEach(protocol => {
             const option = document.createElement('option');
@@ -639,17 +688,16 @@
       .catch(error => console.error('Fetch error:', error));
     }
   
-    function updateProtocolDetails() {
-      const protocolType = document.querySelector('#protocolType').value;
+    function updateProtocolDetails(meterType) {
+      const protocolType = document.querySelector(`#protocolType${capitalize(meterType)}`).value;
       console.log("debug_2:", protocolType); // Debug log
 
-  
       // Manufacturer ve Connection Point dropdownlarını güncelle
-      fetchProtocolDetails(protocolType);
-      fetchConnectionPoints(protocolType);
+      fetchProtocolDetails(protocolType, meterType);
+      fetchConnectionPoints(protocolType, meterType);
     }
   
-    function fetchProtocolDetails(protocolType) {
+    function fetchProtocolDetails(protocolType, meterType) {
       // Modalı kilitle ve bekleme işareti göster
       $.blockUI({
         message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
@@ -657,7 +705,6 @@
         css: { border: 0, padding: 0, backgroundColor: 'transparent' }
       });
       console.log("debug_3:", protocolType); // Debug log
-      console.log("debug_31:", JSON.stringify({ tableName: 'Protocols', filter: { ProtocolTypes: protocolType } })) // Debug log
 
       fetch('http://192.168.1.146:5678/webhook/get-table-content', {
         method: 'POST',
@@ -669,15 +716,15 @@
       .then(response => response.json())
       .then(data => {
         console.log("debug_4:", data); // Debug log
-        const manufacturerSelect = document.querySelector('#manufacturer');
+        const manufacturerSelect = document.querySelector(`#manufacturer${capitalize(meterType)}`);
         manufacturerSelect.innerHTML = '<option value="none" selected disabled>Sayaç Markası Seçiniz.</option>';
-  
+
         if (data[0].success && Array.isArray(data[0].data)) {
           const protocol = data[0].data.find(item => item.ProtocolType === protocolType);
           const manufacturerTable = protocol.ManufacturerTableName;
           console.log("debug_5:", manufacturerTable); // Debug log
 
-          fetchManufacturers(manufacturerTable);
+          fetchManufacturers(manufacturerTable, meterType);
         } else {
           console.error('Protocols tablosu verileri yüklenemedi:', data[0].message);
         }
@@ -685,7 +732,7 @@
       .catch(error => console.error('Fetch error:', error));
     }
   
-    function fetchManufacturers(manufacturerTable) {
+    function fetchManufacturers(manufacturerTable, meterType) {
       fetch('http://192.168.1.146:5678/webhook/get-table-content', {
         method: 'POST',
         headers: {
@@ -696,7 +743,7 @@
       .then(response => response.json())
       .then(data => {
         console.log("debug_6:", data); // Debug log
-        const manufacturerSelect = document.querySelector('#manufacturer');
+        const manufacturerSelect = document.querySelector(`#manufacturer${capitalize(meterType)}`);
         if (data[0].success && Array.isArray(data[0].data)) {
           data[0].data.forEach(manufacturer => {
             const option = document.createElement('option');
@@ -711,11 +758,9 @@
         $.unblockUI();
       })
       .catch(error => console.error('Fetch error:', error));
-      // Modal kilidini kaldır
-      $.unblockUI();
     }
   
-    function fetchConnectionPoints(protocolType) {
+    function fetchConnectionPoints(protocolType, meterType) {
       fetch('http://192.168.1.146:5678/webhook/get-table-content', {
         method: 'POST',
         headers: {
@@ -726,14 +771,14 @@
       .then(response => response.json())
       .then(data => {
         console.log("debug_7:", data); // Debug log
-        const connectionPointSelect = document.querySelector('#connectionPoint');
+        const connectionPointSelect = document.querySelector(`#connectionPoint${capitalize(meterType)}`);
         connectionPointSelect.innerHTML = '<option value="none" selected disabled>Bağlantı Noktası Seçiniz.</option>';
-  
+
         if (data[0].success && Array.isArray(data[0].data)) {
           const protocol = data[0].data.find(item => item.ProtocolType === protocolType);
           const connectionTable = protocol.ConnectionTableName;
-  
-          fetchConnections(connectionTable);
+
+          fetchConnections(connectionTable, meterType);
         } else {
           console.error('Protocols tablosu verileri yüklenemedi:', data[0].message);
         }
@@ -741,7 +786,7 @@
       .catch(error => console.error('Fetch error:', error));
     }
   
-    function fetchConnections(connectionTable) {
+    function fetchConnections(connectionTable, meterType) {
       fetch('http://192.168.1.146:5678/webhook/get-table-content', {
         method: 'POST',
         headers: {
@@ -752,7 +797,7 @@
       .then(response => response.json())
       .then(data => {
         console.log("debug_8:", data); // Debug log
-        const connectionPointSelect = document.querySelector('#connectionPoint');
+        const connectionPointSelect = document.querySelector(`#connectionPoint${capitalize(meterType)}`);
         if (data[0].success && Array.isArray(data[0].data)) {
           data[0].data.forEach(connection => {
             const option = document.createElement('option');
@@ -766,17 +811,24 @@
       })
       .catch(error => console.error('Fetch error:', error));
     }
-  
+
     document.querySelector('#electricityMeterForm').addEventListener('submit', function(event) {
     event.preventDefault(); // Formun submit olmasını engelle
 
-    const serialNumber = document.querySelector('#devicename').value;
-    const protocolType = document.querySelector('#protocolType').value;
-    const manufacturer = document.querySelector('#manufacturer').value;
-    const connectionPoint = document.querySelector('#connectionPoint').value;
+    const serialNumber = document.querySelector('#devicenameElectricity').value;
+    const protocolType = document.querySelector('#protocolTypeElectricity').value;
+    const manufacturer = document.querySelector('#manufacturerElectricity').value;
+    const connectionPoint = document.querySelector('#connectionPointElectricity').value;
     const tableName = 'ElectricMeters'; // İlgili sayaç tablosu
 
     const ElectricMeterID = 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'; 
+
+    // Modalı kilitle ve bekleme işareti göster
+    $.blockUI({
+      message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
+      overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
+      css: { border: 0, padding: 0, backgroundColor: 'transparent' }
+    });
 
     fetch('http://192.168.1.146:5678/webhook/insert-table-content', {
       method: 'POST',
@@ -802,8 +854,160 @@
         console.error('Sayaç ekleme hatası:', data.message);
       }
     })
-    .catch(error => console.error('Fetch error:', error));
+    .catch(error => console.error('Fetch error:', error))
+    .finally(() => {
+      $.unblockUI();
+    });
   });
+
+  document.querySelector('#waterMeterForm').addEventListener('submit', function(event) {
+    event.preventDefault(); // Formun submit olmasını engelle
+
+    const serialNumber = document.querySelector('#devicenameWater').value;
+    const protocolType = document.querySelector('#protocolTypeWater').value;
+    const manufacturer = document.querySelector('#manufacturerWater').value;
+    const connectionPoint = document.querySelector('#connectionPointWater').value;
+    const tableName = 'WaterMeters'; // İlgili sayaç tablosu
+
+    const WaterMeterID = 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'; 
+
+    // Modalı kilitle ve bekleme işareti göster
+    $.blockUI({
+      message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
+      overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
+      css: { border: 0, padding: 0, backgroundColor: 'transparent' }
+    });
+
+    fetch('http://192.168.1.146:5678/webhook/insert-table-content', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        tableName: tableName,
+        WaterMeterID: WaterMeterID,
+        SerialNumber: serialNumber,
+        CommunicationProtocol: protocolType,
+        Brand: manufacturer,
+        ConnectionPoint: connectionPoint
+      })
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log("Received response from insert-table-content:", data); // Debug log
+      if (data[0].success) {
+        alert('Sayaç başarıyla eklendi!');
+        location.reload(); // Sayfayı yeniden yükle
+      } else {
+        console.error('Sayaç ekleme hatası:', data.message);
+      }
+    })
+    .catch(error => console.error('Fetch error:', error))
+    .finally(() => {
+      $.unblockUI();
+    });
+  });
+
+  document.querySelector('#heatingMeterForm').addEventListener('submit', function(event) {
+    event.preventDefault(); // Formun submit olmasını engelle
+
+    const serialNumber = document.querySelector('#devicenameHeating').value;
+    const protocolType = document.querySelector('#protocolTypeHeating').value;
+    const manufacturer = document.querySelector('#manufacturerHeating').value;
+    const connectionPoint = document.querySelector('#connectionPointHeating').value;
+    const tableName = 'HeatingMeters'; // İlgili sayaç tablosu
+
+    const HeatingMeterID = 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'; 
+
+    // Modalı kilitle ve bekleme işareti göster
+    $.blockUI({
+      message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
+      overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
+      css: { border: 0, padding: 0, backgroundColor: 'transparent' }
+    });
+
+    fetch('http://192.168.1.146:5678/webhook/insert-table-content', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        tableName: tableName,
+        HeatingMeterID: HeatingMeterID,
+        SerialNumber: serialNumber,
+        CommunicationProtocol: protocolType,
+        Brand: manufacturer,
+        ConnectionPoint: connectionPoint
+      })
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log("Received response from insert-table-content:", data); // Debug log
+      if (data[0].success) {
+        alert('Sayaç başarıyla eklendi!');
+        location.reload(); // Sayfayı yeniden yükle
+      } else {
+        console.error('Sayaç ekleme hatası:', data.message);
+      }
+    })
+    .catch(error => console.error('Fetch error:', error))
+    .finally(() => {
+      $.unblockUI();
+    });
+  });
+
+  document.querySelector('#coolingMeterForm').addEventListener('submit', function(event) {
+    event.preventDefault(); // Formun submit olmasını engelle
+
+    const serialNumber = document.querySelector('#devicenameCooling').value;
+    const protocolType = document.querySelector('#protocolTypeCooling').value;
+    const manufacturer = document.querySelector('#manufacturerCooling').value;
+    const connectionPoint = document.querySelector('#connectionPointCooling').value;
+    const tableName = 'CoolingMeters'; // İlgili sayaç tablosu
+
+    const CoolingMeterID = 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'; 
+
+    // Modalı kilitle ve bekleme işareti göster
+    $.blockUI({
+      message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
+      overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
+      css: { border: 0, padding: 0, backgroundColor: 'transparent' }
+    });
+
+    fetch('http://192.168.1.146:5678/webhook/insert-table-content', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        tableName: tableName,
+        CoolingMeterID: CoolingMeterID,
+        SerialNumber: serialNumber,
+        CommunicationProtocol: protocolType,
+        Brand: manufacturer,
+        ConnectionPoint: connectionPoint
+      })
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log("Received response from insert-table-content:", data); // Debug log
+      if (data[0].success) {
+        alert('Sayaç başarıyla eklendi!');
+        location.reload(); // Sayfayı yeniden yükle
+      } else {
+        console.error('Sayaç ekleme hatası:', data.message);
+      }
+    })
+    .catch(error => console.error('Fetch error:', error))
+    .finally(() => {
+      $.unblockUI();
+    });
+  });
+
+  function capitalize(str) {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  }
+  
   </script>
 </body>
 
