@@ -390,7 +390,8 @@
                 <th>Sayaç Markası</th>
                 <th>İletişim Protokolü</th>
                 <th>Bağlantı Noktası</th>
-                <th></th>
+                <th>Düzenle</th>
+                <th>Sil</th>
               </tr>
             </thead>
             <tbody>
@@ -417,7 +418,8 @@
                 <th>Sayaç Markası</th>
                 <th>İletişim Protokolü</th>
                 <th>Bağlantı Noktası</th>
-                <th></th>
+                <th>Düzenle</th>
+                <th>Sil</th>
               </tr>
             </thead>
             <tbody>
@@ -444,7 +446,8 @@
                 <th>Sayaç Markası</th>
                 <th>İletişim Protokolü</th>
                 <th>Bağlantı Noktası</th>
-                <th></th>
+                <th>Düzenle</th>
+                <th>Sil</th>
               </tr>
             </thead>
             <tbody>
@@ -471,7 +474,8 @@
                 <th>Sayaç Markası</th>
                 <th>İletişim Protokolü</th>
                 <th>Bağlantı Noktası</th>
-                <th></th>
+                <th>Düzenle</th>
+                <th>Sil</th>
               </tr>
             </thead>
             <tbody>
@@ -639,6 +643,11 @@
               <td>${item.Brand || ''}</td>
               <td>${item.CommunicationProtocol || ''}</td>
               <td>${item.ConnectionPoint || ''}</td>
+              <td>
+                  <button type="button" class="btn btn-sm btn-outline-success" id="table-edit-button">
+                      <i class="fa fa-edit"></i>
+                  </button>
+              </td>
               <td>
                 <button type="button" class="btn btn-sm btn-outline-danger" id="table-delete-button">
                   <i class="fa fa-trash-o"></i>

@@ -193,6 +193,7 @@
             <th>Last Updated</th>
             <th>Rows</th>
             <th>Size</th>
+            <th>Show</th>
             <th>Edit</th>
             <th>Delete</th>
           </tr>
@@ -620,6 +621,16 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
+    // Add event listener for show buttons
+    document.addEventListener('click', function (event) {
+        if (event.target && event.target.id === 'table-show-button') {
+            const tableRow = event.target.closest('tr');
+            const tableName = tableRow.querySelector('td:first-child').textContent;
+            console.log(`Show button clicked for table: ${tableName}`); // Debug
+            showTableContent(tableName);
+        }
+    });
+
     // Add event listener for delete buttons
     document.addEventListener('click', function (event) {
         if (event.target && event.target.id === 'table-delete-button') {
@@ -700,7 +711,12 @@ function updateTable(data) {
                     <td>${table.rows}</td>
                     <td>${table.size}</td>
                     <td>
-                        <button type="button" class="btn btn-sm btn-outline-primary" id="table-edit-button">
+                        <button type="button" class="btn btn-sm btn-outline-info" id="table-show-button">
+                            <i class="fa fa-eye"></i>
+                        </button>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-sm btn-outline-success" id="table-edit-button">
                             <i class="fa fa-edit"></i>
                         </button>
                     </td>
@@ -768,9 +784,15 @@ function updateModalWithData(data, tableName) {
             headers.forEach(header => {
                 tableHead.insertAdjacentHTML('beforeend', `<th>${header}</th>`);
             });
+            tableHead.insertAdjacentHTML('beforeend', `<th>Düzenle</th>`); // Düzenle sütunu başlığı ekleyin
             tableHead.insertAdjacentHTML('beforeend', `<th>Sil</th>`); // Sil sütunu başlığı ekleyin
             rows.forEach(row => {
                 const rowHtml = `<tr>${Object.values(row).map(value => `<td>${value}</td>`).join('')}
+                    <td>
+                        <button type="button" class="btn btn-sm btn-outline-success" id="row-edit-button">
+                            <i class="fa fa-edit"></i>
+                        </button>
+                    </td>
                     <td>
                         <button type="button" class="btn btn-sm btn-outline-danger" id="row-delete-button">
                             <i class="fa fa-trash-o"></i>
