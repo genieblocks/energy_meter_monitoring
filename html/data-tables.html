@@ -61,51 +61,6 @@
         <li class="nav-item"><a href="reports.html"><i class="fa fa-clipboard"></i><span class="menu-title"
               data-i18n="">Raporlar</span></a>
         </li>
-        <!-- <li class="nav-item"><a href="#"><i class="fa fa-floppy-o"></i><span class="menu-title" data-i18n="">Firmware
-              Management</span></a>
-          <ul class="menu-content">
-            <li class="navigation-divider"></li>
-            <li class="menu-item"><a class="menu-item" href="firmware-management-devices.html"
-                data-i18n="nav.starter_kit.semi_dark_layout">Devices</a>
-            </li>
-            <li class="menu-item"><a class="menu-item" href="firmware-management-device-group.html"
-                data-i18n="nav.starter_kit.semi_dark_layout">Device Group</a>
-            </li>
-            <li class="menu-item"><a class="menu-item" href="firmware-management-firmware-images.html"
-                data-i18n="nav.starter_kit.semi_dark_layout">Firmware Images</a>
-            </li>
-            <li class="menu-item"><a class="menu-item" href="firmware-management-ota-jobs.html"
-                data-i18n="nav.starter_kit.semi_dark_layout">OTA Jobs</a>
-            </li>
-          </ul>
-        </li> -->
-        <!-- <li class="nav-item"><a href="#"><i class="fa fa-stethoscope"></i><span class="menu-title"
-              data-i18n="">Insight</span></a>
-          <ul class="menu-content">
-            <li class="navigation-divider"></li>
-            <li class="menu-item"><a class="menu-item" href="insight-dashboard.html"
-                data-i18n="nav.starter_kit.semi_dark_layout">Dashboard</a>
-            </li>
-            <li class="menu-item"><a class="menu-item" href="insight-devices.html"
-                data-i18n="nav.starter_kit.semi_dark_layout">Devices</a>
-            </li>
-            <li class="menu-item"><a class="menu-item" href="insight-firmware-packages.html"
-                data-i18n="nav.starter_kit.semi_dark_layout">Firmware Packages</a>
-            </li>
-            <li class="menu-item"><a class="menu-item" href="insight-auth-keys.html"
-                data-i18n="nav.starter_kit.semi_dark_layout">Auth Keys</a>
-            </li>
-          </ul>
-        </li> -->
-        <!-- <li class="nav-item"><a href="../workflows"><i class="fa fa-random"></i><span class="menu-title"
-              data-i18n="">FlowApp</span></a>
-        </li> -->
-        <!-- <li class="nav-item"><a href="dashboard.html"><i class="fa fa-area-chart"></i><span class="menu-title"
-              data-i18n="">Dashboard</span></a>
-        </li> -->
-        <!-- <li class="nav-item"><a href="project.html"><i class="fa fa-clipboard"></i><span class="menu-title"
-              data-i18n="">Project</span></a>
-        </li> -->
         <li class="nav-item"><a href="#"><i class="fa fa-exchange"></i><span class="menu-title" data-i18n="">Veri Kaynakları</span></a>
           <ul class="menu-content">
             <li class="navigation-divider"></li>
@@ -117,21 +72,6 @@
             </li>
           </ul>
         </li>
-        <!-- <li class="nav-item"><a href="#"><i class="fa fa-shopping-cart"></i><span class="menu-title"
-              data-i18n="">Marketplace</span></a>
-          <ul class="menu-content">
-            <li class="navigation-divider"></li>
-            <li class="menu-item"><a class="menu-item" href="marketplace-app.html"
-                data-i18n="nav.starter_kit.semi_dark_layout">App Marketplace</a>
-            </li>
-            <li class="menu-item"><a class="menu-item" href="marketplace-device.html"
-                data-i18n="nav.starter_kit.semi_dark_layout">Device App Marketplace</a>
-            </li>
-            <li class="menu-item"><a class="menu-item" href="marketplace-block.html"
-                data-i18n="nav.starter_kit.semi_dark_layout">Blocks App Marketplace</a>
-            </li>
-          </ul>
-        </li> -->
         <li class="nav-item"><a href="#"><i class="fa fa-user-circle-o"></i><span class="menu-title"
               data-i18n="">Hesap Ayarları</span></a>
         </li>
@@ -373,7 +313,6 @@
 
   <!-- BEGIN VENDOR JS-->
   <script src="../app-assets/js/core/libraries/jquery.min.js"></script>
-  <!-- <script src="../app-assets/vendors/js/ui/popper.min.js"></script> -->
   <script src="../app-assets/js/core/libraries/bootstrap.min.js"></script>
   <script src="../app-assets/vendors/js/ui/perfect-scrollbar.jquery.min.js"></script>
   <script src="../app-assets/vendors/js/ui/unison.min.js"></script>
@@ -412,7 +351,6 @@ const baseWebhookURL = "http://192.168.2.250:5678"; // Değiştirmek istediğini
             $(this).find('select').on('input', function () {
                 this.setCustomValidity('');
             });
-            console.log('Repeater show: Added new column'); // Debug log
         },
         hide: function (remove) {
             $(this).slideUp(remove);
@@ -422,7 +360,6 @@ const baseWebhookURL = "http://192.168.2.250:5678"; // Değiştirmek istediğini
             'columnType': ''
         },
         ready: function (setIndexes) {
-            console.log('Repeater ready'); // Debug log
         }
     });
 
@@ -438,7 +375,6 @@ const baseWebhookURL = "http://192.168.2.250:5678"; // Değiştirmek istediğini
             const columnName = $(this).find('input[name$="[columnName]"]').val();
             const columnType = $(this).find('select[name$="[columnType]"]').val();
             if (columnName && columnType) {
-                console.log('Collected column:', columnName, columnType); // Debug log
                 columns.push({ columnName, columnType });
             } else {
                 console.error('Sütun adı veya veri tipi eksik.');
@@ -451,9 +387,6 @@ const baseWebhookURL = "http://192.168.2.250:5678"; // Değiştirmek istediğini
             primaryKeyType: formData.get('primaryKeyType'),
             columns: columns
         };
-
-        console.log('Form Data:', formData); // Debug log
-        console.log('JSON Data:', JSON.stringify(jsonData)); // Debug log
 
         $.blockUI({
             message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
@@ -483,7 +416,6 @@ const baseWebhookURL = "http://192.168.2.250:5678"; // Değiştirmek istediğini
             .catch(error => {
                 $.unblockUI();
                 alert('Tablo oluşturulurken bir hata oluştu.');
-                console.error('Error:', error);
             });
     });
 });
@@ -491,24 +423,20 @@ const baseWebhookURL = "http://192.168.2.250:5678"; // Değiştirmek istediğini
 function validateForm() {
     var tableName = document.getElementById('tableName').value;
     if (!validateName(tableName)) {
-        console.log('Invalid table name:', tableName);
         alert('Lütfen geçerli bir tablo ismi girin (sadece harfler, rakamlar, alt çizgi, dolar işareti ve diyez işareti içerebilir, sayı veya özel bir karakterle başlayamaz).');
         return false;
     }
     if (tableName.length > 128) {
-        console.log('Table name too long:', tableName);
         alert('Tablo ismi en fazla 128 karakter olabilir.');
         return false;
     }
 
     var primaryKey = document.getElementById('primaryKey').value;
     if (primaryKey.length > 128) {
-        console.log('Primary key name too long:', primaryKey);
         alert('Birincil anahtar sütun adı en fazla 128 karakter olabilir.');
         return false;
     }
     if (!validateName(primaryKey)) {
-        console.log('Invalid primary key name:', primaryKey);
         alert('Lütfen geçerli bir birincil anahtar sütun adı girin (sadece harfler, rakamlar, alt çizgi, dolar işareti ve diyez işareti içerebilir, sayı veya özel bir karakterle başlayamaz).');
         return false;
     }
@@ -517,12 +445,10 @@ function validateForm() {
     for (var i = 0; i < columnNames.length; i++) {
         var columnName = columnNames[i].value;
         if (columnName.length > 128) {
-            console.log('Column name too long:', columnName);
             alert('Sütun adı en fazla 128 karakter olabilir: ' + columnName);
             return false;
         }
         if (!validateName(columnName)) {
-            console.log('Invalid column name:', columnName);
             alert('Lütfen geçerli bir sütun adı girin (sadece harfler, rakamlar, alt çizgi, dolar işareti ve diyez işareti içerebilir, sayı veya özel bir karakterle başlayamaz): ' + columnName);
             return false;
         }
@@ -542,86 +468,17 @@ function validateName(name) {
 }
     </script>
 
-
-
-
-<script>
-  document.addEventListener('DOMContentLoaded', function () {
-      // Initialize the table
-      fetchTableData();
-  });
-  
-  function fetchTableData() {
-      $.blockUI({
-          message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
-          overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
-          css: { border: 0, padding: 0, backgroundColor: 'transparent' }
-      });
-  
-      fetch(`${baseWebhookURL}/webhook/get-tables-status`)
-          .then(response => response.json())
-          .then(data => {
-              console.log("Received response from webhook:", JSON.stringify(data, null, 2));
-              updateTable(data);
-          })
-          .catch(error => {
-              console.error("Error fetching data:", error);
-              document.getElementById('tableStatusMessage').innerHTML = '<p class="text-danger">Veri tabloları yüklenirken hata oluştu.</p>';
-          })
-          .finally(() => {
-              $.unblockUI();
-          });
-  }
-  
-  function updateTable(data) {
-      var tableBody = document.getElementById('dataTablesTable').getElementsByTagName('tbody')[0];
-      tableBody.innerHTML = ''; // Clear existing rows
-  
-      // Check if data is an array and has elements
-      if (!Array.isArray(data)) {
-          data = [data]; // Ensure data is an array
-      }
-  
-      if (data.length === 0) {
-          document.getElementById('tableStatusMessage').innerHTML = '<p class="text-warning">Kayıtlı tablo yoktur. Tablo oluşturun.</p>';
-          document.getElementById('dataTablesTable').style.display = 'none';
-      } else {
-          document.getElementById('tableStatusMessage').innerHTML = '';
-          document.getElementById('dataTablesTable').style.display = 'table';
-  
-          data.forEach(function (table) {
-              var row = `
-                  <tr>
-                      <td>${table.name}</td>
-                      <td>${table.dataRetention}</td>
-                      <td>${table.createdAt}</td>
-                      <td>${table.lastUpdated}</td>
-                      <td>${table.rows}</td>
-                      <td>${table.size}</td>
-                      <td>
-                          <button type="button" class="btn btn-sm btn-outline-danger" id="table-delete-button">
-                              <i class="fa fa-trash-o"></i>
-                          </button>
-                      </td>
-                  </tr>
-              `;
-              tableBody.insertAdjacentHTML('beforeend', row);
-          });
-        // Re-initialize DataTable
-        $('#dataTablesTable').DataTable();
-      }
-  }
-  </script>
 <script>
 document.addEventListener('DOMContentLoaded', function () {
     // Initialize the table
     fetchTableData();
 
+    $('#dataTablesTable').DataTable();
+
     // Add event listener for table name clicks
     document.addEventListener('click', function (event) {
         if (event.target && event.target.classList.contains('table-name')) {
             const tableName = event.target.textContent;
-            console.log(`Table name clicked: ${tableName}`); // Debug
             showTableContent(tableName);
         }
     });
@@ -631,7 +488,6 @@ document.addEventListener('DOMContentLoaded', function () {
         if (event.target && event.target.id === 'table-show-button') {
             const tableRow = event.target.closest('tr');
             const tableName = tableRow.querySelector('td:first-child').textContent;
-            console.log(`Show button clicked for table: ${tableName}`); // Debug
             showTableContent(tableName);
         }
     });
@@ -641,7 +497,6 @@ document.addEventListener('DOMContentLoaded', function () {
         if (event.target && event.target.id === 'table-delete-button') {
             const tableRow = event.target.closest('tr');
             const tableName = tableRow.querySelector('td:first-child').textContent;
-            console.log(`Delete button clicked for table: ${tableName}`); // Debug
             if (confirm('Bu tabloyu silmek istediğinizden emin misiniz?')) {
                 deleteTable(tableName);
             }
@@ -653,7 +508,6 @@ document.addEventListener('DOMContentLoaded', function () {
         if (event.target && event.target.id === 'table-edit-button') {
             const tableRow = event.target.closest('tr');
             const tableName = tableRow.querySelector('td:first-child').textContent;
-            console.log(`Edit button clicked for table: ${tableName}`); // Debug
             editTableName(tableName, tableRow);
         }
     });
@@ -661,18 +515,10 @@ document.addEventListener('DOMContentLoaded', function () {
     // Add event listener for the new data button
     document.getElementById('newDataButton').addEventListener('click', function() {
         const tableName = $('#tableContentModal .modal-title').text();
-        console.log(`New data button clicked for table: ${tableName}`); // Debug
         showNewDataForm(tableName);
     });
 });
   
-// Initialize DataTable when the document is ready.
-$(document).ready(function () {
-    $('#dataTablesTable').DataTable();
-
-    // Fetch initial table data
-    fetchTableData();
-});
 
 function fetchTableData() {
     $.blockUI({
@@ -685,12 +531,10 @@ function fetchTableData() {
         .then(response => response.json())
         .then(data => {
             $.unblockUI();
-            console.log("Received response from webhook:", JSON.stringify(data, null, 2));
             updateTable(data);
         })
         .catch(error => {
             $.unblockUI();
-            console.error("Error fetching data:", error);
             document.getElementById('tableStatusMessage').innerHTML = '<p class="text-danger">Veri tabloları yüklenirken hata oluştu.</p>';
         });
 }
@@ -768,14 +612,12 @@ function showTableContent(tableName) {
         .then(response => response.json())
         .then(data => {
             $.unblockUI();
-            console.log("Received data: ", data); // Add logging for debugging
             updateModalWithData(data, tableName);
             $('#tableContentModal').modal('show');
         })
         .catch(error => {
             $.unblockUI();
             alert('Tablo içeriği getirilirken bir hata oluştu.');
-            console.error('Error:', error);
         });
 }
   
@@ -787,10 +629,7 @@ function updateModalWithData(data, tableName) {
 
     $('#tableContentModal .modal-title').text(tableName); // Update modal title with table name
 
-    console.log("Data received for updating modal:", data); // Debug log
-
     if (!data || !data[0]) {
-        console.error('Invalid data format:', data);
         alert('Beklenmedik veri formatı.');
         return;
     }
@@ -842,7 +681,6 @@ function updateModalWithData(data, tableName) {
             const tableRow = this.closest('tr');
             const rowData = Array.from(tableRow.children).slice(0, -1).map(td => td.textContent);
             const primaryKey = tableHead.children[0].textContent; // Silinecek sütunun başlığı
-            console.log(`Delete button clicked for row: ${rowData}`); // Debug log
             if (confirm('Bu veriyi silmek istediğinizden emin misiniz?')) {
                 deleteTableRow(tableName, primaryKey, rowData[0]); // İlk sütun birincil anahtar olarak varsayıldı
             }
@@ -868,18 +706,15 @@ function deleteTableRow(tableName, primaryKey, primaryKeyValue) {
     .then(data => {
         $.unblockUI();
         if (data[0].success) {
-          console.log("1-Received data: ", data); // Add logging for debugging
             alert('Veri başarıyla silindi.');
             showTableContent(tableName); // Refresh table content
         } else {
             alert('Veri silinirken bir hata oluştu.');
-            console.log("2-Received data: ", data); // Add logging for debugging
         }
     })
     .catch(error => {
         $.unblockUI();
         alert('Veri silinirken bir hata oluştu.');
-        console.error('Error:', error);
     });
 }
 
@@ -910,7 +745,6 @@ function showNewDataForm(tableName) {
     .then(data => {
         $.unblockUI();
         if (data && Array.isArray(data)) {
-            console.log(`Received columns for table ${tableName}:`, data); // Debug log
             data.forEach(column => {
                 const formGroup = document.createElement('div');
                 formGroup.className = 'form-group';
@@ -935,7 +769,6 @@ function showNewDataForm(tableName) {
     .catch(error => {
         $.unblockUI();
         alert('Sütun bilgileri getirilirken bir hata oluştu.');
-        console.error('Error:', error);
     });
 }
 
@@ -951,8 +784,6 @@ function submitTableContent() {
     formData.forEach((value, key) => {
         jsonData[key] = value;
     });
-
-    console.log("Submitting new data:", jsonData); // Debug log
 
     $.blockUI({
         message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
@@ -970,7 +801,6 @@ function submitTableContent() {
     .then(response => response.json())
     .then(data => {
         $.unblockUI();
-        console.log("Received response from insert-table-content:", data); // Debug log
         if (data[0].success) {
             $('#newDataModal').modal('hide');
             showTableContent($('#tableContentModal .modal-title').text());
@@ -981,7 +811,6 @@ function submitTableContent() {
     .catch(error => {
         $.unblockUI();
         alert('Veri eklenirken bir hata oluştu.');
-        console.error('Error:', error);
     });
 }
 
@@ -1018,7 +847,6 @@ function editTableName(oldTableName, tableRow) {
     .catch(error => {
         $.unblockUI();
         alert('Tablo ismi güncellenirken bir hata oluştu.');
-        console.error('Error:', error);
     });
 }
   
@@ -1050,7 +878,6 @@ function deleteTable(tableName) {
     .catch(error => {
         $.unblockUI();
         alert('Tablo silinirken bir hata oluştu.');
-        console.error('Error:', error);
     });
 }
   </script>
