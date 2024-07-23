@@ -550,14 +550,6 @@ function validateName(name) {
       // Initialize the table
       fetchTableData();
   });
-
-  // Initialize DataTable when the document is ready.
-  $(document).ready(function () {
-    $('#dataTablesTable').DataTable();
-
-    // Fetch initial table data
-    fetchTableData();
-  });
   
   function fetchTableData() {
       $.blockUI({
@@ -582,10 +574,6 @@ function validateName(name) {
   }
   
   function updateTable(data) {
-      // Destroy existing DataTable instance
-      var table = $('#dataTablesTable').DataTable();
-      table.destroy();
-
       var tableBody = document.getElementById('dataTablesTable').getElementsByTagName('tbody')[0];
       tableBody.innerHTML = ''; // Clear existing rows
   
@@ -678,6 +666,14 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
   
+// Initialize DataTable when the document is ready.
+$(document).ready(function () {
+    $('#dataTablesTable').DataTable();
+
+    // Fetch initial table data
+    fetchTableData();
+});
+
 function fetchTableData() {
     $.blockUI({
         message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
@@ -700,6 +696,10 @@ function fetchTableData() {
 }
   
 function updateTable(data) {
+    // Destroy existing DataTable instance
+    var table = $('#dataTablesTable').DataTable();
+    table.destroy();
+
     var tableBody = document.getElementById('dataTablesTable').getElementsByTagName('tbody')[0];
     tableBody.innerHTML = ''; // Clear existing rows
 
@@ -746,6 +746,8 @@ function updateTable(data) {
             `;
             tableBody.insertAdjacentHTML('beforeend', row);
         });
+        // Re-initialize DataTable
+        $('#dataTablesTable').DataTable();
     }
 }
   
