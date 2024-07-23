@@ -473,8 +473,6 @@ document.addEventListener('DOMContentLoaded', function () {
     // Initialize the table
     fetchTableData();
 
-    $('#dataTablesTable').DataTable();
-
     // Add event listener for table name clicks
     document.addEventListener('click', function (event) {
         if (event.target && event.target.classList.contains('table-name')) {
@@ -540,9 +538,10 @@ function fetchTableData() {
 }
   
 function updateTable(data) {
-    // Destroy existing DataTable instance
-    var table = $('#dataTablesTable').DataTable();
-    table.destroy();
+    const tableElement = $('#dataTablesTable');
+    if ($.fn.DataTable.isDataTable(tableElement)) {
+        tableElement.DataTable().clear().destroy();
+    }
 
     var tableBody = document.getElementById('dataTablesTable').getElementsByTagName('tbody')[0];
     tableBody.innerHTML = ''; // Clear existing rows
@@ -591,7 +590,7 @@ function updateTable(data) {
             tableBody.insertAdjacentHTML('beforeend', row);
         });
         // Re-initialize DataTable
-        $('#dataTablesTable').DataTable();
+        tableElement.DataTable();
     }
 }
   
