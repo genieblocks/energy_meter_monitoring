@@ -590,7 +590,9 @@ function updateTable(data) {
             tableBody.insertAdjacentHTML('beforeend', row);
         });
         // Re-initialize DataTable
-        tableElement.DataTable();
+        tableElement.DataTable({
+            dom: '<"top">rt<"bottom"p>',
+        });
     }
 }
   
