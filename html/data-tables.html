@@ -678,20 +678,20 @@ function updateModalWithData(data, tableName) {
                 tableBody.insertAdjacentHTML('beforeend', rowHtml);
             });
 
-            // Update the DataTable if it exists, else initialize it
-            if ($.fn.DataTable.isDataTable('#tableContentDataTable')) {
-                $('#tableContentDataTable').DataTable().clear().rows.add(rows).draw();
-            } else {
-                $('#tableContentDataTable').DataTable({
-                    dom: '<"top">rt<"bottom"p>',
-                    data: rows,
-                    columns: headers.map(header => ({ title: header })).concat([
-                        { title: "Düzenle", orderable: false },
-                        { title: "Sil", orderable: false }
-                    ]),
-                    order: []
-                });
+            // Re-initialize DataTable
+            const tableContentElement = $('#tableContentDataTable');
+            if ($.fn.DataTable.isDataTable(tableContentElement)) {
+                tableContentElement.DataTable().clear().destroy();
             }
+
+            tableContentElement.DataTable({
+                dom: '<"top">rt<"bottom"p>',
+                order: [],
+                columns: headers.map(header => ({ title: header })).concat([
+                    { title: "Düzenle", orderable: false },
+                    { title: "Sil", orderable: false }
+                ])
+            });
 
         } else {
             tableBody.insertAdjacentHTML('beforeend', '<tr><td colspan="100%">Tablo içeriği bulunamadı.</td></tr>');
