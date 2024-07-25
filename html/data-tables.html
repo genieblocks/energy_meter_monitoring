@@ -592,8 +592,8 @@ function updateTable(data) {
         // Re-initialize DataTable
         tableElement.DataTable({
             dom: '<"top">rt<"bottom"p>',
-            destroy: true,  // Ensures any existing instance is properly destroyed
-            retrieve: true  // Ensures the DataTable instance is reused if already initialized
+            order: [],  // Ensure no initial ordering
+            autoWidth: false  // Prevent automatic column width calculation
         });
     }
 }
