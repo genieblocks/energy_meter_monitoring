@@ -608,6 +608,7 @@ function updateTable(data) {
     }
 }
   
+// Show table content with error handling
 function showTableContent(tableName) {
     $.blockUI({
         message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
@@ -622,17 +623,18 @@ function showTableContent(tableName) {
         },
         body: JSON.stringify({ tableName: tableName })
     })
-        .then(response => response.json())
-        .then(data => {
-            $.unblockUI();
-            updateModalWithData(data, tableName);
-            $('#tableContentModal').modal('show');
-        })
-        .catch(error => {
-            $.unblockUI();
-            console.error('Error fetching table content:', error);
-            alert('Tablo içeriği getirilirken bir hata oluştu.');
-        });
+    .then(handleFetchError) // Handle fetch errors
+    .then(response => response.json())
+    .then(data => {
+        $.unblockUI();
+        updateModalWithData(data, tableName);
+        $('#tableContentModal').modal('show');
+    })
+    .catch(error => {
+        $.unblockUI();
+        console.error('Error fetching table content:', error); // Log the error
+        alert('Tablo içeriği getirilirken bir hata oluştu.');
+    });
 }
   
 function updateModalWithData(data, tableName) {
@@ -642,6 +644,8 @@ function updateModalWithData(data, tableName) {
     tableHead.innerHTML = ''; // Clear existing headers
 
     $('#tableContentModal .modal-title').text(tableName); // Update modal title with table name
+
+    console.log('Received data:', data); // Log received data
 
     if (!data || !data[0]) {
         alert('Beklenmedik veri formatı.');
@@ -676,8 +680,7 @@ function updateModalWithData(data, tableName) {
 
             // Update the DataTable if it exists, else initialize it
             if ($.fn.DataTable.isDataTable('#tableContentDataTable')) {
-                $('#tableContentDataTable').DataTable().clear().draw();
-                $('#tableContentDataTable').DataTable().rows.add(rows).draw();
+                $('#tableContentDataTable').DataTable().clear().rows.add(rows).draw();
             } else {
                 $('#tableContentDataTable').DataTable({
                     dom: '<"top">rt<"bottom"p>',
@@ -717,6 +720,14 @@ function updateModalWithData(data, tableName) {
             }
         });
     });
+}
+
+// Error handling function for fetch
+function handleFetchError(response) {
+    if (!response.ok) {
+        throw Error(response.statusText);
+    }
+    return response;
 }
 
 function deleteTableRow(tableName, primaryKey, primaryKeyValue) {
