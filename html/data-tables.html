@@ -592,15 +592,18 @@ function updateTable(data) {
         // Re-initialize DataTable
         tableElement.DataTable({
             dom: '<"top">rt<"bottom"p>',
-            order: [],  // Ensure no initial ordering
-            autoWidth: false,  // Prevent automatic column width calculation
-            columns: columnDefs,  // Use explicit column definitions
-            data: tableData.map(table => [
-                table.name, table.dataRetention, table.createdAt, table.lastUpdated, table.rows, table.size,
-                '<button type="button" class="btn btn-sm btn-outline-info" id="table-show-button"><i class="fa fa-eye"></i></button>',
-                '<button type="button" class="btn btn-sm btn-outline-success" id="table-edit-button"><i class="fa fa-edit"></i></button>',
-                '<button type="button" class="btn btn-sm btn-outline-danger" id="table-delete-button"><i class="fa fa-trash-o"></i></button>'
-            ])
+            columns: [
+                { title: "Table Name" },
+                { title: "Data Retention" },
+                { title: "Created at" },
+                { title: "Last Updated" },
+                { title: "Rows" },
+                { title: "Size" },
+                { title: "Show", orderable: false },
+                { title: "Edit", orderable: false },
+                { title: "Delete", orderable: false }
+            ],
+            order: []
         });
     }
 }
