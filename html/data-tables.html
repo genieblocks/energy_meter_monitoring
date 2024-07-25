@@ -630,6 +630,7 @@ function showTableContent(tableName) {
         })
         .catch(error => {
             $.unblockUI();
+            console.error('Error fetching table content:', error);
             alert('Tablo içeriği getirilirken bir hata oluştu.');
         });
 }
@@ -708,7 +709,12 @@ function updateModalWithData(data, tableName) {
 
     tableContentElement.DataTable({
         dom: '<"top">rt<"bottom"p>',
-        order: []
+        order: [], // Ensure no initial ordering
+        columns: [
+            ...Object.keys(firstEntry.data[0]).map(key => ({ title: key })),
+            { title: 'Düzenle', orderable: false },
+            { title: 'Sil', orderable: false }
+        ]
     });
 }
 
