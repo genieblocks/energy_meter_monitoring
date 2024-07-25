@@ -637,7 +637,7 @@ function showTableContent(tableName) {
   
 function updateModalWithData(data, tableName) {
     const tableBody = document.querySelector('#tableContentModal tbody');
-    const tableHead = document.querySelector('#tableContentModal thead tr');
+    const tableHead = document.querySelector('#tableContentModal thead');
     tableBody.innerHTML = ''; // Clear existing rows
     tableHead.innerHTML = ''; // Clear existing headers
 
@@ -653,11 +653,9 @@ function updateModalWithData(data, tableName) {
         const rows = firstEntry.data;
         if (rows && rows.length > 0) {
             const headers = Object.keys(rows[0]);
-            headers.forEach(header => {
-                tableHead.insertAdjacentHTML('beforeend', `<th>${header}</th>`);
-            });
-            tableHead.insertAdjacentHTML('beforeend', `<th>Düzenle</th>`); // Düzenle sütunu başlığı ekleyin
-            tableHead.insertAdjacentHTML('beforeend', `<th>Sil</th>`); // Sil sütunu başlığı ekleyin
+            const headerHtml = headers.map(header => `<th>${header}</th>`).join('');
+            tableHead.innerHTML = `<tr>${headerHtml}<th>Düzenle</th><th>Sil</th></tr>`; // Add headers
+
             rows.forEach(row => {
                 const rowHtml = `<tr>${Object.values(row).map(value => `<td>${value}</td>`).join('')}
                     <td>
@@ -679,10 +677,8 @@ function updateModalWithData(data, tableName) {
     } else {
         const columns = firstEntry.data;
         if (columns && columns.length > 0) {
-            columns.forEach(col => {
-                tableHead.insertAdjacentHTML('beforeend', `<th>${col.COLUMN_NAME}</th>`);
-            });
-            tableHead.insertAdjacentHTML('beforeend', `<th>Sil</th>`); // Sil sütunu başlığı ekleyin
+            const headerHtml = columns.map(col => `<th>${col.COLUMN_NAME}</th>`).join('');
+            tableHead.innerHTML = `<tr>${headerHtml}<th>Sil</th></tr>`; // Add headers
             tableBody.insertAdjacentHTML('beforeend', '<tr><td colspan="100%">Tablo içeriği bulunamadı.</td></tr>');
         } else {
             tableBody.insertAdjacentHTML('beforeend', '<tr><td colspan="100%">Tablo içeriği bulunamadı.</td></tr>');
@@ -694,7 +690,7 @@ function updateModalWithData(data, tableName) {
         button.addEventListener('click', function() {
             const tableRow = this.closest('tr');
             const rowData = Array.from(tableRow.children).slice(0, -1).map(td => td.textContent);
-            const primaryKey = tableHead.children[0].textContent; // Silinecek sütunun başlığı
+            const primaryKey = tableHead.querySelector('tr th').textContent; // Silinecek sütunun başlığı
             if (confirm('Bu veriyi silmek istediğinizden emin misiniz?')) {
                 deleteTableRow(tableName, primaryKey, rowData[0]); // İlk sütun birincil anahtar olarak varsayıldı
             }
