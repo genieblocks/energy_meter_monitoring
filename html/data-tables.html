@@ -679,19 +679,19 @@ function updateModalWithData(data, tableName) {
             });
 
             // Re-initialize DataTable
-            const tableContentElement = $('#tableContentDataTable');
-            if ($.fn.DataTable.isDataTable(tableContentElement)) {
-                tableContentElement.DataTable().clear().destroy();
-            }
+            // const tableContentElement = $('#tableContentDataTable');
+            // if ($.fn.DataTable.isDataTable(tableContentElement)) {
+            //     tableContentElement.DataTable().clear().destroy();
+            // }
 
-            tableContentElement.DataTable({
-                dom: '<"top">rt<"bottom"p>',
-                order: [],
-                columns: headers.map(header => ({ title: header })).concat([
-                    { title: "Düzenle", orderable: false },
-                    { title: "Sil", orderable: false }
-                ])
-            });
+            // tableContentElement.DataTable({
+            //     dom: '<"top">rt<"bottom"p>',
+            //     order: [],
+            //     columns: headers.map(header => ({ title: header })).concat([
+            //         { title: "Düzenle", orderable: false },
+            //         { title: "Sil", orderable: false }
+            //     ])
+            // });
 
         } else {
             tableBody.insertAdjacentHTML('beforeend', '<tr><td colspan="100%">Tablo içeriği bulunamadı.</td></tr>');
