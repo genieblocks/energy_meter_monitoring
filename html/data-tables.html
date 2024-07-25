@@ -674,11 +674,21 @@ function updateModalWithData(data, tableName) {
                 tableBody.insertAdjacentHTML('beforeend', rowHtml);
             });
 
-            // Initialize DataTable only if rows are present
-            $('#tableContentDataTable').DataTable({
-                dom: '<"top">rt<"bottom"p>',
-                order: []
-            });
+            // Update the DataTable if it exists, else initialize it
+            if ($.fn.DataTable.isDataTable('#tableContentDataTable')) {
+                $('#tableContentDataTable').DataTable().clear().draw();
+                $('#tableContentDataTable').DataTable().rows.add(rows).draw();
+            } else {
+                $('#tableContentDataTable').DataTable({
+                    dom: '<"top">rt<"bottom"p>',
+                    data: rows,
+                    columns: headers.map(header => ({ title: header })).concat([
+                        { title: "Düzenle", orderable: false },
+                        { title: "Sil", orderable: false }
+                    ]),
+                    order: []
+                });
+            }
 
         } else {
             tableBody.insertAdjacentHTML('beforeend', '<tr><td colspan="100%">Tablo içeriği bulunamadı.</td></tr>');
