@@ -673,6 +673,13 @@ function updateModalWithData(data, tableName) {
                 </tr>`;
                 tableBody.insertAdjacentHTML('beforeend', rowHtml);
             });
+
+            // Initialize DataTable only if rows are present
+            $('#tableContentDataTable').DataTable({
+                dom: '<"top">rt<"bottom"p>',
+                order: []
+            });
+
         } else {
             tableBody.insertAdjacentHTML('beforeend', '<tr><td colspan="100%">Tablo içeriği bulunamadı.</td></tr>');
         }
@@ -688,17 +695,6 @@ function updateModalWithData(data, tableName) {
             tableBody.insertAdjacentHTML('beforeend', '<tr><td colspan="100%">Tablo içeriği bulunamadı.</td></tr>');
         }
     }
-
-    // Re-initialize DataTable for tableContentDataTable
-    const tableContentElement = $('#tableContentDataTable');
-    if ($.fn.DataTable.isDataTable(tableContentElement)) {
-        tableContentElement.DataTable().clear().destroy();
-    }
-
-    tableContentElement.DataTable({
-        dom: '<"top">rt<"bottom"p>',
-        order: []
-    });
 
     // Add event listener for delete buttons
     document.querySelectorAll('#row-delete-button').forEach(button => {
