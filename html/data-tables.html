@@ -709,12 +709,7 @@ function updateModalWithData(data, tableName) {
 
     tableContentElement.DataTable({
         dom: '<"top">rt<"bottom"p>',
-        order: [], // Ensure no initial ordering
-        columns: [
-            ...Object.keys(firstEntry.data[0]).map(key => ({ title: key })),
-            { title: 'Düzenle', orderable: false },
-            { title: 'Sil', orderable: false }
-        ]
+        order: []
     });
 }
 
