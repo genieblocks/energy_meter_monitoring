@@ -689,15 +689,15 @@ function updateModalWithData(data, tableName) {
     });
 
     // Re-initialize DataTable for tableContentDataTable
-    // const tableContentElement = $('#tableContentDataTable');
-    // if ($.fn.DataTable.isDataTable(tableContentElement)) {
-    //     tableContentElement.DataTable().clear().destroy();
-    // }
+    const tableContentElement = $('#tableContentDataTable');
+    if ($.fn.DataTable.isDataTable(tableContentElement)) {
+        tableContentElement.DataTable().clear().destroy();
+    }
 
-    // tableContentElement.DataTable({
-    //     dom: '<"top">rt<"bottom"p>',
-    //     order: [] // Ensure no initial ordering
-    // });
+    tableContentElement.DataTable({
+        dom: '<"top">rt<"bottom"p>',
+        order: [] // Ensure no initial ordering
+    });
 }
 
 function deleteTableRow(tableName, primaryKey, primaryKeyValue) {
