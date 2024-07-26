@@ -611,6 +611,7 @@
     // const baseWebhookURL = "http://192.168.1.146:5678"; // Değiştirmek istediğiniz temel URL
 
 function initializePage() {
+  console.log("Initializing page...");
   // Sayfa yüklendiğinde UI'yi kilitle ve spinner göster
   $.blockUI({
     message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
@@ -636,6 +637,7 @@ function initializePage() {
 }
 
 function initializeDataTable(tableSelector) {
+  console.log("Initializing DataTable for:", tableSelector);
   // Destroy existing DataTable instance if it exists
   if ($.fn.DataTable.isDataTable(tableSelector)) {
     $(tableSelector).DataTable().clear().destroy();
@@ -654,6 +656,7 @@ function initializeDataTable(tableSelector) {
 }
   
 function fetchTableData(tableName, tableBodySelector, callback) {
+  console.log("Fetching data for:", tableName);
   fetch(`${baseWebhookURL}/webhook/get-table-content`, {
     method: 'POST',
     headers: {
@@ -663,6 +666,7 @@ function fetchTableData(tableName, tableBodySelector, callback) {
   })
   .then(response => response.json())
   .then(data => {
+    console.log("Data received for", tableName, ":", data);
     const tableBody = document.querySelector(tableBodySelector);
     tableBody.innerHTML = ''; // Mevcut satırları temizle
 
