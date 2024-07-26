@@ -618,22 +618,21 @@ function initializePage() {
     css: { border: 0, padding: 0, backgroundColor: 'transparent' }
   });
 
-  // Tabloları fetch fonksiyonu ile doldur ve ardından DataTable'ı başlat
+  // Fetch ve initialize işlemlerini sıraya koyarak yap
   fetchTableData('ElectricMeters', '#DataTables_Table_Electricity_Meter_List tbody', function() {
     initializeDataTable('#DataTables_Table_Electricity_Meter_List');
+    fetchTableData('WaterMeters', '#DataTables_Table_Water_Meter_List tbody', function() {
+      initializeDataTable('#DataTables_Table_Water_Meter_List');
+      fetchTableData('HeatingMeters', '#DataTables_Table_Calorimeter_Hot_Meter_List tbody', function() {
+        initializeDataTable('#DataTables_Table_Calorimeter_Hot_Meter_List');
+        fetchTableData('CoolingMeters', '#DataTables_Table_Calorimeter_Cold_Meter_List tbody', function() {
+          initializeDataTable('#DataTables_Table_Calorimeter_Cold_Meter_List');
+          // İşlemler tamamlandığında UI kilidini kaldır
+          $.unblockUI();
+        });
+      });
+    });
   });
-  fetchTableData('WaterMeters', '#DataTables_Table_Water_Meter_List tbody', function() {
-    initializeDataTable('#DataTables_Table_Water_Meter_List');
-  });
-  fetchTableData('HeatingMeters', '#DataTables_Table_Calorimeter_Hot_Meter_List tbody', function() {
-    initializeDataTable('#DataTables_Table_Calorimeter_Hot_Meter_List');
-  });
-  fetchTableData('CoolingMeters', '#DataTables_Table_Calorimeter_Cold_Meter_List tbody', function() {
-    initializeDataTable('#DataTables_Table_Calorimeter_Cold_Meter_List');
-  });
-
-  // İşlemler tamamlandığında UI kilidini kaldır
-  $.unblockUI();
 }
 
 function initializeDataTable(tableSelector) {
