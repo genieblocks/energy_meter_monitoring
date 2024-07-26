@@ -640,7 +640,10 @@ function initializeDataTable(tableSelector) {
   console.log("Initializing DataTable for:", tableSelector);
   // Destroy existing DataTable instance if it exists
   if ($.fn.DataTable.isDataTable(tableSelector)) {
+    console.log("DataTable exists. Destroying and clearing:", tableSelector);
     $(tableSelector).DataTable().clear().destroy();
+  } else {
+    console.log("DataTable does not exist. Initializing:", tableSelector);
   }
   
   // Initialize DataTable
@@ -653,6 +656,7 @@ function initializeDataTable(tableSelector) {
     ordering: true,
     paging: true
   });
+  console.log("DataTable initialized:", tableSelector);
 }
   
 function fetchTableData(tableName, tableBodySelector, callback) {
@@ -664,13 +668,17 @@ function fetchTableData(tableName, tableBodySelector, callback) {
     },
     body: JSON.stringify({ tableName: tableName })
   })
-  .then(response => response.json())
+  .then(response => {
+    console.log("Response received for", tableName, ":", response);
+    return response.json();
+  })
   .then(data => {
     console.log("Data received for", tableName, ":", data);
     const tableBody = document.querySelector(tableBodySelector);
     tableBody.innerHTML = ''; // Mevcut satırları temizle
 
     if (data[0].success && Array.isArray(data[0].data)) {
+      console.log("Success:", tableName, "data is array with length", data[0].data.length);
       data[0].data.forEach(item => {
         const row = document.createElement('tr');
         row.innerHTML = `
@@ -690,6 +698,7 @@ function fetchTableData(tableName, tableBodySelector, callback) {
           </td>
         `;
         tableBody.appendChild(row);
+        console.log("Appended row:", row.innerHTML);
       });
     } else {
       console.error(tableName + ' tablosu verileri yüklenemedi:', data[0].message);
