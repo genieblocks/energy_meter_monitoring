@@ -642,8 +642,6 @@ function initializeDataTable(tableSelector) {
   if ($.fn.DataTable.isDataTable(tableSelector)) {
     console.log("DataTable exists. Destroying and clearing:", tableSelector);
     $(tableSelector).DataTable().clear().destroy();
-  } else {
-    console.log("DataTable does not exist. Initializing:", tableSelector);
   }
   
   // Initialize DataTable
@@ -657,6 +655,7 @@ function initializeDataTable(tableSelector) {
     paging: true
   });
   console.log("DataTable initialized:", tableSelector);
+  console.log("Current table HTML after initialization:", $(tableSelector).html());
 }
   
 function fetchTableData(tableName, tableBodySelector, callback) {
@@ -703,6 +702,9 @@ function fetchTableData(tableName, tableBodySelector, callback) {
     } else {
       console.error(tableName + ' tablosu verileri yüklenemedi:', data[0].message);
     }
+
+    console.log("Current table HTML before initializing DataTable:", tableBody.parentElement.innerHTML);
+
     // Call the callback function to initialize DataTable after data is fetched
     if (typeof callback === 'function') {
       callback();
@@ -711,6 +713,7 @@ function fetchTableData(tableName, tableBodySelector, callback) {
   .catch(error => console.error('Fetch error:', error));
 }
   </script>
+
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       loadProtocolTypes('electricity');
