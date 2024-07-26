@@ -637,21 +637,21 @@
 }
 
 function initializeDataTable(tableSelector) {
-  // Destroy existing DataTable instance if it exists
-  if ($.fn.DataTable.isDataTable(tableSelector)) {
-    $(tableSelector).DataTable().clear().destroy();
-  }
+  // // Destroy existing DataTable instance if it exists
+  // if ($.fn.DataTable.isDataTable(tableSelector)) {
+  //   $(tableSelector).DataTable().clear().destroy();
+  // }
   
-  // Initialize DataTable
-  $(tableSelector).DataTable({
-    dom: '<"top">rt<"bottom"Bp>',
-    buttons: [
-      'copyHtml5',
-      'csvHtml5'
-    ],
-    ordering: true,
-    paging: true
-  });
+  // // Initialize DataTable
+  // $(tableSelector).DataTable({
+  //   dom: '<"top">rt<"bottom"Bp>',
+  //   buttons: [
+  //     'copyHtml5',
+  //     'csvHtml5'
+  //   ],
+  //   ordering: true,
+  //   paging: true
+  // });
 }
   
 function fetchTableData(tableName, tableBodySelector, callback) {
