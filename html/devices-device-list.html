@@ -626,7 +626,7 @@ function fetchElectricMetersData() {
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ meterType: 'ElectricMeters' })
+    body: JSON.stringify({ tableName: 'ElectricMeters' })
   })
   .then(response => {
     if (!response.ok) {
@@ -660,7 +660,7 @@ function fetchWaterMetersData() {
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ meterType: 'WaterMeters' })
+    body: JSON.stringify({ tableName: 'WaterMeters' })
   })
   .then(response => {
     if (!response.ok) {
@@ -694,7 +694,7 @@ function fetchHeatingMetersData() {
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ meterType: 'HeatingMeters' })
+    body: JSON.stringify({ tableName: 'HeatingMeters' })
   })
   .then(response => {
     if (!response.ok) {
@@ -728,7 +728,7 @@ function fetchCoolingMetersData() {
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ meterType: 'CoolingMeters' })
+    body: JSON.stringify({ tableName: 'CoolingMeters' })
   })
   .then(response => {
     if (!response.ok) {
