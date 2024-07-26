@@ -637,14 +637,14 @@ function fetchElectricMetersData() {
   })
   .then(data => {
     console.log("Data received for ElectricMeters :", data);
-    if (data.success && Array.isArray(data.data)) {
+    if (data && data.success && Array.isArray(data.data)) {
       console.log("Success: ElectricMeters data is array with length", data.data.length);
       data.data.forEach(meter => {
         console.log("Appending row for ElectricMeters:", meter);
         appendRowToTable(meter, '#DataTables_Table_Electricity_Meter_List');
       });
     } else {
-      console.log("Failed: ElectricMeters data is not an array or success flag is false");
+      console.log("Failed: ElectricMeters data is not an array or success flag is false", data);
     }
     initializeDataTable('#DataTables_Table_Electricity_Meter_List');
   })
@@ -671,14 +671,14 @@ function fetchWaterMetersData() {
   })
   .then(data => {
     console.log("Data received for WaterMeters :", data);
-    if (data.success && Array.isArray(data.data)) {
+    if (data && data.success && Array.isArray(data.data)) {
       console.log("Success: WaterMeters data is array with length", data.data.length);
       data.data.forEach(meter => {
         console.log("Appending row for WaterMeters:", meter);
         appendRowToTable(meter, '#DataTables_Table_Water_Meter_List');
       });
     } else {
-      console.log("Failed: WaterMeters data is not an array or success flag is false");
+      console.log("Failed: WaterMeters data is not an array or success flag is false", data);
     }
     initializeDataTable('#DataTables_Table_Water_Meter_List');
   })
@@ -705,14 +705,14 @@ function fetchHeatingMetersData() {
   })
   .then(data => {
     console.log("Data received for HeatingMeters :", data);
-    if (data.success && Array.isArray(data.data)) {
+    if (data && data.success && Array.isArray(data.data)) {
       console.log("Success: HeatingMeters data is array with length", data.data.length);
       data.data.forEach(meter => {
         console.log("Appending row for HeatingMeters:", meter);
         appendRowToTable(meter, '#DataTables_Table_Calorimeter_Hot_Meter_List');
       });
     } else {
-      console.log("Failed: HeatingMeters data is not an array or success flag is false");
+      console.log("Failed: HeatingMeters data is not an array or success flag is false", data);
     }
     initializeDataTable('#DataTables_Table_Calorimeter_Hot_Meter_List');
   })
@@ -739,14 +739,14 @@ function fetchCoolingMetersData() {
   })
   .then(data => {
     console.log("Data received for CoolingMeters :", data);
-    if (data.success && Array.isArray(data.data)) {
+    if (data && data.success && Array.isArray(data.data)) {
       console.log("Success: CoolingMeters data is array with length", data.data.length);
       data.data.forEach(meter => {
         console.log("Appending row for CoolingMeters:", meter);
         appendRowToTable(meter, '#DataTables_Table_Calorimeter_Cold_Meter_List');
       });
     } else {
-      console.log("Failed: CoolingMeters data is not an array or success flag is false");
+      console.log("Failed: CoolingMeters data is not an array or success flag is false", data);
     }
     initializeDataTable('#DataTables_Table_Calorimeter_Cold_Meter_List');
   })
