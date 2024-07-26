@@ -610,7 +610,7 @@
     const baseWebhookURL = "http://192.168.2.250:5678"; // Değiştirmek istediğiniz temel URL
     // const baseWebhookURL = "http://192.168.1.146:5678"; // Değiştirmek istediğiniz temel URL
 
-    function initializePage() {
+function initializePage() {
   // Sayfa yüklendiğinde UI'yi kilitle ve spinner göster
   $.blockUI({
     message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
@@ -699,22 +699,6 @@ function fetchTableData(tableName, tableBodySelector, callback) {
   .catch(error => console.error('Fetch error:', error));
 }
   </script>
-  <!-- <script>
-    $(document).ready(function() {
-      $('#DataTables_Table_Electricity_Meter_List').DataTable({
-        "ordering": true
-      });
-      $('#DataTables_Table_Water_Meter_List').DataTable({
-        "ordering": true
-      });
-      $('#DataTables_Table_Calorimeter_Hot_Meter_List').DataTable({
-        "ordering": true
-      });
-      $('#DataTables_Table_Calorimeter_Cold_Meter_List').DataTable({
-        "ordering": true
-      });
-    });
-  </script> -->
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       loadProtocolTypes('electricity');
