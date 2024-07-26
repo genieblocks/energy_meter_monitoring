@@ -618,9 +618,28 @@
     css: { border: 0, padding: 0, backgroundColor: 'transparent' }
   });
 
+  // Destroy existing DataTable instance if it exists
+  if ($.fn.DataTable.isDataTable('#DataTables_Table_Electricity_Meter_List')) {
+    $('#DataTables_Table_Electricity_Meter_List').DataTable().clear().destroy();
+  }
+  if ($.fn.DataTable.isDataTable('#DataTables_Table_Water_Meter_List')) {
+    $('#DataTables_Table_Water_Meter_List').DataTable().clear().destroy();
+  }
+  if ($.fn.DataTable.isDataTable('#DataTables_Table_Calorimeter_Hot_Meter_List')) {
+    $('#DataTables_Table_Calorimeter_Hot_Meter_List').DataTable().clear().destroy();
+  }
+  if ($.fn.DataTable.isDataTable('#DataTables_Table_Calorimeter_Cold_Meter_List')) {
+    $('#DataTables_Table_Calorimeter_Cold_Meter_List').DataTable().clear().destroy();
+  }
+
   // Check if DataTable is already initialized, if not then initialize it
   if (!$.fn.DataTable.isDataTable('#DataTables_Table_Electricity_Meter_List')) {
     $('#DataTables_Table_Electricity_Meter_List').DataTable({
+      dom: '<"top">rt<"bottom"Bp>',
+      buttons: [
+          'copyHtml5',
+          'csvHtml5'
+      ],
       ordering: true,
       paging: true
     });
@@ -628,6 +647,11 @@
   
   if (!$.fn.DataTable.isDataTable('#DataTables_Table_Water_Meter_List')) {
     $('#DataTables_Table_Water_Meter_List').DataTable({
+      dom: '<"top">rt<"bottom"Bp>',
+      buttons: [
+          'copyHtml5',
+          'csvHtml5'
+      ],
       ordering: true,
       paging: true
     });
@@ -635,6 +659,11 @@
   
   if (!$.fn.DataTable.isDataTable('#DataTables_Table_Calorimeter_Hot_Meter_List')) {
     $('#DataTables_Table_Calorimeter_Hot_Meter_List').DataTable({
+      dom: '<"top">rt<"bottom"Bp>',
+      buttons: [
+          'copyHtml5',
+          'csvHtml5'
+      ],
       ordering: true,
       paging: true
     });
@@ -642,6 +671,11 @@
   
   if (!$.fn.DataTable.isDataTable('#DataTables_Table_Calorimeter_Cold_Meter_List')) {
     $('#DataTables_Table_Calorimeter_Cold_Meter_List').DataTable({
+      dom: '<"top">rt<"bottom"Bp>',
+      buttons: [
+          'copyHtml5',
+          'csvHtml5'
+      ],
       ordering: true,
       paging: true
     });
