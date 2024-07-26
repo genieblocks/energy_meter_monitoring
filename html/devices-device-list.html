@@ -621,18 +621,15 @@ function initializePage() {
 
 function fetchElectricMetersData() {
   console.log("Fetching data for: ElectricMeters");
-  fetch('http://192.168.2.250:5678/webhook/get-table-content', {
-    method: 'GET',
+  fetch(`${baseWebhookURL}/get-table-content`, {
+    method: 'POST',
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json'
     },
-    mode: 'cors'  // CORS başlıklarını eklemeye çalışır
+    body: JSON.stringify({ meterType: 'ElectricMeters' })
   })
   .then(response => {
     console.log("Response received for ElectricMeters :", response);
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
     return response.json();
   })
   .then(data => {
@@ -655,18 +652,15 @@ function fetchElectricMetersData() {
 
 function fetchWaterMetersData() {
   console.log("Fetching data for: WaterMeters");
-  fetch('http://192.168.2.250:5678/webhook/get-table-content', {
-    method: 'GET',
+  fetch(`${baseWebhookURL}/get-table-content`, {
+    method: 'POST',
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json'
     },
-    mode: 'cors'  // CORS başlıklarını eklemeye çalışır
+    body: JSON.stringify({ meterType: 'WaterMeters' })
   })
   .then(response => {
     console.log("Response received for WaterMeters :", response);
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
     return response.json();
   })
   .then(data => {
@@ -689,18 +683,15 @@ function fetchWaterMetersData() {
 
 function fetchHeatingMetersData() {
   console.log("Fetching data for: HeatingMeters");
-  fetch('http://192.168.2.250:5678/webhook/get-table-content', {
-    method: 'GET',
+  fetch(`${baseWebhookURL}/get-table-content`, {
+    method: 'POST',
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json'
     },
-    mode: 'cors'  // CORS başlıklarını eklemeye çalışır
+    body: JSON.stringify({ meterType: 'HeatingMeters' })
   })
   .then(response => {
     console.log("Response received for HeatingMeters :", response);
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
     return response.json();
   })
   .then(data => {
@@ -723,18 +714,15 @@ function fetchHeatingMetersData() {
 
 function fetchCoolingMetersData() {
   console.log("Fetching data for: CoolingMeters");
-  fetch('http://192.168.2.250:5678/webhook/get-table-content', {
-    method: 'GET',
+  fetch(`${baseWebhookURL}/get-table-content`, {
+    method: 'POST',
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json'
     },
-    mode: 'cors'  // CORS başlıklarını eklemeye çalışır
+    body: JSON.stringify({ meterType: 'CoolingMeters' })
   })
   .then(response => {
     console.log("Response received for CoolingMeters :", response);
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
     return response.json();
   })
   .then(data => {
