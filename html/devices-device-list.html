@@ -621,7 +621,7 @@ function initializePage() {
 
 function fetchElectricMetersData() {
   console.log("Fetching data for: ElectricMeters");
-  fetch(`${baseWebhookURL}/get-table-content`, {
+  fetch(`${baseWebhookURL}/webhook/get-table-content`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -629,6 +629,9 @@ function fetchElectricMetersData() {
     body: JSON.stringify({ meterType: 'ElectricMeters' })
   })
   .then(response => {
+    if (!response.ok) {
+      throw new Error('Network response was not ok ' + response.statusText);
+    }
     console.log("Response received for ElectricMeters :", response);
     return response.json();
   })
@@ -652,7 +655,7 @@ function fetchElectricMetersData() {
 
 function fetchWaterMetersData() {
   console.log("Fetching data for: WaterMeters");
-  fetch(`${baseWebhookURL}/get-table-content`, {
+  fetch(`${baseWebhookURL}/webhook/get-table-content`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -660,6 +663,9 @@ function fetchWaterMetersData() {
     body: JSON.stringify({ meterType: 'WaterMeters' })
   })
   .then(response => {
+    if (!response.ok) {
+      throw new Error('Network response was not ok ' + response.statusText);
+    }
     console.log("Response received for WaterMeters :", response);
     return response.json();
   })
@@ -683,7 +689,7 @@ function fetchWaterMetersData() {
 
 function fetchHeatingMetersData() {
   console.log("Fetching data for: HeatingMeters");
-  fetch(`${baseWebhookURL}/get-table-content`, {
+  fetch(`${baseWebhookURL}/webhook/get-table-content`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -691,6 +697,9 @@ function fetchHeatingMetersData() {
     body: JSON.stringify({ meterType: 'HeatingMeters' })
   })
   .then(response => {
+    if (!response.ok) {
+      throw new Error('Network response was not ok ' + response.statusText);
+    }
     console.log("Response received for HeatingMeters :", response);
     return response.json();
   })
@@ -714,7 +723,7 @@ function fetchHeatingMetersData() {
 
 function fetchCoolingMetersData() {
   console.log("Fetching data for: CoolingMeters");
-  fetch(`${baseWebhookURL}/get-table-content`, {
+  fetch(`${baseWebhookURL}/webhook/get-table-content`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -722,6 +731,9 @@ function fetchCoolingMetersData() {
     body: JSON.stringify({ meterType: 'CoolingMeters' })
   })
   .then(response => {
+    if (!response.ok) {
+      throw new Error('Network response was not ok ' + response.statusText);
+    }
     console.log("Response received for CoolingMeters :", response);
     return response.json();
   })
