@@ -621,90 +621,138 @@ function initializePage() {
 
 function fetchElectricMetersData() {
   console.log("Fetching data for: ElectricMeters");
-  fetch('http://192.168.2.250:5678/webhook/get-table-content')
-    .then(response => {
-      console.log("Response received for ElectricMeters :", response);
-      return response.json();
-    })
-    .then(data => {
-      console.log("Data received for ElectricMeters :", data);
-      if (Array.isArray(data)) {
-        console.log("Success: ElectricMeters data is array with length", data.length);
-        data.forEach(meter => {
-          console.log("Appending row for ElectricMeters:", meter);
-          appendRowToTable(meter, '#DataTables_Table_Electricity_Meter_List');
-        });
-      } else {
-        console.log("Failed: ElectricMeters data is not an array");
-      }
-      initializeDataTable('#DataTables_Table_Electricity_Meter_List');
-    });
+  fetch('http://192.168.2.250:5678/webhook/get-table-content', {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    mode: 'cors'  // CORS başlıklarını eklemeye çalışır
+  })
+  .then(response => {
+    console.log("Response received for ElectricMeters :", response);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    return response.json();
+  })
+  .then(data => {
+    console.log("Data received for ElectricMeters :", data);
+    if (Array.isArray(data)) {
+      console.log("Success: ElectricMeters data is array with length", data.length);
+      data.forEach(meter => {
+        console.log("Appending row for ElectricMeters:", meter);
+        appendRowToTable(meter, '#DataTables_Table_Electricity_Meter_List');
+      });
+    } else {
+      console.log("Failed: ElectricMeters data is not an array");
+    }
+    initializeDataTable('#DataTables_Table_Electricity_Meter_List');
+  })
+  .catch(error => {
+    console.error("Error fetching ElectricMeters data:", error);
+  });
 }
 
 function fetchWaterMetersData() {
   console.log("Fetching data for: WaterMeters");
-  fetch('http://192.168.2.250:5678/webhook/get-table-content')
-    .then(response => {
-      console.log("Response received for WaterMeters :", response);
-      return response.json();
-    })
-    .then(data => {
-      console.log("Data received for WaterMeters :", data);
-      if (Array.isArray(data)) {
-        console.log("Success: WaterMeters data is array with length", data.length);
-        data.forEach(meter => {
-          console.log("Appending row for WaterMeters:", meter);
-          appendRowToTable(meter, '#DataTables_Table_Water_Meter_List');
-        });
-      } else {
-        console.log("Failed: WaterMeters data is not an array");
-      }
-      initializeDataTable('#DataTables_Table_Water_Meter_List');
-    });
+  fetch('http://192.168.2.250:5678/webhook/get-table-content', {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    mode: 'cors'  // CORS başlıklarını eklemeye çalışır
+  })
+  .then(response => {
+    console.log("Response received for WaterMeters :", response);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    return response.json();
+  })
+  .then(data => {
+    console.log("Data received for WaterMeters :", data);
+    if (Array.isArray(data)) {
+      console.log("Success: WaterMeters data is array with length", data.length);
+      data.forEach(meter => {
+        console.log("Appending row for WaterMeters:", meter);
+        appendRowToTable(meter, '#DataTables_Table_Water_Meter_List');
+      });
+    } else {
+      console.log("Failed: WaterMeters data is not an array");
+    }
+    initializeDataTable('#DataTables_Table_Water_Meter_List');
+  })
+  .catch(error => {
+    console.error("Error fetching WaterMeters data:", error);
+  });
 }
 
 function fetchHeatingMetersData() {
   console.log("Fetching data for: HeatingMeters");
-  fetch('http://192.168.2.250:5678/webhook/get-table-content')
-    .then(response => {
-      console.log("Response received for HeatingMeters :", response);
-      return response.json();
-    })
-    .then(data => {
-      console.log("Data received for HeatingMeters :", data);
-      if (Array.isArray(data)) {
-        console.log("Success: HeatingMeters data is array with length", data.length);
-        data.forEach(meter => {
-          console.log("Appending row for HeatingMeters:", meter);
-          appendRowToTable(meter, '#DataTables_Table_Calorimeter_Hot_Meter_List');
-        });
-      } else {
-        console.log("Failed: HeatingMeters data is not an array");
-      }
-      initializeDataTable('#DataTables_Table_Calorimeter_Hot_Meter_List');
-    });
+  fetch('http://192.168.2.250:5678/webhook/get-table-content', {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    mode: 'cors'  // CORS başlıklarını eklemeye çalışır
+  })
+  .then(response => {
+    console.log("Response received for HeatingMeters :", response);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    return response.json();
+  })
+  .then(data => {
+    console.log("Data received for HeatingMeters :", data);
+    if (Array.isArray(data)) {
+      console.log("Success: HeatingMeters data is array with length", data.length);
+      data.forEach(meter => {
+        console.log("Appending row for HeatingMeters:", meter);
+        appendRowToTable(meter, '#DataTables_Table_Calorimeter_Hot_Meter_List');
+      });
+    } else {
+      console.log("Failed: HeatingMeters data is not an array");
+    }
+    initializeDataTable('#DataTables_Table_Calorimeter_Hot_Meter_List');
+  })
+  .catch(error => {
+    console.error("Error fetching HeatingMeters data:", error);
+  });
 }
 
 function fetchCoolingMetersData() {
   console.log("Fetching data for: CoolingMeters");
-  fetch('http://192.168.2.250:5678/webhook/get-table-content')
-    .then(response => {
-      console.log("Response received for CoolingMeters :", response);
-      return response.json();
-    })
-    .then(data => {
-      console.log("Data received for CoolingMeters :", data);
-      if (Array.isArray(data)) {
-        console.log("Success: CoolingMeters data is array with length", data.length);
-        data.forEach(meter => {
-          console.log("Appending row for CoolingMeters:", meter);
-          appendRowToTable(meter, '#DataTables_Table_Calorimeter_Cold_Meter_List');
-        });
-      } else {
-        console.log("Failed: CoolingMeters data is not an array");
-      }
-      initializeDataTable('#DataTables_Table_Calorimeter_Cold_Meter_List');
-    });
+  fetch('http://192.168.2.250:5678/webhook/get-table-content', {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    mode: 'cors'  // CORS başlıklarını eklemeye çalışır
+  })
+  .then(response => {
+    console.log("Response received for CoolingMeters :", response);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    return response.json();
+  })
+  .then(data => {
+    console.log("Data received for CoolingMeters :", data);
+    if (Array.isArray(data)) {
+      console.log("Success: CoolingMeters data is array with length", data.length);
+      data.forEach(meter => {
+        console.log("Appending row for CoolingMeters:", meter);
+        appendRowToTable(meter, '#DataTables_Table_Calorimeter_Cold_Meter_List');
+      });
+    } else {
+      console.log("Failed: CoolingMeters data is not an array");
+    }
+    initializeDataTable('#DataTables_Table_Calorimeter_Cold_Meter_List');
+  })
+  .catch(error => {
+    console.error("Error fetching CoolingMeters data:", error);
+  });
 }
 
 function appendRowToTable(meter, tableId) {
