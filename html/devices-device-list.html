@@ -781,13 +781,13 @@ function appendRowToTable(meter, tableId) {
 }
 
 function initializeDataTable(tableId) {
-  if ($.fn.DataTable.isDataTable(tableId)) {
-    $(tableId).DataTable().clear().destroy();
-  }
+  // if ($.fn.DataTable.isDataTable(tableId)) {
+  //   $(tableId).DataTable().clear().destroy();
+  // }
 
-  $(tableId).DataTable({
-    "order": [[ 0, "asc" ]]
-  });
+  // $(tableId).DataTable({
+  //   "order": [[ 0, "asc" ]]
+  // });
 
   console.log(`DataTable initialized for: ${tableId}`);
 }
