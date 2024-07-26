@@ -758,6 +758,7 @@ function fetchCoolingMetersData() {
 function appendRowToTable(meter, tableId) {
   const tableBody = document.querySelector(`${tableId} tbody`);
   const row = document.createElement('tr');
+
   row.innerHTML = `
     <td>${meter.serialNumber || ''}</td>
     <td>${meter.brand || ''}</td>
@@ -774,20 +775,21 @@ function appendRowToTable(meter, tableId) {
       </button>
     </td>
   `;
+
+  console.log(`Appending row: ${row.innerHTML}`);
   tableBody.appendChild(row);
 }
 
 function initializeDataTable(tableId) {
-  console.log("Initializing DataTable for:", tableId);
-  let table = $(tableId).DataTable();
-  if (table) {
-    console.log("DataTable exists. Destroying and clearing:", tableId);
-    table.destroy();
-    $(tableId + ' tbody').empty();
+  if ($.fn.DataTable.isDataTable(tableId)) {
+    $(tableId).DataTable().clear().destroy();
   }
-  table = $(tableId).DataTable();
-  console.log("DataTable initialized:", tableId);
-  console.log("Current table HTML after initialization:", $(tableId).html());
+
+  $(tableId).DataTable({
+    "order": [[ 0, "asc" ]]
+  });
+
+  console.log(`DataTable initialized for: ${tableId}`);
 }
   </script>
 
