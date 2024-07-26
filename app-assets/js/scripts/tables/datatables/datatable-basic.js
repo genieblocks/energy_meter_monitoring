@@ -39,13 +39,13 @@ $('#dataTablesTable').DataTable({
 //     dom: '<"top">rt<"bottom"Bp>',
 // });
 
-$('#DataTables_Table_Electricity_Meter_List').DataTable({
-    dom: '<"top">rt<"bottom"Bp>',
-    buttons: [
-        'copyHtml5',
-        'csvHtml5'
-    ]
-});
+// $('#DataTables_Table_Electricity_Meter_List').DataTable({
+//     dom: '<"top">rt<"bottom"Bp>',
+//     buttons: [
+//         'copyHtml5',
+//         'csvHtml5'
+//     ]
+// });
 
 $('#DataTables_Table_Electricity_Meter_Report').DataTable({
     dom: '<"top">rt<"bottom"Bp>',
@@ -59,29 +59,29 @@ $('#DataTables_Table_Electricity_Meter_Report').DataTable({
     ]
 });
 
-$('#DataTables_Table_Water_Meter_List').DataTable({
-    dom: '<"top">rt<"bottom"Bp>',
-    buttons: [
-        'copyHtml5',
-        'csvHtml5'
-    ]
-});
+// $('#DataTables_Table_Water_Meter_List').DataTable({
+//     dom: '<"top">rt<"bottom"Bp>',
+//     buttons: [
+//         'copyHtml5',
+//         'csvHtml5'
+//     ]
+// });
 
-$('#DataTables_Table_Calorimeter_Hot_Meter_List').DataTable({
-    dom: '<"top">rt<"bottom"Bp>',
-    buttons: [
-        'copyHtml5',
-        'csvHtml5'
-    ]
-});
+// $('#DataTables_Table_Calorimeter_Hot_Meter_List').DataTable({
+//     dom: '<"top">rt<"bottom"Bp>',
+//     buttons: [
+//         'copyHtml5',
+//         'csvHtml5'
+//     ]
+// });
 
-$('#DataTables_Table_Calorimeter_Cold_Meter_List').DataTable({
-    dom: '<"top">rt<"bottom"Bp>',
-    buttons: [
-        'copyHtml5',
-        'csvHtml5'
-    ]
-});
+// $('#DataTables_Table_Calorimeter_Cold_Meter_List').DataTable({
+//     dom: '<"top">rt<"bottom"Bp>',
+//     buttons: [
+//         'copyHtml5',
+//         'csvHtml5'
+//     ]
+// });
 
 $('input.global_filter').on('keyup click', function () {
     filterGlobal();
