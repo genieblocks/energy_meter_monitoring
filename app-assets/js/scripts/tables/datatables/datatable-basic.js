@@ -20,7 +20,7 @@ $(document).ready(function() {
 *    configure dom elements (show hide) *
 ****************************************/
 $('#DataTables_Table_0').DataTable({
-    dom: '<"top">rt<"bottom"p>',
+    dom: 'B<"top">rt<"bottom"p>',
     buttons: [
         'copyHtml5',
         'csvHtml5'
@@ -28,7 +28,7 @@ $('#DataTables_Table_0').DataTable({
 });
 
 $('#dataTablesTable').DataTable({
-    dom: '<"top">rt<"bottom"p>',
+    dom: 'B<"top">rt<"bottom"p>',
     buttons: [
         'copyHtml5',
         'csvHtml5'
@@ -40,7 +40,7 @@ $('#dataTablesTable').DataTable({
 // });
 
 $('#DataTables_Table_Electricity_Meter_List').DataTable({
-    dom: '<"top">rt<"bottom"p>',
+    dom: 'B<"top">rt<"bottom"p>',
     buttons: [
         'copyHtml5',
         'csvHtml5'
@@ -48,7 +48,7 @@ $('#DataTables_Table_Electricity_Meter_List').DataTable({
 });
 
 $('#DataTables_Table_Electricity_Meter_Report').DataTable({
-    dom: '<"top">rt<"bottom"p>',
+    dom: 'B<"top">rt<"bottom"p>',
     "autoWidth": true,
     scrollY:        "600px",
     "scrollCollapse": true,
@@ -60,7 +60,7 @@ $('#DataTables_Table_Electricity_Meter_Report').DataTable({
 });
 
 $('#DataTables_Table_Water_Meter_List').DataTable({
-    dom: '<"top">rt<"bottom"p>',
+    dom: 'B<"top">rt<"bottom"p>',
     buttons: [
         'copyHtml5',
         'csvHtml5'
@@ -68,7 +68,7 @@ $('#DataTables_Table_Water_Meter_List').DataTable({
 });
 
 $('#DataTables_Table_Calorimeter_Hot_Meter_List').DataTable({
-    dom: '<"top">rt<"bottom"p>',
+    dom: 'B<"top">rt<"bottom"p>',
     buttons: [
         'copyHtml5',
         'csvHtml5'
@@ -76,7 +76,7 @@ $('#DataTables_Table_Calorimeter_Hot_Meter_List').DataTable({
 });
 
 $('#DataTables_Table_Calorimeter_Cold_Meter_List').DataTable({
-    dom: '<"top">rt<"bottom"p>',
+    dom: 'B<"top">rt<"bottom"p>',
     buttons: [
         'copyHtml5',
         'csvHtml5'
