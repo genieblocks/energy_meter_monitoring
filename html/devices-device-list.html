@@ -637,9 +637,9 @@ function fetchElectricMetersData() {
   })
   .then(data => {
     console.log("Data received for ElectricMeters :", data);
-    if (data && data.success && Array.isArray(data.data)) {
-      console.log("Success: ElectricMeters data is array with length", data.data.length);
-      data.data.forEach(meter => {
+    if (data && data[0] && data[0].success && Array.isArray(data[0].data)) {
+      console.log("Success: ElectricMeters data is array with length", data[0].data.length);
+      data[0].data.forEach(meter => {
         console.log("Appending row for ElectricMeters:", meter);
         appendRowToTable(meter, '#DataTables_Table_Electricity_Meter_List');
       });
@@ -760,10 +760,10 @@ function appendRowToTable(meter, tableId) {
   const row = document.createElement('tr');
 
   row.innerHTML = `
-    <td>${meter.serialNumber || ''}</td>
-    <td>${meter.brand || ''}</td>
-    <td>${meter.protocol || ''}</td>
-    <td>${meter.connectionPoint || ''}</td>
+    <td>${meter.SerialNumber || ''}</td>
+    <td>${meter.Brand || ''}</td>
+    <td>${meter.CommunicationProtocol || ''}</td>
+    <td>${meter.ConnectionPoint || ''}</td>
     <td>
       <button type="button" class="btn btn-sm btn-outline-success" id="table-edit-button">
         <i class="fa fa-edit"></i>
