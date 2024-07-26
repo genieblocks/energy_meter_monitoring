@@ -21,10 +21,18 @@ $(document).ready(function() {
 ****************************************/
 $('#DataTables_Table_0').DataTable({
     dom: '<"top">rt<"bottom"p>',
+    buttons: [
+        'copyHtml5',
+        'csvHtml5'
+    ]
 });
 
 $('#dataTablesTable').DataTable({
     dom: '<"top">rt<"bottom"p>',
+    buttons: [
+        'copyHtml5',
+        'csvHtml5'
+    ]
 });
 
 // $('#tableContentDataTable').DataTable({
@@ -33,6 +41,10 @@ $('#dataTablesTable').DataTable({
 
 $('#DataTables_Table_Electricity_Meter_List').DataTable({
     dom: '<"top">rt<"bottom"p>',
+    buttons: [
+        'copyHtml5',
+        'csvHtml5'
+    ]
 });
 
 $('#DataTables_Table_Electricity_Meter_Report').DataTable({
@@ -41,18 +53,34 @@ $('#DataTables_Table_Electricity_Meter_Report').DataTable({
     scrollY:        "600px",
     "scrollCollapse": true,
     "paging":         false,
+    buttons: [
+        'copyHtml5',
+        'csvHtml5'
+    ]
 });
 
 $('#DataTables_Table_Water_Meter_List').DataTable({
     dom: '<"top">rt<"bottom"p>',
+    buttons: [
+        'copyHtml5',
+        'csvHtml5'
+    ]
 });
 
 $('#DataTables_Table_Calorimeter_Hot_Meter_List').DataTable({
     dom: '<"top">rt<"bottom"p>',
+    buttons: [
+        'copyHtml5',
+        'csvHtml5'
+    ]
 });
 
 $('#DataTables_Table_Calorimeter_Cold_Meter_List').DataTable({
     dom: '<"top">rt<"bottom"p>',
+    buttons: [
+        'copyHtml5',
+        'csvHtml5'
+    ]
 });
 
 $('input.global_filter').on('keyup click', function () {
