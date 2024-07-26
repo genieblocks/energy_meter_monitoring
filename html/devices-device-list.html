@@ -732,129 +732,114 @@ function fetchTableData(tableName, tableBodySelector, callback) {
       .catch(error => console.error('Fetch error:', error));
     }
   
-    function updateProtocolDetails(meterType) {
-      const protocolType = document.querySelector(`#protocolType${capitalize(meterType)}`).value;
-      console.log("debug_2:", protocolType); // Debug log
+function updateProtocolDetails(meterType) {
+  const protocolType = document.querySelector(`#protocolType${capitalize(meterType)}`).value;
 
-      // Manufacturer ve Connection Point dropdownlarını güncelle
-      fetchProtocolDetails(protocolType, meterType);
-      fetchConnectionPoints(protocolType, meterType);
-    }
+  // Manufacturer ve Connection Point dropdownlarını güncelle
+  fetchProtocolDetails(protocolType, meterType);
+  fetchConnectionPoints(protocolType, meterType);
+}
   
-    function fetchProtocolDetails(protocolType, meterType) {
-      // Modalı kilitle ve bekleme işareti göster
-      $.blockUI({
-        message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
-        overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
-        css: { border: 0, padding: 0, backgroundColor: 'transparent' }
+function fetchProtocolDetails(protocolType, meterType) {
+  fetch(`${baseWebhookURL}/webhook/get-table-content`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ tableName: 'Protocols' })
+  })
+  .then(response => response.json())
+  .then(data => {
+    const manufacturerSelect = document.querySelector(`#manufacturer${capitalize(meterType)}`);
+    manufacturerSelect.innerHTML = '<option value="none" selected disabled>Sayaç Markası Seçiniz.</option>';
+
+    if (data[0].success && Array.isArray(data[0].data)) {
+      const protocol = data[0].data.find(item => item.ProtocolType === protocolType);
+      const manufacturerTable = protocol.ManufacturerTableName;
+
+      fetchManufacturers(manufacturerTable, meterType);
+    } else {
+      console.error('Protocols tablosu verileri yüklenemedi:', data[0].message);
+    }
+  })
+  .catch(error => console.error('Fetch error:', error));
+}
+  
+function fetchManufacturers(manufacturerTable, meterType) {
+  fetch(`${baseWebhookURL}/webhook/get-table-content`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ tableName: manufacturerTable })
+  })
+  .then(response => response.json())
+  .then(data => {
+    const manufacturerSelect = document.querySelector(`#manufacturer${capitalize(meterType)}`);
+    if (data[0].success && Array.isArray(data[0].data)) {
+      data[0].data.forEach(manufacturer => {
+        const option = document.createElement('option');
+        option.value = manufacturer.ManufacturerName;
+        option.textContent = manufacturer.ManufacturerName;
+        manufacturerSelect.appendChild(option);
       });
-      console.log("debug_3:", protocolType); // Debug log
-
-      fetch(`${baseWebhookURL}/webhook/get-table-content`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ tableName: 'Protocols' })
-      })
-      .then(response => response.json())
-      .then(data => {
-        console.log("debug_4:", data); // Debug log
-        const manufacturerSelect = document.querySelector(`#manufacturer${capitalize(meterType)}`);
-        manufacturerSelect.innerHTML = '<option value="none" selected disabled>Sayaç Markası Seçiniz.</option>';
-
-        if (data[0].success && Array.isArray(data[0].data)) {
-          const protocol = data[0].data.find(item => item.ProtocolType === protocolType);
-          const manufacturerTable = protocol.ManufacturerTableName;
-          console.log("debug_5:", manufacturerTable); // Debug log
-
-          fetchManufacturers(manufacturerTable, meterType);
-        } else {
-          console.error('Protocols tablosu verileri yüklenemedi:', data[0].message);
-        }
-      })
-      .catch(error => console.error('Fetch error:', error));
+    } else {
+      console.error('Manufacturer tablosu verileri yüklenemedi:', data[0].message);
     }
+    $.unblockUI();
+  })
+  .catch(error => console.error('Fetch error:', error));
+}
   
-    function fetchManufacturers(manufacturerTable, meterType) {
-      fetch(`${baseWebhookURL}/webhook/get-table-content`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ tableName: manufacturerTable })
-      })
-      .then(response => response.json())
-      .then(data => {
-        console.log("debug_6:", data); // Debug log
-        const manufacturerSelect = document.querySelector(`#manufacturer${capitalize(meterType)}`);
-        if (data[0].success && Array.isArray(data[0].data)) {
-          data[0].data.forEach(manufacturer => {
-            const option = document.createElement('option');
-            option.value = manufacturer.ManufacturerName;
-            option.textContent = manufacturer.ManufacturerName;
-            manufacturerSelect.appendChild(option);
-          });
-        } else {
-          console.error('Manufacturer tablosu verileri yüklenemedi:', data[0].message);
-        }
-        // Modal kilidini kaldır
-        $.unblockUI();
-      })
-      .catch(error => console.error('Fetch error:', error));
-    }
-  
-    function fetchConnectionPoints(protocolType, meterType) {
-      fetch(`${baseWebhookURL}/webhook/get-table-content`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ tableName: 'Protocols' })
-      })
-      .then(response => response.json())
-      .then(data => {
-        console.log("debug_7:", data); // Debug log
-        const connectionPointSelect = document.querySelector(`#connectionPoint${capitalize(meterType)}`);
-        connectionPointSelect.innerHTML = '<option value="none" selected disabled>Bağlantı Noktası Seçiniz.</option>';
+function fetchConnectionPoints(protocolType, meterType) {
+  fetch(`${baseWebhookURL}/webhook/get-table-content`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ tableName: 'Protocols' })
+  })
+  .then(response => response.json())
+  .then(data => {
+    const connectionPointSelect = document.querySelector(`#connectionPoint${capitalize(meterType)}`);
+    connectionPointSelect.innerHTML = '<option value="none" selected disabled>Bağlantı Noktası Seçiniz.</option>';
 
-        if (data[0].success && Array.isArray(data[0].data)) {
-          const protocol = data[0].data.find(item => item.ProtocolType === protocolType);
-          const connectionTable = protocol.ConnectionTableName;
+    if (data[0].success && Array.isArray(data[0].data)) {
+      const protocol = data[0].data.find(item => item.ProtocolType === protocolType);
+      const connectionTable = protocol.ConnectionTableName;
 
-          fetchConnections(connectionTable, meterType);
-        } else {
-          console.error('Protocols tablosu verileri yüklenemedi:', data[0].message);
-        }
-      })
-      .catch(error => console.error('Fetch error:', error));
+      fetchConnections(connectionTable, meterType);
+    } else {
+      console.error('Protocols tablosu verileri yüklenemedi:', data[0].message);
     }
+  })
+  .catch(error => console.error('Fetch error:', error));
+}
   
-    function fetchConnections(connectionTable, meterType) {
-      fetch(`${baseWebhookURL}/webhook/get-table-content`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ tableName: connectionTable })
-      })
-      .then(response => response.json())
-      .then(data => {
-        console.log("debug_8:", data); // Debug log
-        const connectionPointSelect = document.querySelector(`#connectionPoint${capitalize(meterType)}`);
-        if (data[0].success && Array.isArray(data[0].data)) {
-          data[0].data.forEach(connection => {
-            const option = document.createElement('option');
-            option.value = connection.ConnectionName;
-            option.textContent = connection.ConnectionName;
-            connectionPointSelect.appendChild(option);
-          });
-        } else {
-          console.error('Connection tablosu verileri yüklenemedi:', data[0].message);
-        }
-      })
-      .catch(error => console.error('Fetch error:', error));
+function fetchConnections(connectionTable, meterType) {
+  fetch(`${baseWebhookURL}/webhook/get-table-content`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ tableName: connectionTable })
+  })
+  .then(response => response.json())
+  .then(data => {
+    const connectionPointSelect = document.querySelector(`#connectionPoint${capitalize(meterType)}`);
+    if (data[0].success && Array.isArray(data[0].data)) {
+      data[0].data.forEach(connection => {
+        const option = document.createElement('option');
+        option.value = connection.ConnectionName;
+        option.textContent = connection.ConnectionName;
+        connectionPointSelect.appendChild(option);
+      });
+    } else {
+      console.error('Connection tablosu verileri yüklenemedi:', data[0].message);
     }
+  })
+  .catch(error => console.error('Fetch error:', error));
+}
 
     document.querySelector('#electricityMeterForm').addEventListener('submit', function(event) {
     event.preventDefault(); // Formun submit olmasını engelle
@@ -1048,9 +1033,9 @@ function fetchTableData(tableName, tableBodySelector, callback) {
     });
   });
 
-  function capitalize(str) {
-    return str.charAt(0).toUpperCase() + str.slice(1);
-  }
+function capitalize(str) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
   
   </script>
 </body>
