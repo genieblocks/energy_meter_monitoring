@@ -613,7 +613,7 @@ function updateTable(data) {
         });
         // Re-initialize DataTable
         tableElement.DataTable({
-            dom: '<"top">rt<"bottom"Bp>',
+            dom: '<"top">rtfl<"bottom"Bp>',
             columns: [
                 { title: "Table Name" },
                 { title: "Data Retention" },
@@ -736,7 +736,7 @@ function updateModalWithData(data, tableName) {
     const tableId = '#tableContentDataTable';
     if (!$.fn.DataTable.isDataTable(tableId)) {
         $(tableId).DataTable({
-            dom: '<"top">rt<"bottom"Bp>',
+            dom: '<"top">rtfl<"bottom"Bp>',
             buttons: [
                 'copyHtml5',
                 'csvHtml5'
