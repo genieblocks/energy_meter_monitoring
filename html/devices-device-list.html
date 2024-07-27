@@ -781,12 +781,11 @@ function appendRowToTable(meter, tableId) {
 }
 
 function initializeDataTable(tableId) {
-  if (!$.fn.DataTable.isDataTable(tableId)) {
-    $(tableId).DataTable({
-      "order": [[ 0, "asc" ]]
-    });
-    console.log(`DataTable initialized for: ${tableId}`);
-  }
+  const table = $(tableId).DataTable({
+    "order": [[0, "asc"]],
+    "destroy": true // Ensure that the DataTable can be reinitialized
+  });
+  console.log(`DataTable initialized for: ${tableId}`);
 }
 
   </script>
