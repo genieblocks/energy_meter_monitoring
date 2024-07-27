@@ -612,11 +612,21 @@
 
 
 function initializePage() {
+  // Sayfa yüklendiğinde UI'yi kilitle ve spinner göster
+  $.blockUI({
+    message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
+    overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
+    css: { border: 0, padding: 0, backgroundColor: 'transparent' }
+  });
+
   console.log("Initializing page...");
   fetchElectricMetersData();
   fetchWaterMetersData();
   fetchHeatingMetersData();
   fetchCoolingMetersData();
+  
+  // İşlemler tamamlandığında UI kilidini kaldır
+  $.unblockUI();
 }
 
 function fetchElectricMetersData() {
