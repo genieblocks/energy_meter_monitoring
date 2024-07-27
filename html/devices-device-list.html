@@ -787,26 +787,20 @@ function appendRowToTable(meter, tableId) {
 
 function initializeDataTable(tableId) {
   // Eğer DataTable zaten initialize edilmişse, yeniden initialize etme
-  // if (!$.fn.DataTable.isDataTable(tableId)) {
-  //   $(tableId).DataTable({
-  //     "order": [[0, "asc"]],
-  //     "destroy": true // Ensure that the DataTable can be reinitialized
-  //   });
-  //   console.log(`DataTable initialized for: ${tableId}`);
-  // } else {
-  //   console.log(`DataTable already initialized for: ${tableId}`);
-  // }
-  
-  const tableElement = $('tableId');
-  // Re-initialize DataTable
-  tableElement.DataTable({
-    dom: '<"top">rt<"bottom"Bp>',
-    buttons: [
-        'copyHtml5',
-        'csvHtml5'
-    ],
-    order: []
-  });
+  if (!$.fn.DataTable.isDataTable(tableId)) {
+    $(tableId).DataTable({
+      dom: '<"top">rt<"bottom"Bp>',
+      buttons: [
+          'copyHtml5',
+          'csvHtml5'
+      ],
+      "order": [[0, "asc"]]
+    });
+    console.log(`DataTable initialized for: ${tableId}`);
+  } else {
+    console.log(`DataTable already initialized for: ${tableId}`);
+  }
+
 }
 
   </script>
