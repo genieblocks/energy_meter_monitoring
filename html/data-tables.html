@@ -721,6 +721,22 @@ function updateModalWithData(data, tableName) {
             }
         });
     });
+
+    // Re-initialize DataTable for tableContentDataTable
+    const tableId = '#tableContentDataTable';
+    if (!$.fn.DataTable.isDataTable(tableId)) {
+        $(tableId).DataTable({
+            dom: '<"top">rt<"bottom"Bp>',
+            buttons: [
+                'copyHtml5',
+                'csvHtml5'
+            ],
+            order: [[0, "asc"]]
+        });
+        console.log(`DataTable initialized for: ${tableId}`);
+    } else {
+        console.log(`DataTable already initialized for: ${tableId}`);
+    }
 }
 
 // Error handling function for fetch
