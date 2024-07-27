@@ -756,6 +756,11 @@ function fetchCoolingMetersData() {
 }
 
 function appendRowToTable(meter, tableId) {
+  const tableElement = $('tableId');
+  if ($.fn.DataTable.isDataTable(tableElement)) {
+      tableElement.DataTable().clear().destroy();
+  }
+
   const tableBody = document.querySelector(`${tableId} tbody`);
   const row = document.createElement('tr');
 
@@ -782,15 +787,26 @@ function appendRowToTable(meter, tableId) {
 
 function initializeDataTable(tableId) {
   // Eğer DataTable zaten initialize edilmişse, yeniden initialize etme
-  if (!$.fn.DataTable.isDataTable(tableId)) {
-    $(tableId).DataTable({
-      "order": [[0, "asc"]],
-      "destroy": true // Ensure that the DataTable can be reinitialized
-    });
-    console.log(`DataTable initialized for: ${tableId}`);
-  } else {
-    console.log(`DataTable already initialized for: ${tableId}`);
-  }
+  // if (!$.fn.DataTable.isDataTable(tableId)) {
+  //   $(tableId).DataTable({
+  //     "order": [[0, "asc"]],
+  //     "destroy": true // Ensure that the DataTable can be reinitialized
+  //   });
+  //   console.log(`DataTable initialized for: ${tableId}`);
+  // } else {
+  //   console.log(`DataTable already initialized for: ${tableId}`);
+  // }
+  
+  const tableElement = $('tableId');
+  // Re-initialize DataTable
+  tableElement.DataTable({
+    dom: '<"top">rt<"bottom"Bp>',
+    buttons: [
+        'copyHtml5',
+        'csvHtml5'
+    ],
+    order: []
+  });
 }
 
   </script>
