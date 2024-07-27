@@ -527,6 +527,16 @@ document.addEventListener('DOMContentLoaded', function () {
         const tableName = $('#tableContentModal .modal-title').text();
         showNewDataForm(tableName);
     });
+
+    // Add event listener for modal close to destroy DataTable
+    $('#tableContentModal').on('hidden.bs.modal', function () {
+        const tableContentElement = $('#tableContentDataTable');
+        if ($.fn.DataTable.isDataTable(tableContentElement)) {
+            tableContentElement.DataTable().clear().destroy();
+        }
+        $('#tableContentDataTable tbody').empty(); // Clear table body
+        $('#tableContentDataTable thead tr').empty(); // Clear table header
+    });
 });
   
 
