@@ -756,11 +756,6 @@ function fetchCoolingMetersData() {
 }
 
 function appendRowToTable(meter, tableId) {
-  const tableElement = $('tableId');
-  if ($.fn.DataTable.isDataTable(tableElement)) {
-      tableElement.DataTable().clear().destroy();
-  }
-
   const tableBody = document.querySelector(`${tableId} tbody`);
   const row = document.createElement('tr');
 
