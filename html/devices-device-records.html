@@ -204,16 +204,16 @@
               <input type="text" class="global_filter mr-2" id="global_filter" placeholder=" Sayaç Ara">
             </div> -->
           </div>
-          <table class="table table-hover table-bordered zero-configuration dataTable" id="DataTables_Table_Electricity_Meter_List"
+          <table class="table table-hover table-bordered zero-configuration dataTable" id="DataTables_Table_Electricity_Meter_Records"
             role="grid" aria-describedby="DataTables_Table_0_info">
             <thead>
               <tr>
                 <th>Sayaç Seri Numarası</th>
-                <th>Sayaç Markası</th>
-                <th>İletişim Protokolü</th>
-                <th>Bağlantı Noktası</th>
-                <th>Düzenle</th>
-                <th>Sil</th>
+                <th>Hata</th>
+                <th>Üretici Kodu</th>
+                <th>Sayaç Değeri</th>
+                <th>Sorgu Başlangıç Zamanı</th>
+                <th>Okuma Zamanı</th>
               </tr>
             </thead>
             <tbody>
@@ -229,16 +229,16 @@
               <input type="text" class="global_filter mr-2" id="global_filter" placeholder=" Sayaç Ara">
             </div> -->
           </div>
-          <table class="table table-hover table-bordered zero-configuration dataTable" id="DataTables_Table_Water_Meter_List"
+          <table class="table table-hover table-bordered zero-configuration dataTable" id="DataTables_Table_Water_Meter_Records"
             role="grid" aria-describedby="DataTables_Table_0_info">
             <thead>
               <tr>
                 <th>Sayaç Seri Numarası</th>
-                <th>Sayaç Markası</th>
-                <th>İletişim Protokolü</th>
-                <th>Bağlantı Noktası</th>
-                <th>Düzenle</th>
-                <th>Sil</th>
+                <th>Hata</th>
+                <th>Üretici Kodu</th>
+                <th>Sayaç Değeri</th>
+                <th>Sorgu Başlangıç Zamanı</th>
+                <th>Okuma Zamanı</th>
               </tr>
             </thead>
             <tbody>
@@ -254,16 +254,16 @@
               <input type="text" class="global_filter mr-2" id="global_filter" placeholder=" Sayaç Ara">
             </div> -->
           </div>
-          <table class="table table-hover table-bordered zero-configuration dataTable" id="DataTables_Table_Calorimeter_Hot_Meter_List"
+          <table class="table table-hover table-bordered zero-configuration dataTable" id="DataTables_Table_Calorimeter_Hot_Meter_Records"
             role="grid" aria-describedby="DataTables_Table_0_info">
             <thead>
               <tr>
                 <th>Sayaç Seri Numarası</th>
-                <th>Sayaç Markası</th>
-                <th>İletişim Protokolü</th>
-                <th>Bağlantı Noktası</th>
-                <th>Düzenle</th>
-                <th>Sil</th>
+                <th>Hata</th>
+                <th>Üretici Kodu</th>
+                <th>Sayaç Değeri</th>
+                <th>Sorgu Başlangıç Zamanı</th>
+                <th>Okuma Zamanı</th>
               </tr>
             </thead>
             <tbody>
@@ -279,16 +279,16 @@
               <input type="text" class="global_filter mr-2" id="global_filter" placeholder=" Sayaç Ara">
             </div> -->
           </div>
-          <table class="table table-hover table-bordered zero-configuration dataTable" id="DataTables_Table_Calorimeter_Cold_Meter_List"
+          <table class="table table-hover table-bordered zero-configuration dataTable" id="DataTables_Table_Calorimeter_Cold_Meter_Records"
             role="grid" aria-describedby="DataTables_Table_1_info">
             <thead>
               <tr>
                 <th>Sayaç Seri Numarası</th>
-                <th>Sayaç Markası</th>
-                <th>İletişim Protokolü</th>
-                <th>Bağlantı Noktası</th>
-                <th>Düzenle</th>
-                <th>Sil</th>
+                <th>Hata</th>
+                <th>Üretici Kodu</th>
+                <th>Sayaç Değeri</th>
+                <th>Sorgu Başlangıç Zamanı</th>
+                <th>Okuma Zamanı</th>
               </tr>
             </thead>
             <tbody>
@@ -360,138 +360,138 @@ function initializePage() {
 }
 
 function fetchElectricMetersUsageData() {
-  console.log("Fetching data for: ElectricMeters");
+  console.log("Fetching data for: ElectricityUsage");
   fetch(`${baseWebhookURL}/webhook/get-table-content`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ tableName: 'ElectricMeters' })
+    body: JSON.stringify({ tableName: 'ElectricityUsage' })
   })
   .then(response => {
     if (!response.ok) {
       throw new Error('Network response was not ok ' + response.statusText);
     }
-    console.log("Response received for ElectricMeters :", response);
+    console.log("Response received for ElectricityUsage :", response);
     return response.json();
   })
   .then(data => {
-    console.log("Data received for ElectricMeters :", data);
+    console.log("Data received for ElectricityUsage :", data);
     if (data.length > 0 && data[0].success && Array.isArray(data[0].data)) {
-      console.log("Success: ElectricMeters data is array with length", data[0].data.length);
+      console.log("Success: ElectricityUsage data is array with length", data[0].data.length);
       data[0].data.forEach(meter => {
-        console.log("Appending row for ElectricMeters:", meter);
-        appendRowToTable(meter, '#DataTables_Table_Electricity_Meter_List');
+        console.log("Appending row for ElectricityUsage:", meter);
+        appendRowToTable(meter, '#DataTables_Table_Electricity_Meter_Records');
       });
-      initializeDataTable('#DataTables_Table_Electricity_Meter_List'); // İlk defa initialize et
+      initializeDataTable('#DataTables_Table_Electricity_Meter_Records'); // İlk defa initialize et
     } else {
-      console.log("Failed: ElectricMeters data is not an array or success flag is false", data);
+      console.log("Failed: ElectricityUsage data is not an array or success flag is false", data);
     }
   })
   .catch(error => {
-    console.error("Error fetching ElectricMeters data:", error);
+    console.error("Error fetching ElectricityUsage data:", error);
   });
 }
 
 function fetchWaterMetersUsageData() {
-  console.log("Fetching data for: WaterMeters");
+  console.log("Fetching data for: WaterUsage");
   fetch(`${baseWebhookURL}/webhook/get-table-content`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ tableName: 'WaterMeters' })
+    body: JSON.stringify({ tableName: 'WaterUsage' })
   })
   .then(response => {
     if (!response.ok) {
       throw new Error('Network response was not ok ' + response.statusText);
     }
-    console.log("Response received for WaterMeters :", response);
+    console.log("Response received for WaterUsage :", response);
     return response.json();
   })
   .then(data => {
-    console.log("Data received for WaterMeters :", data);
+    console.log("Data received for WaterUsage :", data);
     if (data.length > 0 && data[0].success && Array.isArray(data[0].data)) {
-      console.log("Success: WaterMeters data is array with length", data[0].data.length);
+      console.log("Success: WaterUsage data is array with length", data[0].data.length);
       data[0].data.forEach(meter => {
-        console.log("Appending row for WaterMeters:", meter);
-        appendRowToTable(meter, '#DataTables_Table_Water_Meter_List');
+        console.log("Appending row for WaterUsage:", meter);
+        appendRowToTable(meter, '#DataTables_Table_Water_Meter_Records');
       });
-      initializeDataTable('#DataTables_Table_Water_Meter_List'); // İlk defa initialize et
+      initializeDataTable('#DataTables_Table_Water_Meter_Records'); // İlk defa initialize et
     } else {
-      console.log("Failed: WaterMeters data is not an array or success flag is false", data);
+      console.log("Failed: WaterUsage data is not an array or success flag is false", data);
     }
   })
   .catch(error => {
-    console.error("Error fetching WaterMeters data:", error);
+    console.error("Error fetching WaterUsage data:", error);
   });
 }
 
 function fetchHeatingMetersUsageData() {
-  console.log("Fetching data for: HeatingMeters");
+  console.log("Fetching data for: HeatingUsage");
   fetch(`${baseWebhookURL}/webhook/get-table-content`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ tableName: 'HeatingMeters' })
+    body: JSON.stringify({ tableName: 'HeatingUsage' })
   })
   .then(response => {
     if (!response.ok) {
       throw new Error('Network response was not ok ' + response.statusText);
     }
-    console.log("Response received for HeatingMeters :", response);
+    console.log("Response received for HeatingUsage :", response);
     return response.json();
   })
   .then(data => {
-    console.log("Data received for HeatingMeters :", data);
+    console.log("Data received for HeatingUsage :", data);
     if (data.length > 0 && data[0].success && Array.isArray(data[0].data)) {
-      console.log("Success: HeatingMeters data is array with length", data[0].data.length);
+      console.log("Success: HeatingUsage data is array with length", data[0].data.length);
       data[0].data.forEach(meter => {
-        console.log("Appending row for HeatingMeters:", meter);
-        appendRowToTable(meter, '#DataTables_Table_Calorimeter_Hot_Meter_List');
+        console.log("Appending row for HeatingUsage:", meter);
+        appendRowToTable(meter, '#DataTables_Table_Calorimeter_Hot_Meter_Records');
       });
-      initializeDataTable('#DataTables_Table_Calorimeter_Hot_Meter_List'); // İlk defa initialize et
+      initializeDataTable('#DataTables_Table_Calorimeter_Hot_Meter_Records'); // İlk defa initialize et
     } else {
-      console.log("Failed: HeatingMeters data is not an array or success flag is false", data);
+      console.log("Failed: HeatingUsage data is not an array or success flag is false", data);
     }
   })
   .catch(error => {
-    console.error("Error fetching HeatingMeters data:", error);
+    console.error("Error fetching HeatingUsage data:", error);
   });
 }
 
 function fetchCoolingMetersUsageData() {
-  console.log("Fetching data for: CoolingMeters");
+  console.log("Fetching data for: CoolingUsage");
   fetch(`${baseWebhookURL}/webhook/get-table-content`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ tableName: 'CoolingMeters' })
+    body: JSON.stringify({ tableName: 'CoolingUsage' })
   })
   .then(response => {
     if (!response.ok) {
       throw new Error('Network response was not ok ' + response.statusText);
     }
-    console.log("Response received for CoolingMeters :", response);
+    console.log("Response received for CoolingUsage :", response);
     return response.json();
   })
   .then(data => {
-    console.log("Data received for CoolingMeters :", data);
+    console.log("Data received for CoolingUsage :", data);
     if (data.length > 0 && data[0].success && Array.isArray(data[0].data)) {
-      console.log("Success: CoolingMeters data is array with length", data[0].data.length);
+      console.log("Success: CoolingUsage data is array with length", data[0].data.length);
       data[0].data.forEach(meter => {
-        console.log("Appending row for CoolingMeters:", meter);
-        appendRowToTable(meter, '#DataTables_Table_Calorimeter_Cold_Meter_List');
+        console.log("Appending row for CoolingUsage:", meter);
+        appendRowToTable(meter, '#DataTables_Table_Calorimeter_Cold_Meter_Records');
       });
-      initializeDataTable('#DataTables_Table_Calorimeter_Cold_Meter_List'); // İlk defa initialize et
+      initializeDataTable('#DataTables_Table_Calorimeter_Cold_Meter_Records'); // İlk defa initialize et
     } else {
-      console.log("Failed: CoolingMeters data is not an array or success flag is false", data);
+      console.log("Failed: CoolingUsage data is not an array or success flag is false", data);
     }
   })
   .catch(error => {
-    console.error("Error fetching CoolingMeters data:", error);
+    console.error("Error fetching CoolingUsage data:", error);
   });
 }
 
