@@ -610,11 +610,10 @@
   <script src="../app-assets/js/scripts/tables/datatables/datatable-basic.js"></script>
   <!-- END PAGE LEVEL JS-->
 
-  <script>
-    // const baseWebhookURL = "http://127.0.0.1:5678"; // Değiştirmek istediğiniz temel URL
-    const baseWebhookURL = "http://192.168.2.250:5678"; // Değiştirmek istediğiniz temel URL
-    // const baseWebhookURL = "http://192.168.1.146:5678"; // Değiştirmek istediğiniz temel URL
-
+<script>
+  // const baseWebhookURL = "http://127.0.0.1:5678"; // Değiştirmek istediğiniz temel URL
+  const baseWebhookURL = "http://192.168.2.250:5678"; // Değiştirmek istediğiniz temel URL
+  // const baseWebhookURL = "http://192.168.1.146:5678"; // Değiştirmek istediğiniz temel URL
 
 function initializePage() {
   // Sayfa yüklendiğinde UI'yi kilitle ve spinner göster
@@ -625,16 +624,16 @@ function initializePage() {
   });
 
   console.log("Initializing page...");
-  fetchElectricMetersData();
-  fetchWaterMetersData();
-  fetchHeatingMetersData();
-  fetchCoolingMetersData();
+  fetchElectricMetersUsageData();
+  fetchWaterMetersUsageData();
+  fetchHeatingMetersUsageData();
+  fetchCoolingMetersUsageData();
   
   // İşlemler tamamlandığında UI kilidini kaldır
   $.unblockUI();
 }
 
-function fetchElectricMetersData() {
+function fetchElectricMetersUsageData() {
   console.log("Fetching data for: ElectricMeters");
   fetch(`${baseWebhookURL}/webhook/get-table-content`, {
     method: 'POST',
@@ -668,7 +667,7 @@ function fetchElectricMetersData() {
   });
 }
 
-function fetchWaterMetersData() {
+function fetchWaterMetersUsageData() {
   console.log("Fetching data for: WaterMeters");
   fetch(`${baseWebhookURL}/webhook/get-table-content`, {
     method: 'POST',
@@ -702,7 +701,7 @@ function fetchWaterMetersData() {
   });
 }
 
-function fetchHeatingMetersData() {
+function fetchHeatingMetersUsageData() {
   console.log("Fetching data for: HeatingMeters");
   fetch(`${baseWebhookURL}/webhook/get-table-content`, {
     method: 'POST',
@@ -736,7 +735,7 @@ function fetchHeatingMetersData() {
   });
 }
 
-function fetchCoolingMetersData() {
+function fetchCoolingMetersUsageData() {
   console.log("Fetching data for: CoolingMeters");
   fetch(`${baseWebhookURL}/webhook/get-table-content`, {
     method: 'POST',
@@ -776,19 +775,11 @@ function appendRowToTable(meter, tableId) {
 
   row.innerHTML = `
     <td>${meter.SerialNumber || ''}</td>
-    <td>${meter.Brand || ''}</td>
-    <td>${meter.CommunicationProtocol || ''}</td>
-    <td>${meter.ConnectionPoint || ''}</td>
-    <td>
-      <button type="button" class="btn btn-sm btn-outline-success" id="table-edit-button">
-        <i class="fa fa-edit"></i>
-      </button>
-    </td>
-    <td>
-      <button type="button" class="btn btn-sm btn-outline-danger" id="table-delete-button">
-        <i class="fa fa-trash-o"></i>
-      </button>
-    </td>
+    <td>${meter.Error || ''}</td>
+    <td>${meter.ManufacturerID || ''}</td>
+    <td>${meter.MeterValue_kWh || ''}</td>
+    <td>${meter.QueryStartTime || ''}</td>
+    <td>${meter.Timestamp || ''}</td>
   `;
 
   console.log(`Appending row: ${row.innerHTML}`);
@@ -813,348 +804,7 @@ function initializeDataTable(tableId) {
 
 }
 
-  </script>
-
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      loadProtocolTypes('electricity');
-      loadProtocolTypes('water');
-      loadProtocolTypes('heating');
-      loadProtocolTypes('cooling');
-    });
-  
-    function loadProtocolTypes(meterType) {
-      fetch(`${baseWebhookURL}/webhook/get-table-content`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ tableName: 'Protocols' })
-      })
-      .then(response => response.json())
-      .then(data => {
-        console.log("debug_1:", data); // Debug log
-        const protocolTypeSelect = document.querySelector(`#protocolType${capitalize(meterType)}`);
-        if (data[0].success && Array.isArray(data[0].data)) {
-          data[0].data.forEach(protocol => {
-            const option = document.createElement('option');
-            option.value = protocol.ProtocolType;
-            option.textContent = protocol.ProtocolType;
-            protocolTypeSelect.appendChild(option);
-          });
-        } else {
-          console.error('Protocols tablosu verileri yüklenemedi:', data[0].message);
-        }
-      })
-      .catch(error => console.error('Fetch error:', error));
-    }
-  
-function updateProtocolDetails(meterType) {
-  const protocolType = document.querySelector(`#protocolType${capitalize(meterType)}`).value;
-
-  // Manufacturer ve Connection Point dropdownlarını güncelle
-  fetchProtocolDetails(protocolType, meterType);
-  fetchConnectionPoints(protocolType, meterType);
-}
-  
-function fetchProtocolDetails(protocolType, meterType) {
-  fetch(`${baseWebhookURL}/webhook/get-table-content`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({ tableName: 'Protocols' })
-  })
-  .then(response => response.json())
-  .then(data => {
-    const manufacturerSelect = document.querySelector(`#manufacturer${capitalize(meterType)}`);
-    manufacturerSelect.innerHTML = '<option value="none" selected disabled>Sayaç Markası Seçiniz.</option>';
-
-    if (data[0].success && Array.isArray(data[0].data)) {
-      const protocol = data[0].data.find(item => item.ProtocolType === protocolType);
-      const manufacturerTable = protocol.ManufacturerTableName;
-
-      fetchManufacturers(manufacturerTable, meterType);
-    } else {
-      console.error('Protocols tablosu verileri yüklenemedi:', data[0].message);
-    }
-  })
-  .catch(error => console.error('Fetch error:', error));
-}
-  
-function fetchManufacturers(manufacturerTable, meterType) {
-  fetch(`${baseWebhookURL}/webhook/get-table-content`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({ tableName: manufacturerTable })
-  })
-  .then(response => response.json())
-  .then(data => {
-    const manufacturerSelect = document.querySelector(`#manufacturer${capitalize(meterType)}`);
-    if (data[0].success && Array.isArray(data[0].data)) {
-      data[0].data.forEach(manufacturer => {
-        const option = document.createElement('option');
-        option.value = manufacturer.ManufacturerName;
-        option.textContent = manufacturer.ManufacturerName;
-        manufacturerSelect.appendChild(option);
-      });
-    } else {
-      console.error('Manufacturer tablosu verileri yüklenemedi:', data[0].message);
-    }
-    $.unblockUI();
-  })
-  .catch(error => console.error('Fetch error:', error));
-}
-  
-function fetchConnectionPoints(protocolType, meterType) {
-  fetch(`${baseWebhookURL}/webhook/get-table-content`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({ tableName: 'Protocols' })
-  })
-  .then(response => response.json())
-  .then(data => {
-    const connectionPointSelect = document.querySelector(`#connectionPoint${capitalize(meterType)}`);
-    connectionPointSelect.innerHTML = '<option value="none" selected disabled>Bağlantı Noktası Seçiniz.</option>';
-
-    if (data[0].success && Array.isArray(data[0].data)) {
-      const protocol = data[0].data.find(item => item.ProtocolType === protocolType);
-      const connectionTable = protocol.ConnectionTableName;
-
-      fetchConnections(connectionTable, meterType);
-    } else {
-      console.error('Protocols tablosu verileri yüklenemedi:', data[0].message);
-    }
-  })
-  .catch(error => console.error('Fetch error:', error));
-}
-  
-function fetchConnections(connectionTable, meterType) {
-  fetch(`${baseWebhookURL}/webhook/get-table-content`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({ tableName: connectionTable })
-  })
-  .then(response => response.json())
-  .then(data => {
-    const connectionPointSelect = document.querySelector(`#connectionPoint${capitalize(meterType)}`);
-    if (data[0].success && Array.isArray(data[0].data)) {
-      data[0].data.forEach(connection => {
-        const option = document.createElement('option');
-        option.value = connection.ConnectionName;
-        option.textContent = connection.ConnectionName;
-        connectionPointSelect.appendChild(option);
-      });
-    } else {
-      console.error('Connection tablosu verileri yüklenemedi:', data[0].message);
-    }
-  })
-  .catch(error => console.error('Fetch error:', error));
-}
-
-    document.querySelector('#electricityMeterForm').addEventListener('submit', function(event) {
-    event.preventDefault(); // Formun submit olmasını engelle
-
-    const serialNumber = document.querySelector('#devicenameElectricity').value;
-    const protocolType = document.querySelector('#protocolTypeElectricity').value;
-    const manufacturer = document.querySelector('#manufacturerElectricity').value;
-    const connectionPoint = document.querySelector('#connectionPointElectricity').value;
-    const tableName = 'ElectricMeters'; // İlgili sayaç tablosu
-
-    const ElectricMeterID = 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'; 
-
-    // Modalı kilitle ve bekleme işareti göster
-    $.blockUI({
-      message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
-      overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
-      css: { border: 0, padding: 0, backgroundColor: 'transparent' }
-    });
-
-    fetch(`${baseWebhookURL}/webhook/insert-table-content`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        tableName: tableName,
-        ElectricMeterID: ElectricMeterID,
-        SerialNumber: serialNumber,
-        CommunicationProtocol: protocolType,
-        Brand: manufacturer,
-        ConnectionPoint: connectionPoint
-      })
-    })
-    .then(response => response.json())
-    .then(data => {
-      console.log("Received response from insert-table-content:", data); // Debug log
-      if (data[0].success) {
-        alert('Sayaç başarıyla eklendi!');
-        location.reload(); // Sayfayı yeniden yükle
-      } else {
-        console.error('Sayaç ekleme hatası:', data.message);
-      }
-    })
-    .catch(error => console.error('Fetch error:', error))
-    .finally(() => {
-      $.unblockUI();
-    });
-  });
-
-  document.querySelector('#waterMeterForm').addEventListener('submit', function(event) {
-    event.preventDefault(); // Formun submit olmasını engelle
-
-    const serialNumber = document.querySelector('#devicenameWater').value;
-    const protocolType = document.querySelector('#protocolTypeWater').value;
-    const manufacturer = document.querySelector('#manufacturerWater').value;
-    const connectionPoint = document.querySelector('#connectionPointWater').value;
-    const tableName = 'WaterMeters'; // İlgili sayaç tablosu
-
-    const WaterMeterID = 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'; 
-
-    // Modalı kilitle ve bekleme işareti göster
-    $.blockUI({
-      message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
-      overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
-      css: { border: 0, padding: 0, backgroundColor: 'transparent' }
-    });
-
-    fetch(`${baseWebhookURL}/webhook/insert-table-content`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        tableName: tableName,
-        WaterMeterID: WaterMeterID,
-        SerialNumber: serialNumber,
-        CommunicationProtocol: protocolType,
-        Brand: manufacturer,
-        ConnectionPoint: connectionPoint
-      })
-    })
-    .then(response => response.json())
-    .then(data => {
-      console.log("Received response from insert-table-content:", data); // Debug log
-      if (data[0].success) {
-        alert('Sayaç başarıyla eklendi!');
-        location.reload(); // Sayfayı yeniden yükle
-      } else {
-        console.error('Sayaç ekleme hatası:', data.message);
-      }
-    })
-    .catch(error => console.error('Fetch error:', error))
-    .finally(() => {
-      $.unblockUI();
-    });
-  });
-
-  document.querySelector('#heatingMeterForm').addEventListener('submit', function(event) {
-    event.preventDefault(); // Formun submit olmasını engelle
-
-    const serialNumber = document.querySelector('#devicenameHeating').value;
-    const protocolType = document.querySelector('#protocolTypeHeating').value;
-    const manufacturer = document.querySelector('#manufacturerHeating').value;
-    const connectionPoint = document.querySelector('#connectionPointHeating').value;
-    const tableName = 'HeatingMeters'; // İlgili sayaç tablosu
-
-    const HeatingMeterID = 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'; 
-
-    // Modalı kilitle ve bekleme işareti göster
-    $.blockUI({
-      message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
-      overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
-      css: { border: 0, padding: 0, backgroundColor: 'transparent' }
-    });
-
-    fetch(`${baseWebhookURL}/webhook/insert-table-content`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        tableName: tableName,
-        HeatingMeterID: HeatingMeterID,
-        SerialNumber: serialNumber,
-        CommunicationProtocol: protocolType,
-        Brand: manufacturer,
-        ConnectionPoint: connectionPoint
-      })
-    })
-    .then(response => response.json())
-    .then(data => {
-      console.log("Received response from insert-table-content:", data); // Debug log
-      if (data[0].success) {
-        alert('Sayaç başarıyla eklendi!');
-        location.reload(); // Sayfayı yeniden yükle
-      } else {
-        console.error('Sayaç ekleme hatası:', data.message);
-      }
-    })
-    .catch(error => console.error('Fetch error:', error))
-    .finally(() => {
-      $.unblockUI();
-    });
-  });
-
-  document.querySelector('#coolingMeterForm').addEventListener('submit', function(event) {
-    event.preventDefault(); // Formun submit olmasını engelle
-
-    const serialNumber = document.querySelector('#devicenameCooling').value;
-    const protocolType = document.querySelector('#protocolTypeCooling').value;
-    const manufacturer = document.querySelector('#manufacturerCooling').value;
-    const connectionPoint = document.querySelector('#connectionPointCooling').value;
-    const tableName = 'CoolingMeters'; // İlgili sayaç tablosu
-
-    const CoolingMeterID = 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'; 
-
-    // Modalı kilitle ve bekleme işareti göster
-    $.blockUI({
-      message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
-      overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
-      css: { border: 0, padding: 0, backgroundColor: 'transparent' }
-    });
-
-    fetch(`${baseWebhookURL}/webhook/insert-table-content`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        tableName: tableName,
-        CoolingMeterID: CoolingMeterID,
-        SerialNumber: serialNumber,
-        CommunicationProtocol: protocolType,
-        Brand: manufacturer,
-        ConnectionPoint: connectionPoint
-      })
-    })
-    .then(response => response.json())
-    .then(data => {
-      console.log("Received response from insert-table-content:", data); // Debug log
-      if (data[0].success) {
-        alert('Sayaç başarıyla eklendi!');
-        location.reload(); // Sayfayı yeniden yükle
-      } else {
-        console.error('Sayaç ekleme hatası:', data.message);
-      }
-    })
-    .catch(error => console.error('Fetch error:', error))
-    .finally(() => {
-      $.unblockUI();
-    });
-  });
-
-function capitalize(str) {
-  return str.charAt(0).toUpperCase() + str.slice(1);
-}
-  
-  </script>
+</script>
 </body>
 
 </html>
