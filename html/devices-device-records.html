@@ -381,7 +381,21 @@ function fetchElectricMetersUsageData() {
       console.log("Success: ElectricityUsage data is array with length", data[0].data.length);
       data[0].data.forEach(meter => {
         console.log("Appending row for ElectricityUsage:", meter);
-        appendRowToTable(meter, '#DataTables_Table_Electricity_Meter_Records');
+        // appendRowToTable(meter, '#DataTables_Table_Electricity_Meter_Records');
+        const tableBody = document.querySelector(`${'#DataTables_Table_Electricity_Meter_Records'} tbody`);
+        const row = document.createElement('tr');
+
+        row.innerHTML = `
+          <td>${meter.SerialNumber || ''}</td>
+          <td>${meter.Error || ''}</td>
+          <td>${meter.ManufacturerID || ''}</td>
+          <td>${meter.PositiveActiveEnergyTotal_kWh || ''}</td>
+          <td>${meter.QueryStartTime || ''}</td>
+          <td>${meter.Timestamp || ''}</td>
+        `;
+
+        console.log(`Appending row: ${row.innerHTML}`);
+        tableBody.appendChild(row);
       });
       initializeDataTable('#DataTables_Table_Electricity_Meter_Records'); // İlk defa initialize et
     } else {
@@ -415,7 +429,21 @@ function fetchWaterMetersUsageData() {
       console.log("Success: WaterUsage data is array with length", data[0].data.length);
       data[0].data.forEach(meter => {
         console.log("Appending row for WaterUsage:", meter);
-        appendRowToTable(meter, '#DataTables_Table_Water_Meter_Records');
+        // appendRowToTable(meter, '#DataTables_Table_Water_Meter_Records');
+        const tableBody = document.querySelector(`${'#DataTables_Table_Water_Meter_Records'} tbody`);
+        const row = document.createElement('tr');
+
+        row.innerHTML = `
+          <td>${meter.SerialNumber || ''}</td>
+          <td>${meter.Error || ''}</td>
+          <td>${meter.ManufacturerID || ''}</td>
+          <td>${meter.MeterValue_m3 || ''}</td>
+          <td>${meter.QueryStartTime || ''}</td>
+          <td>${meter.Timestamp || ''}</td>
+        `;
+
+        console.log(`Appending row: ${row.innerHTML}`);
+        tableBody.appendChild(row);
       });
       initializeDataTable('#DataTables_Table_Water_Meter_Records'); // İlk defa initialize et
     } else {
@@ -449,7 +477,21 @@ function fetchHeatingMetersUsageData() {
       console.log("Success: HeatingUsage data is array with length", data[0].data.length);
       data[0].data.forEach(meter => {
         console.log("Appending row for HeatingUsage:", meter);
-        appendRowToTable(meter, '#DataTables_Table_Calorimeter_Hot_Meter_Records');
+        // appendRowToTable(meter, '#DataTables_Table_Calorimeter_Hot_Meter_Records');
+        const tableBody = document.querySelector(`${'#DataTables_Table_Calorimeter_Hot_Meter_Records'} tbody`);
+        const row = document.createElement('tr');
+
+        row.innerHTML = `
+          <td>${meter.SerialNumber || ''}</td>
+          <td>${meter.Error || ''}</td>
+          <td>${meter.ManufacturerID || ''}</td>
+          <td>${meter.MeterValue_kWh || ''}</td>
+          <td>${meter.QueryStartTime || ''}</td>
+          <td>${meter.Timestamp || ''}</td>
+        `;
+
+        console.log(`Appending row: ${row.innerHTML}`);
+        tableBody.appendChild(row);
       });
       initializeDataTable('#DataTables_Table_Calorimeter_Hot_Meter_Records'); // İlk defa initialize et
     } else {
@@ -483,7 +525,21 @@ function fetchCoolingMetersUsageData() {
       console.log("Success: CoolingUsage data is array with length", data[0].data.length);
       data[0].data.forEach(meter => {
         console.log("Appending row for CoolingUsage:", meter);
-        appendRowToTable(meter, '#DataTables_Table_Calorimeter_Cold_Meter_Records');
+        // appendRowToTable(meter, '#DataTables_Table_Calorimeter_Cold_Meter_Records');
+        const tableBody = document.querySelector(`${'#DataTables_Table_Calorimeter_Cold_Meter_Records'} tbody`);
+        const row = document.createElement('tr');
+
+        row.innerHTML = `
+          <td>${meter.SerialNumber || ''}</td>
+          <td>${meter.Error || ''}</td>
+          <td>${meter.ManufacturerID || ''}</td>
+          <td>${meter.MeterValue_kWh || ''}</td>
+          <td>${meter.QueryStartTime || ''}</td>
+          <td>${meter.Timestamp || ''}</td>
+        `;
+
+        console.log(`Appending row: ${row.innerHTML}`);
+        tableBody.appendChild(row);
       });
       initializeDataTable('#DataTables_Table_Calorimeter_Cold_Meter_Records'); // İlk defa initialize et
     } else {
