@@ -549,8 +549,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function queryMeterData(serialNumber, connectionPoint) {
   $('#singleQueryModal').modal('show');
-  $.blockUI({
-    message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
+
+  // Sadece modal içeriği bloklanacak
+  $('#singleQueryModal .modal-content').block({
+    message: '<div class="icon-spinner9 fa fa-spinner icon-spin icon-lg"></div>',
     overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
     css: { border: 0, padding: 0, backgroundColor: 'transparent' }
   });
@@ -564,12 +566,14 @@ function queryMeterData(serialNumber, connectionPoint) {
   })
   .then(response => response.json())
   .then(data => {
-    $.unblockUI();
     updateSingleQueryModal(data);
+    // Modal içeriği bloklamayı kaldır
+    $('#singleQueryModal .modal-content').unblock();
   })
   .catch(error => {
-    $.unblockUI();
     console.error("Error querying meter data:", error);
+    // Modal içeriği bloklamayı kaldır
+    $('#singleQueryModal .modal-content').unblock();
   });
 }
 
