@@ -774,7 +774,6 @@ function initializeDataTable(tableId) {
       })
       .then(response => response.json())
       .then(data => {
-        console.log("debug_1:", data); // Debug log
         const protocolTypeSelect = document.querySelector(`#protocolType${capitalize(meterType)}`);
         if (data[0].success && Array.isArray(data[0].data)) {
           data[0].data.forEach(protocol => {
