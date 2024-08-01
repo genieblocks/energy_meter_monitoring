@@ -390,6 +390,7 @@
                 <th>Sayaç Markası</th>
                 <th>İletişim Protokolü</th>
                 <th>Bağlantı Noktası</th>
+                <th>Oku</th>
                 <th>Düzenle</th>
                 <th>Sil</th>
               </tr>
@@ -419,6 +420,7 @@
                 <th>Sayaç Markası</th>
                 <th>İletişim Protokolü</th>
                 <th>Bağlantı Noktası</th>
+                <th>Oku</th>
                 <th>Düzenle</th>
                 <th>Sil</th>
               </tr>
@@ -447,6 +449,7 @@
                 <th>Sayaç Markası</th>
                 <th>İletişim Protokolü</th>
                 <th>Bağlantı Noktası</th>
+                <th>Oku</th>
                 <th>Düzenle</th>
                 <th>Sil</th>
               </tr>
@@ -475,6 +478,7 @@
                 <th>Sayaç Markası</th>
                 <th>İletişim Protokolü</th>
                 <th>Bağlantı Noktası</th>
+                <th>Oku</th>
                 <th>Düzenle</th>
                 <th>Sil</th>
               </tr>
@@ -532,7 +536,7 @@
 document.addEventListener('DOMContentLoaded', function() {
   document.querySelectorAll('#DataTables_Table_Electricity_Meter_List tbody, #DataTables_Table_Water_Meter_List tbody, #DataTables_Table_Calorimeter_Hot_Meter_List tbody, #DataTables_Table_Calorimeter_Cold_Meter_List tbody').forEach(function(tableBody) {
     tableBody.addEventListener('click', function(event) {
-      if (event.target && event.target.nodeName === 'BUTTON' && event.target.id === 'table-edit-button') {
+      if (event.target && event.target.nodeName === 'BUTTON' && event.target.id === 'table-show-button') {
         const row = event.target.closest('tr');
         const serialNumber = row.cells[0].innerText;
         const connectionPoint = row.cells[3].innerText;
@@ -734,6 +738,11 @@ function appendRowToTable(meter, tableId) {
     <td>${meter.Brand || ''}</td>
     <td>${meter.CommunicationProtocol || ''}</td>
     <td>${meter.ConnectionPoint || ''}</td>
+    <td>
+      <button type="button" class="btn btn-sm btn-outline-info" id="table-show-button">
+          <i class="fa fa-eye"></i>
+      </button>
+    </td>
     <td>
       <button type="button" class="btn btn-sm btn-outline-success" id="table-edit-button">
         <i class="fa fa-edit"></i>
