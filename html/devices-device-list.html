@@ -550,19 +550,11 @@ document.addEventListener('DOMContentLoaded', function() {
 function queryMeterData(serialNumber, connectionPoint) {
   $('#singleQueryModal').modal('show');
 
-  // Sadece modal içeriği bloklanacak ve spinner merkeze yerleştirilecek
+  // Sadece modal içeriği bloklanacak
   $('#singleQueryModal .modal-content').block({
     message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
     overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
-    css: { 
-      border: 0, 
-      padding: 0, 
-      backgroundColor: 'transparent', 
-      position: 'absolute',
-      top: '50%',
-      left: '50%',
-      transform: 'translate(-50%, -50%)'
-    }
+    css: { border: 0, padding: 0, backgroundColor: 'transparent' }
   });
 
   fetch(`${baseWebhookURL}/webhook/query-meter-data`, {
