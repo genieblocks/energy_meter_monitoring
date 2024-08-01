@@ -597,7 +597,6 @@ function initializePage() {
 }
 
 function fetchElectricMetersData() {
-  console.log("Fetching data for: ElectricMeters");
   fetch(`${baseWebhookURL}/webhook/get-table-content`, {
     method: 'POST',
     headers: {
@@ -609,15 +608,11 @@ function fetchElectricMetersData() {
     if (!response.ok) {
       throw new Error('Network response was not ok ' + response.statusText);
     }
-    console.log("Response received for ElectricMeters :", response);
     return response.json();
   })
   .then(data => {
-    console.log("Data received for ElectricMeters :", data);
     if (data.length > 0 && data[0].success && Array.isArray(data[0].data)) {
-      console.log("Success: ElectricMeters data is array with length", data[0].data.length);
       data[0].data.forEach(meter => {
-        console.log("Appending row for ElectricMeters:", meter);
         appendRowToTable(meter, '#DataTables_Table_Electricity_Meter_List');
       });
       initializeDataTable('#DataTables_Table_Electricity_Meter_List'); // İlk defa initialize et
@@ -631,7 +626,6 @@ function fetchElectricMetersData() {
 }
 
 function fetchWaterMetersData() {
-  console.log("Fetching data for: WaterMeters");
   fetch(`${baseWebhookURL}/webhook/get-table-content`, {
     method: 'POST',
     headers: {
@@ -643,15 +637,11 @@ function fetchWaterMetersData() {
     if (!response.ok) {
       throw new Error('Network response was not ok ' + response.statusText);
     }
-    console.log("Response received for WaterMeters :", response);
     return response.json();
   })
   .then(data => {
-    console.log("Data received for WaterMeters :", data);
     if (data.length > 0 && data[0].success && Array.isArray(data[0].data)) {
-      console.log("Success: WaterMeters data is array with length", data[0].data.length);
       data[0].data.forEach(meter => {
-        console.log("Appending row for WaterMeters:", meter);
         appendRowToTable(meter, '#DataTables_Table_Water_Meter_List');
       });
       initializeDataTable('#DataTables_Table_Water_Meter_List'); // İlk defa initialize et
@@ -665,7 +655,6 @@ function fetchWaterMetersData() {
 }
 
 function fetchHeatingMetersData() {
-  console.log("Fetching data for: HeatingMeters");
   fetch(`${baseWebhookURL}/webhook/get-table-content`, {
     method: 'POST',
     headers: {
@@ -677,15 +666,11 @@ function fetchHeatingMetersData() {
     if (!response.ok) {
       throw new Error('Network response was not ok ' + response.statusText);
     }
-    console.log("Response received for HeatingMeters :", response);
     return response.json();
   })
   .then(data => {
-    console.log("Data received for HeatingMeters :", data);
     if (data.length > 0 && data[0].success && Array.isArray(data[0].data)) {
-      console.log("Success: HeatingMeters data is array with length", data[0].data.length);
       data[0].data.forEach(meter => {
-        console.log("Appending row for HeatingMeters:", meter);
         appendRowToTable(meter, '#DataTables_Table_Calorimeter_Hot_Meter_List');
       });
       initializeDataTable('#DataTables_Table_Calorimeter_Hot_Meter_List'); // İlk defa initialize et
@@ -699,7 +684,6 @@ function fetchHeatingMetersData() {
 }
 
 function fetchCoolingMetersData() {
-  console.log("Fetching data for: CoolingMeters");
   fetch(`${baseWebhookURL}/webhook/get-table-content`, {
     method: 'POST',
     headers: {
@@ -711,15 +695,11 @@ function fetchCoolingMetersData() {
     if (!response.ok) {
       throw new Error('Network response was not ok ' + response.statusText);
     }
-    console.log("Response received for CoolingMeters :", response);
     return response.json();
   })
   .then(data => {
-    console.log("Data received for CoolingMeters :", data);
     if (data.length > 0 && data[0].success && Array.isArray(data[0].data)) {
-      console.log("Success: CoolingMeters data is array with length", data[0].data.length);
       data[0].data.forEach(meter => {
-        console.log("Appending row for CoolingMeters:", meter);
         appendRowToTable(meter, '#DataTables_Table_Calorimeter_Cold_Meter_List');
       });
       initializeDataTable('#DataTables_Table_Calorimeter_Cold_Meter_List'); // İlk defa initialize et
@@ -753,7 +733,6 @@ function appendRowToTable(meter, tableId) {
     </td>
   `;
 
-  console.log(`Appending row: ${row.innerHTML}`);
   tableBody.appendChild(row);
 }
 
@@ -954,7 +933,6 @@ function fetchConnections(connectionTable, meterType) {
     })
     .then(response => response.json())
     .then(data => {
-      console.log("Received response from insert-table-content:", data); // Debug log
       if (data[0].success) {
         alert('Sayaç başarıyla eklendi!');
         location.reload(); // Sayfayı yeniden yükle
@@ -1002,7 +980,6 @@ function fetchConnections(connectionTable, meterType) {
     })
     .then(response => response.json())
     .then(data => {
-      console.log("Received response from insert-table-content:", data); // Debug log
       if (data[0].success) {
         alert('Sayaç başarıyla eklendi!');
         location.reload(); // Sayfayı yeniden yükle
@@ -1050,7 +1027,6 @@ function fetchConnections(connectionTable, meterType) {
     })
     .then(response => response.json())
     .then(data => {
-      console.log("Received response from insert-table-content:", data); // Debug log
       if (data[0].success) {
         alert('Sayaç başarıyla eklendi!');
         location.reload(); // Sayfayı yeniden yükle
@@ -1098,7 +1074,6 @@ function fetchConnections(connectionTable, meterType) {
     })
     .then(response => response.json())
     .then(data => {
-      console.log("Received response from insert-table-content:", data); // Debug log
       if (data[0].success) {
         alert('Sayaç başarıyla eklendi!');
         location.reload(); // Sayfayı yeniden yükle
