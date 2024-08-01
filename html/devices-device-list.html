@@ -249,10 +249,11 @@
               <thead>
                   <tr>
                     <th>Seri Numarası</th>
+                    <th>Bağlantı Noktası</th>
                     <th>Seri Port</th>
-                    <th>Hata</th>
                     <th>Üretici Kodu</th>
                     <th>Değeri</th>
+                    <th>Hata</th>
                   </tr>
               </thead>
               <tbody>
@@ -582,10 +583,11 @@ function updateSingleQueryModal(data) {
       const row = document.createElement('tr');
       row.innerHTML = `
         <td>${meter.device_addr || ''}</td>
+        <td>${meter.connectionPoint || ''}</td>
         <td>${meter.serial_port || ''}</td>
-        <td>${meter.originalDataError || ''}</td>
         <td>${meter.ManID || ''}</td>
-        <td>${meter.meterValue || ''}</td>
+        <td>${meter.meterValue || ''}
+        <td>${meter.originalDataError || ''}</td>
       `;
       tableBody.appendChild(row);
     });
