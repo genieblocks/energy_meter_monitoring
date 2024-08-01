@@ -563,12 +563,11 @@ function updateSingleQueryModal(data) {
     data.forEach(meter => {
       const row = document.createElement('tr');
       row.innerHTML = `
-        <td>${meter.SerialNumber || ''}</td>
-        <td>${meter.ConnectionPoint || ''}</td>
-        <td>${meter.Error || ''}</td>
-        <td>${meter.ManufacturerID || ''}</td>
-        <td>${meter.MeterValue || ''}</td>
-        <td>${meter.Timestamp || ''}</td>
+        <td>${meter.device_addr || ''}</td>
+        <td>${meter.serial_port || ''}</td>
+        <td>${meter.originalDataError || ''}</td>
+        <td>${meter.ManID || ''}</td>
+        <td>${meter.meterValue || ''}</td>
       `;
       tableBody.appendChild(row);
     });
