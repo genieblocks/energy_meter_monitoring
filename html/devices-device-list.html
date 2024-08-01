@@ -560,6 +560,7 @@ function updateSingleQueryModal(data) {
   tableBody.innerHTML = '';
 
   if (data.length > 0) {
+    document.getElementById('noContentMessage').style.display = 'none'; // Hide error message
     data.forEach(meter => {
       const row = document.createElement('tr');
       row.innerHTML = `
