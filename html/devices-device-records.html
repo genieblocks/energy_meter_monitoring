@@ -328,41 +328,37 @@ function initializePage() {
   });
 
   console.log("Initializing page...");
-  fetchElectricMetersUsageData();
-  fetchWaterMetersUsageData();
-  fetchHeatingMetersUsageData();
-  fetchCoolingMetersUsageData();
-  
-  // İşlemler tamamlandığında UI kilidini kaldır
-  $.unblockUI();
+  // Fetch all meter data
+  const fetchPromises = [
+    fetchElectricMetersUsageData(),
+    fetchWaterMetersUsageData(),
+    fetchHeatingMetersUsageData(),
+    fetchCoolingMetersUsageData()
+  ];
+
+  // Wait for all data fetches to complete before unblocking UI
+  Promise.all(fetchPromises).then(() => {
+    $.unblockUI();
+  }).catch(error => {
+    $.unblockUI();
+    console.error("Error initializing page:", error);
+  });
 }
 
 function fetchElectricMetersUsageData() {
-  console.log("Fetching data for: ElectricityUsage");
-  fetch(`${baseWebhookURL}/webhook/get-table-content`, {
+  return fetch(`${baseWebhookURL}/webhook/get-table-content`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({ tableName: 'ElectricityUsage' })
   })
-  .then(response => {
-    if (!response.ok) {
-      throw new Error('Network response was not ok ' + response.statusText);
-    }
-    console.log("Response received for ElectricityUsage :", response);
-    return response.json();
-  })
+  .then(response => response.json())
   .then(data => {
-    console.log("Data received for ElectricityUsage :", data);
     if (data.length > 0 && data[0].success && Array.isArray(data[0].data)) {
-      console.log("Success: ElectricityUsage data is array with length", data[0].data.length);
+      const tableBody = document.querySelector('#DataTables_Table_Electricity_Meter_Records tbody');
       data[0].data.forEach(meter => {
-        console.log("Appending row for ElectricityUsage:", meter);
-        // appendRowToTable(meter, '#DataTables_Table_Electricity_Meter_Records');
-        const tableBody = document.querySelector(`${'#DataTables_Table_Electricity_Meter_Records'} tbody`);
         const row = document.createElement('tr');
-
         row.innerHTML = `
           <td>${meter.SerialNumber || ''}</td>
           <td>${meter.Error || ''}</td>
@@ -371,13 +367,9 @@ function fetchElectricMetersUsageData() {
           <td>${meter.QueryStartTime || ''}</td>
           <td>${meter.Timestamp || ''}</td>
         `;
-
-        console.log(`Appending row: ${row.innerHTML}`);
         tableBody.appendChild(row);
       });
-      initializeDataTable('#DataTables_Table_Electricity_Meter_Records'); // İlk defa initialize et
-    } else {
-      console.log("Failed: ElectricityUsage data is not an array or success flag is false", data);
+      initializeDataTable('#DataTables_Table_Electricity_Meter_Records');
     }
   })
   .catch(error => {
@@ -386,31 +378,19 @@ function fetchElectricMetersUsageData() {
 }
 
 function fetchWaterMetersUsageData() {
-  console.log("Fetching data for: WaterUsage");
-  fetch(`${baseWebhookURL}/webhook/get-table-content`, {
+  return fetch(`${baseWebhookURL}/webhook/get-table-content`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({ tableName: 'WaterUsage' })
   })
-  .then(response => {
-    if (!response.ok) {
-      throw new Error('Network response was not ok ' + response.statusText);
-    }
-    console.log("Response received for WaterUsage :", response);
-    return response.json();
-  })
+  .then(response => response.json())
   .then(data => {
-    console.log("Data received for WaterUsage :", data);
     if (data.length > 0 && data[0].success && Array.isArray(data[0].data)) {
-      console.log("Success: WaterUsage data is array with length", data[0].data.length);
+      const tableBody = document.querySelector('#DataTables_Table_Water_Meter_Records tbody');
       data[0].data.forEach(meter => {
-        console.log("Appending row for WaterUsage:", meter);
-        // appendRowToTable(meter, '#DataTables_Table_Water_Meter_Records');
-        const tableBody = document.querySelector(`${'#DataTables_Table_Water_Meter_Records'} tbody`);
         const row = document.createElement('tr');
-
         row.innerHTML = `
           <td>${meter.SerialNumber || ''}</td>
           <td>${meter.Error || ''}</td>
@@ -419,13 +399,9 @@ function fetchWaterMetersUsageData() {
           <td>${meter.QueryStartTime || ''}</td>
           <td>${meter.Timestamp || ''}</td>
         `;
-
-        console.log(`Appending row: ${row.innerHTML}`);
         tableBody.appendChild(row);
       });
-      initializeDataTable('#DataTables_Table_Water_Meter_Records'); // İlk defa initialize et
-    } else {
-      console.log("Failed: WaterUsage data is not an array or success flag is false", data);
+      initializeDataTable('#DataTables_Table_Water_Meter_Records');
     }
   })
   .catch(error => {
@@ -434,31 +410,19 @@ function fetchWaterMetersUsageData() {
 }
 
 function fetchHeatingMetersUsageData() {
-  console.log("Fetching data for: HeatUsage");
-  fetch(`${baseWebhookURL}/webhook/get-table-content`, {
+  return fetch(`${baseWebhookURL}/webhook/get-table-content`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({ tableName: 'HeatUsage' })
   })
-  .then(response => {
-    if (!response.ok) {
-      throw new Error('Network response was not ok ' + response.statusText);
-    }
-    console.log("Response received for HeatUsage :", response);
-    return response.json();
-  })
+  .then(response => response.json())
   .then(data => {
-    console.log("Data received for HeatUsage :", data);
     if (data.length > 0 && data[0].success && Array.isArray(data[0].data)) {
-      console.log("Success: HeatUsage data is array with length", data[0].data.length);
+      const tableBody = document.querySelector('#DataTables_Table_Calorimeter_Hot_Meter_Records tbody');
       data[0].data.forEach(meter => {
-        console.log("Appending row for HeatUsage:", meter);
-        // appendRowToTable(meter, '#DataTables_Table_Calorimeter_Hot_Meter_Records');
-        const tableBody = document.querySelector(`${'#DataTables_Table_Calorimeter_Hot_Meter_Records'} tbody`);
         const row = document.createElement('tr');
-
         row.innerHTML = `
           <td>${meter.SerialNumber || ''}</td>
           <td>${meter.Error || ''}</td>
@@ -467,13 +431,9 @@ function fetchHeatingMetersUsageData() {
           <td>${meter.QueryStartTime || ''}</td>
           <td>${meter.Timestamp || ''}</td>
         `;
-
-        console.log(`Appending row: ${row.innerHTML}`);
         tableBody.appendChild(row);
       });
-      initializeDataTable('#DataTables_Table_Calorimeter_Hot_Meter_Records'); // İlk defa initialize et
-    } else {
-      console.log("Failed: HeatUsage data is not an array or success flag is false", data);
+      initializeDataTable('#DataTables_Table_Calorimeter_Hot_Meter_Records');
     }
   })
   .catch(error => {
@@ -482,31 +442,19 @@ function fetchHeatingMetersUsageData() {
 }
 
 function fetchCoolingMetersUsageData() {
-  console.log("Fetching data for: CoolUsage");
-  fetch(`${baseWebhookURL}/webhook/get-table-content`, {
+  return fetch(`${baseWebhookURL}/webhook/get-table-content`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({ tableName: 'CoolUsage' })
   })
-  .then(response => {
-    if (!response.ok) {
-      throw new Error('Network response was not ok ' + response.statusText);
-    }
-    console.log("Response received for CoolUsage :", response);
-    return response.json();
-  })
+  .then(response => response.json())
   .then(data => {
-    console.log("Data received for CoolUsage :", data);
     if (data.length > 0 && data[0].success && Array.isArray(data[0].data)) {
-      console.log("Success: CoolUsage data is array with length", data[0].data.length);
+      const tableBody = document.querySelector('#DataTables_Table_Calorimeter_Cold_Meter_Records tbody');
       data[0].data.forEach(meter => {
-        console.log("Appending row for CoolUsage:", meter);
-        // appendRowToTable(meter, '#DataTables_Table_Calorimeter_Cold_Meter_Records');
-        const tableBody = document.querySelector(`${'#DataTables_Table_Calorimeter_Cold_Meter_Records'} tbody`);
         const row = document.createElement('tr');
-
         row.innerHTML = `
           <td>${meter.SerialNumber || ''}</td>
           <td>${meter.Error || ''}</td>
@@ -515,13 +463,9 @@ function fetchCoolingMetersUsageData() {
           <td>${meter.QueryStartTime || ''}</td>
           <td>${meter.Timestamp || ''}</td>
         `;
-
-        console.log(`Appending row: ${row.innerHTML}`);
         tableBody.appendChild(row);
       });
-      initializeDataTable('#DataTables_Table_Calorimeter_Cold_Meter_Records'); // İlk defa initialize et
-    } else {
-      console.log("Failed: CoolUsage data is not an array or success flag is false", data);
+      initializeDataTable('#DataTables_Table_Calorimeter_Cold_Meter_Records');
     }
   })
   .catch(error => {
