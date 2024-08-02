@@ -344,41 +344,39 @@
   // const baseWebhookURL = "http://192.168.1.146:5678"; // Değiştirmek istediğiniz temel URL
 
   $(document).ready(function() {
-  function filterGlobal() {
-    let globalFilterValue = $('#global_filter').val();
-    $('.dataTable').each(function() {
-      $(this).DataTable().search(globalFilterValue).draw();
-    });
-  }
-
-  function filterByDate() {
-    let dateFilterValue = $('#date_filter').val();
-    $('.dataTable').each(function() {
-      $(this).DataTable().columns(5).search(dateFilterValue).draw();
-    });
-  }
-
-  $('input.global_filter').on('keyup click', function() {
-    filterGlobal();
-  });
-
-  $('input.date_filter').on('keyup click', function() {
-    filterByDate();
-  });
+  let table = initializeDataTable('#DataTables_Table_Electricity_Meter_Records');
+  initializeFilters(table);
 
   initializePage();
 });
 
+function filterGlobal(table) {
+  let filter = document.querySelector('#global_filter');
+  table.search(filter.value).draw();
+}
+
+function filterByDate(table) {
+  let filter = document.querySelector('#date_filter');
+  table.column(5).search(filter.value).draw();
+}
+
+function initializeFilters(table) {
+  $('input.global_filter').on('keyup click', function() {
+    filterGlobal(table);
+  });
+
+  $('input.date_filter').on('keyup click', function() {
+    filterByDate(table);
+  });
+}
+
 function initializePage() {
-  // Sayfa yüklendiğinde UI'yi kilitle ve spinner göster
   $.blockUI({
     message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
     overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
     css: { border: 0, padding: 0, backgroundColor: 'transparent' }
   });
 
-  console.log("Initializing page...");
-  // Fetch all meter data
   const fetchPromises = [
     fetchElectricMetersUsageData(),
     fetchWaterMetersUsageData(),
@@ -386,7 +384,6 @@ function initializePage() {
     fetchCoolingMetersUsageData()
   ];
 
-  // Wait for all data fetches to complete before unblocking UI
   Promise.all(fetchPromises).then(() => {
     initializeDataTables();
     $.unblockUI();
@@ -545,19 +542,14 @@ function appendRowToTable(meter, tableId) {
 }
 
 function initializeDataTable(tableId) {
-  // Eğer DataTable zaten initialize edilmişse, yeniden initialize etme
   if (!$.fn.DataTable.isDataTable(tableId)) {
-    $(tableId).DataTable({
+    return $(tableId).DataTable({
       dom: '<"top"fl>rt<"bottom"Bp>',
-      buttons: [
-          'copyHtml5',
-          'csvHtml5'
-      ],
-      "order": [[0, "asc"]]
+      buttons: ['copyHtml5', 'csvHtml5'],
+      order: [[0, 'asc']]
     });
-    console.log(`DataTable initialized for: ${tableId}`);
   } else {
-    console.log(`DataTable already initialized for: ${tableId}`);
+    return $(tableId).DataTable();
   }
 }
 
