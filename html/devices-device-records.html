@@ -345,14 +345,13 @@
 
 $(document).ready(function() {
   function filterGlobal() {
-    $('.dataTable').DataTable().search(
-      $('#global_filter').val()
-    ).draw();
+    let globalFilterValue = $('#global_filter').val();
+    $('.dataTable').DataTable().search(globalFilterValue).draw();
   }
 
   function filterByDate() {
-    var dateFilter = $('#date_filter').val();
-    $('.dataTable').DataTable().columns(5).search(dateFilter).draw();
+    let dateFilterValue = $('#date_filter').val();
+    $('.dataTable').DataTable().columns(5).search(dateFilterValue).draw();
   }
 
   $('input.global_filter').on('keyup click', function() {
@@ -362,6 +361,7 @@ $(document).ready(function() {
   $('input.date_filter').on('keyup click', function() {
     filterByDate();
   });
+
   initializePage();
 });
 
@@ -384,11 +384,19 @@ function initializePage() {
 
   // Wait for all data fetches to complete before unblocking UI
   Promise.all(fetchPromises).then(() => {
+    initializeDataTables();
     $.unblockUI();
   }).catch(error => {
     $.unblockUI();
     console.error("Error initializing page:", error);
   });
+}
+
+function initializeDataTables() {
+  initializeDataTable('#DataTables_Table_Electricity_Meter_Records');
+  initializeDataTable('#DataTables_Table_Water_Meter_Records');
+  initializeDataTable('#DataTables_Table_Calorimeter_Hot_Meter_Records');
+  initializeDataTable('#DataTables_Table_Calorimeter_Cold_Meter_Records');
 }
 
 function fetchElectricMetersUsageData() {
@@ -415,7 +423,6 @@ function fetchElectricMetersUsageData() {
         `;
         tableBody.appendChild(row);
       });
-      initializeDataTable('#DataTables_Table_Electricity_Meter_Records');
     }
   })
   .catch(error => {
@@ -447,7 +454,6 @@ function fetchWaterMetersUsageData() {
         `;
         tableBody.appendChild(row);
       });
-      initializeDataTable('#DataTables_Table_Water_Meter_Records');
     }
   })
   .catch(error => {
@@ -479,7 +485,6 @@ function fetchHeatingMetersUsageData() {
         `;
         tableBody.appendChild(row);
       });
-      initializeDataTable('#DataTables_Table_Calorimeter_Hot_Meter_Records');
     }
   })
   .catch(error => {
@@ -511,7 +516,6 @@ function fetchCoolingMetersUsageData() {
         `;
         tableBody.appendChild(row);
       });
-      initializeDataTable('#DataTables_Table_Calorimeter_Cold_Meter_Records');
     }
   })
   .catch(error => {
