@@ -150,15 +150,14 @@
         <!-- <div role="tabpanel" class="tab-pane active" id="tab31" aria-expanded="true" aria-labelledby="base-tab31"> -->
         <div class="tab-pane" id="tab31" aria-labelledby="base-tab31">
           <div class="row mb-1">
-              <div class="cal-9 col-xl-9">
-                <h5 class="content-header-title mb-0 genie">Elektrik Sayaç Kayıtları</h5>
-              </div>
-              <div class="cal-1 col-xl-1">
-                <input type="text" class="global_filter mr-2" id="global_filter" placeholder="Sayaç Ara">
-              </div>
-              <div class="cal-1 col-xl-1">
-                <input type="text" class="date_filter mr-2" id="date_filter" placeholder="Tarih Ara (YYYY-MM-DD)">
-              </div>
+            <div class="cal-9 col-xl-9">
+              <h5 class="content-header-title mb-0 genie">Elektrik Sayaç Kayıtları</h5>
+            </div>
+            <div class="cal-2 col-xl-2">
+              <input type="text" class="global_filter mr-2" id="global_filter" placeholder="Sayaç Ara">
+            </div>
+            <div class="cal-2 col-xl-2">
+              <input type="text" class="date_filter mr-2" id="date_filter" placeholder="Tarih Ara (YYYY-MM-DD)">
             </div>
           </div>
           <table class="table table-hover table-bordered zero-configuration dataTable" id="DataTables_Table_Electricity_Meter_Records"
@@ -183,10 +182,10 @@
             <div class="cal-9 col-xl-9">
               <h5 class="content-header-title mb-0 genie">Su Sayaç Kayıtları</h5>
             </div>
-            <div class="cal-1 col-xl-1">
+            <div class="cal-2 col-xl-2">
               <input type="text" class="global_filter mr-2" id="global_filter" placeholder="Sayaç Ara">
             </div>
-            <div class="cal-1 col-xl-1">
+            <div class="cal-2 col-xl-2">
               <input type="text" class="date_filter mr-2" id="date_filter" placeholder="Tarih Ara (YYYY-MM-DD)">
             </div>
           </div>
@@ -211,10 +210,10 @@
             <div class="cal-9 col-xl-9">
               <h5 class="content-header-title mb-0 genie">Kalorimetre Isıtma Sayaç Kayıtları</h5>
             </div>
-            <div class="cal-1 col-xl-1">
+            <div class="cal-2 col-xl-2">
               <input type="text" class="global_filter mr-2" id="global_filter" placeholder="Sayaç Ara">
             </div>
-            <div class="cal-1 col-xl-1">
+            <div class="cal-2 col-xl-2">
               <input type="text" class="date_filter mr-2" id="date_filter" placeholder="Tarih Ara (YYYY-MM-DD)">
             </div>
           </div>
@@ -239,10 +238,10 @@
             <div class="cal-9 col-xl-9">
               <h5 class="content-header-title mb-0 genie">Kalorimetre Soğutma Sayaç Kayıtları</h5>
             </div>
-            <div class="cal-1 col-xl-1">
+            <div class="cal-2 col-xl-2">
               <input type="text" class="global_filter mr-2" id="global_filter" placeholder="Sayaç Ara">
             </div>
-            <div class="cal-1 col-xl-1">
+            <div class="cal-2 col-xl-2">
               <input type="text" class="date_filter mr-2" id="date_filter" placeholder="Tarih Ara (YYYY-MM-DD)">
             </div>
           </div>
@@ -344,7 +343,7 @@
   const baseWebhookURL = "http://192.168.2.250:5678"; // Değiştirmek istediğiniz temel URL
   // const baseWebhookURL = "http://192.168.1.146:5678"; // Değiştirmek istediğiniz temel URL
 
-  $(document).ready(function() {
+$(document).ready(function() {
   function filterGlobal() {
     $('.dataTable').DataTable().search(
       $('#global_filter').val()
@@ -363,6 +362,7 @@
   $('input.date_filter').on('keyup click', function() {
     filterByDate();
   });
+  initializePage();
 });
 
 function initializePage() {
