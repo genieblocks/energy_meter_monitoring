@@ -343,15 +343,19 @@
   const baseWebhookURL = "http://192.168.2.250:5678"; // Değiştirmek istediğiniz temel URL
   // const baseWebhookURL = "http://192.168.1.146:5678"; // Değiştirmek istediğiniz temel URL
 
-$(document).ready(function() {
+  $(document).ready(function() {
   function filterGlobal() {
     let globalFilterValue = $('#global_filter').val();
-    $('.dataTable').DataTable().search(globalFilterValue).draw();
+    $('.dataTable').each(function() {
+      $(this).DataTable().search(globalFilterValue).draw();
+    });
   }
 
   function filterByDate() {
     let dateFilterValue = $('#date_filter').val();
-    $('.dataTable').DataTable().columns(5).search(dateFilterValue).draw();
+    $('.dataTable').each(function() {
+      $(this).DataTable().columns(5).search(dateFilterValue).draw();
+    });
   }
 
   $('input.global_filter').on('keyup click', function() {
