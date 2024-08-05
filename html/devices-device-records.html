@@ -359,12 +359,22 @@ function filterByDate(table) {
 }
 
 function initializeFilters(table) {
-  $('input.global_filter').keyup(function()  {
-    filterGlobal(table);
+  // $('input.global_filter').keyup(function()  {
+  //   filterGlobal(table);
+  // });
+
+  // $('input.date_filter').keyup(function()  {
+  //   filterByDate(table);
+  // });
+
+  // Seri numarasına göre arama
+  $('#global_filter').keyup(function() {
+    table.column(0).search(this.value, true, false).draw();
   });
 
-  $('input.date_filter').keyup(function()  {
-    filterByDate(table);
+  // Başlangıç zamanına göre arama
+  $('#date_filter').keyup(function() {
+    table.column(4).search(this.value, true, false).draw();
   });
 }
 
