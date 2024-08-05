@@ -154,10 +154,10 @@
               <h5 class="content-header-title mb-0 genie">Elektrik Sayaç Kayıtları</h5>
             </div>
             <div class="cal-2 col-xl-2">
-              <input type="text" class="global_filter mr-2" id="global_filter" placeholder="Sayaç Ara">
+              <input type="text" class="serialNumber_filter mr-2" id="serialNumber_electricity_filter" placeholder="Sayaç Ara">
             </div>
             <div class="cal-2 col-xl-2">
-              <input type="text" class="date_filter mr-2" id="date_filter" placeholder="Tarih Ara (YYYY-MM-DD)">
+              <input type="text" class="date_filter mr-2" id="startQueryTime_electricity_filter" placeholder="Tarih Ara (YYYY-MM-DD)">
             </div>
           </div>
           <table class="table table-hover table-bordered zero-configuration dataTable" id="DataTables_Table_Electricity_Meter_Records"
@@ -183,10 +183,10 @@
               <h5 class="content-header-title mb-0 genie">Su Sayaç Kayıtları</h5>
             </div>
             <div class="cal-2 col-xl-2">
-              <input type="text" class="global_filter mr-2" id="global_filter" placeholder="Sayaç Ara">
+              <input type="text" class="serialNumber_filter mr-2" id="serialNumber_water_filter" placeholder="Sayaç Ara">
             </div>
             <div class="cal-2 col-xl-2">
-              <input type="text" class="date_filter mr-2" id="date_filter" placeholder="Tarih Ara (YYYY-MM-DD)">
+              <input type="text" class="date_filter mr-2" id="startQueryTime_water_filter" placeholder="Tarih Ara (YYYY-MM-DD)">
             </div>
           </div>
           <table class="table table-hover table-bordered zero-configuration dataTable" id="DataTables_Table_Water_Meter_Records"
@@ -211,10 +211,10 @@
               <h5 class="content-header-title mb-0 genie">Kalorimetre Isıtma Sayaç Kayıtları</h5>
             </div>
             <div class="cal-2 col-xl-2">
-              <input type="text" class="global_filter mr-2" id="global_filter" placeholder="Sayaç Ara">
+              <input type="text" class="serialNumber_filter mr-2" id="serialNumber_Calorimeter_Hot_filter" placeholder="Sayaç Ara">
             </div>
             <div class="cal-2 col-xl-2">
-              <input type="text" class="date_filter mr-2" id="date_filter" placeholder="Tarih Ara (YYYY-MM-DD)">
+              <input type="text" class="date_filter mr-2" id="startQueryTime_Calorimeter_Hot_filter" placeholder="Tarih Ara (YYYY-MM-DD)">
             </div>
           </div>
           <table class="table table-hover table-bordered zero-configuration dataTable" id="DataTables_Table_Calorimeter_Hot_Meter_Records"
@@ -239,10 +239,10 @@
               <h5 class="content-header-title mb-0 genie">Kalorimetre Soğutma Sayaç Kayıtları</h5>
             </div>
             <div class="cal-2 col-xl-2">
-              <input type="text" class="global_filter mr-2" id="global_filter" placeholder="Sayaç Ara">
+              <input type="text" class="serialNumber_filter mr-2" id="serialNumber_Calorimeter_Cold_filter" placeholder="Sayaç Ara">
             </div>
             <div class="cal-2 col-xl-2">
-              <input type="text" class="date_filter mr-2" id="date_filter" placeholder="Tarih Ara (YYYY-MM-DD)">
+              <input type="text" class="date_filter mr-2" id="startQueryTime_Calorimeter_Cold_filter" placeholder="Tarih Ara (YYYY-MM-DD)">
             </div>
           </div>
           <table class="table table-hover table-bordered zero-configuration dataTable" id="DataTables_Table_Calorimeter_Cold_Meter_Records"
@@ -348,71 +348,54 @@ $(document).ready(function() {
   initializePage();
 });
 
-function filterGlobal(table) {
-  let filter = document.querySelector('#global_filter');
-  table.search(filter.value).draw();
-}
 
-function filterByDate(table) {
-  let filter = document.querySelector('#date_filter');
-  table.column(5).search(filter.value).draw();
-}
+function initializeFilters(table, serialFilterId, dateFilterId) {
+    // Seri numarasına göre arama
+    $(serialFilterId).keyup(function() {
+      table.column(0).search(this.value, true, false).draw();
+    });
 
-function initializeFilters(table) {
-  // $('input.global_filter').keyup(function()  {
-  //   filterGlobal(table);
-  // });
+    // Başlangıç zamanına göre arama
+    $(dateFilterId).keyup(function() {
+      table.column(4).search(this.value, true, false).draw();
+    });
+  }
 
-  // $('input.date_filter').keyup(function()  {
-  //   filterByDate(table);
-  // });
+  function initializePage() {
+    $.blockUI({
+      message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
+      overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
+      css: { border: 0, padding: 0, backgroundColor: 'transparent' }
+    });
 
-  // Seri numarasına göre arama
-  $('#global_filter').keyup(function() {
-    table.column(0).search(this.value, true, false).draw();
-  });
+    const fetchPromises = [
+      fetchElectricMetersUsageData(),
+      fetchWaterMetersUsageData(),
+      fetchHeatingMetersUsageData(),
+      fetchCoolingMetersUsageData()
+    ];
 
-  // Başlangıç zamanına göre arama
-  $('#date_filter').keyup(function() {
-    table.column(4).search(this.value, true, false).draw();
-  });
-}
+    Promise.all(fetchPromises).then(() => {
+      initializeDataTables();
+      $.unblockUI();
+    }).catch(error => {
+      $.unblockUI();
+      console.error("Error initializing page:", error);
+    });
+  }
 
-function initializePage() {
-  $.blockUI({
-    message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
-    overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
-    css: { border: 0, padding: 0, backgroundColor: 'transparent' }
-  });
+  function initializeDataTables() {
+    const electricityTable = initializeDataTable('#DataTables_Table_Electricity_Meter_Records');
+    const waterTable = initializeDataTable('#DataTables_Table_Water_Meter_Records');
+    const heatingTable = initializeDataTable('#DataTables_Table_Calorimeter_Hot_Meter_Records');
+    const coolingTable = initializeDataTable('#DataTables_Table_Calorimeter_Cold_Meter_Records');
 
-  const fetchPromises = [
-    fetchElectricMetersUsageData(),
-    fetchWaterMetersUsageData(),
-    fetchHeatingMetersUsageData(),
-    fetchCoolingMetersUsageData()
-  ];
-
-  Promise.all(fetchPromises).then(() => {
-    initializeDataTables();
-    $.unblockUI();
-  }).catch(error => {
-    $.unblockUI();
-    console.error("Error initializing page:", error);
-  });
-}
-
-function initializeDataTables() {
-  const electricityTable = initializeDataTable('#DataTables_Table_Electricity_Meter_Records');
-  const waterTable = initializeDataTable('#DataTables_Table_Water_Meter_Records');
-  const heatingTable = initializeDataTable('#DataTables_Table_Calorimeter_Hot_Meter_Records');
-  const coolingTable = initializeDataTable('#DataTables_Table_Calorimeter_Cold_Meter_Records');
-  
-  // Initialize filters for each table
-  initializeFilters(electricityTable);
-  initializeFilters(waterTable);
-  initializeFilters(heatingTable);
-  initializeFilters(coolingTable);
-}
+    // Initialize filters for each table
+    initializeFilters(electricityTable, '#serialNumber_electricity_filter', '#startQueryTime_electricity_filter');
+    initializeFilters(waterTable, '#serialNumber_water_filter', '#startQueryTime_water_filter');
+    initializeFilters(heatingTable, '#serialNumber_Calorimeter_Hot_filter', '#startQueryTime_Calorimeter_Hot_filter');
+    initializeFilters(coolingTable, '#serialNumber_Calorimeter_Cold_filter', '#startQueryTime_Calorimeter_Cold_filter');
+  }
 
 function fetchElectricMetersUsageData() {
   return fetch(`${baseWebhookURL}/webhook/get-table-content`, {
