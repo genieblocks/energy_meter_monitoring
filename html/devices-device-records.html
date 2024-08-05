@@ -359,11 +359,11 @@ function filterByDate(table) {
 }
 
 function initializeFilters(table) {
-  $('input.global_filter').on('keyup click', function() {
+  $('input.global_filter').keyup(function()  {
     filterGlobal(table);
   });
 
-  $('input.date_filter').on('keyup click', function() {
+  $('input.date_filter').keyup(function()  {
     filterByDate(table);
   });
 }
