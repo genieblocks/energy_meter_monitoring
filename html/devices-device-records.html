@@ -344,11 +344,67 @@
   // const baseWebhookURL = "http://192.168.1.146:5678"; // Değiştirmek istediğiniz temel URL
 
   $(document).ready(function() {
-  let table = initializeDataTable('#DataTables_Table_Electricity_Meter_Records');
-  initializeFilters(table);
+    // Initialize all DataTables
+    let electricityTable = $('#DataTables_Table_Electricity_Meter_Records').DataTable({
+      dom: '<"top"fl>rt<"bottom"Bp>',
+      buttons: ['copyHtml5', 'csvHtml5'],
+      order: [[0, "asc"]]
+    });
 
-  initializePage();
-});
+    let waterTable = $('#DataTables_Table_Water_Meter_Records').DataTable({
+      dom: '<"top"fl>rt<"bottom"Bp>',
+      buttons: ['copyHtml5', 'csvHtml5'],
+      order: [[0, "asc"]]
+    });
+
+    let hotMeterTable = $('#DataTables_Table_Calorimeter_Hot_Meter_Records').DataTable({
+      dom: '<"top"fl>rt<"bottom"Bp>',
+      buttons: ['copyHtml5', 'csvHtml5'],
+      order: [[0, "asc"]]
+    });
+
+    let coldMeterTable = $('#DataTables_Table_Calorimeter_Cold_Meter_Records').DataTable({
+      dom: '<"top"fl>rt<"bottom"Bp>',
+      buttons: ['copyHtml5', 'csvHtml5'],
+      order: [[0, "asc"]]
+    });
+
+    // Bind global filter events
+    $('input.global_filter').on('keyup click', function() {
+      filterGlobal(electricityTable);
+      filterGlobal(waterTable);
+      filterGlobal(hotMeterTable);
+      filterGlobal(coldMeterTable);
+    });
+
+    // Bind date filter events
+    $('input.date_filter').on('keyup click', function() {
+      filterByDate(electricityTable);
+      filterByDate(waterTable);
+      filterByDate(hotMeterTable);
+      filterByDate(coldMeterTable);
+    });
+
+    // Block UI until all tables are initialized and data is fetched
+    $.blockUI({
+      message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
+      overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
+      css: { border: 0, padding: 0, backgroundColor: 'transparent' }
+    });
+    
+    // Fetch all meter data and unblock UI after loading
+    Promise.all([
+      fetchElectricMetersUsageData(),
+      fetchWaterMetersUsageData(),
+      fetchHeatingMetersUsageData(),
+      fetchCoolingMetersUsageData()
+    ]).then(() => {
+      $.unblockUI();
+    }).catch(error => {
+      $.unblockUI();
+      console.error("Error initializing page:", error);
+    });
+  });
 
 function filterGlobal(table) {
   let filter = document.querySelector('#global_filter');
@@ -356,48 +412,8 @@ function filterGlobal(table) {
 }
 
 function filterByDate(table) {
-  let filter = document.querySelector('#date_filter');
-  table.column(5).search(filter.value).draw();
-}
-
-function initializeFilters(table) {
-  $('input.global_filter').on('keyup click', function() {
-    filterGlobal(table);
-  });
-
-  $('input.date_filter').on('keyup click', function() {
-    filterByDate(table);
-  });
-}
-
-function initializePage() {
-  $.blockUI({
-    message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
-    overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
-    css: { border: 0, padding: 0, backgroundColor: 'transparent' }
-  });
-
-  const fetchPromises = [
-    fetchElectricMetersUsageData(),
-    fetchWaterMetersUsageData(),
-    fetchHeatingMetersUsageData(),
-    fetchCoolingMetersUsageData()
-  ];
-
-  Promise.all(fetchPromises).then(() => {
-    initializeDataTables();
-    $.unblockUI();
-  }).catch(error => {
-    $.unblockUI();
-    console.error("Error initializing page:", error);
-  });
-}
-
-function initializeDataTables() {
-  initializeDataTable('#DataTables_Table_Electricity_Meter_Records');
-  initializeDataTable('#DataTables_Table_Water_Meter_Records');
-  initializeDataTable('#DataTables_Table_Calorimeter_Hot_Meter_Records');
-  initializeDataTable('#DataTables_Table_Calorimeter_Cold_Meter_Records');
+  let dateFilter = document.querySelector('#date_filter').value;
+  table.columns(5).search(dateFilter).draw();
 }
 
 function fetchElectricMetersUsageData() {
@@ -522,35 +538,6 @@ function fetchCoolingMetersUsageData() {
   .catch(error => {
     console.error("Error fetching CoolUsage data:", error);
   });
-}
-
-function appendRowToTable(meter, tableId) {
-  const tableBody = document.querySelector(`${tableId} tbody`);
-  const row = document.createElement('tr');
-
-  row.innerHTML = `
-    <td>${meter.SerialNumber || ''}</td>
-    <td>${meter.Error || ''}</td>
-    <td>${meter.ManufacturerID || ''}</td>
-    <td>${meter.MeterValue_kWh || ''}</td>
-    <td>${meter.QueryStartTime || ''}</td>
-    <td>${meter.Timestamp || ''}</td>
-  `;
-
-  console.log(`Appending row: ${row.innerHTML}`);
-  tableBody.appendChild(row);
-}
-
-function initializeDataTable(tableId) {
-  if (!$.fn.DataTable.isDataTable(tableId)) {
-    return $(tableId).DataTable({
-      dom: '<"top"fl>rt<"bottom"Bp>',
-      buttons: ['copyHtml5', 'csvHtml5'],
-      order: [[0, 'asc']]
-    });
-  } else {
-    return $(tableId).DataTable();
-  }
 }
 
 </script>
