@@ -343,68 +343,53 @@
   const baseWebhookURL = "http://192.168.2.250:5678"; // Değiştirmek istediğiniz temel URL
   // const baseWebhookURL = "http://192.168.1.146:5678"; // Değiştirmek istediğiniz temel URL
 
-  $(document).ready(function() {
-    // Initialize all DataTables
-    let electricityTable = $('#DataTables_Table_Electricity_Meter_Records').DataTable({
-      dom: '<"top"fl>rt<"bottom"Bp>',
-      buttons: ['copyHtml5', 'csvHtml5'],
-      order: [[0, "asc"]]
-    });
+$(document).ready(function() {
+  let electricityTable = $('#DataTables_Table_Electricity_Meter_Records').DataTable();
+  let waterTable = $('#DataTables_Table_Water_Meter_Records').DataTable();
 
-    let waterTable = $('#DataTables_Table_Water_Meter_Records').DataTable({
-      dom: '<"top"fl>rt<"bottom"Bp>',
-      buttons: ['copyHtml5', 'csvHtml5'],
-      order: [[0, "asc"]]
-    });
+  function filterGlobal(table) {
+    table.search($('#global_filter').val()).draw();
+  }
 
-    let hotMeterTable = $('#DataTables_Table_Calorimeter_Hot_Meter_Records').DataTable({
-      dom: '<"top"fl>rt<"bottom"Bp>',
-      buttons: ['copyHtml5', 'csvHtml5'],
-      order: [[0, "asc"]]
-    });
+  function filterByDate(table) {
+    table.columns(5).search($('#date_filter').val()).draw();
+  }
 
-    let coldMeterTable = $('#DataTables_Table_Calorimeter_Cold_Meter_Records').DataTable({
-      dom: '<"top"fl>rt<"bottom"Bp>',
-      buttons: ['copyHtml5', 'csvHtml5'],
-      order: [[0, "asc"]]
-    });
-
-    // Bind global filter events
-    $('input.global_filter').on('keyup click', function() {
-      filterGlobal(electricityTable);
-      filterGlobal(waterTable);
-      filterGlobal(hotMeterTable);
-      filterGlobal(coldMeterTable);
-    });
-
-    // Bind date filter events
-    $('input.date_filter').on('keyup click', function() {
-      filterByDate(electricityTable);
-      filterByDate(waterTable);
-      filterByDate(hotMeterTable);
-      filterByDate(coldMeterTable);
-    });
-
-    // Block UI until all tables are initialized and data is fetched
-    $.blockUI({
-      message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
-      overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
-      css: { border: 0, padding: 0, backgroundColor: 'transparent' }
-    });
-    
-    // Fetch all meter data and unblock UI after loading
-    Promise.all([
-      fetchElectricMetersUsageData(),
-      fetchWaterMetersUsageData(),
-      fetchHeatingMetersUsageData(),
-      fetchCoolingMetersUsageData()
-    ]).then(() => {
-      $.unblockUI();
-    }).catch(error => {
-      $.unblockUI();
-      console.error("Error initializing page:", error);
-    });
+  $('input.global_filter').on('keyup click', function() {
+    filterGlobal(electricityTable);
+    filterGlobal(waterTable);
   });
+
+  $('input.date_filter').on('keyup click', function() {
+    filterByDate(electricityTable);
+    filterByDate(waterTable);
+  });
+
+  initializePage();
+});
+
+function initializePage() {
+  $.blockUI({
+    message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
+    overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
+    css: { border: 0, padding: 0, backgroundColor: 'transparent' }
+  });
+
+  console.log("Initializing page...");
+  const fetchPromises = [
+    fetchElectricMetersUsageData(),
+    fetchWaterMetersUsageData(),
+    fetchHeatingMetersUsageData(),
+    fetchCoolingMetersUsageData()
+  ];
+
+  Promise.all(fetchPromises).then(() => {
+    $.unblockUI();
+  }).catch(error => {
+    $.unblockUI();
+    console.error("Error initializing page:", error);
+  });
+}
 
 function filterGlobal(table) {
   let filter = document.querySelector('#global_filter');
@@ -428,6 +413,7 @@ function fetchElectricMetersUsageData() {
   .then(data => {
     if (data.length > 0 && data[0].success && Array.isArray(data[0].data)) {
       const tableBody = document.querySelector('#DataTables_Table_Electricity_Meter_Records tbody');
+      tableBody.innerHTML = ''; // Clear existing rows
       data[0].data.forEach(meter => {
         const row = document.createElement('tr');
         row.innerHTML = `
@@ -459,6 +445,7 @@ function fetchWaterMetersUsageData() {
   .then(data => {
     if (data.length > 0 && data[0].success && Array.isArray(data[0].data)) {
       const tableBody = document.querySelector('#DataTables_Table_Water_Meter_Records tbody');
+      tableBody.innerHTML = ''; // Clear existing rows
       data[0].data.forEach(meter => {
         const row = document.createElement('tr');
         row.innerHTML = `
@@ -490,6 +477,7 @@ function fetchHeatingMetersUsageData() {
   .then(data => {
     if (data.length > 0 && data[0].success && Array.isArray(data[0].data)) {
       const tableBody = document.querySelector('#DataTables_Table_Calorimeter_Hot_Meter_Records tbody');
+      tableBody.innerHTML = ''; // Clear existing rows
       data[0].data.forEach(meter => {
         const row = document.createElement('tr');
         row.innerHTML = `
@@ -521,6 +509,7 @@ function fetchCoolingMetersUsageData() {
   .then(data => {
     if (data.length > 0 && data[0].success && Array.isArray(data[0].data)) {
       const tableBody = document.querySelector('#DataTables_Table_Calorimeter_Cold_Meter_Records tbody');
+      tableBody.innerHTML = ''; // Clear existing rows
       data[0].data.forEach(meter => {
         const row = document.createElement('tr');
         row.innerHTML = `
