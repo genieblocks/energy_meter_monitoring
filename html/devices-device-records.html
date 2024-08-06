@@ -430,7 +430,7 @@ function fetchElectricMetersUsageData() {
         `;
         tableBody.appendChild(row);
       });
-      initializeDataTable('#DataTables_Table_Electricity_Meter_Records'); // DataTable'ı yeniden başlatın
+      initializeDataTable('#DataTables_Table_Electricity_Meter_Records').draw(); // DataTable'ı yeniden başlatın ve çizdirin
     }
   })
   .catch(error => {
@@ -463,7 +463,7 @@ function fetchWaterMetersUsageData() {
         `;
         tableBody.appendChild(row);
       });
-      initializeDataTable('#DataTables_Table_Water_Meter_Records'); // DataTable'ı yeniden başlatın
+      initializeDataTable('#DataTables_Table_Water_Meter_Records').draw(); // DataTable'ı yeniden başlatın ve çizdirin
     }
   })
   .catch(error => {
@@ -496,7 +496,7 @@ function fetchHeatingMetersUsageData() {
         `;
         tableBody.appendChild(row);
       });
-      initializeDataTable('#DataTables_Table_Calorimeter_Hot_Meter_Records'); // DataTable'ı yeniden başlatın
+      initializeDataTable('#DataTables_Table_Calorimeter_Hot_Meter_Records').draw(); // DataTable'ı yeniden başlatın ve çizdirin
     }
   })
   .catch(error => {
@@ -529,7 +529,7 @@ function fetchCoolingMetersUsageData() {
         `;
         tableBody.appendChild(row);
       });
-      initializeDataTable('#DataTables_Table_Calorimeter_Cold_Meter_Records'); // DataTable'ı yeniden başlatın
+      initializeDataTable('#DataTables_Table_Calorimeter_Cold_Meter_Records').draw(); // DataTable'ı yeniden başlatın ve çizdirin
     }
   })
   .catch(error => {
