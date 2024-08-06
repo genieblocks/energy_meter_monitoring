@@ -370,27 +370,27 @@ function initializeFilters(table, serialFilterId, dateFilterId) {
   }
 
   function initializePage() {
-    $.blockUI({
-      message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
-      overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
-      css: { border: 0, padding: 0, backgroundColor: 'transparent' }
-    });
+  $.blockUI({
+    message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
+    overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
+    css: { border: 0, padding: 0, backgroundColor: 'transparent' }
+  });
 
-    const fetchPromises = [
-      fetchElectricMetersUsageData(),
-      fetchWaterMetersUsageData(),
-      fetchHeatingMetersUsageData(),
-      fetchCoolingMetersUsageData()
-    ];
+  const fetchPromises = [
+    fetchElectricMetersUsageData(),
+    fetchWaterMetersUsageData(),
+    fetchHeatingMetersUsageData(),
+    fetchCoolingMetersUsageData()
+  ];
 
-    Promise.all(fetchPromises).then(() => {
-      initializeDataTables();
-      $.unblockUI();
-    }).catch(error => {
-      $.unblockUI();
-      console.error("Error initializing page:", error);
-    });
-  }
+  Promise.all(fetchPromises).then(() => {
+    initializeDataTables(); // Bu satırı ekleyin
+    $.unblockUI();
+  }).catch(error => {
+    $.unblockUI();
+    console.error("Error initializing page:", error);
+  });
+}
 
   function initializeDataTables() {
     const electricityTable = initializeDataTable('#DataTables_Table_Electricity_Meter_Records');
@@ -417,6 +417,7 @@ function fetchElectricMetersUsageData() {
   .then(data => {
     if (data.length > 0 && data[0].success && Array.isArray(data[0].data)) {
       const tableBody = document.querySelector('#DataTables_Table_Electricity_Meter_Records tbody');
+      tableBody.innerHTML = ''; // Tablonun içeriğini temizleyin
       data[0].data.forEach(meter => {
         const row = document.createElement('tr');
         row.innerHTML = `
@@ -429,6 +430,7 @@ function fetchElectricMetersUsageData() {
         `;
         tableBody.appendChild(row);
       });
+      initializeDataTable('#DataTables_Table_Electricity_Meter_Records'); // DataTable'ı yeniden başlatın
     }
   })
   .catch(error => {
@@ -448,6 +450,7 @@ function fetchWaterMetersUsageData() {
   .then(data => {
     if (data.length > 0 && data[0].success && Array.isArray(data[0].data)) {
       const tableBody = document.querySelector('#DataTables_Table_Water_Meter_Records tbody');
+      tableBody.innerHTML = ''; // Tablonun içeriğini temizleyin
       data[0].data.forEach(meter => {
         const row = document.createElement('tr');
         row.innerHTML = `
@@ -460,6 +463,7 @@ function fetchWaterMetersUsageData() {
         `;
         tableBody.appendChild(row);
       });
+      initializeDataTable('#DataTables_Table_Water_Meter_Records'); // DataTable'ı yeniden başlatın
     }
   })
   .catch(error => {
@@ -479,6 +483,7 @@ function fetchHeatingMetersUsageData() {
   .then(data => {
     if (data.length > 0 && data[0].success && Array.isArray(data[0].data)) {
       const tableBody = document.querySelector('#DataTables_Table_Calorimeter_Hot_Meter_Records tbody');
+      tableBody.innerHTML = ''; // Tablonun içeriğini temizleyin
       data[0].data.forEach(meter => {
         const row = document.createElement('tr');
         row.innerHTML = `
@@ -491,6 +496,7 @@ function fetchHeatingMetersUsageData() {
         `;
         tableBody.appendChild(row);
       });
+      initializeDataTable('#DataTables_Table_Calorimeter_Hot_Meter_Records'); // DataTable'ı yeniden başlatın
     }
   })
   .catch(error => {
@@ -510,6 +516,7 @@ function fetchCoolingMetersUsageData() {
   .then(data => {
     if (data.length > 0 && data[0].success && Array.isArray(data[0].data)) {
       const tableBody = document.querySelector('#DataTables_Table_Calorimeter_Cold_Meter_Records tbody');
+      tableBody.innerHTML = ''; // Tablonun içeriğini temizleyin
       data[0].data.forEach(meter => {
         const row = document.createElement('tr');
         row.innerHTML = `
@@ -522,6 +529,7 @@ function fetchCoolingMetersUsageData() {
         `;
         tableBody.appendChild(row);
       });
+      initializeDataTable('#DataTables_Table_Calorimeter_Cold_Meter_Records'); // DataTable'ı yeniden başlatın
     }
   })
   .catch(error => {
