@@ -637,7 +637,21 @@ function updateTable(data) {
                 'copyHtml5',
                 'csvHtml5'
             ],
-            order: []
+            order: [[0, 'asc']],
+            language: {
+                search: "Ara:",
+                lengthMenu: "Göster _MENU_ kayıtlar",
+                info: "Gösteriliyor _START_ ile _END_ arasında _TOTAL_ kayıt",
+                infoEmpty: "Gösterilecek kayıt yok",
+                infoFiltered: "(toplam _MAX_ kayıt içinde filtrelendi)",
+                paginate: {
+                first: "İlk",
+                last: "Son",
+                next: "Sonraki",
+                previous: "Önceki"
+                },
+                zeroRecords: "Eşleşen kayıt bulunamadı"
+            }
         });
     }
 }
@@ -745,11 +759,22 @@ function updateModalWithData(data, tableName) {
     if (!$.fn.DataTable.isDataTable(tableId)) {
         $(tableId).DataTable({
             dom: '<"top"fl>rt<"bottom"Bp>',
-            buttons: [
-                'copyHtml5',
-                'csvHtml5'
-            ],
-            order: [[0, "asc"]]
+            buttons: ['copyHtml5','csvHtml5'],
+            order: [[0, 'asc']],
+            language: {
+                search: "Ara:",
+                lengthMenu: "Göster _MENU_ kayıtlar",
+                info: "Gösteriliyor _START_ ile _END_ arasında _TOTAL_ kayıt",
+                infoEmpty: "Gösterilecek kayıt yok",
+                infoFiltered: "(toplam _MAX_ kayıt içinde filtrelendi)",
+                paginate: {
+                first: "İlk",
+                last: "Son",
+                next: "Sonraki",
+                previous: "Önceki"
+                },
+                zeroRecords: "Eşleşen kayıt bulunamadı"
+            }
         });
         console.log(`DataTable initialized for: ${tableId}`);
     } else {
