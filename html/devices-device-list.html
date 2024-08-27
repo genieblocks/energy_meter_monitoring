@@ -535,7 +535,7 @@
     // const baseWebhookURL = "http://192.168.1.146:5678"; // Değiştirmek istediğiniz temel URL
 
 document.addEventListener('DOMContentLoaded', function() {
-  document.querySelectorAll('#DataTables_Table_Electricity_Meter_List tbody, #DataTables_Table_Water_Meter_List tbody, #DataTables_Table_Calorimeter_Hot_Meter_List tbody, #DataTables_Table_Calorimeter_Cold_Meter_List tbody').forEach(function(tableBody) {
+  document.querySelectorAll('#DataTables_Table_Water_Meter_List tbody, #DataTables_Table_Calorimeter_Hot_Meter_List tbody, #DataTables_Table_Calorimeter_Cold_Meter_List tbody').forEach(function(tableBody) {
     tableBody.addEventListener('click', function(event) {
       if (event.target && event.target.nodeName === 'BUTTON' && event.target.id === 'table-show-button') {
         const row = event.target.closest('tr');
@@ -558,6 +558,49 @@ function queryMeterData(serialNumber, connectionPoint) {
   });
 
   fetch(`${baseWebhookURL}/webhook/query-meter-data`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ serialNumber: serialNumber, connectionPoint: connectionPoint })
+  })
+  .then(response => response.json())
+  .then(data => {
+    updateSingleQueryModal(data);
+    // Modal içeriği bloklamayı kaldır
+    $('#singleQueryModal .modal-content').unblock();
+  })
+  .catch(error => {
+    console.error("Error querying meter data:", error);
+    // Modal içeriği bloklamayı kaldır
+    $('#singleQueryModal .modal-content').unblock();
+  });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('#DataTables_Table_Electricity_Meter_List tbody').forEach(function(tableBody) {
+    tableBody.addEventListener('click', function(event) {
+      if (event.target && event.target.nodeName === 'BUTTON' && event.target.id === 'table-show-button') {
+        const row = event.target.closest('tr');
+        const serialNumber = row.cells[0].innerText;
+        const connectionPoint = row.cells[3].innerText;
+        queryIecMeterData(serialNumber, connectionPoint);
+      }
+    });
+  });
+});
+
+function queryIecMeterData(serialNumber, connectionPoint) {
+  $('#singleQueryModal').modal('show');
+
+  // Sadece modal içeriği bloklanacak
+  $('#singleQueryModal .modal-content').block({
+    message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
+    overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
+    css: { border: 0, padding: 0, backgroundColor: 'transparent' }
+  });
+
+  fetch(`${baseWebhookURL}/webhook/query-iec-meter-data`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
