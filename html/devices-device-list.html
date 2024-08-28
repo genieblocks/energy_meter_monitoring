@@ -678,34 +678,36 @@ function queryIecMeterData(serialNumber, connectionPoint) {
 }
 
 function updateSingleIecQueryModal(data) {
-  const tableBody = document.querySelector('#singleIecQueryDataTable tbody');
-  tableBody.innerHTML = ''; // Clear existing content
+    console.log("Received data:", data); // Log the entire data for debugging
+    
+    const tableBody = document.querySelector('#singleIecQueryDataTable tbody');
+    tableBody.innerHTML = '';
 
-  // Split the data by the newline character to get each OBIS entry
-  const obisEntries = data.split('\n');
+    if (data.length > 0) {
+        document.getElementById('noContentMessage').style.display = 'none'; // Hide error message
+        data.forEach(meter => {
+            // Split the incoming data into OBIS code and value
+            const obisData = meter.split('\\n');
+            
+            obisData.forEach(item => {
+                const obisCode = item.split('(')[0]; // OBIS code
+                const obisValue = item.match(/\(([^)]+)\)/)[1]; // OBIS value inside parentheses
 
-  // Iterate through each entry and extract the OBIS code and value
-  obisEntries.forEach(entry => {
-    if (entry.trim() !== '') { // Skip empty entries
-      const obisCode = entry.substring(0, entry.indexOf('(')); // Extract OBIS code before the first parenthesis
-      const obisValue = entry.substring(entry.indexOf('('), entry.length); // Extract everything from the first parenthesis to the end
+                console.log("OBIS Code:", obisCode); // Log the OBIS code
+                console.log("OBIS Value:", obisValue); // Log the OBIS value
 
-      // Create a new table row
-      const row = document.createElement('tr');
-      row.innerHTML = `
-        <td>${obisCode}</td>
-        <td>${obisValue}</td>
-      `;
-      tableBody.appendChild(row); // Add the row to the table body
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${obisCode}</td>
+                    <td>${obisValue}</td>
+                    <td></td>
+                `;
+                tableBody.appendChild(row);
+            });
+        });
+    } else {
+        document.getElementById('noContentMessage').style.display = 'block';
     }
-  });
-
-  // Show message if no data found
-  if (obisEntries.length === 0 || tableBody.innerHTML === '') {
-    document.getElementById('noContentMessage').style.display = 'block';
-  } else {
-    document.getElementById('noContentMessage').style.display = 'none';
-  }
 }
 
 
