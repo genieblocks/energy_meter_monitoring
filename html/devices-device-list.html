@@ -679,21 +679,32 @@ function queryIecMeterData(serialNumber, connectionPoint) {
 
 function updateSingleIecQueryModal(data) {
   const tableBody = document.querySelector('#singleIecQueryDataTable tbody');
-  tableBody.innerHTML = '';
+  tableBody.innerHTML = ''; // Clear existing content
 
-  if (data.length > 0) {
-    document.getElementById('noContentMessage').style.display = 'none'; // Hide error message
-    data.forEach(meter => {
+  // Split the data by the newline character to get each OBIS entry
+  const obisEntries = data.split('\n');
+
+  // Iterate through each entry and extract the OBIS code and value
+  obisEntries.forEach(entry => {
+    if (entry.trim() !== '') { // Skip empty entries
+      const obisCode = entry.substring(0, entry.indexOf('(')); // Extract OBIS code before the first parenthesis
+      const obisValue = entry.substring(entry.indexOf('('), entry.length); // Extract everything from the first parenthesis to the end
+
+      // Create a new table row
       const row = document.createElement('tr');
       row.innerHTML = `
-        <td>${meter.data || ''}</td>
-        <td>${meter.value || ''}</td>
-        <td>${meter.error || ''}</td>
+        <td>${obisCode}</td>
+        <td>${obisValue}</td>
       `;
-      tableBody.appendChild(row);
-    });
-  } else {
+      tableBody.appendChild(row); // Add the row to the table body
+    }
+  });
+
+  // Show message if no data found
+  if (obisEntries.length === 0 || tableBody.innerHTML === '') {
     document.getElementById('noContentMessage').style.display = 'block';
+  } else {
+    document.getElementById('noContentMessage').style.display = 'none';
   }
 }
 
