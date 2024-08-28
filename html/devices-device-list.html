@@ -692,7 +692,7 @@ function updateSingleIecQueryModal(data) {
     meterData.forEach((meter) => {
       if (meter) {
         const obisCode = meter.split('(')[0];
-        const obisValue = meter.substring(meter.indexOf('(') + 1, meter.indexOf(')'));
+        const obisValue = meter.substring(meter.indexOf('('));
 
         console.log("OBIS Code:", obisCode);
         console.log("OBIS Value:", obisValue);
