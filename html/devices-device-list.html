@@ -270,6 +270,40 @@
     </div>
   </div>
 
+  <!-- Single IEC Query Modal -->
+  <div class="modal fade text-left" id="singleIecQueryModal" tabindex="-1" role="dialog" aria-labelledby="singleIecQueryModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title text-bold-600" id="singleIecQueryModalLabel"></h4>
+          <!-- <button type="button" class="ml-auto col-4 btn-sm btn-genie" id="newDataButton">Yeni Veri Ekle</button> -->
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <table class="table table-hover table-bordered zero-configuration dataTable w-auto" id="singleIecQueryDataTable" role="grid">
+              <thead>
+                  <tr>
+                    <th>OBIS Kodu</th>
+                    <th>Değeri</th>
+                    <th>Hata</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <!-- Dinamik içerik buraya eklenecek -->
+              </tbody>
+          </table>
+          <div id="noContentMessage" class="alert alert-warning" style="display: none;">Cihaza Erişilemedi.
+          </div>
+        </div>
+        <div class="modal-footer">
+            <input type="reset" class="btn btn-light" data-dismiss="modal" value="Kapat">
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- ////////////////////////////////////////////////////////////////////////////-->
 
 
@@ -577,49 +611,6 @@ function queryMeterData(serialNumber, connectionPoint) {
   });
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-  document.querySelectorAll('#DataTables_Table_Electricity_Meter_List tbody').forEach(function(tableBody) {
-    tableBody.addEventListener('click', function(event) {
-      if (event.target && event.target.nodeName === 'BUTTON' && event.target.id === 'table-show-button') {
-        const row = event.target.closest('tr');
-        const serialNumber = row.cells[0].innerText;
-        const connectionPoint = row.cells[3].innerText;
-        queryIecMeterData(serialNumber, connectionPoint);
-      }
-    });
-  });
-});
-
-function queryIecMeterData(serialNumber, connectionPoint) {
-  $('#singleQueryModal').modal('show');
-
-  // Sadece modal içeriği bloklanacak
-  $('#singleQueryModal .modal-content').block({
-    message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
-    overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
-    css: { border: 0, padding: 0, backgroundColor: 'transparent' }
-  });
-
-  fetch(`${baseWebhookURL}/webhook/query-iec-meter-data`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({ serialNumber: serialNumber, connectionPoint: connectionPoint })
-  })
-  .then(response => response.json())
-  .then(data => {
-    updateSingleQueryModal(data);
-    // Modal içeriği bloklamayı kaldır
-    $('#singleQueryModal .modal-content').unblock();
-  })
-  .catch(error => {
-    console.error("Error querying meter data:", error);
-    // Modal içeriği bloklamayı kaldır
-    $('#singleQueryModal .modal-content').unblock();
-  });
-}
-
 function updateSingleQueryModal(data) {
   const tableBody = document.querySelector('#singleQueryDataTable tbody');
   tableBody.innerHTML = '';
@@ -635,6 +626,69 @@ function updateSingleQueryModal(data) {
         <td>${meter.ManID || ''}</td>
         <td>${meter.meterValue || ''}
         <td>${meter.originalDataError || ''}</td>
+      `;
+      tableBody.appendChild(row);
+    });
+  } else {
+    document.getElementById('noContentMessage').style.display = 'block';
+  }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('#DataTables_Table_Electricity_Meter_List tbody').forEach(function(tableBody) {
+    tableBody.addEventListener('click', function(event) {
+      if (event.target && event.target.nodeName === 'BUTTON' && event.target.id === 'table-show-button') {
+        const row = event.target.closest('tr');
+        const serialNumber = row.cells[0].innerText;
+        const connectionPoint = row.cells[3].innerText;
+        queryIecMeterData(serialNumber, connectionPoint);
+      }
+    });
+  });
+});
+
+function queryIecMeterData(serialNumber, connectionPoint) {
+  $('#singleIecQueryModal').modal('show');
+
+  // Sadece modal içeriği bloklanacak
+  $('#singleIecQueryModal .modal-content').block({
+    message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
+    overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
+    css: { border: 0, padding: 0, backgroundColor: 'transparent' }
+  });
+
+  fetch(`${baseWebhookURL}/webhook/query-iec-meter-data`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ serialNumber: serialNumber, connectionPoint: connectionPoint })
+  })
+  .then(response => response.json())
+  .then(data => {
+    updateSingleIecQueryModal(data);
+    // Modal içeriği bloklamayı kaldır
+    $('#singleIecQueryModal .modal-content').unblock();
+  })
+  .catch(error => {
+    console.error("Error querying meter data:", error);
+    // Modal içeriği bloklamayı kaldır
+    $('#singleIecQueryModal .modal-content').unblock();
+  });
+}
+
+function updateSingleIecQueryModal(data) {
+  const tableBody = document.querySelector('#singleIecQueryDataTable tbody');
+  tableBody.innerHTML = '';
+
+  if (data.length > 0) {
+    document.getElementById('noContentMessage').style.display = 'none'; // Hide error message
+    data.forEach(meter => {
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td>${meter.data || ''}</td>
+        <td>${meter.value || ''}</td>
+        <td>${meter.error || ''}</td>
       `;
       tableBody.appendChild(row);
     });
