@@ -685,7 +685,17 @@ function updateSingleIecQueryModal(data) {
 
   if (data.length > 0) {
     document.getElementById('noContentMessage').style.display = 'none'; // Hide error message
-    
+
+    // Identification message added as the first row
+    const identificationRow = document.createElement('tr');
+    identificationRow.innerHTML = `
+      <td>---</td>
+      <td>Haberleşme İstek Mesajı Cevabı</td>
+      <td>${data[0].identification_msg || ''}</td>
+      <td></td>
+    `;
+    tableBody.appendChild(identificationRow);
+
     // Gelen veriyi parçalama
     const meterData = data[0].data.split('\r\n');
 
@@ -715,7 +725,6 @@ function updateSingleIecQueryModal(data) {
     document.getElementById('noContentMessage').style.display = 'block';
   }
 }
-
 
 function initializePage() {
   // Block the entire page UI and show spinner
