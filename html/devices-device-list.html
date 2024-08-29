@@ -286,7 +286,8 @@
               <thead>
                   <tr>
                     <th>OBIS Kodu</th>
-                    <th>Değeri</th>
+                    <th>Açıklama</th>
+                    <th>Değer</th>
                     <th>Hata</th>
                   </tr>
               </thead>
@@ -561,6 +562,7 @@
   <!-- BEGIN PAGE LEVEL JS-->
   <script src="../app-assets/js/scripts/modal/components-modal.js"></script>
   <script src="../app-assets/js/scripts/tables/datatables/datatable-basic.js"></script>
+  <script src="../app-assets/js/scripts/obisDescriptions.js"></script>
   <!-- END PAGE LEVEL JS-->
 
   <script>
@@ -693,14 +695,17 @@ function updateSingleIecQueryModal(data) {
       if (meter) {
         const obisCode = meter.split('(')[0];
         const obisValue = meter.substring(meter.indexOf('('));
+        const obisDescription = obisDescriptions[obisCode] || "Description not found"; // Get Description or default
 
         console.log("OBIS Code:", obisCode);
         console.log("OBIS Value:", obisValue);
+        console.log("OBIS Description:", obisDescription);
 
         const row = document.createElement('tr');
         row.innerHTML = `
           <td>${obisCode || ''}</td>
           <td>${obisValue || ''}</td>
+          <td>${obisDescription || ''}</td>
           <td></td>
         `;
         tableBody.appendChild(row);
