@@ -686,17 +686,25 @@ function updateSingleIecQueryModal(data) {
   if (data.length > 0) {
     document.getElementById('noContentMessage').style.display = 'none'; // Hide error message
 
-    // Identification message added as the first row
+    // Extract the number from identification_msg (e.g., <1>)
+    const identificationMsg = data[0].identification_msg || '';
+    const versionMatch = identificationMsg.match(/<(\d+)>/);
+    const version = versionMatch ? parseInt(versionMatch[1], 10) : null;
+
+    // Select the correct OBIS description source
+    const obisDescriptionsSource = version === 3 ? obisDescriptionsTedas3 : obisDescriptionsTedas;
+
+    // Add the identification message as the first row
     const identificationRow = document.createElement('tr');
     identificationRow.innerHTML = `
       <td>---</td>
       <td>Haberleşme İstek Mesajı Cevabı</td>
-      <td>${data[0].identification_msg || ''}</td>
+      <td>${identificationMsg}</td>
       <td></td>
     `;
     tableBody.appendChild(identificationRow);
 
-    // Gelen veriyi parçalama
+    // Parse the meter data
     const meterData = data[0].data.split('\r\n');
 
     console.log("Parsed meter data:", meterData);
@@ -705,7 +713,7 @@ function updateSingleIecQueryModal(data) {
       if (meter) {
         const obisCode = meter.split('(')[0];
         const obisValue = meter.substring(meter.indexOf('('));
-        const obisDescription = obisDescriptionsTedas[obisCode] || "Açıklama Bulunamadı."; // Get Description or default
+        const obisDescription = obisDescriptionsSource[obisCode] || "Açıklama Bulunamadı."; // Get Description or default
 
         console.log("OBIS Code:", obisCode);
         console.log("OBIS Description:", obisDescription);
