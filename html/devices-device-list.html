@@ -695,7 +695,7 @@ function updateSingleIecQueryModal(data) {
       if (meter) {
         const obisCode = meter.split('(')[0];
         const obisValue = meter.substring(meter.indexOf('('));
-        const obisDescription = obisDescriptions[obisCode] || "Description not found"; // Get Description or default
+        const obisDescription = obisDescriptionsTedas[obisCode] || "Açıklama Bulunamadı."; // Get Description or default
 
         console.log("OBIS Code:", obisCode);
         console.log("OBIS Description:", obisDescription);
