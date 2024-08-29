@@ -698,14 +698,14 @@ function updateSingleIecQueryModal(data) {
         const obisDescription = obisDescriptions[obisCode] || "Description not found"; // Get Description or default
 
         console.log("OBIS Code:", obisCode);
-        console.log("OBIS Value:", obisValue);
         console.log("OBIS Description:", obisDescription);
+        console.log("OBIS Value:", obisValue);
 
         const row = document.createElement('tr');
         row.innerHTML = `
           <td>${obisCode || ''}</td>
-          <td>${obisValue || ''}</td>
           <td>${obisDescription || ''}</td>
+          <td>${obisValue || ''}</td>
           <td></td>
         `;
         tableBody.appendChild(row);
