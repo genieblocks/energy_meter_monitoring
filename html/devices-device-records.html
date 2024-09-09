@@ -424,13 +424,16 @@ function fetchElectricMetersUsageData() {
           <td>${meter.SerialNumber || ''}</td>
           <td>${meter.Error || ''}</td>
           <td>${meter.ManufacturerID || ''}</td>
-          <td>${meter.PositiveActiveEnergyTotal_kWh ? meter.PositiveActiveEnergyTotal_kWh : '<span class="text-danger">!</span>'}</td>
+          <td>${meter.PositiveActiveEnergyTotal_kWh ? meter.PositiveActiveEnergyTotal_kWh : `<span class="text-danger" data-toggle="tooltip" data-popup="tooltip-custom" data-bg-color="pink" data-original-title="${meter.Error}">!</span>`}</td>
           <td>${meter.QueryStartTime || ''}</td>
           <td>${meter.Timestamp || ''}</td>
         `;
         tableBody.appendChild(row);
       });
       initializeDataTable('#DataTables_Table_Electricity_Meter_Records').draw(); // DataTable'ı yeniden başlatın ve çizdirin
+
+      // Initialize tooltips
+      $('[data-toggle="tooltip"]').tooltip();
     }
   })
   .catch(error => {
@@ -457,13 +460,16 @@ function fetchWaterMetersUsageData() {
           <td>${meter.SerialNumber || ''}</td>
           <td>${meter.Error || ''}</td>
           <td>${meter.ManufacturerID || ''}</td>
-          <td>${meter.MeterValue_m3 ? meter.MeterValue_m3 : '<span class="text-danger">!</span>'}</td>
+          <td>${meter.MeterValue_m3 ? meter.MeterValue_m3 : `<span class="text-danger" data-toggle="tooltip" data-popup="tooltip-custom" data-bg-color="pink" data-original-title="${meter.Error}">!</span>`}</td>
           <td>${meter.QueryStartTime || ''}</td>
           <td>${meter.Timestamp || ''}</td>
         `;
         tableBody.appendChild(row);
       });
       initializeDataTable('#DataTables_Table_Water_Meter_Records').draw(); // DataTable'ı yeniden başlatın ve çizdirin
+
+      // Initialize tooltips
+      $('[data-toggle="tooltip"]').tooltip();
     }
   })
   .catch(error => {
@@ -490,13 +496,16 @@ function fetchHeatingMetersUsageData() {
           <td>${meter.SerialNumber || ''}</td>
           <td>${meter.Error || ''}</td>
           <td>${meter.ManufacturerID || ''}</td>
-          <td>${meter.MeterValue_kWh ? meter.MeterValue_kWh : '<span class="text-danger">!</span>'}</td>
+          <td>${meter.MeterValue_kWh ? meter.MeterValue_kWh : `<span class="text-danger" data-toggle="tooltip" data-popup="tooltip-custom" data-bg-color="pink" data-original-title="${meter.Error}">!</span>`}</td>
           <td>${meter.QueryStartTime || ''}</td>
           <td>${meter.Timestamp || ''}</td>
         `;
         tableBody.appendChild(row);
       });
       initializeDataTable('#DataTables_Table_Calorimeter_Hot_Meter_Records').draw(); // DataTable'ı yeniden başlatın ve çizdirin
+
+      // Initialize tooltips
+      $('[data-toggle="tooltip"]').tooltip();
     }
   })
   .catch(error => {
@@ -523,13 +532,16 @@ function fetchCoolingMetersUsageData() {
           <td>${meter.SerialNumber || ''}</td>
           <td>${meter.Error || ''}</td>
           <td>${meter.ManufacturerID || ''}</td>
-          <td>${meter.MeterValue_kWh ? meter.MeterValue_kWh : '<span class="text-danger">!</span>'}</td>
+          <td>${meter.MeterValue_kWh ? meter.MeterValue_kWh : `<span class="text-danger" data-toggle="tooltip" data-popup="tooltip-custom" data-bg-color="pink" data-original-title="${meter.Error}">!</span>`}</td>
           <td>${meter.QueryStartTime || ''}</td>
           <td>${meter.Timestamp || ''}</td>
         `;
         tableBody.appendChild(row);
       });
       initializeDataTable('#DataTables_Table_Calorimeter_Cold_Meter_Records').draw(); // DataTable'ı yeniden başlatın ve çizdirin
+
+      // Initialize tooltips
+      $('[data-toggle="tooltip"]').tooltip();
     }
   })
   .catch(error => {
@@ -545,7 +557,7 @@ function appendRowToTable(meter, tableId) {
     <td>${meter.SerialNumber || ''}</td>
     <td>${meter.Error || ''}</td>
     <td>${meter.ManufacturerID || ''}</td>
-    <td>${meter.MeterValue_kWh ? meter.MeterValue_kWh : '<span class="text-danger">!</span>'}</td>
+    <td>${meter.MeterValue_kWh ? meter.MeterValue_kWh : `<span class="text-danger" data-toggle="tooltip" data-popup="tooltip-custom" data-bg-color="pink" data-original-title="${meter.Error}">!</span>`}</td>
     <td>${meter.QueryStartTime || ''}</td>
     <td>${meter.Timestamp || ''}</td>
   `;
