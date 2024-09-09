@@ -167,7 +167,6 @@
             <thead>
               <tr>
                 <th>Sayaç Seri Numarası</th>
-                <th>Hata</th>
                 <th>Üretici Kodu</th>
                 <th>Sayaç Değeri</th>
                 <th>Sorgu Başlangıç Zamanı</th>
@@ -198,7 +197,6 @@
             <thead>
               <tr>
                 <th>Sayaç Seri Numarası</th>
-                <th>Hata</th>
                 <th>Üretici Kodu</th>
                 <th>Sayaç Değeri</th>
                 <th>Sorgu Başlangıç Zamanı</th>
@@ -228,7 +226,6 @@
             <thead>
               <tr>
                 <th>Sayaç Seri Numarası</th>
-                <th>Hata</th>
                 <th>Üretici Kodu</th>
                 <th>Sayaç Değeri</th>
                 <th>Sorgu Başlangıç Zamanı</th>
@@ -258,7 +255,6 @@
             <thead>
               <tr>
                 <th>Sayaç Seri Numarası</th>
-                <th>Hata</th>
                 <th>Üretici Kodu</th>
                 <th>Sayaç Değeri</th>
                 <th>Sorgu Başlangıç Zamanı</th>
@@ -428,7 +424,6 @@ function fetchElectricMetersUsageData() {
         const row = document.createElement('tr');
         row.innerHTML = `
           <td>${meter.SerialNumber || ''}</td>
-          <td>${meter.Error || ''}</td>
           <td>${meter.ManufacturerID || ''}</td>
           <td>${meter.PositiveActiveEnergyTotal_kWh ? meter.PositiveActiveEnergyTotal_kWh : `<span class="text-danger" data-toggle="tooltip" data-popup="tooltip-custom" data-bg-color="pink" data-original-title="${meter.Error}">!</span>`}</td>
           <td>${meter.QueryStartTime || ''}</td>
@@ -471,7 +466,6 @@ function fetchWaterMetersUsageData() {
         const row = document.createElement('tr');
         row.innerHTML = `
           <td>${meter.SerialNumber || ''}</td>
-          <td>${meter.Error || ''}</td>
           <td>${meter.ManufacturerID || ''}</td>
           <td>${meter.MeterValue_m3 ? meter.MeterValue_m3 : `<span class="text-danger" data-toggle="tooltip" data-popup="tooltip-custom" data-bg-color="pink" data-original-title="${meter.Error}">!</span>`}</td>
           <td>${meter.QueryStartTime || ''}</td>
@@ -514,7 +508,6 @@ function fetchHeatingMetersUsageData() {
         const row = document.createElement('tr');
         row.innerHTML = `
           <td>${meter.SerialNumber || ''}</td>
-          <td>${meter.Error || ''}</td>
           <td>${meter.ManufacturerID || ''}</td>
           <td>${meter.MeterValue_kWh ? meter.MeterValue_kWh : `<span class="text-danger" data-toggle="tooltip" data-popup="tooltip-custom" data-bg-color="pink" data-original-title="${meter.Error}">!</span>`}</td>
           <td>${meter.QueryStartTime || ''}</td>
@@ -557,7 +550,6 @@ function fetchCoolingMetersUsageData() {
         const row = document.createElement('tr');
         row.innerHTML = `
           <td>${meter.SerialNumber || ''}</td>
-          <td>${meter.Error || ''}</td>
           <td>${meter.ManufacturerID || ''}</td>
           <td>${meter.MeterValue_kWh ? meter.MeterValue_kWh : `<span class="text-danger" data-toggle="tooltip" data-popup="tooltip-custom" data-bg-color="pink" data-original-title="${meter.Error}">!</span>`}</td>
           <td>${meter.QueryStartTime || ''}</td>
