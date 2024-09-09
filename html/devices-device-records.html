@@ -434,7 +434,14 @@ function fetchElectricMetersUsageData() {
       initializeDataTable('#DataTables_Table_Electricity_Meter_Records').draw(); // DataTable'ı yeniden başlatın ve çizdirin
 
       // Initialize tooltips
-      $('[data-toggle="tooltip"]').tooltip();
+      // $('[data-toggle="tooltip"]').tooltip();
+      $("[data-popup=tooltip-custom]").tooltip({
+          trigger: 'hover',
+          html: true, // To ensure the HTML structure works
+          title: function () {
+              return $(this).attr("data-error"); // Fetch the meter.Error content from data-error attribute
+          }
+      });
     }
   })
   .catch(error => {
@@ -470,7 +477,14 @@ function fetchWaterMetersUsageData() {
       initializeDataTable('#DataTables_Table_Water_Meter_Records').draw(); // DataTable'ı yeniden başlatın ve çizdirin
 
       // Initialize tooltips
-      $('[data-toggle="tooltip"]').tooltip();
+      // $('[data-toggle="tooltip"]').tooltip();
+      $("[data-popup=tooltip-custom]").tooltip({
+          trigger: 'hover',
+          html: true, // To ensure the HTML structure works
+          title: function () {
+              return $(this).attr("data-error"); // Fetch the meter.Error content from data-error attribute
+          }
+      });
     }
   })
   .catch(error => {
@@ -506,7 +520,14 @@ function fetchHeatingMetersUsageData() {
       initializeDataTable('#DataTables_Table_Calorimeter_Hot_Meter_Records').draw(); // DataTable'ı yeniden başlatın ve çizdirin
 
       // Initialize tooltips
-      $('[data-toggle="tooltip"]').tooltip();
+      // $('[data-toggle="tooltip"]').tooltip();
+      $("[data-popup=tooltip-custom]").tooltip({
+          trigger: 'hover',
+          html: true, // To ensure the HTML structure works
+          title: function () {
+              return $(this).attr("data-error"); // Fetch the meter.Error content from data-error attribute
+          }
+      });
     }
   })
   .catch(error => {
@@ -542,7 +563,14 @@ function fetchCoolingMetersUsageData() {
       initializeDataTable('#DataTables_Table_Calorimeter_Cold_Meter_Records').draw(); // DataTable'ı yeniden başlatın ve çizdirin
 
       // Initialize tooltips
-      $('[data-toggle="tooltip"]').tooltip();
+      // $('[data-toggle="tooltip"]').tooltip();
+      $("[data-popup=tooltip-custom]").tooltip({
+          trigger: 'hover',
+          html: true, // To ensure the HTML structure works
+          title: function () {
+              return $(this).attr("data-error"); // Fetch the meter.Error content from data-error attribute
+          }
+      });
     }
   })
   .catch(error => {
