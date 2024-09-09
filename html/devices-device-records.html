@@ -623,6 +623,17 @@ function initializeDataTable(tableId) {
           previous: "Önceki"
         },
         zeroRecords: "Eşleşen kayıt bulunamadı"
+      },
+      // Ensure tooltips are initialized on table redraw (pagination, search, etc.)
+      drawCallback: function() {
+        // Reinitialize tooltips for new elements
+        $("[data-popup=tooltip-custom]").tooltip({
+          trigger: 'hover',
+          html: true,
+          title: function () {
+            return $(this).attr("data-original-title");
+          }
+        });
       }
     });
   } else {
