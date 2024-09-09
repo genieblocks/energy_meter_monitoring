@@ -424,7 +424,7 @@ function fetchElectricMetersUsageData() {
           <td>${meter.SerialNumber || ''}</td>
           <td>${meter.Error || ''}</td>
           <td>${meter.ManufacturerID || ''}</td>
-          <td>${meter.PositiveActiveEnergyTotal_kWh || ''}</td>
+          <td>${meter.PositiveActiveEnergyTotal_kWh ? meter.PositiveActiveEnergyTotal_kWh : '<span class="text-danger">!</span>'}</td>
           <td>${meter.QueryStartTime || ''}</td>
           <td>${meter.Timestamp || ''}</td>
         `;
@@ -457,7 +457,7 @@ function fetchWaterMetersUsageData() {
           <td>${meter.SerialNumber || ''}</td>
           <td>${meter.Error || ''}</td>
           <td>${meter.ManufacturerID || ''}</td>
-          <td>${meter.MeterValue_m3 || ''}</td>
+          <td>${meter.MeterValue_m3 ? meter.MeterValue_m3 : '<span class="text-danger">!</span>'}</td>
           <td>${meter.QueryStartTime || ''}</td>
           <td>${meter.Timestamp || ''}</td>
         `;
@@ -490,7 +490,7 @@ function fetchHeatingMetersUsageData() {
           <td>${meter.SerialNumber || ''}</td>
           <td>${meter.Error || ''}</td>
           <td>${meter.ManufacturerID || ''}</td>
-          <td>${meter.MeterValue_kWh || ''}</td>
+          <td>${meter.MeterValue_kWh ? meter.MeterValue_kWh : '<span class="text-danger">!</span>'}</td>
           <td>${meter.QueryStartTime || ''}</td>
           <td>${meter.Timestamp || ''}</td>
         `;
@@ -523,7 +523,7 @@ function fetchCoolingMetersUsageData() {
           <td>${meter.SerialNumber || ''}</td>
           <td>${meter.Error || ''}</td>
           <td>${meter.ManufacturerID || ''}</td>
-          <td>${meter.MeterValue_kWh || ''}</td>
+          <td>${meter.MeterValue_kWh ? meter.MeterValue_kWh : '<span class="text-danger">!</span>'}</td>
           <td>${meter.QueryStartTime || ''}</td>
           <td>${meter.Timestamp || ''}</td>
         `;
@@ -545,7 +545,7 @@ function appendRowToTable(meter, tableId) {
     <td>${meter.SerialNumber || ''}</td>
     <td>${meter.Error || ''}</td>
     <td>${meter.ManufacturerID || ''}</td>
-    <td>${meter.MeterValue_kWh || ''}</td>
+    <td>${meter.MeterValue_kWh ? meter.MeterValue_kWh : '<span class="text-danger">!</span>'}</td>
     <td>${meter.QueryStartTime || ''}</td>
     <td>${meter.Timestamp || ''}</td>
   `;
