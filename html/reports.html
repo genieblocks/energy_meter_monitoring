@@ -694,9 +694,17 @@
       });
     }
 
-    // ReportModal içerisindeki tabloyu dinamik olarak güncelleyen fonksiyon
-    function updateReportTable(data) {
+    function updateReportTable(responseData) {
+      // Assuming responseData is [{ "data": [ { /* meter data */ }, ... ] }]
+      const data = responseData[0].data; // Access the data array inside the first element
+      
       const table = document.querySelector('#DataTables_Table_Electricity_Meter_Report');
+      
+      if (!table) {
+          console.error("Table not found!");
+          return;
+      }
+      
       const tableHead = table.querySelector('thead');
       const tableBody = table.querySelector('tbody');
 
@@ -709,47 +717,47 @@
       const headers = ['Sayaç Seri Numarası', 'Sayaç Tarihi', 'Sayaç Saati', 'Mevcut Tarih', 'Mevcut Saat', 'Zaman Farkı'];
 
       headers.forEach(headerText => {
-        const th = document.createElement('th');
-        th.textContent = headerText;
-        headerRow.appendChild(th);
+          const th = document.createElement('th');
+          th.textContent = headerText;
+          headerRow.appendChild(th);
       });
 
       tableHead.appendChild(headerRow); // Başlıkları tabloya ekle
 
       // Gelen veriyi tabloya ekle
       data.forEach(item => {
-        const row = document.createElement('tr');
+          const row = document.createElement('tr');
 
-        const serialNumberCell = document.createElement('td');
-        serialNumberCell.textContent = item.serialNumber; // Sayaç Seri Numarası
+          const serialNumberCell = document.createElement('td');
+          serialNumberCell.textContent = item.serialNumber; // Sayaç Seri Numarası
 
-        const meterDateCell = document.createElement('td');
-        meterDateCell.textContent = item.meterDate; // Sayaç Tarihi
+          const meterDateCell = document.createElement('td');
+          meterDateCell.textContent = item.meterDate; // Sayaç Tarihi
 
-        const meterTimeCell = document.createElement('td');
-        meterTimeCell.textContent = item.meterTime; // Sayaç Saati
+          const meterTimeCell = document.createElement('td');
+          meterTimeCell.textContent = item.meterTime; // Sayaç Saati
 
-        const currentDateCell = document.createElement('td');
-        currentDateCell.textContent = item.currentDate; // Mevcut Tarih
+          const currentDateCell = document.createElement('td');
+          currentDateCell.textContent = item.currentDate; // Mevcut Tarih
 
-        const currentTimeCell = document.createElement('td');
-        currentTimeCell.textContent = item.currentTime; // Mevcut Saat
+          const currentTimeCell = document.createElement('td');
+          currentTimeCell.textContent = item.currentTime; // Mevcut Saat
 
-        const timeDifferenceCell = document.createElement('td');
-        timeDifferenceCell.textContent = item.timeDifference; // Zaman Farkı
+          const timeDifferenceCell = document.createElement('td');
+          timeDifferenceCell.textContent = item.timeDifference; // Zaman Farkı
 
-        // Hücreleri tabloya ekle
-        row.appendChild(serialNumberCell);
-        row.appendChild(meterDateCell);
-        row.appendChild(meterTimeCell);
-        row.appendChild(currentDateCell);
-        row.appendChild(currentTimeCell);
-        row.appendChild(timeDifferenceCell);
+          // Hücreleri tabloya ekle
+          row.appendChild(serialNumberCell);
+          row.appendChild(meterDateCell);
+          row.appendChild(meterTimeCell);
+          row.appendChild(currentDateCell);
+          row.appendChild(currentTimeCell);
+          row.appendChild(timeDifferenceCell);
 
-        // Satırı tabloya ekle
-        tableBody.appendChild(row);
+          // Satırı tabloya ekle
+          tableBody.appendChild(row);
       });
-    }
+  }
     
     function toggleFormGroups(reportType) {
       // Başlangıçta tüm form gruplarını gizle
