@@ -958,14 +958,15 @@
           <div class="modal-body">
             <div class="form-group">
               <label for="projectinput5">Rapor Tipi</label>
-              <select id="projectinput5" name="interested" class="form-control">
+              <select id="projectinput5" name="interested" class="form-control" onchange="toggleFormGroups(this.value)">
                 <option value="none" selected="" disabled="">Rapor tipi seçiniz</option>
                 <option value="olay-raporu">Olay raporu</option>
                 <option value="alarm-raporu">Alarm raporu</option>
                 <option value="enerji-tuketim-raporu">Enerji tüketim raporu</option>
+                <option value="cihaz-tarih-saat-raporu">Cihaz Tarih-Saat Raporu</option>
               </select>
             </div>
-            <div class="form-group">
+            <div id="date-range-group" class="form-group">
               <label>Tarih Aralığı Seçiniz</label>
               <div class="input-group">
                 <input type="text" class="form-control daterange">
@@ -974,10 +975,10 @@
                 </span>
               </div>
             </div>
-            <div class="form-group">
+            <div id="invoice-group" class="form-group">
               <label>Fatura Tutarını Giriniz</label>
               <div class="input-group">
-                <input type="text" class="form-control" id="basicInput" >
+                <input type="text" class="form-control" id="basicInput">
               </div>
             </div>
           </div>
@@ -1207,6 +1208,24 @@
   <script src="../app-assets/js/scripts/pickers/dateTime/picker-date-time.js"></script>
   <script src="../app-assets/js/scripts/modal/components-modal.js"></script>
   <!-- END PAGE LEVEL JS-->
+
+  <script>
+    function toggleFormGroups(reportType) {
+      // Tüm form gruplarını varsayılan olarak gizle
+      document.getElementById('date-range-group').style.display = 'none';
+      document.getElementById('invoice-group').style.display = 'none';
+  
+      // Eğer cihaz tarih-saat raporu seçildiyse sadece cihaz zaman alanını göster
+      if (reportType === 'cihaz-tarih-saat-raporu') {
+        document.getElementById('device-time').style.display = 'block';
+        document.getElementById('manual-time').style.display = 'block';
+      } else {
+        // Diğer rapor tiplerine göre form alanlarını aktif et
+        document.getElementById('date-range-group').style.display = 'block';
+        document.getElementById('invoice-group').style.display = 'block';
+      }
+    }
+  </script>
 
 </body>
 
