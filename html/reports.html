@@ -656,18 +656,29 @@
       });
 
       // Fetch işlemi başlatılır
-      fetch(`${baseWebhookURL}/webhook/get-electricity-meter-time-report`)
-        .then(response => response.json())
-        .then(data => {
-          updateReportTable(data);
-        })
-        .catch(error => {
-          console.error('Error fetching time report:', error);
-        })
-        .finally(() => {
-          // Sorgu tamamlandığında block kaldırılır
-          $.unblockUI();
-        });
+      fetch(`${baseWebhookURL}/webhook/get-electricity-meter-time-report`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then(data => {
+        updateReportTable(data);
+      })
+      .catch(error => {
+        console.error('Error fetching time report:', error.message); // Hata mesajı daha detaylı
+        alert(`Error fetching time report: ${error.message}`); // Kullanıcıyı bilgilendirmek için
+      })
+      .finally(() => {
+        // Sorgu tamamlandığında block kaldırılır
+        $.unblockUI();
+      });
     }
 
     // ReportModal içerisindeki tabloyu dinamik olarak güncelleyen fonksiyon
