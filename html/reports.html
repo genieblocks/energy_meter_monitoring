@@ -966,7 +966,7 @@
                 <option value="cihaz-tarih-saat-raporu">Cihaz Tarih-Saat Raporu</option>
               </select>
             </div>
-            <div id="date-range-group" class="form-group">
+            <div id="date-range-group" class="form-group" style="display: none;">
               <label>Tarih Aralığı Seçiniz</label>
               <div class="input-group">
                 <input type="text" class="form-control daterange">
@@ -975,7 +975,7 @@
                 </span>
               </div>
             </div>
-            <div id="invoice-group" class="form-group">
+            <div id="invoice-group" class="form-group" style="display: none;">
               <label>Fatura Tutarını Giriniz</label>
               <div class="input-group">
                 <input type="text" class="form-control" id="basicInput">
@@ -1211,16 +1211,15 @@
 
   <script>
     function toggleFormGroups(reportType) {
-      // Tüm form gruplarını varsayılan olarak gizle
+      // Başlangıçta tüm form gruplarını gizle
       document.getElementById('date-range-group').style.display = 'none';
       document.getElementById('invoice-group').style.display = 'none';
-  
-      // Eğer cihaz tarih-saat raporu seçildiyse sadece cihaz zaman alanını göster
+      
+      // Eğer cihaz tarih-saat raporu seçildiyse, diğer alanları gizli tut
       if (reportType === 'cihaz-tarih-saat-raporu') {
-        document.getElementById('device-time').style.display = 'block';
-        document.getElementById('manual-time').style.display = 'block';
+        // Bu durumda başka bir alan gösterilmeyecek.
       } else {
-        // Diğer rapor tiplerine göre form alanlarını aktif et
+        // Diğer rapor tiplerine göre form alanlarını göster
         document.getElementById('date-range-group').style.display = 'block';
         document.getElementById('invoice-group').style.display = 'block';
       }
