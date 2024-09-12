@@ -156,7 +156,7 @@
               <input type="text" class="global_filter mr-2" id="global_filter" placeholder=" Rapor Ara">
             </div>
             <div class="cal-1 col-xl-1">
-              <button class="btn btn-sm btn-genie white" type="button" data-toggle="modal" data-target="#generateReportModal">Rapor Oluştur</button>
+              <button class="btn btn-sm btn-genie white" type="button" data-toggle="modal" data-target="#generateElectricityReportModal">Rapor Oluştur</button>
             </div>
           </div>
           <table class="table table-hover table-bordered zero-configuration dataTable" id="DataTables_Table_Electricity_Meter_List"
@@ -205,7 +205,7 @@
               <input type="text" class="global_filter mr-2" id="global_filter" placeholder=" Rapor Ara">
             </div>
             <div class="cal-1 col-xl-1">
-              <button class="btn btn-sm btn-genie white" type="button" data-toggle="modal" data-target="#generateReportModal">Rapor Oluştur</button>
+              <button class="btn btn-sm btn-genie white" type="button" data-toggle="modal" data-target="#generateWaterReportModal">Rapor Oluştur</button>
             </div>
           </div>
           <table class="table table-hover table-bordered zero-configuration dataTable" id="DataTables_Table_Electricity_Meter_List"
@@ -254,7 +254,7 @@
               <input type="text" class="global_filter mr-2" id="global_filter" placeholder=" Rapor Ara">
             </div>
             <div class="cal-1 col-xl-1">
-              <button class="btn btn-sm btn-genie white" type="button" data-toggle="modal" data-target="#generateReportModal">Rapor Oluştur</button>
+              <button class="btn btn-sm btn-genie white" type="button" data-toggle="modal" data-target="#generateHeatingReportModal">Rapor Oluştur</button>
             </div>
           </div>
           <table class="table table-hover table-bordered zero-configuration dataTable" id="DataTables_Table_Electricity_Meter_List"
@@ -303,7 +303,7 @@
               <input type="text" class="global_filter mr-2" id="global_filter" placeholder=" Rapor Ara">
             </div>
             <div class="cal-1 col-xl-1">
-              <button class="btn btn-sm btn-genie white" type="button" data-toggle="modal" data-target="#generateReportModal">Rapor Oluştur</button>
+              <button class="btn btn-sm btn-genie white" type="button" data-toggle="modal" data-target="#generateCoolingReportModal">Rapor Oluştur</button>
             </div>
           </div>
           <table class="table table-hover table-bordered zero-configuration dataTable" id="DataTables_Table_Electricity_Meter_List"
@@ -944,9 +944,8 @@
       </div>
     </div>
   </div>
-  <!-- Generate Report Modal -->
-  <div class="modal fade text-left" id="generateReportModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2"
-    aria-hidden="true">
+  <!-- Elektrik Sayaç Raporu Oluşturma Modal -->
+  <div class="modal fade text-left" id="generateElectricityReportModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
     <div class="modal-dialog modal-sm" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -990,6 +989,141 @@
       </div>
     </div>
   </div>
+<!-- Su Sayaç Raporu Oluşturma Modal -->
+<div class="modal fade text-left" id="generateWaterReportModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
+  <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title text-bold-600" id="myModalLabel1"><i class="fa fa-road2"></i> Manuel Rapor Oluşturma Ekranı</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <form>
+            <div class="modal-body">
+              <div class="form-group">
+                <label for="projectinput5">Rapor Tipi</label>
+                <select id="projectinput5" name="interested" class="form-control">
+                  <option value="none" selected="" disabled="">Rapor tipi seçiniz</option>
+                  <option value="olay-raporu">Olay raporu</option>
+                  <option value="alarm-raporu">Alarm raporu</option>
+                  <option value="enerji-tuketim-raporu">Enerji tüketim raporu</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Tarih Aralığı Seçiniz</label>
+                <div class="input-group">
+                  <input type="text" class="form-control daterange">
+                  <span class="input-group-addon">
+                    <span class="icon-calendar3"></span>
+                  </span>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Fatura Tutarını Giriniz</label>
+                <div class="input-group">
+                  <input type="text" class="form-control" id="basicInput" >
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <input type="reset" class="btn btn-light btn-lg" data-dismiss="modal" value="İptal">
+              <input type="button" class="btn btn-genie white btn-lg" data-toggle="modal" data-target="#reportModal" data-dismiss="modal" value="Oluştur">
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+<!-- Kalorimetre Isıtma Sayaç Raporu Oluşturma Modal -->
+<div class="modal fade text-left" id="generateHeatingReportModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
+  <div class="modal-dialog modal-sm" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title text-bold-600" id="myModalLabel1"><i class="fa fa-road2"></i> Manuel Rapor Oluşturma Ekranı</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form>
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="projectinput5">Rapor Tipi</label>
+              <select id="projectinput5" name="interested" class="form-control">
+                <option value="none" selected="" disabled="">Rapor tipi seçiniz</option>
+                <option value="olay-raporu">Olay raporu</option>
+                <option value="alarm-raporu">Alarm raporu</option>
+                <option value="enerji-tuketim-raporu">Enerji tüketim raporu</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Tarih Aralığı Seçiniz</label>
+              <div class="input-group">
+                <input type="text" class="form-control daterange">
+                <span class="input-group-addon">
+                  <span class="icon-calendar3"></span>
+                </span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Fatura Tutarını Giriniz</label>
+              <div class="input-group">
+                <input type="text" class="form-control" id="basicInput" >
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <input type="reset" class="btn btn-light btn-lg" data-dismiss="modal" value="İptal">
+            <input type="button" class="btn btn-genie white btn-lg" data-toggle="modal" data-target="#reportModal" data-dismiss="modal" value="Oluştur">
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+<!-- Kalorimetre Soğutma Sayaç Raporu Oluşturma Modal -->
+<div class="modal fade text-left" id="generateCoolingReportModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
+  <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title text-bold-600" id="myModalLabel1"><i class="fa fa-road2"></i> Manuel Rapor Oluşturma Ekranı</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <form>
+            <div class="modal-body">
+              <div class="form-group">
+                <label for="projectinput5">Rapor Tipi</label>
+                <select id="projectinput5" name="interested" class="form-control">
+                  <option value="none" selected="" disabled="">Rapor tipi seçiniz</option>
+                  <option value="olay-raporu">Olay raporu</option>
+                  <option value="alarm-raporu">Alarm raporu</option>
+                  <option value="enerji-tuketim-raporu">Enerji tüketim raporu</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Tarih Aralığı Seçiniz</label>
+                <div class="input-group">
+                  <input type="text" class="form-control daterange">
+                  <span class="input-group-addon">
+                    <span class="icon-calendar3"></span>
+                  </span>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Fatura Tutarını Giriniz</label>
+                <div class="input-group">
+                  <input type="text" class="form-control" id="basicInput" >
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <input type="reset" class="btn btn-light btn-lg" data-dismiss="modal" value="İptal">
+              <input type="button" class="btn btn-genie white btn-lg" data-toggle="modal" data-target="#reportModal" data-dismiss="modal" value="Oluştur">
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
   <!-- Modal -->
   <div class="modal fade text-left" id="iconModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2"
     aria-hidden="true">
