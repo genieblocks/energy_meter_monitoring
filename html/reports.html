@@ -415,7 +415,7 @@
           </div>
           <div class="modal-footer">
             <input type="reset" class="btn btn-light btn-lg" data-dismiss="modal" value="İptal">
-            <input type="button" class="btn btn-genie white btn-lg" data-toggle="modal" data-target="#reportModal" data-dismiss="modal" value="Oluştur">
+            <input type="button" class="btn btn-genie white btn-lg" onclick="handleReportGeneration()" value="Oluştur">
           </div>
         </form>
       </div>
@@ -645,6 +645,19 @@
     const baseWebhookURL = "http://192.168.2.250:5678"; // Bilgili Holding URL
     // const baseWebhookURL = "http://192.168.1.146:5678"; // Değiştirmek istediğiniz temel URL
     // const baseWebhookURL = "http://192.168.1.119:5678"; // gbenergy_lenovo URL
+
+    function handleReportGeneration() {
+      const reportType = document.getElementById('projectinput5').value;
+      
+      if (reportType === 'cihaz-tarih-saat-raporu') {
+        // Call the function if 'Cihaz Tarih-Saat Raporu' is selected
+        generateElectricityMeterTimeReport();
+      } else {
+        // For other report types, just close the modal
+        $('#generateElectricityReportModal').modal('hide');
+        $('#reportModal').modal('show');
+      }
+    }
 
     // Cihaz tarih-saat raporu oluşturma butonuna tıklanınca çalışacak fonksiyon
     function generateElectricityMeterTimeReport() {
