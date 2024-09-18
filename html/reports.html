@@ -607,7 +607,7 @@
     });
 
     function loadReportLists() {
-      // Block the UI while fetching data
+      // Arayüzü veri alırken blokla
       $.blockUI({
         message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
         overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
@@ -630,7 +630,19 @@
       .then(data => {
         console.log("Fetched ReportList data:", data); // Debug amacıyla cevabı konsola yazdırıyoruz
 
-        populateTables(data);
+        // Verinin yapısını kontrol ediyoruz
+        if (data && data.length > 0 && data[0].data && Array.isArray(data[0].data)) {
+          const reportList = data[0].data;
+          
+          if (reportList.length === 0) {
+            console.warn("Rapor listesi boş.");
+            alert("Hiç rapor bulunamadı.");
+          } else {
+            populateTables(reportList);
+          }
+        } else {
+          throw new Error("Beklenmeyen veri yapısı alındı.");
+        }
       })
       .catch(error => {
         console.error('Error fetching reports:', error.message);
