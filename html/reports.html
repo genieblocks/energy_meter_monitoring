@@ -628,6 +628,8 @@
         return response.json();
       })
       .then(data => {
+        console.log("Fetched ReportList data:", data); // Debug amacıyla cevabı konsola yazdırıyoruz
+
         populateTables(data);
       })
       .catch(error => {
