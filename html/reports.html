@@ -344,8 +344,8 @@
         <form>
           <div class="modal-body">
             <div class="form-group">
-              <label for="projectinput5">Rapor Tipi</label>
-              <select id="projectinput5" name="interested" class="form-control" onchange="toggleFormGroups(this.value)">
+              <label for="electricityReportTypeSelect">Rapor Tipi</label>
+              <select id="electricityReportTypeSelect" name="interested" class="form-control" onchange="toggleFormGroups(this.value)">
                 <option value="none" selected="" disabled="">Rapor tipi seçiniz</option>
                 <option value="olay-raporu">Olay raporu</option>
                 <option value="alarm-raporu">Alarm raporu</option>
@@ -390,8 +390,8 @@
           <form>
             <div class="modal-body">
               <div class="form-group">
-                <label for="projectinput5">Rapor Tipi</label>
-                <select id="projectinput5" name="interested" class="form-control">
+                <label for="waterReportTypeSelect">Rapor Tipi</label>
+                <select id="waterReportTypeSelect" name="interested" class="form-control">
                   <option value="none" selected="" disabled="">Rapor tipi seçiniz</option>
                   <option value="olay-raporu">Olay raporu</option>
                   <option value="alarm-raporu">Alarm raporu</option>
@@ -435,8 +435,8 @@
         <form>
           <div class="modal-body">
             <div class="form-group">
-              <label for="projectinput5">Rapor Tipi</label>
-              <select id="projectinput5" name="interested" class="form-control">
+              <label for="heatingReportTypeSelect">Rapor Tipi</label>
+              <select id="heatingReportTypeSelect" name="interested" class="form-control">
                 <option value="none" selected="" disabled="">Rapor tipi seçiniz</option>
                 <option value="olay-raporu">Olay raporu</option>
                 <option value="alarm-raporu">Alarm raporu</option>
@@ -480,8 +480,8 @@
           <form>
             <div class="modal-body">
               <div class="form-group">
-                <label for="projectinput5">Rapor Tipi</label>
-                <select id="projectinput5" name="interested" class="form-control">
+                <label for="coolingReportTypeSelect">Rapor Tipi</label>
+                <select id="coolingReportTypeSelect" name="interested" class="form-control">
                   <option value="none" selected="" disabled="">Rapor tipi seçiniz</option>
                   <option value="olay-raporu">Olay raporu</option>
                   <option value="alarm-raporu">Alarm raporu</option>
@@ -717,7 +717,7 @@
     }
     
     function handleReportGeneration() {
-        const reportType = document.getElementById('projectinput5').value;
+        const reportType = document.getElementById('electricityReportTypeSelect').value;
         
         if (reportType === 'cihaz-tarih-saat-raporu') {
             // 'Cihaz Tarih-Saat Raporu' seçildiğinde rapor oluşturuluyor
