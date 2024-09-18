@@ -643,7 +643,7 @@
       reports.forEach(report => {
         // Determine which table to populate based on report category
         let tableId = '';
-        switch (report.category) {
+        switch (report.ReportCategory) {
           case 'electricityconsumption':
             tableId = 'DataTables_Table_Electricity_Meter_List';
             break;
@@ -657,16 +657,22 @@
             tableId = 'DataTables_Table_Cooling_Meter_List';
             break;
           default:
-            console.warn(`Unknown category: ${report.category}`);
+            console.warn(`Unknown category: ${report.ReportCategory}`);
             return;
         }
 
         const tableBody = document.querySelector(`#${tableId} tbody`);
+        if (!tableBody) {
+          console.error(`Table body not found for ID: ${tableId}`);
+          return;
+        }
+
         const row = document.createElement('tr');
 
-        const createdAtCell = document.createElement('td');
-        createdAtCell.textContent = formatDate(report.createdAt);
-        row.appendChild(createdAtCell);
+        // Map ReportList fields to table columns
+        const creationDateCell = document.createElement('td');
+        creationDateCell.textContent = formatDate(report.CreationDate);
+        row.appendChild(creationDateCell);
 
         const titleCell = document.createElement('td');
         const titleLink = document.createElement('a');
@@ -674,12 +680,12 @@
         titleLink.setAttribute('data-toggle', 'modal');
         titleLink.setAttribute('data-target', '#reportModal');
         titleLink.classList.add('text-bold-600');
-        titleLink.textContent = report.title;
+        titleLink.textContent = report.ReportTitle;
         titleCell.appendChild(titleLink);
         row.appendChild(titleCell);
 
         const reportTypeCell = document.createElement('td');
-        reportTypeCell.textContent = report.reportType;
+        reportTypeCell.textContent = report.ReportType;
         row.appendChild(reportTypeCell);
 
         const creationTypeCell = document.createElement('td');
@@ -695,7 +701,7 @@
 
     function initializeDataTables() {
       ['Electricity', 'Water', 'Heating', 'Cooling'].forEach(type => {
-        const tableId = `DataTables_Table_${type}_Meter_List`;
+        const tableId = `DataTables_Table_${type}_Report_List`;
         if ($.fn.DataTable.isDataTable(`#${tableId}`)) {
           $(`#${tableId}`).DataTable().destroy();
         }
