@@ -15,18 +15,15 @@
     href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i%7CMuli:300,400,500,700"
     rel="stylesheet">
   <!-- BEGIN VENDOR CSS-->
-  <!-- <link rel="stylesheet" type="text/css" href="../app-assets/css/bootstrap.css"> -->
+  <link rel="stylesheet" type="text/css" href="../app-assets/css/bootstrap.css">
+  <!-- font icons-->
   <link rel="stylesheet" type="text/css" href="../app-assets/fonts/icomoon.css">
-  <!-- <link rel="stylesheet" type="text/css" href="../app-assets/fonts/flag-icon-css/css/flag-icon.min.css">
+  <link rel="stylesheet" type="text/css" href="../app-assets/fonts/flag-icon-css/css/flag-icon.min.css">
   <link rel="stylesheet" type="text/css" href="../app-assets/vendors/css/sliders/slick/slick.css">
-  <link rel="stylesheet" type="text/css" href="../app-assets/vendors/css/extensions/pace.css"> -->
+  <link rel="stylesheet" type="text/css" href="../app-assets/vendors/css/extensions/pace.css">
+  <link rel="stylesheet" type="text/css" href="../app-assets/fonts/feather/style.min.css">
+  <link rel="stylesheet" type="text/css" href="../app-assets/fonts/font-awesome/css/font-awesome.min.css">
 
-  <link rel="stylesheet" type="text/css" href="../app-assets/css/vendors.css">
-  <link rel="stylesheet" type="text/css" href="../app-assets/vendors/css/tables/datatable/jquery.dataTables.min.css">
-  <link rel="stylesheet" type="text/css" href="../app-assets/vendors/css/pickers/daterange/daterangepicker.css">
-  <link rel="stylesheet" type="text/css" href="../app-assets/vendors/css/pickers/datetime/bootstrap-datetimepicker.css">
-  <link rel="stylesheet" type="text/css" href="../app-assets/vendors/css/pickers/pickadate/pickadate.css">
-  <!-- END VENDOR CSS-->
   <!-- END VENDOR CSS-->
   <!-- BEGIN TEMPLATE CSS-->
   <link rel="stylesheet" type="text/css" href="../app-assets/css/bootstrap-extended.css">
@@ -36,11 +33,20 @@
   <!-- END TEMPLATE CSS-->
   <!-- BEGIN Page Level CSS-->
   <link rel="stylesheet" type="text/css" href="../app-assets/css/core/menu/menu-types/vertical-menu.css">
-  <link rel="stylesheet" type="text/css" href="../app-assets/css/plugins/pickers/daterange/daterange.css">
+  <link rel="stylesheet" type="text/css" href="../app-assets/css/core/colors/palette-gradient.css">
   <!-- END Page Level CSS-->
   <!-- BEGIN Custom CSS-->
   <link rel="stylesheet" type="text/css" href="../assets/css/style.css">
   <!-- END Custom CSS-->
+  <style>
+    body .modal-dialog { /* Width */
+        max-width: 100%;
+        width: auto !important;
+        display: inline-block;
+    }
+
+  </style>
+
 </head>
 
 <body class="vertical-layout vertical-menu 2-columns menu-expanded" data-open="click" data-menu="vertical-menu"
@@ -431,7 +437,6 @@
   </div>
 
   <div class="app-content content bg-white">
-
     <div class="content-body">
       <nav
         class="header-navbar navbar-expand-md navbar navbar-with-menu navbar-light navbar-border navbar-brand-center">
@@ -454,296 +459,332 @@
                 <li class="nav-item d-none d-md-block"><a class="nav-link nav-menu-main menu-toggle hidden-xs"
                     href="#"><i class="ft-menu"></i></a></li>
                 <li class="nav-item"><a class="nav-link" href="#" role="button" aria-haspopup="true"
-                    aria-expanded="false">Blok F2 Bina No: 6 Daire: 1</a></li>
+                    aria-expanded="false">Veri Bağlayıcıları</a></li>
               </ul>
               <ul class="nav navbar-nav float-right">
+                <li class="nav-item">
+                  <button class="nav-link btn btn-round btn-outline-info" type="button" data-toggle="modal"
+                    data-target="#deviceSetupModal"><i class="icon-wrench"></i>Cihaz Kurulumu</button>
+                </li>
+                <!-- <li class="nav-item ml-2">
+                  <input type="text" class="form-control" id="inlineFormInput" placeholder="Bağlantı Ara">
+                </li> -->
               </ul>
             </div>
           </div>
         </div>
       </nav>
-    </div>
-
-
-    <div class="sidebar-left sidebar-sticky">
-      <div class="sidebar"><div class="sidebar-content card hidden-md-down box-shadow-1">
-  <div class="card-block">
-      <!-- <div class="category-title pb-1">
-          <h6>Card example</h6>
-      </div> -->
-      <!-- Card sample -->
-      <div class="text-xs-center">
-          <img class="card-img-top mb-1 img-fluid" data-src="holder.js/100px180/" src="../../../assets/images/portfolio/portfolio-1.jpg" alt="Card image cap">
-      </div>
-      <h4 class="card-title">Kadıköy Şubesi</h4>
-      <span class="text-bold-600">Adres:</span> Muvakkithane Sok. No:9 </br>
-      <span class="text-bold-600">Telefon:</span> (0216) 349 19 85 </br>
-      <span class="text-bold-600">Çalışma Saatleri:</span> 09.00 - 17.30 </br>
-      <span class="text-bold-600">Alan:</span> 200 m2 </br>
-      <span class="text-bold-600">Çalışan Sayısı:</span> 18 </br>
-      <!-- /Card sample -->
-      <hr>
-      <!-- Striped Progress sample -->
-      <!-- /Ratings sample -->
-      <div class="category-title pb-1">
-          <h5>Enerji Performans Puanı</h5>
-      </div>
-      <div>
-          <div id="score-rating"></div>
-      </div>
-      <!-- /Ratings sample -->
-      <hr>
-      <!-- Tarifeler -->
-      <div class="category-title pb-1">
-          <h5>Tarifeler</h5>
-      </div>
-      <span class="text-bold-600">Elektrik:</span></br>
-      <ul>
-          <li><span class="text-bold-600">T1:</span> 0,4463 TL</li>
-          <li><span class="text-bold-600">T2:</span> 0,6769 TL</li>
-          <li><span class="text-bold-600">T3:</span> 0,2797 TL</li>
-      </ul>
-      <span class="text-bold-600">Gaz:</span> 1,0103 TL / kWh </br>
-      <span class="text-bold-600">Su:</span> 4,45 TL / m3 </br>
-      <!-- /Tarifeler -->
-
-      <hr>
-      <!-- /Range Slider sample -->
-      <fieldset>
-          <div style="height: 10px;">
-          </div>
-      </fieldset>
-      <!-- /Range Slider sample -->
-      <hr>
-
-      <div class="form-group">
-              <div class="slider-sm slider-success my-1" id="small-slider"></div>
-          </div>
-  </div>
-</div>
-
-      </div>
-    </div>
-    <div class="content-right">
       <div class="content-wrapper">
-        <div class="content-header row">
+<!-- IEC 62056-21 section start -->
+<section id="form-repeater">
+  <div class="row">
+    <div class="col-xs-12 col-md-12">
+      <div class="card border-genie">
+        <div class="card-header">
+          <h4 class="card-title" id="repeat-form">IEC 62056-21</h4>
+          <a class="heading-elements-toggle"><I class="icon-ellipsis font-medium-3"></I></a>
+          <div class="heading-elements">
+            <ul class="list-inline mb-0">
+              <li><a data-action="expand"><I class="icon-expand2"></I></a></li>
+            </ul>
+          </div>
         </div>
-        <div class="content-body">
-<nav class="navbar navbar-light navbar-profile">
-  <button class="navbar-toggler hidden-sm-up" type="button" data-toggle="collapse" data-target="#exCollapsingNavbar2" aria-controls="exCollapsingNavbar2"
-      aria-expanded="false" aria-label="Toggle navigation"></button>
-  <div class="collapse navbar-toggleable-xs" id="exCollapsingNavbar2">
-          <ul class="nav nav-pills nav-justified">
-                  <li class="nav-item">
-                      <!-- <a class="nav-link" id="profile-tab" data-toggle="pill" href="layout-content-left-sticky-sidebar.html" aria-expanded="false">Özet</a> -->
-                      <a class="nav-link active" href="gb-sube-ozet.html" >Özet</a>
-                  </li>
-                  <li class="nav-item">
-                      <a class="nav-link" href="gb-sube-semalar.html">Şemalar</a>
-                  </li>
-                  <li class="nav-item dropdown">
-                      <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Analizler</a>
-                      <div class="dropdown-menu">
-                          <!-- <a class="dropdown-item" id="dropdown1-tab" href="#dropdown1" data-toggle="pill" aria-expanded="true">Enerji Tüketimi</a>
-                          <a class="dropdown-item" id="dropdown2-tab" href="#dropdown2" data-toggle="pill" aria-expanded="true">Enerji Performansı</a>
-                          <a class="dropdown-item" id="dropdown2-tab" href="#dropdown2" data-toggle="pill" aria-expanded="true">Enerji Yoğunluk Haritası</a>
-                          <a class="dropdown-item" id="dropdown2-tab" href="#dropdown2" data-toggle="pill" aria-expanded="true">Reaktif Enerji</a>
-                          <a class="dropdown-item" id="dropdown2-tab" href="#dropdown2" data-toggle="pill" aria-expanded="true">Güç Kalitesi</a> -->
-                          <a class="dropdown-item" href="gb-sube-analiz-enerji-tuketimi.html" >Enerji Tüketimi</a>
-                          <a class="dropdown-item" href="gb-sube-analiz-enerji-performansi.html" >Enerji Performansı</a>
-                          <a class="dropdown-item" href="gb-sube-analiz-enerji-yogunluk-haritasi.html" >Enerji Yoğunluk Haritası</a>
-                          <a class="dropdown-item" href="gb-sube-analiz-reaktif-enerji.html" >Reaktif Enerji</a>
-                          <a class="dropdown-item" href="gb-sube-analiz-guc-kalitesi.html" >Güç Kalitesi</a>
-                          <a class="dropdown-item" href="gb-sube-analiz-fatura.html" >Fatura</a>
-                      </div>
-                  </li>
-                  <li class="nav-item">
-                      <a class="nav-link" href="gb-sube-alarmlar.html">Alarmlar</a>
-                  </li>
-                  <li class="nav-item">
-                      <a class="nav-link" href="gb-sube-raporlar.html">Raporlar</a>
-                  </li>
-              </ul>
-  </div>
-</nav>
-
-<!-- fitness target -->
-<div class="row">
-  <div class="col-xs-12">
-      <div class="card box-shadow-1">
-          <div class="card-body">
-              <div class="row">
-                  <div class="col-xl-3 col-lg-6 col-md-12 border-right-blue-grey border-right-lighten-5">
-                      <div class="my-1 text-xs-center">
-                          <div class="card-body">
-                              <span class="primary">Elektrik Tüketimi</span>
-                              <h3 class="font-large-2 text-bold-200">197
-                                      <span class="font-medium-1 grey darken-1 text-bold-400">kWh</span>
-                                  </h3>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="col-xl-3 col-lg-6 col-md-12 border-right-blue-grey border-right-lighten-5">
-                      <div class="my-1 text-xs-center">
-                          <div class="card-body">
-                              <span class="deep-orange">Elektrik Maliyeti</span>
-                              <h3 class="font-large-2 text-bold-200">92
-                                  <span class="font-medium-1 grey darken-1 text-bold-400">TL</span>
-                              </h3>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="col-xl-3 col-lg-6 col-md-12 border-right-blue-grey border-right-lighten-5">
-                      <div class="my-1 text-xs-center">
-                          <div class="card-body">
-                              <span class="danger">Karbon Ayak İzi</span>
-                              <h3 class="font-large-2 text-bold-200">0.09
-                                  <span class="font-medium-1 grey darken-1 text-bold-400">ton</span>
-                              </h3>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="col-xl-3 col-lg-6 col-md-12">
-                          <div class="my-1 text-xs-center">
-                              <div class="card-body">
-                                  <span class="success">Hava Sıcaklığı</span>
-                                  <h3 class="font-large-2 text-bold-200">24.5
-                                      <span class="font-medium-1 grey darken-1 text-bold-400">°C</span>
-                                  </h3>
-                              </div>
-                          </div>
-                  </div>
+        <div class="card-body">
+          <div class="card-block">
+            <table class="table table-hover table-bordered" id="iecTable">
+              <thead>
+                <tr>
+                  <th>Bağlantı İsmi</th>
+                  <th>Seri Port</th>
+                  <th>Baud Rate (bps)</th>
+                  <th>Tekrar Deneme Sayısı</th>
+                  <th>Zaman Aşımı (milisaniye)</th>
+                  <th>Düzenle</th>
+                  <th>Sil</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- Dynamic content will be inserted here -->
+              </tbody>
+            </table>
+            <div class="form-group overflow-hidden">
+              <div class="col-xs-12">
+                <button id="addRowButton" class="btn btn-info btn-lg" data-toggle="modal" data-target="#addRowModalIEC">
+                  <I class="icon-plus4"></I> Ekle
+                </button>
               </div>
+            </div>
           </div>
-      </div>
-  </div>
-</div>
-<!--/ fitness target -->
-
-<!-- activity charts -->
-<div class="row match-height">
-  <!-- <div class="row"> -->
-  <div class="col-xl-8 col-lg-12">
-      <div class="card box-shadow-1">
-          <div class="card-header no-border-bottom">
-              <h4 class="card-title">Elektrik Tüketim Grafiği
-              </h4>
-              <a class="heading-elements-toggle">
-                  <i class="icon-ellipsis font-medium-3"></i>
-              </a>
-              <div class="heading-elements">
-                  <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
-                      <button type="button" class="btn btn-outline-primary btn-round active">Gün</button>
-                      <button type="button" class="btn btn-outline-primary btn-round">Hafta</button>
-                      <button type="button" class="btn btn-outline-primary btn-round">Ay</button>
-                      <button type="button" class="btn btn-outline-primary btn-round">Yıl</button>
-                  </div>
-              </div>
-          </div>
-          <div class="card-body collapse in">
-              <div class="card-block">
-                  <div id="graph-gun"></div>
-              </div>
-          </div>
-      </div>
-  </div>
-  <div class="col-xl-4 col-lg-6 col-md-12">
-      <div class="card box-shadow-1 overflow-hidden">
-          <div class="card-body border-bottom-grey border-bottom-lighten-2">
-              <div class="card-block cleartfix">
-                  <div class="media">
-                      <div class="media-body media-middle">
-                          <h5>Elektrik Tüketimi</h5>
-                          <!-- <span>Bu ayki mevcut değer</span> -->
-                      </div>
-                      <div class="media-right media-middle">
-                          <h2>197<span class="font-medium-1 grey darken-1 text-bold-400">kWh</span></h2>
-                      </div>
-                  </div>
-                  <div class="row mt-1">
-                      <div class="col-md-4 text-xs-center border-right-grey border-right-lighten-2">
-                          <span class="text-bold-200 text-muted">Günlük</span>
-                          </br><span class="text-bold-200 text-muted">Değişim</span>
-                          </br><i class="icon-chevron-up danger"></i> <span class="danger">13%</span>
-                      </div>
-                      <div class="col-md-4 text-xs-center border-right-grey border-right-lighten-2">
-                          <span class="text-bold-200 text-muted">Haftalık</span>
-                          </br><span class="text-bold-200 text-muted">Değişim</span>
-                          </br><i class="icon-chevron-down success"></i> <span class="success">-5%</span>
-                      </div>
-                      <div class="col-md-4 text-xs-center">
-                          <span class="text-bold-200 text-muted">Aylık</span>
-                          </br><span class="text-bold-200 text-muted">Değişim</span>
-                          </br><i class="icon-chevron-up danger"></i> <span class="danger">2%</span>
-                      </div>
-                  </div>
-              </div>
-          </div>
-          <div class="card-body border-bottom-grey border-bottom-lighten-2">
-              <div class="card-block cleartfix">
-                  <div class="media">
-                      <div class="media-body media-middle">
-                          <h5>Aktif Güç</h5>
-                          <!-- <span class="grey">%70</span> -->
-                      </div>
-                      <div class="media-right media-middle">
-                          <h2>25<span class="font-medium-1 grey darken-1 text-bold-400">kW</span></h2>
-                      </div>
-                  </div>
-                  <div class="text-xs-center font-small-2">
-                      70%
-                      <progress class="progress progress-sm mb-0 progress-primary box-shadow-1" value="70" max="100"></progress>
-                  </div>
-              </div>
-          </div>
-          <div class="card-body border-bottom-grey border-bottom-lighten-2">
-              <div class="card-block cleartfix">
-                  <div class="media">
-                      <div class="media-body media-middle text-xs-center">
-                          <h5>Reaktif Enerji Oranları</h5>
-                          <!-- <span>Bu ayki mevcut değer</span> -->
-                      </div>
-                      <!-- <div class="media-right media-middle">
-                              <h1>25<span class="font-medium-1 grey darken-1 text-bold-400">kW</span></h1>
-                          </div> -->
-                  </div>
-                  <div class="media">
-                      <ul class="list-inline text-xs-center clearfix mt-2 mb-0">
-                          <li class="border-right-grey border-right-lighten-2 pr-2">
-                              <h2 class="success text-bold-400">5%</h2>
-                              <span class="text-muted">Endüktif Enerji</span>
-                          </li>
-                          <li class="pl-2">
-                              <h2 class="success text-bold-400">7.5%</h2>
-                              <span class="text-muted">Kapasitif Enerji</span>
-                          </li>
-                      </ul>
-                  </div>
-              </div>
-          </div>
-          <div class="card-body">
-              <div class="card-block cleartfix">
-                  <span class="float-xs-left">Bildirimler</span>
-                  <span class="tags float-xs-right">
-                      <span class="tag tag-pill tag-danger">3</span>
-                  </span>
-              </div>
-          </div>
-      </div>
-  </div>
-</div>
-<!--/ activity charts -->
-
         </div>
       </div>
     </div>
   </div>
+</section>
+<!-- M-BUS section start -->
+<section id="m-bus-section">
+  <div class="row">
+    <div class="col-xs-12 col-md-12">
+      <div class="card border-genie">
+        <div class="card-header">
+          <h4 class="card-title" id="repeat-form">M-BUS</h4>
+          <a class="heading-elements-toggle"><I class="icon-ellipsis font-medium-3"></I></a>
+          <div class="heading-elements">
+            <ul class="list-inline mb-0">
+              <li><a data-action="expand"><I class="icon-expand2"></I></a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="card-block">
+            <table class="table table-hover table-bordered" id="mBusTable">
+              <thead>
+                <tr>
+                  <th>Bağlantı İsmi</th>
+                  <th>Seri Port</th>
+                  <th>Baud Rate (bps)</th>
+                  <th>Tekrar Deneme Sayısı</th>
+                  <th>Zaman Aşımı (milisaniye)</th>
+                  <th>Düzenle</th>
+                  <th>Sil</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- Dynamic content will be inserted here -->
+              </tbody>
+            </table>
+            <div class="form-group overflow-hidden">
+              <div class="col-xs-12">
+                <button id="addRowButtonMbus" class="btn btn-info btn-lg" data-toggle="modal" data-target="#addRowModalMbus">
+                  <I class="icon-plus4"></I> Ekle
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+      </div>
+    </div>
+  </div>
+<!-- Add Row Modal for M-BUS -->
+<div class="modal fade" id="addRowModalMbus" tabindex="-1" role="dialog" aria-labelledby="addRowModalLabelMbus" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addRowModalLabelMbus">Yeni M-BUS Bağlantısı Ekle</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- Form içeriği -->
+        <form id="addRowFormMbus">
+          <div class="form-group">
+            <label for="modal-mbus-name">Bağlantı İsmi</label>
+            <input type="text" class="form-control" id="modal-mbus-name" placeholder="İsim giriniz">
+          </div>
+          <div class="form-group">
+            <label for="modal-serial-port-mbus">Seri Port</label>
+            <select class="form-control" id="modal-serial-port-mbus">
+              <option>Seri Port Seçiniz</option>
+              <option>COM 1</option>
+              <option>COM 2</option>
+              <option>COM 3</option>
+              <option>COM 4</option>
+              <option>COM 5</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="modal-baud-rate-mbus">Baud Rate (bps)</label>
+            <select class="form-control" id="modal-baud-rate-mbus">
+              <option>Baud Rate Seçiniz</option>
+              <option>2400</option>
+              <option>9600</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="modal-retry-mbus">Tekrar Deneme Sayısı</label>
+            <select class="form-control" id="modal-retry-mbus">
+              <option>Tekrar Deneme Sayısı Seçiniz</option>
+              <option>0</option>
+              <option>1</option>
+              <option>2</option>
+              <option>3</option>
+              <option>4</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="modal-time-out-mbus">Zaman Aşımı (milisaniye)</label>
+            <select class="form-control" id="modal-time-out-mbus">
+              <option>Zaman Aşımı</option>
+              <option>500</option>
+              <option>1000</option>
+              <option>1500</option>
+              <option>2000</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-primary">Ekle</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 
+<!-- Add Row Modal for IEC 62056-21-->
+<div class="modal fade" id="addRowModalIEC" tabindex="-1" role="dialog" aria-labelledby="addRowModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addRowModalLabel">Yeni IEC 62056-21 Bağlantısı Ekle</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- Form içeriği -->
+        <form id="addRowFormIEC">
+          <div class="form-group">
+            <label for="modal-iec-name">Bağlantı İsmi</label>
+            <input type="text" class="form-control" id="modal-iec-name" placeholder="İsim giriniz">
+          </div>
+          <div class="form-group">
+            <label for="modal-serial-port-iec">Seri Port</label>
+            <select class="form-control" id="modal-serial-port-iec">
+              <option>Seri Port Seçiniz</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="modal-baud-rate-iec">Baud Rate (bps)</label>
+            <select class="form-control" id="modal-baud-rate-iec">
+              <option>Baud Rate Seçiniz</option>
+              <option>300</option>
+              <option>600</option>
+              <option>1200</option>
+              <option>2400</option>
+              <option>4800</option>
+              <option>9600</option>
+              <option>19200</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="modal-retry-iec">Tekrar Deneme Sayısı</label>
+            <select class="form-control" id="modal-retry-iec">
+              <option>Tekrar Deneme Sayısı Seçiniz</option>
+              <option>0</option>
+              <option>1</option>
+              <option>2</option>
+              <option>3</option>
+              <option>4</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="modal-time-out-iec">Zaman Aşımı</label>
+            <select class="form-control" id="modal-time-out-iec">
+              <option>Zaman Aşımı (milisaniye)</option>
+              <option>500</option>
+              <option>1000</option>
+              <option>1500</option>
+              <option>2000</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-primary">Ekle</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 
+        <!-- Device Setup Modal -->
+        <div class="modal fade text-left" id="deviceSetupModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2"
+        aria-hidden="true">
+          <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h4 class="modal-title text-bold-600" id="myModalLabel1"><i class="fa fa-road2"></i> Tanımlı Cihaz Listesi</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <table class="table table-hover table-bordered zero-configuration dataTable w-auto" id="DataTables_Table_Electricity_Meter_Report"
+                role="grid" aria-describedby="DataTables_Table_0_info">
+                  <thead>
+                    <tr>
+                      <th>No</th>
+                      <th>Minor</th>
+                      <th>Adresi</th>
+                      <th>data</th>
+                      <th>cmd</th>
+                      <th>ttyName</th>
+                      <th>coutName</th>
+                      <th>Cihaz ismi</th>
+                      <th>Cihaz modeli</th>
+                      <th>MAC Adresi</th>
+                      <th>seri No</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <!-- Dinamik içerik buraya eklenecek -->
+                  </tbody>
+                </table>
+                <div id="noDefinedDevicesMessage" class="alert alert-warning" style="display: none;">Kayıtlı cihaz yok.</div>
+              </div>
+              <div class="modal-footer">
+                <input type="reset" class="btn btn-light" data-dismiss="modal" value="Kapat">
+                <input type="button" class="btn btn-genie white" data-toggle="modal" data-dismiss="modal" data-target="#addDeviceModal" value="Yeni Cihaz Tanımla">
+              </div>
+            </div>
+          </div>
+        </div>
 
-
-
-  <!-- ////////////////////////////////////////////////////////////////////////////-->
+        <!-- Add Device Modal -->
+        <div class="modal fade text-left" id="addDeviceModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2"
+        aria-hidden="true">
+          <div class="modal-dialog modal-xl" role="document" style="max-width: 90%; width: auto !important; display: inline-block;">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h4 class="modal-title text-bold-600" id="myModalLabel1"><i class="fa fa-road2"></i> Bulunan Cihazlar</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <table class="table table-hover table-bordered zero-configuration dataTable w-auto" id="deviceTable"
+                role="grid" aria-describedby="DataTables_Table_0_info">
+                  <thead>
+                    <tr>
+                      <th></th>
+                      <th>No</th>
+                      <th>Adresi</th>
+                      <th>Cihaz ismi</th>
+                      <th>Cihaz modeli</th>
+                      <th>MAC Adresi</th>
+                      <th>seri No</th>
+                      <th>Durumu</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <!-- Dinamik içerik buraya eklenecek -->
+                  </tbody>
+                </table>
+                <div id="noDevicesMessage" class="alert alert-warning" style="display: none;">Cihaz bulunamadı.</div>
+              </div>
+              <div class="modal-footer d-flex justify-content-between">
+                <div>
+                  <button class="btn btn-round btn-outline-info" id="scanDevicesButton"><i class="icon-search7 ml-1"> </i>Cihazları Bul</button>
+                </div>
+                <div>
+                  <input type="reset" class="btn btn-light" data-dismiss="modal" value="Kapat">
+                  <input type="button" class="btn btn-genie white" id="addSelectedDevicesButton" value="Seçilenleri Ekle">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+  <!-- ////////////////////////////////////////////////////////////////////////////  -->
 
   <footer class="footer footer-static footer-light navbar-border">
     <p class="clearfix blue-grey lighten-2 text-sm-center mb-0 px-2">
@@ -755,41 +796,704 @@
   </footer>
 
   <!-- BEGIN VENDOR JS-->
-  <script src="../app-assets/js/core/libraries/jquery.min.js"></script>
+  <!-- <script src="../app-assets/vendors/js/ui/tether.min.js" type="text/javascript"></script>
+  <script src="../app-assets/vendors/js/ui/jquery.matchHeight-min.js" type="text/javascript"></script>
+  <script src="../app-assets/vendors/js/sliders/slick/slick.min.js" type="text/javascript"></script>
+  <script src="../app-assets/vendors/js/ui/screenfull.min.js" type="text/javascript"></script>
+  <script src="../app-assets/vendors/js/extensions/pace.min.js" type="text/javascript"></script> -->
+  <!-- BEGIN VENDOR JS-->
+  <!-- <script src="../app-assets/js/core/libraries/jquery.min.js"></script>
   <script src="../app-assets/vendors/js/ui/popper.min.js"></script>
   <script src="../app-assets/js/core/libraries/bootstrap.min.js"></script>
   <script src="../app-assets/vendors/js/ui/perfect-scrollbar.jquery.min.js"></script>
   <script src="../app-assets/vendors/js/ui/unison.min.js"></script>
   <script src="../app-assets/vendors/js/ui/blockUI.min.js"></script>
+  <script src="../app-assets/vendors/js/ui/jquery-sliding-menu.js"></script> -->
+
+  <script src="../app-assets/js/core/libraries/jquery.min.js"></script>
+  <script src="../app-assets/vendors/js/ui/tether.min.js"></script>
+  <script src="../app-assets/js/core/libraries/bootstrap.min.js"></script>
+  <script src="../app-assets/vendors/js/ui/perfect-scrollbar.jquery.min.js"></script>
+  <script src="../app-assets/vendors/js/ui/unison.min.js"></script>
+  <script src="../app-assets/vendors/js/ui/blockUI.min.js"></script>
+  <script src="../app-assets/vendors/js/ui/jquery.matchHeight-min.js"></script>
   <script src="../app-assets/vendors/js/ui/jquery-sliding-menu.js"></script>
+  <script src="../app-assets/vendors/js/sliders/slick/slick.min.js"></script>
+  <script src="../app-assets/vendors/js/ui/screenfull.min.js"></script>
+  <script src="../app-assets/vendors/js/extensions/pace.min.js"></script>
   <!-- END VENDOR JS-->
   <!-- BEGIN PAGE VENDOR JS-->
-  <script src="../app-assets/vendors/js/tables/datatable/datatables.min.js"></script>
-  <script src="../app-assets/vendors/js/tables/datatable/dataTables.buttons.min.js"></script>
-  <script src="../app-assets/vendors/js/pickers/dateTime/moment-with-locales.min.js"></script>
-  <script src="../app-assets/vendors/js/pickers/dateTime/bootstrap-datetimepicker.min.js"></script>
-  <script src="../app-assets/vendors/js/pickers/pickadate/picker.js"></script>
-  <script src="../app-assets/vendors/js/pickers/pickadate/picker.date.js"></script>
-  <script src="../app-assets/vendors/js/pickers/pickadate/picker.time.js"></script>
-  <script src="../app-assets/vendors/js/pickers/daterange/daterangepicker.js"></script>
+  <script src="../app-assets/vendors/js/forms/repeater/jquery.repeater.min.js" type="text/javascript"></script>
   <!-- END PAGE VENDOR JS-->
   <!-- BEGIN TEMPLATE JS-->
   <script src="../app-assets/js/core/app-menu.js"></script>
   <script src="../app-assets/js/core/app.js"></script>
   <!-- END TEMPLATE JS-->
   <!-- BEGIN PAGE LEVEL JS-->
-  <script src="../app-assets/js/scripts/tables/datatables/datatable-basic.js"></script>
-  <script src="../app-assets/js/scripts/pickers/dateTime/picker-date-time.js"></script>
+  <script src="../app-assets/js/scripts/forms/form-repeater.js" type="text/javascript"></script>
+  <script src="../app-assets/js/scripts/extensions/block-ui.js"></script>
   <script src="../app-assets/js/scripts/modal/components-modal.js"></script>
   <!-- END PAGE LEVEL JS-->
-
   <script>
-    // const baseWebhookURL = "http://127.0.0.1:5678"; // Değiştirmek istediğiniz temel URL
-    const baseWebhookURL = "http://192.168.2.250:5678"; // Bilgili Holding URL
-    // const baseWebhookURL = "http://192.168.1.146:5678"; // Değiştirmek istediğiniz temel URL
-    // const baseWebhookURL = "http://192.168.1.119:5678"; // gbenergy_lenovo URL
-  </script>
+  // const baseWebhookURL = "http://127.0.0.1:5678"; // Değiştirmek istediğiniz temel URL
+  const baseWebhookURL = "http://192.168.2.250:5678"; // Değiştirmek istediğiniz temel URL
+  // const baseWebhookURL = "http://192.168.1.146:5678"; // Değiştirmek istediğiniz temel URL
 
+document.addEventListener('DOMContentLoaded', function() {
+  // UI'yi kilitle ve spinner göster
+  $.blockUI({
+    message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
+    overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
+    css: { border: 0, padding: 0, backgroundColor: 'transparent' }
+  });
+
+  // IEC 62056-21 verilerini çek ve tabloya ekle
+  fetch(`${baseWebhookURL}/webhook/get-table-content`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ tableName: 'IECProtocolConnections' })
+  })
+  .then(response => response.json())
+  .then(data => {
+    const tableBodyIEC = document.querySelector('#iecTable tbody');
+    tableBodyIEC.innerHTML = ''; // Mevcut satırları temizle
+
+    if (data[0].success && Array.isArray(data[0].data)) {
+      data[0].data.forEach(connection => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${connection.ConnectionName}</td>
+          <td>${connection.PortName}</td>
+          <td>${connection.BaudRate}</td>
+          <td>${connection.RetryCount}</td>
+          <td>${connection.Timeout}</td>
+          <td class="text-xs-center">
+            <button type="button" class="btn btn-outline-success btn-sm"> <i class="fa fa-edit"></i></button>
+          </td>
+          <td class="text-xs-center">
+            <button type="button" class="btn btn-outline-danger btn-sm"> <i class="fa fa-trash-o"></i></button>
+          </td>
+        `;
+        tableBodyIEC.appendChild(row);
+      });
+    } else {
+      console.error('IECProtocolConnections tablosu verileri yüklenemedi:', data[0].message);
+    }
+  })
+  .catch(error => console.error('Error:', error));
+
+  // M-BUS verilerini çek ve tabloya ekle
+  fetch(`${baseWebhookURL}/webhook/get-table-content`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ tableName: 'MBusProtocolConnections' })
+  })
+  .then(response => response.json())
+  .then(data => {
+    const tableBodyMbus = document.querySelector('#mBusTable tbody');
+    tableBodyMbus.innerHTML = ''; // Mevcut satırları temizle
+
+    if (data[0].success && Array.isArray(data[0].data)) {
+      data[0].data.forEach(connection => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${connection.ConnectionName}</td>
+          <td>${connection.PortName}</td>
+          <td>${connection.BaudRate}</td>
+          <td>${connection.RetryCount}</td>
+          <td>${connection.Timeout}</td>
+          <td class="text-xs-center">
+            <button type="button" class="btn btn-outline-success btn-sm"> <i class="fa fa-edit"></i></button>
+          </td>
+          <td class="text-xs-center">
+            <button type="button" class="btn btn-outline-danger btn-sm"> <i class="fa fa-trash-o"></i></button>
+          </td>
+        `;
+        tableBodyMbus.appendChild(row);
+      });
+    } else {
+      console.error('MBusProtocolConnections tablosu verileri yüklenemedi:', data[0].message);
+    }
+  })
+  .catch(error => console.error('Error:', error))
+  .finally(() => {
+    // UI'yi aç ve spinnerı kaldır
+    $.unblockUI();
+  });
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+  const tableBodyMbus = document.querySelector('#mBusTable tbody');
+
+  document.getElementById('addRowFormMbus').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const busName = document.getElementById('modal-mbus-name').value;
+    const serialPort = document.getElementById('modal-serial-port-mbus').value;
+    const baudRate = document.getElementById('modal-baud-rate-mbus').value;
+    const retry = document.getElementById('modal-retry-mbus').value;
+    const timeOut = document.getElementById('modal-time-out-mbus').value;
+
+    const jsonData = {
+      tableName: "MBusProtocolConnections",
+      MBusProtocolConnectionID: 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx', // Örnek UUID değeri, bunu gerektiği şekilde oluştur
+      ConnectionName: busName,
+      PortName: serialPort,
+      BaudRate: baudRate,
+      RetryCount: retry,
+      Timeout: timeOut
+    };
+
+    fetch(`${baseWebhookURL}/webhook/insert-table-content`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(jsonData)
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log("Received response from insert-table-content:", data); // Debug log
+      if (data[0].success) {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${busName}</td>
+          <td>${serialPort}</td>
+          <td>${baudRate}</td>
+          <td>${retry}</td>
+          <td>${timeOut}</td>
+          <td class="text-xs-center">
+            <button type="button" class="btn btn-success btn-sm"> <i class="icon-save"></i> Kaydet</button>
+          </td>
+          <td class="text-xs-center">
+            <button type="button" class="btn btn-danger btn-sm"> <i class="icon-cross2"></i> Sil</button>
+          </td>
+        `;
+        tableBodyMbus.appendChild(row);
+
+        $('#addRowModalMbus').modal('hide');
+        document.getElementById('addRowFormMbus').reset();
+      } else {
+        alert('Veri eklenirken bir hata oluştu: ' + data[0].message);
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      alert('Veri eklenirken bir hata oluştu.');
+    });
+  });
+
+  tableBodyMbus.addEventListener('click', function(e) {
+    if (e.target.classList.contains('icon-cross2')) {
+      const row = e.target.closest('tr');
+      row.parentNode.removeChild(row);
+    }
+
+    if (e.target.classList.contains('icon-save')) {
+      const row = e.target.closest('tr');
+      const cells = row.querySelectorAll('td');
+      cells.forEach(cell => cell.contentEditable = false);
+      e.target.classList.remove('icon-save');
+      e.target.classList.add('icon-edit');
+      e.target.closest('button').classList.remove('btn-success');
+      e.target.closest('button').classList.add('btn-warning');
+      e.target.closest('button').innerHTML = '<i class="icon-edit"></i> Düzenle';
+    }
+
+    if (e.target.classList.contains('icon-edit')) {
+      const row = e.target.closest('tr');
+      const cells = row.querySelectorAll('td');
+      cells.forEach(cell => cell.contentEditable = true);
+      e.target.classList.remove('icon-edit');
+      e.target.classList.add('icon-save');
+      e.target.closest('button').classList.remove('btn-warning');
+      e.target.closest('button').classList.add('btn-success');
+      e.target.closest('button').innerHTML = '<i class="icon-save"></i> Kaydet';
+    }
+  });
+
+  // Modal açıldığında TTYPortları yükle
+  $('#addRowModalMbus').on('shown.bs.modal', function() {
+    fetch(`${baseWebhookURL}/webhook/get-table-content`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ tableName: 'MoxaDefinedSerialPorts' })
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data[0].success && Array.isArray(data[0].data)) {
+        const serialPortDropdown = document.getElementById('modal-serial-port-mbus');
+        serialPortDropdown.innerHTML = '<option>Seri Port Seçiniz</option>';
+        data[0].data.forEach(port => {
+          const option = document.createElement('option');
+          option.value = port.TTYPort;
+          option.text = port.TTYPort;
+          serialPortDropdown.appendChild(option);
+        });
+      }
+    })
+    .catch(error => console.error('Error:', error));
+  });
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+  const tableBodyIEC = document.querySelector('#iecTable tbody');
+
+  document.getElementById('addRowFormIEC').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const busName = document.getElementById('modal-iec-name').value;
+    const serialPort = document.getElementById('modal-serial-port-iec').value;
+    const baudRate = document.getElementById('modal-baud-rate-iec').value;
+    const retry = document.getElementById('modal-retry-iec').value;
+    const timeOut = document.getElementById('modal-time-out-iec').value;
+
+    const iecConnectionID = 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'; // Bu değeri ihtiyaç duyduğunuz GUID ile değiştirebilirsiniz
+
+    const jsonData = {
+        tableName: 'IECProtocolConnections',
+        IECConnectionID: iecConnectionID,
+        ConnectionName: busName,
+        PortName: serialPort,
+        BaudRate: baudRate,
+        RetryCount: retry,
+        Timeout: timeOut
+    };
+
+    // Modalı kilitle ve bekleme işareti göster
+    $.blockUI({
+    message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
+    overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
+    css: { border: 0, padding: 0, backgroundColor: 'transparent' }
+    });
+
+    fetch(`${baseWebhookURL}/webhook/insert-table-content`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(jsonData)
+    })
+    .then(response => response.json())
+    .then(data => {
+        $.unblockUI();
+        console.log("Received response from insert-table-content:", data); // Debug log
+        if (data[0].success) {
+            $('#addRowModalIEC').modal('hide');
+            // Yeni eklenen veriyi tabloya ekleyin
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${busName}</td>
+                <td>${serialPort}</td>
+                <td>${baudRate}</td>
+                <td>${retry}</td>
+                <td>${timeOut}</td>
+                <td class="text-xs-center">
+                    <button type="button" class="btn btn-success btn-sm"> <i class="icon-save"></i> Kaydet</button>
+                </td>
+                <td class="text-xs-center">
+                    <button type="button" class="btn btn-danger btn-sm"> <i class="icon-cross2"></i> Sil</button>
+                </td>
+            `;
+            document.querySelector('#iecTable tbody').appendChild(row);
+
+            document.getElementById('addRowFormIEC').reset();
+        } else {
+            alert('Veri eklenirken bir hata oluştu: ' + data[0].message);
+        }
+    })
+    .catch(error => {
+        $.unblockUI();
+        alert('Veri eklenirken bir hata oluştu.');
+        console.error('Error:', error);
+    });
+  });
+
+  tableBodyIEC.addEventListener('click', function(e) {
+    if (e.target.classList.contains('icon-cross2')) {
+      const row = e.target.closest('tr');
+      row.parentNode.removeChild(row);
+    }
+
+    if (e.target.classList.contains('icon-save')) {
+      const row = e.target.closest('tr');
+      const cells = row.querySelectorAll('td');
+      cells.forEach(cell => cell.contentEditable = false);
+      e.target.classList.remove('icon-save');
+      e.target.classList.add('icon-edit');
+      e.target.closest('button').classList.remove('btn-success');
+      e.target.closest('button').classList.add('btn-warning');
+      e.target.closest('button').innerHTML = '<i class="icon-edit"></i> Düzenle';
+    }
+
+    if (e.target.classList.contains('icon-edit')) {
+      const row = e.target.closest('tr');
+      const cells = row.querySelectorAll('td');
+      cells.forEach(cell => cell.contentEditable = true);
+      e.target.classList.remove('icon-edit');
+      e.target.classList.add('icon-save');
+      e.target.closest('button').classList.remove('btn-warning');
+      e.target.closest('button').classList.add('btn-success');
+      e.target.closest('button').innerHTML = '<i class="icon-save"></i> Kaydet';
+    }
+  });
+
+  // Modal açıldığında TTYPortları yükle
+  $('#addRowModalIEC').on('shown.bs.modal', function() {
+    fetch(`${baseWebhookURL}/webhook/get-table-content`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ tableName: 'MoxaDefinedSerialPorts' })
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log('Gelen veri:', data); // Debug amaçlı gelen veriyi ekrana bas
+      if (data[0].success && Array.isArray(data[0].data)) {
+        const serialPortDropdown = document.getElementById('modal-serial-port-iec');
+        serialPortDropdown.innerHTML = '<option>Seri Port Seçiniz</option>';
+        data[0].data.forEach(port => {
+          const option = document.createElement('option');
+          option.value = port.TTYPort;
+          option.text = port.TTYPort;
+          serialPortDropdown.appendChild(option);
+        });
+      }
+    })
+    .catch(error => console.error('Error:', error));
+  });
+});
+
+  function scanDevices() {
+    // Modalı kilitle ve bekleme işareti göster
+    $('#addDeviceModal .modal-content').block({ 
+      message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
+      overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
+      css: { border: 0, padding: 0, backgroundColor: 'transparent' }
+    });
+
+    // Tanımlı cihazları çağır
+    fetch(`${baseWebhookURL}/webhook/driver-device-list`, {
+      method: 'GET'
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok ' + response.statusText);
+      }
+      return response.json();
+    })
+    .then(definedData => {
+      // Bulunan cihazları çağır
+      return fetch(`${baseWebhookURL}/webhook/scan-devices`, {
+        method: 'POST'
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok ' + response.statusText);
+        }
+        return response.json();
+      })
+      .then(data => {
+        const definedIPs = definedData.devices.map(device => device.address);
+        const tableBody = document.querySelector('#deviceTable tbody');
+        tableBody.innerHTML = ''; // Mevcut satırları temizle
+
+        const noDevicesMessage = document.getElementById('noDevicesMessage');
+        if (!data.devices || !Array.isArray(data.devices) || data.devices.length === 0) {
+          noDevicesMessage.style.display = 'block';
+        } else {
+          noDevicesMessage.style.display = 'none';
+          data.devices.forEach(device => {
+            const isDefined = definedIPs.includes(device.address);
+            const row = document.createElement('tr');
+            row.innerHTML = `
+              <td><input type="checkbox" class="device-checkbox" value="${device.address}" ${isDefined ? 'disabled' : ''}></td>
+              <td>${device.id || 'N/A'}</td>
+              <td>${device.address || 'N/A'}</td>
+              <td>${device.name || 'N/A'}</td>
+              <td>${device.model || 'N/A'}</td>
+              <td>${device.mac || 'N/A'}</td>
+              <td>${device.serial || 'N/A'}</td>
+              <td><span class="badge ${isDefined ? 'badge-info' : 'badge-success'}">${isDefined ? 'Tanımlı' : 'Tanımlanabilir'}</span></td>
+            `;
+            tableBody.appendChild(row);
+          });
+        }
+      });
+    })
+      .catch(error => console.error('Error:', error))
+      .finally(() => {
+        // Modalı aç ve bekleme işaretini kaldır
+        $('#addDeviceModal .modal-content').unblock();
+      });
+    }
+
+    // Modal açıldığında cihazları tarar
+    $('#addDeviceModal').on('shown.bs.modal', function () {
+      scanDevices();
+    });
+
+    document.getElementById('scanDevicesButton').addEventListener('click', scanDevices);
+
+    // Seçilen cihazları ekleme işlemi
+    document.getElementById('addSelectedDevicesButton').addEventListener('click', function() {
+      const checkboxes = document.querySelectorAll('.device-checkbox:checked');
+      const selectedDevices = Array.from(checkboxes).map(checkbox => {
+        const row = checkbox.closest('tr');
+        return {
+          id: row.cells[1].innerText,
+          address: row.cells[2].innerText,
+          name: row.cells[3].innerText,
+          model: row.cells[4].innerText,
+          mac: row.cells[5].innerText,
+          serial: row.cells[6].innerText
+        };
+      });
+
+      if (selectedDevices.length > 0) {
+        // Modalı kilitle ve bekleme işareti göster
+        $('#addDeviceModal .modal-content').block({ 
+          message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
+          overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
+          css: { border: 0, padding: 0, backgroundColor: 'transparent' }
+        });
+
+        fetch(`${baseWebhookURL}/webhook/driver-device-add`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ devices: selectedDevices })
+        })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok ' + response.statusText);
+          }
+          return response.json();
+        })
+        .then(data => {
+          // Seçilen cihazlar eklendikten sonra modalları yönet
+          $('#addDeviceModal').modal('hide');
+          $('#addDeviceModal').on('hidden.bs.modal', function () {
+            $(this).off('hidden.bs.modal');
+            $('#deviceSetupModal').modal('show');
+          });
+        })
+        .catch(error => console.error('Error:', error))
+        .finally(() => {
+          // Modalı aç ve bekleme işaretini kaldır
+          $('#addDeviceModal .modal-content').unblock();
+        });
+      } else {
+        alert('Lütfen en az bir cihaz seçin.');
+      }
+    });
+
+    $('#deviceSetupModal').on('shown.bs.modal', function () {
+      // Modalı kilitle ve bekleme işareti göster
+      $('#deviceSetupModal .modal-content').block({ 
+        message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
+        overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
+        css: { border: 0, padding: 0, backgroundColor: 'transparent' }
+      });
+
+      fetch(`${baseWebhookURL}/webhook/driver-device-list`, {
+        method: 'GET'
+      })
+      .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok ' + response.statusText);
+      }
+      return response.json();
+      })
+      .then(data => {
+        const tableBody = document.querySelector('#DataTables_Table_Electricity_Meter_Report tbody');
+        tableBody.innerHTML = ''; // Mevcut satırları temizle
+
+        const noDefinedDevicesMessage = document.getElementById('noDefinedDevicesMessage');
+        if (!data.devices || !Array.isArray(data.devices) || data.devices.length === 0) {
+          noDefinedDevicesMessage.style.display = 'block';
+        } else {
+          noDefinedDevicesMessage.style.display = 'none';
+          data.devices.forEach((device, index) => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+              <td>${device.no || 'N/A'}</td>
+              <td>${device.minor || 'N/A'}</td>
+              <td>${device.address || 'N/A'}</td>
+              <td>${device.data || 'N/A'}</td>
+              <td>${device.cmd || 'N/A'}</td>
+              <td>${device.ttyName || 'N/A'}</td>
+              <td>${device.coutName || 'N/A'}</td>
+              <td>${device.name || 'N/A'}</td>
+              <td>${device.model || 'N/A'}</td>
+              <td>${device.mac || 'N/A'}</td>
+              <td>${device.serial || 'N/A'}</td>
+              <td>
+                <button type="button" class="btn btn-sm btn-outline-danger" onclick="deleteDevice('${device.address}')">
+                  <i class="fa fa-trash-o"></i>
+                </button>
+              </td>
+            `;
+            tableBody.appendChild(row);
+          });
+        }
+      })
+      .catch(error => console.error('Error:', error))
+      .finally(() => {
+        // Modalı aç ve bekleme işaretini kaldır
+        $('#deviceSetupModal .modal-content').unblock();
+      });
+    });
+
+    // Add Device Modal Kapatma İşlemi
+    document.querySelector('#addDeviceModal .close').addEventListener('click', function() {
+      $('#addDeviceModal').modal('hide');
+      $('#addDeviceModal').on('hidden.bs.modal', function () {
+        $(this).off('hidden.bs.modal');
+        $('#deviceSetupModal').modal('show');
+      });
+    });
+
+    // Ayrıca "Kapat" düğmesi için benzer işlemi ekleyelim
+    document.querySelector('#addDeviceModal input[data-dismiss="modal"]').addEventListener('click', function() {
+      $('#addDeviceModal').modal('hide');
+      $('#addDeviceModal').on('hidden.bs.modal', function () {
+        $(this).off('hidden.bs.modal');
+        $('#deviceSetupModal').modal('show');
+      });
+    });
+
+    // Cihazı silmek için fonksiyon
+    function deleteDevice(ip) {
+      if (confirm('Cihazı silmek istediğinizden emin misiniz?')) {
+        // Modalı kilitle ve bekleme işareti göster
+        $('#deviceSetupModal .modal-content').block({ 
+          message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
+          overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
+          css: { border: 0, padding: 0, backgroundColor: 'transparent' }
+        });
+          
+        fetch(`${baseWebhookURL}/webhook/driver-device-remove`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ ip: ip })
+        })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok ' + response.statusText);
+          }
+          return response.json();
+        })
+        .then(data => {
+      // Silme işlemi başarılı olduğunda cihaz listesini yeniden sorgula ve güncelle
+      fetch(`${baseWebhookURL}/webhook/driver-device-list`, {
+        method: 'GET'
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok ' + response.statusText);
+        }
+        return response.json();
+      })
+      .then(data => {
+          const tableBody = document.querySelector('#DataTables_Table_Electricity_Meter_Report tbody');
+          tableBody.innerHTML = ''; // Mevcut satırları temizle
+
+          const noDefinedDevicesMessage = document.getElementById('noDefinedDevicesMessage');
+          if (!data.devices || !Array.isArray(data.devices) || data.devices.length === 0) {
+            noDefinedDevicesMessage.style.display = 'block';
+          } else {
+            noDefinedDevicesMessage.style.display = 'none';
+            data.devices.forEach((device, index) => {
+              const row = document.createElement('tr');
+              row.innerHTML = `
+                <td>${device.no || 'N/A'}</td>
+                <td>${device.minor || 'N/A'}</td>
+                <td>${device.address || 'N/A'}</td>
+                <td>${device.data || 'N/A'}</td>
+                <td>${device.cmd || 'N/A'}</td>
+                <td>${device.ttyName || 'N/A'}</td>
+                <td>${device.coutName || 'N/A'}</td>
+                <td>${device.name || 'N/A'}</td>
+                <td>${device.model || 'N/A'}</td>
+                <td>${device.mac || 'N/A'}</td>
+                <td>${device.serial || 'N/A'}</td>
+                <td>
+                  <button type="button" class="btn btn-sm btn-outline-danger" onclick="deleteDevice('${device.address}')">
+                    <i class="fa fa-trash-o"></i>
+                  </button>
+                </td>
+              `;
+              tableBody.appendChild(row);
+            });
+          }
+        })
+        .catch(error => console.error('Error:', error))
+        .finally(() => {
+          // Modalı aç ve bekleme işaretini kaldır
+          $('#deviceSetupModal .modal-content').unblock();
+        });
+        })
+        .catch(error => console.error('Error:', error));
+      }
+    }
+    // addDeviceModal kapandığında deviceSetupModal'ı aç
+    $('#addDeviceModal').on('hidden.bs.modal', function () {
+      $('#deviceSetupModal').modal('show');
+    });
+
+    // Modalları dikey ve yatayda ortalamak için fonksiyon
+    function centerModals() {
+        $('.modal').each(function() {
+          if ($(this).hasClass('show')) {
+            centerModal($(this));
+          }
+        });
+      }
+
+      function centerModal(modal) {
+        var $dialog = modal.find('.modal-dialog');
+        modal.css('display', 'block');
+        
+        // Modalın yüksekliğini ve genişliğini hesaplayın
+        var dialogHeight = $dialog.height();
+        var windowHeight = $(window).height();
+        var dialogWidth = $dialog.width();
+        var windowWidth = $(window).width();
+        
+        // Dikey ve yatayda ortalama
+        var top = Math.max(0, (windowHeight - dialogHeight) / 2);
+        var left = Math.max(0, (windowWidth - dialogWidth) / 2);
+        
+        $dialog.css({
+          'margin-top': top,
+          'margin-left': left
+        });
+      }
+
+      // Sayfa yüklendiğinde modalları ortala
+      $(document).ready(function() {
+        centerModals();
+        
+        // Modal gösterildiğinde veya gizlendiğinde yeniden ortala
+        $('.modal').on('show.bs.modal', function() {
+          centerModal($(this));
+        });
+        $(window).on('resize', function() {
+          centerModals();
+        });
+      });
+  </script>
 </body>
 
 </html>
