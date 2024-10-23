@@ -674,7 +674,12 @@ document.addEventListener('DOMContentLoaded', function() {
       console.error('IECProtocolConnections tablosu verileri yüklenemedi:', data[0].message);
     }
   })
-  .catch(error => console.error('Error:', error));
+  .catch(error => console.error('Error:', error))
+  .finally(() => {
+    // UI'yi aç ve spinnerı kaldır
+    $.unblockUI();
+  });
+});
 
 document.addEventListener('DOMContentLoaded', function() {
   const tableBodyIEC = document.querySelector('#iecTable tbody');
