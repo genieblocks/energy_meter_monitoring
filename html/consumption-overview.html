@@ -683,7 +683,15 @@ document.addEventListener('DOMContentLoaded', function() {
             <button type="button" class="btn btn-outline-danger btn-sm"> <i class="fa fa-trash-o"></i></button>
           </td>
           <td class="text-xs-center">
-            <button type="button" class="btn btn-outline-danger btn-sm"> <i class="icon-android-settings"></i></button>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
+                aria-haspopup="true" aria-expanded="false"><i class="icon-android-settings"></i></a>
+                <div class="dropdown-menu dropdown-menu-right">
+                  <a class="dropdown-item" href="#">Detay</a>
+                  <a class="dropdown-item" href="#">Düzenle</a>
+                  <a class="dropdown-item" href="#">Sil</a>
+                </div>
+              </li>
           </td>
         `;
         tableBodyIEC.appendChild(row);
