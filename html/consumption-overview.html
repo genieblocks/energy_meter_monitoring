@@ -660,7 +660,7 @@ document.addEventListener('DOMContentLoaded', function() {
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ tableName: 'IECProtocolConnections' })
+    body: JSON.stringify({ tableName: 'DummySubscriber' })
   })
   .then(response => response.json())
   .then(data => {
@@ -671,17 +671,13 @@ document.addEventListener('DOMContentLoaded', function() {
       data[0].data.forEach(connection => {
         const row = document.createElement('tr');
         row.innerHTML = `
-          <td>${connection.ConnectionName}</td>
-          <td>${connection.PortName}</td>
-          <td>${connection.BaudRate}</td>
-          <td>${connection.RetryCount}</td>
-          <td>${connection.Timeout}</td>
-          <td class="text-xs-center">
-            <button type="button" class="btn btn-outline-success btn-sm"> <i class="fa fa-edit"></i></button>
-          </td>
-          <td class="text-xs-center">
-            <button type="button" class="btn btn-outline-danger btn-sm"> <i class="fa fa-trash-o"></i></button>
-          </td>
+          <td>${connection.BuildingNo}</td>
+          <td>${connection.Flat}</td>
+          <td>${connection.Subscriber}</td>
+          <td>${connection.ElectricityUsage}</td>
+          <td>${connection.WaterUsage}</td>
+          <td>${connection.HeatingUsage}</td>
+          <td>${connection.CoolingUsage}</td>
           <td class="text-xs-center">
             <div class="btn-group">
               <button type="button" class="btn btn-square btn-icon btn-pure dropdown-toggle mr-1 mb-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icon-android-settings"></i></button>
