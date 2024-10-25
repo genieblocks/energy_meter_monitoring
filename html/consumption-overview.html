@@ -532,7 +532,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="addRowModalLabel">Yeni IEC 62056-21 Bağlantısı Ekle</h5>
+        <h5 class="modal-title" id="addRowModalLabel">Yeni Abone Ekle</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -541,16 +541,18 @@
         <!-- Form içeriği -->
         <form id="addRowFormIEC">
           <div class="form-group">
-            <label for="modal-iec-name">Bağlantı İsmi</label>
+            <label for="modal-iec-name">Abone İsmi</label>
             <input type="text" class="form-control" id="modal-iec-name" placeholder="İsim giriniz">
           </div>
           <div class="form-group">
-            <label for="modal-serial-port-iec">Seri Port</label>
-            <select class="form-control" id="modal-serial-port-iec">
-              <option>Seri Port Seçiniz</option>
-            </select>
+            <label for="modal-iec-name">Bina No</label>
+            <input type="text" class="form-control" id="modal-iec-name" placeholder="İsim giriniz">
           </div>
           <div class="form-group">
+            <label for="modal-iec-name">Daire</label>
+            <input type="text" class="form-control" id="modal-iec-name" placeholder="İsim giriniz">
+          </div>
+          <!-- <div class="form-group">
             <label for="modal-baud-rate-iec">Baud Rate (bps)</label>
             <select class="form-control" id="modal-baud-rate-iec">
               <option>Baud Rate Seçiniz</option>
@@ -583,7 +585,7 @@
               <option>1500</option>
               <option>2000</option>
             </select>
-          </div>
+          </div> -->
           <button type="submit" class="btn btn-primary">Ekle</button>
         </form>
       </div>
