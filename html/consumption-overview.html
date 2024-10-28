@@ -707,16 +707,17 @@ document.addEventListener('DOMContentLoaded', function() {
           <td>${connection.WaterUsage}</td>
           <td>${connection.HeatingUsage}</td>
           <td>${connection.CoolingUsage}</td>
-          <td class="text-xs-center">
-            <div class="btn-group">
-              <button type="button" class="btn btn-square btn-icon btn-pure dropdown-toggle mr-1 mb-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icon-android-settings"></i></button>
-              <div class="dropdown-menu">
-                <a class="dropdown-item" href="#">Detay</a>
-                <a class="dropdown-item" href="#">Düzenle</a>
-                <a class="dropdown-item" href="#">Sil</a>
-              </div>
-            </div>
-          </td>
+            <td>
+              <span class="dropdown">
+                <button id="btnSearchDrop23" type="button" data-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="true" class="btn btn-primary dropdown-toggle dropdown-menu-right"><i class="ft-settings"></i></button>
+                <span aria-labelledby="btnSearchDrop23" class="dropdown-menu mt-1 dropdown-menu-right">
+                  <a href="#" class="dropdown-item"><i class="fa fa-eye"></i> Detay/a>
+                  <a href="#" class="dropdown-item"><i class="fa fa-pencil"></i> Düzenle</a>
+                  <a href="#" class="dropdown-item"><i class="fa fa-trash"></i> Sil</a>
+                </span>
+              </span>
+            </td>
         `;
         tableBodyIEC.appendChild(row);
       });
