@@ -96,7 +96,6 @@
   </div>
 
   <div class="app-content content bg-white">
-
     <div class="content-body">
       <nav
         class="header-navbar navbar-expand-md navbar navbar-with-menu navbar-light navbar-border navbar-brand-center">
@@ -127,112 +126,60 @@
           </div>
         </div>
       </nav>
-      <div class="content-header row">
-        <div class="content-header-right breadcrumbs-right col-md-6 col-12">
-        </div>
-      </div>
-      <ul class="nav nav-tabs nav-underline no-hover-bg">
-        <li class="nav-item">
-          <a class="nav-link active" id="base-tab31" data-toggle="tab" aria-controls="tab31" href="#tab31"
-            aria-expanded="true">Elektrik Sayaç Raporları</a>
-        </li>
-      </ul>
-      <div class="tab-content px-1 pt-1">
-        <div role="tabpanel" class="tab-pane active" id="tab31" aria-expanded="true" aria-labelledby="base-tab31">
-          <!-- <div class="row mb-1">
-            <div class="cal-1 col-xl-1">
-              <button class="btn btn-sm btn-genie white" type="button" data-toggle="modal" data-target="#generateElectricityReportModal">Rapor Oluştur</button>
-            </div>
-          </div> -->
-          <!-- <table class="table table-hover table-bordered zero-configuration dataTable" id="DataTables_Table_Electricity_Meter_List"
-          role="grid" aria-describedby="DataTables_Table_Electricity_Meter_List_info">
-            <thead>
-              <tr>
-                <th>Oluşturulma tarihi</th>
-                <th>Konu Başlığı</th>
-                <th>Rapor Tipi</th>
-                <th>Oluşturulma Tipi</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>17/04/2024 16:46</td>
-                <td><a href="#" data-toggle="modal" data-target="#reportModal" class="text-bold-600">Aylık Elektrik Tüketim Tablosu</a></td>
-                <td></td>
-                <td>Otomatik</td>
-              </tr>
-              <tr>
-                <td>7/03/2024 12:32</td>
-                <td><a href="#" data-toggle="modal" data-target="#reportModal" class="text-bold-600">7/03/2024 ile 3/01/2024 arasındaki Elektrik Tüketim Tablosu</a></td>
-                <td></td>
-                <td>Manuel</td>
-              </tr>
-            </tbody>
-          </table> -->
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- IEC 62056-21 section start -->
-<section id="form-repeater">
-  <div class="row">
-    <div class="col-xs-12 col-md-12">
-      <div class="card border-genie">
-        <div class="card-header">
-          <h4 class="card-title" id="repeat-form">Blok B1</h4>
-          <a class="heading-elements-toggle"><I class="icon-ellipsis font-medium-3"></I></a>
-          <div class="heading-elements">
-            <ul class="list-inline mb-0">
-              <li><a data-action="expand"><I class="icon-expand2"></I></a></li>
-            </ul>
-          </div>
-        </div>
-        <div class="card-body">
-          <div class="card-block">
-            <div class="row mb-1">
-              <div class="cal-1 col-xl-1">
-                <button class="btn btn-sm btn-genie white" type="button" data-toggle="modal" data-target="#generateElectricityReportModal">Rapor Oluştur</button>
+      <!-- IEC 62056-21 section start -->
+      <section id="form-repeater">
+        <div class="row">
+          <div class="col-xs-12 col-md-12">
+            <div class="card border-genie">
+              <div class="card-header">
+                <h4 class="card-title" id="repeat-form">Blok B1</h4>
+                <a class="heading-elements-toggle"><I class="icon-ellipsis font-medium-3"></I></a>
+                <div class="heading-elements">
+                  <ul class="list-inline mb-0">
+                    <li><a data-action="expand"><I class="icon-expand2"></I></a></li>
+                  </ul>
+                </div>
               </div>
-            </div>
-            <table class="table table-hover table-bordered zero-configuration dataTable" id="DataTables_Table_Electricity_Meter_List"
-            role="grid" aria-describedby="DataTables_Table_Electricity_Meter_List_info">
-              <thead>
-                <tr>
-                  <th>Oluşturulma tarihi</th>
-                  <th>Konu Başlığı</th>
-                  <th>Rapor Tipi</th>
-                  <th>Oluşturulma Tipi</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>17/04/2024 16:46</td>
-                  <td><a href="#" data-toggle="modal" data-target="#reportModal" class="text-bold-600">Aylık Elektrik Tüketim Tablosu</a></td>
-                  <td></td>
-                  <td>Otomatik</td>
-                </tr>
-                <tr>
-                  <td>7/03/2024 12:32</td>
-                  <td><a href="#" data-toggle="modal" data-target="#reportModal" class="text-bold-600">7/03/2024 ile 3/01/2024 arasındaki Elektrik Tüketim Tablosu</a></td>
-                  <td></td>
-                  <td>Manuel</td>
-                </tr>
-              </tbody>
-            </table>
-            <div class="form-group overflow-hidden">
-              <div class="col-xs-12">
-                <button id="addRowButton" class="btn btn-info btn-lg" data-toggle="modal" data-target="#addRowModalIEC">
-                  <I class="icon-plus4"></I> Ekle
-                </button>
+              <div class="card-body">
+                <div class="card-block">
+                  <div class="row mb-1">
+                    <div class="cal-1 col-xl-1">
+                      <button class="btn btn-sm btn-genie white" type="button" data-toggle="modal" data-target="#generateElectricityReportModal">Rapor Oluştur</button>
+                    </div>
+                  </div>
+                  <table class="table table-hover table-bordered zero-configuration dataTable" id="DataTables_Table_Electricity_Meter_List"
+                  role="grid" aria-describedby="DataTables_Table_Electricity_Meter_List_info">
+                    <thead>
+                      <tr>
+                        <th>Oluşturulma tarihi</th>
+                        <th>Konu Başlığı</th>
+                        <th>Rapor Tipi</th>
+                        <th>Oluşturulma Tipi</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>17/04/2024 16:46</td>
+                        <td><a href="#" data-toggle="modal" data-target="#reportModal" class="text-bold-600">Aylık Elektrik Tüketim Tablosu</a></td>
+                        <td></td>
+                        <td>Otomatik</td>
+                      </tr>
+                      <tr>
+                        <td>7/03/2024 12:32</td>
+                        <td><a href="#" data-toggle="modal" data-target="#reportModal" class="text-bold-600">7/03/2024 ile 3/01/2024 arasındaki Elektrik Tüketim Tablosu</a></td>
+                        <td></td>
+                        <td>Manuel</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </section>
     </div>
   </div>
-</section>
 
     <!-- Report Modal -->
     <div class="modal fade text-left" id="reportModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2"
