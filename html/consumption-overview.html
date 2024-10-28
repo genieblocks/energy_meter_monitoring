@@ -530,7 +530,8 @@
                   <th>Daire</th>
                   <th>Abone</th>
                   <th>Elektrik Tüketimi (kWh)</th>
-                  <th>Su Tüketimi (m3)</th>
+                  <th>Su Tüketimi (Soğuk) (m3)</th>
+                  <th>Su Tüketimi (Sıcak) (m3)</th>
                   <th>Kalori. Sıcak Tüketimi (kWh)</th>
                   <th>Kalori. Soğuk Tüketimi (kWh)</th>
                   <th>Düzenle</th>
@@ -704,7 +705,8 @@ document.addEventListener('DOMContentLoaded', function() {
           <td>${connection.Flat}</td>
           <td>${connection.Subscriber}</td>
           <td>${connection.ElectricityUsage}</td>
-          <td>${connection.WaterUsage}</td>
+          <td>${connection.HotWaterUsage}</td>
+          <td>${connection.ColdWaterUsage}</td>
           <td>${connection.HeatingUsage}</td>
           <td>${connection.CoolingUsage}</td>
             <td>
