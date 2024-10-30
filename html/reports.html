@@ -375,13 +375,13 @@
 
         const reportStatusCell = document.createElement('td');
         const statusSpan = document.createElement('span');
-        statusSpan.classList.add('tag', 'tag-default');
+        statusSpan.classList.add('badge', 'badge-default');
         
         if (report.Status === 'Ready') {
-          statusSpan.classList.add('tag-success');
+          statusSpan.classList.add('badge-success');
           statusSpan.textContent = 'Hazır';
         } else if (report.Status === 'Preparing') {
-          statusSpan.classList.add('tag-warning');
+          statusSpan.classList.add('badge-warning');
           statusSpan.textContent = 'Hazırlanıyor';
         } else {
           statusSpan.textContent = report.Status || 'Durum Bilinmiyor';
