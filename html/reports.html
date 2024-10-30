@@ -345,81 +345,65 @@
     }
 
     function populateTables(reports) {
-      const tableBody = document.querySelector('#DataTables_Table_Electricity_Meter_List tbody');
-
-      if (!tableBody) {
-        console.error("Table body not found for ID: DataTables_Table_Electricity_Meter_List");
-        return;
-      }
-
-      // Tablonun önceki içeriğini temizle
-      tableBody.innerHTML = '';
-
-      // Tabloda her bir rapor için satır oluştur
       reports.forEach(report => {
+        const tableBody = document.querySelector(`#DataTables_Table_Electricity_Meter_List tbody`);
+
+        if (!tableBody) {
+          console.error("Table body not found for ID: DataTables_Table_Electricity_Meter_List");
+          return;
+        }
+
         const row = document.createElement('tr');
 
-        // Rapor Başlığı
+        // ReportTitle hücresini oluşturma
         const titleCell = document.createElement('td');
-        const titleLink = document.createElement('a');
-        titleLink.href = "#";
-        titleLink.setAttribute('data-toggle', 'modal');
-        titleLink.setAttribute('data-target', '#reportModal');
-        titleLink.classList.add('text-bold-600');
-        titleLink.textContent = report.ReportTitle;
-        titleCell.appendChild(titleLink);
+        if (report.Status === "Ready") {
+          const titleLink = document.createElement('a');
+          titleLink.href = "#";
+          titleLink.setAttribute('data-toggle', 'modal');
+          titleLink.setAttribute('data-target', '#reportModal');
+          titleLink.classList.add('text-bold-600');
+          titleLink.textContent = report.ReportTitle;
+          titleCell.appendChild(titleLink);
+        } else {
+          titleCell.textContent = report.ReportTitle;
+        }
         row.appendChild(titleCell);
 
-        // Rapor Tipi
+        // Diğer hücreler...
         const reportTypeCell = document.createElement('td');
         reportTypeCell.textContent = report.ReportType;
         row.appendChild(reportTypeCell);
 
-        // Durum
         const reportStatusCell = document.createElement('td');
-        const statusSpan = document.createElement('span');
-        statusSpan.classList.add('badge', 'badge-default');
-        if (report.Status === 'Ready') {
-          statusSpan.classList.add('badge-success');
-          statusSpan.textContent = 'Hazır';
-        } else if (report.Status === 'Preparing') {
-          statusSpan.classList.add('badge-warning');
-          statusSpan.textContent = 'Hazırlanıyor';
-        } else {
-          statusSpan.textContent = report.Status || 'Durum Bilinmiyor';
-        }
-        reportStatusCell.appendChild(statusSpan);
+        reportStatusCell.innerHTML = report.Status === "Ready" 
+          ? '<span class="badge badge-success">Hazır</span>' 
+          : '<span class="badge badge-warning">Hazırlanıyor</span>';
         row.appendChild(reportStatusCell);
 
-        // Oluşturulma Tipi
         const creationTypeCell = document.createElement('td');
         creationTypeCell.textContent = report.CreationType;
         row.appendChild(creationTypeCell);
 
-        // İstek Zamanı
         const reportRequestDateCell = document.createElement('td');
         reportRequestDateCell.textContent = formatDate(report.ReportRequestDate);
         row.appendChild(reportRequestDateCell);
 
-        // Oluşturulma Zamanı ve Duration
         const creationDateCell = document.createElement('td');
+        creationDateCell.textContent = report.CreationDate ? formatDate(report.CreationDate) : '-';
+        row.appendChild(creationDateCell);
+
         const durationCell = document.createElement('td');
-        if (report.CreationDate) {
-          creationDateCell.textContent = formatDate(report.CreationDate);
-          durationCell.textContent = calculateDuration(report.ReportRequestDate, report.CreationDate);
+        if (report.CreationDate && report.ReportRequestDate) {
+          const duration = calculateDuration(report.ReportRequestDate, report.CreationDate);
+          durationCell.textContent = duration;
         } else {
-          creationDateCell.textContent = '-';
           durationCell.textContent = '-';
         }
-        row.appendChild(creationDateCell);
         row.appendChild(durationCell);
 
-        // Satırı tabloya ekle
         tableBody.appendChild(row);
       });
-
-      // Tablo verilerini yeniden başlat
-      initializeDataTables();
     }
 
     function initializeDataTables() {
