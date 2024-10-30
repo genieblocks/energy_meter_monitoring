@@ -345,17 +345,21 @@
     }
 
     function populateTables(reports) {
+      const tableBody = document.querySelector('#DataTables_Table_Electricity_Meter_List tbody');
+
+      if (!tableBody) {
+        console.error("Table body not found for ID: DataTables_Table_Electricity_Meter_List");
+        return;
+      }
+
+      // Tablonun önceki içeriğini temizle
+      tableBody.innerHTML = '';
+
+      // Tabloda her bir rapor için satır oluştur
       reports.forEach(report => {
-        const tableBody = document.querySelector(`#DataTables_Table_Electricity_Meter_List tbody`);
-
-        if (!tableBody) {
-          console.error("Table body not found for ID: DataTables_Table_Electricity_Meter_List");
-          return;
-        }
-
         const row = document.createElement('tr');
 
-        // ReportTitle hücresini oluşturma
+        // Rapor Başlığı
         const titleCell = document.createElement('td');
         if (report.Status === "Ready") {
           const titleLink = document.createElement('a');
@@ -370,40 +374,56 @@
         }
         row.appendChild(titleCell);
 
-        // Diğer hücreler...
+        // Rapor Tipi
         const reportTypeCell = document.createElement('td');
         reportTypeCell.textContent = report.ReportType;
         row.appendChild(reportTypeCell);
 
+        // Durum
         const reportStatusCell = document.createElement('td');
-        reportStatusCell.innerHTML = report.Status === "Ready" 
-          ? '<span class="badge badge-success">Hazır</span>' 
-          : '<span class="badge badge-warning">Hazırlanıyor</span>';
+        const statusSpan = document.createElement('span');
+        statusSpan.classList.add('badge', 'badge-default');
+        if (report.Status === 'Ready') {
+          statusSpan.classList.add('badge-success');
+          statusSpan.textContent = 'Hazır';
+        } else if (report.Status === 'Preparing') {
+          statusSpan.classList.add('badge-warning');
+          statusSpan.textContent = 'Hazırlanıyor';
+        } else {
+          statusSpan.textContent = report.Status || 'Durum Bilinmiyor';
+        }
+        reportStatusCell.appendChild(statusSpan);
         row.appendChild(reportStatusCell);
 
+        // Oluşturulma Tipi
         const creationTypeCell = document.createElement('td');
         creationTypeCell.textContent = report.CreationType;
         row.appendChild(creationTypeCell);
 
+        // İstek Zamanı
         const reportRequestDateCell = document.createElement('td');
         reportRequestDateCell.textContent = formatDate(report.ReportRequestDate);
         row.appendChild(reportRequestDateCell);
 
+        // Oluşturulma Zamanı ve Duration
         const creationDateCell = document.createElement('td');
-        creationDateCell.textContent = report.CreationDate ? formatDate(report.CreationDate) : '-';
-        row.appendChild(creationDateCell);
-
         const durationCell = document.createElement('td');
-        if (report.CreationDate && report.ReportRequestDate) {
-          const duration = calculateDuration(report.ReportRequestDate, report.CreationDate);
-          durationCell.textContent = duration;
+        if (report.CreationDate) {
+          creationDateCell.textContent = formatDate(report.CreationDate);
+          durationCell.textContent = calculateDuration(report.ReportRequestDate, report.CreationDate);
         } else {
+          creationDateCell.textContent = '-';
           durationCell.textContent = '-';
         }
+        row.appendChild(creationDateCell);
         row.appendChild(durationCell);
 
+        // Satırı tabloya ekle
         tableBody.appendChild(row);
       });
+
+      // Tablo verilerini yeniden başlat
+      initializeDataTables();
     }
 
     function initializeDataTables() {
