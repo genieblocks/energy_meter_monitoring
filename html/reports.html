@@ -505,58 +505,71 @@
       });
     }
 
+    // Report Modal içindeki tabloyu güncelle
     function updateReportModalTable(reportData) {
+      if (!reportData || !reportData[0] || !Array.isArray(reportData[0].data)) {
+          console.error("Hatalı veya eksik veri:", reportData);
+          return;
+      }
+
       const data = reportData[0].data;
       const tableHead = document.querySelector('#DataTables_Table_Report thead');
       const tableBody = document.querySelector('#DataTables_Table_Report tbody');
-      
+
       tableHead.innerHTML = '';
       tableBody.innerHTML = '';
-
-      // Report data doğrulaması
-      if (!data || !Array.isArray(data) || data.length === 0) {
-        console.error("Report data is empty or undefined:", data);
-        return;
-      }
 
       const headers = ['Sayaç Seri Numarası', 'Sayaç Tarihi', 'Sayaç Saati', 'Mevcut Tarih', 'Mevcut Saat', 'Zaman Farkı'];
       const headerRow = document.createElement('tr');
 
       headers.forEach(headerText => {
-        const th = document.createElement('th');
-        th.textContent = headerText;
-        headerRow.appendChild(th);
+          const th = document.createElement('th');
+          th.textContent = headerText;
+          headerRow.appendChild(th);
       });
       tableHead.appendChild(headerRow);
 
+      // Boş veri kontrolü
+      if (data.length === 0) {
+          console.warn("Tablo doldurulacak veri bulunamadı.");
+          const emptyRow = document.createElement('tr');
+          const emptyCell = document.createElement('td');
+          emptyCell.colSpan = headers.length;
+          emptyCell.textContent = "Gösterilecek veri yok.";
+          emptyRow.appendChild(emptyCell);
+          tableBody.appendChild(emptyRow);
+          return;
+      }
+
+      // Veriyi tabloya yazdırma
       data.forEach(item => {
-        const row = document.createElement('tr');
+          const row = document.createElement('tr');
 
-        const serialNumberCell = document.createElement('td');
-        serialNumberCell.textContent = item.serialNumber || '-';
-        row.appendChild(serialNumberCell);
+          const serialNumberCell = document.createElement('td');
+          serialNumberCell.textContent = item.serialNumber || '-';
+          row.appendChild(serialNumberCell);
 
-        const meterDateCell = document.createElement('td');
-        meterDateCell.textContent = item.meterDate || '-';
-        row.appendChild(meterDateCell);
+          const meterDateCell = document.createElement('td');
+          meterDateCell.textContent = item.meterDate || '-';
+          row.appendChild(meterDateCell);
 
-        const meterTimeCell = document.createElement('td');
-        meterTimeCell.textContent = item.meterTime || '-';
-        row.appendChild(meterTimeCell);
+          const meterTimeCell = document.createElement('td');
+          meterTimeCell.textContent = item.meterTime || '-';
+          row.appendChild(meterTimeCell);
 
-        const currentDateCell = document.createElement('td');
-        currentDateCell.textContent = item.currentDate || '-';
-        row.appendChild(currentDateCell);
+          const currentDateCell = document.createElement('td');
+          currentDateCell.textContent = item.currentDate || '-';
+          row.appendChild(currentDateCell);
 
-        const currentTimeCell = document.createElement('td');
-        currentTimeCell.textContent = item.currentTime || '-';
-        row.appendChild(currentTimeCell);
+          const currentTimeCell = document.createElement('td');
+          currentTimeCell.textContent = item.currentTime || '-';
+          row.appendChild(currentTimeCell);
 
-        const timeDifferenceCell = document.createElement('td');
-        timeDifferenceCell.textContent = item.timeDifference || '-';
-        row.appendChild(timeDifferenceCell);
+          const timeDifferenceCell = document.createElement('td');
+          timeDifferenceCell.textContent = item.timeDifference || '-';
+          row.appendChild(timeDifferenceCell);
 
-        tableBody.appendChild(row);
+          tableBody.appendChild(row);
       });
     }
 
