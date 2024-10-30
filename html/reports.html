@@ -345,6 +345,15 @@
     }
 
     function populateTables(reports) {
+      // Clear previous table contents to avoid duplication
+      ['Electricity', 'Water', 'Heating', 'Cooling'].forEach(type => {
+        const tableBody = document.querySelector(`#DataTables_Table_${type}_Meter_List tbody`);
+        if (tableBody) {
+          tableBody.innerHTML = ''; // Clear existing rows
+        }
+      });
+
+      // Populate each report into the correct table
       reports.forEach(report => {
         // Determine which table to populate based on report category
         let tableId = '';
@@ -366,34 +375,16 @@
             return;
         }
 
-        const tableHead = document.querySelector(`#${tableId} thead`);
+        // Select the table body to append new rows
         const tableBody = document.querySelector(`#${tableId} tbody`);
-
-        if (!tableBody || !tableHead) {
-          console.error(`Table body or head not found for ID: ${tableId}`);
+        if (!tableBody) {
+          console.error(`Table body not found for ID: ${tableId}`);
           return;
         }
 
-        // Clear existing table head and body
-        tableHead.innerHTML = '';
-        tableBody.innerHTML = '';
-
-        // Create dynamic headers
-        const headerRow = document.createElement('tr');
-        const headers = ['Rapor Başlığı', 'Rapor Tipi', 'Durumu', 'Oluşturulma Tipi', 'İstek Zamanı', 'Oluşturulma Zamanı', 'Gecen Süre'];
-
-        headers.forEach(headerText => {
-          const th = document.createElement('th');
-          th.textContent = headerText;
-          headerRow.appendChild(th);
-        });
-
-        tableHead.appendChild(headerRow);
-
-        // Add rows to the table
+        // Create a new row and populate it with report data
         const row = document.createElement('tr');
 
-        // Map ReportList fields to table columns
         const titleCell = document.createElement('td');
         const titleLink = document.createElement('a');
         titleLink.href = "#";
@@ -407,7 +398,7 @@
         const reportTypeCell = document.createElement('td');
         reportTypeCell.textContent = report.ReportType;
         row.appendChild(reportTypeCell);
-        
+
         const reportStatusCell = document.createElement('td');
         reportStatusCell.textContent = report.Status;
         row.appendChild(reportStatusCell);
@@ -425,13 +416,14 @@
         row.appendChild(creationDateCell);
 
         const durationCell = document.createElement('td');
-        durationCell.textContent = 0;
+        durationCell.textContent = report.Duration || 'N/A';
         row.appendChild(durationCell);
 
+        // Append the row to the correct table body
         tableBody.appendChild(row);
       });
 
-      // Initialize DataTables for each table after population
+      // Re-initialize DataTables for each table after population
       initializeDataTables();
     }
 
