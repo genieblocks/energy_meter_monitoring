@@ -352,13 +352,17 @@
         return;
       }
 
-      // Clear existing table rows to avoid duplication
+      // Tablonun önceki içeriğini temizle
       tableBody.innerHTML = '';
 
-      // Populate each report into the table
+      // En yeni tarihten en eskiye sıralama
+      reports.sort((a, b) => new Date(b.ReportRequestDate) - new Date(a.ReportRequestDate));
+
+      // Tabloda her bir rapor için satır oluştur
       reports.forEach(report => {
         const row = document.createElement('tr');
 
+        // Rapor Başlığı
         const titleCell = document.createElement('td');
         const titleLink = document.createElement('a');
         titleLink.href = "#";
@@ -369,14 +373,15 @@
         titleCell.appendChild(titleLink);
         row.appendChild(titleCell);
 
+        // Rapor Tipi
         const reportTypeCell = document.createElement('td');
         reportTypeCell.textContent = report.ReportType;
         row.appendChild(reportTypeCell);
 
+        // Durum
         const reportStatusCell = document.createElement('td');
         const statusSpan = document.createElement('span');
         statusSpan.classList.add('badge', 'badge-default');
-        
         if (report.Status === 'Ready') {
           statusSpan.classList.add('badge-success');
           statusSpan.textContent = 'Hazır';
@@ -386,31 +391,37 @@
         } else {
           statusSpan.textContent = report.Status || 'Durum Bilinmiyor';
         }
-        
         reportStatusCell.appendChild(statusSpan);
         row.appendChild(reportStatusCell);
 
+        // Oluşturulma Tipi
         const creationTypeCell = document.createElement('td');
         creationTypeCell.textContent = report.CreationType;
         row.appendChild(creationTypeCell);
 
+        // İstek Zamanı
         const reportRequestDateCell = document.createElement('td');
         reportRequestDateCell.textContent = formatDate(report.ReportRequestDate);
         row.appendChild(reportRequestDateCell);
 
+        // Oluşturulma Zamanı ve Duration
         const creationDateCell = document.createElement('td');
-        creationDateCell.textContent = formatDate(report.CreationDate);
-        row.appendChild(creationDateCell);
-
         const durationCell = document.createElement('td');
-        durationCell.textContent = report.Duration || 'N/A';
+        if (report.CreationDate) {
+          creationDateCell.textContent = formatDate(report.CreationDate);
+          durationCell.textContent = calculateDuration(report.ReportRequestDate, report.CreationDate);
+        } else {
+          creationDateCell.textContent = '-';
+          durationCell.textContent = '-';
+        }
+        row.appendChild(creationDateCell);
         row.appendChild(durationCell);
 
-        // Append the row to the table body
+        // Satırı tabloya ekle
         tableBody.appendChild(row);
       });
 
-      // Initialize DataTable after population
+      // Tablo verilerini yeniden başlat
       initializeDataTables();
     }
 
@@ -427,10 +438,19 @@
       });
     }
 
-    // Optional: Format date to 'DD/MM/YYYY HH:MM'
+    // İki tarih arasındaki süreyi hesaplar
+    function calculateDuration(start, end) {
+      const startDate = new Date(start);
+      const endDate = new Date(end);
+      const durationMs = endDate - startDate;
+      const durationMinutes = Math.floor(durationMs / (1000 * 60));
+      return `${durationMinutes} dakika`;
+    }
+
+    // Tarih formatı
     function formatDate(dateString) {
-      const options = { year: 'numeric', month: '2-digit', day: '2-digit', 
-                        hour: '2-digit', minute: '2-digit' };
+      if (!dateString) return '-';
+      const options = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' };
       const date = new Date(dateString);
       return date.toLocaleDateString('tr-TR', options).replace(',', '');
     }
