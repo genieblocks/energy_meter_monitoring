@@ -495,7 +495,7 @@
       .then(response => response.json())
       .then(data => {
         console.log("Fetched Report Data:", data); // Debug için cevabı konsola yazdır
-        updateReportTable(data);
+        updateReportModalTable(data);
       })
       .catch(error => {
         console.error('Error fetching report data:', error.message);
@@ -506,6 +506,7 @@
     }
 
     function updateReportModalTable(reportData) {
+      const data = reportData[0].data;
       const tableHead = document.querySelector('#DataTables_Table_Report thead');
       const tableBody = document.querySelector('#DataTables_Table_Report tbody');
       
@@ -513,8 +514,8 @@
       tableBody.innerHTML = '';
 
       // Report data doğrulaması
-      if (!reportData || !Array.isArray(reportData) || reportData.length === 0) {
-        console.error("Report data is empty or undefined:", reportData);
+      if (!data || !Array.isArray(data) || data.length === 0) {
+        console.error("Report data is empty or undefined:", data);
         return;
       }
 
@@ -528,7 +529,7 @@
       });
       tableHead.appendChild(headerRow);
 
-      reportData.forEach(item => {
+      data.forEach(item => {
         const row = document.createElement('tr');
 
         const serialNumberCell = document.createElement('td');
