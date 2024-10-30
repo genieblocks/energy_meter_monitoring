@@ -494,6 +494,7 @@
       })
       .then(response => response.json())
       .then(data => {
+        console.log("Fetched Report Data:", data); // Debug için cevabı konsola yazdır
         updateReportModalTable(data);
       })
       .catch(error => {
@@ -521,31 +522,32 @@
       });
       tableHead.appendChild(headerRow);
 
+      // Gelen veri yapısına göre tabloyu doldur
       reportData.forEach(item => {
         const row = document.createElement('tr');
 
         const serialNumberCell = document.createElement('td');
-        serialNumberCell.textContent = item.serialNumber;
+        serialNumberCell.textContent = item.serialNumber || '-';
         row.appendChild(serialNumberCell);
 
         const meterDateCell = document.createElement('td');
-        meterDateCell.textContent = item.meterDate;
+        meterDateCell.textContent = item.meterDate || '-';
         row.appendChild(meterDateCell);
 
         const meterTimeCell = document.createElement('td');
-        meterTimeCell.textContent = item.meterTime;
+        meterTimeCell.textContent = item.meterTime || '-';
         row.appendChild(meterTimeCell);
 
         const currentDateCell = document.createElement('td');
-        currentDateCell.textContent = item.currentDate;
+        currentDateCell.textContent = item.currentDate || '-';
         row.appendChild(currentDateCell);
 
         const currentTimeCell = document.createElement('td');
-        currentTimeCell.textContent = item.currentTime;
+        currentTimeCell.textContent = item.currentTime || '-';
         row.appendChild(currentTimeCell);
 
         const timeDifferenceCell = document.createElement('td');
-        timeDifferenceCell.textContent = item.timeDifference;
+        timeDifferenceCell.textContent = item.timeDifference || '-';
         row.appendChild(timeDifferenceCell);
 
         tableBody.appendChild(row);
