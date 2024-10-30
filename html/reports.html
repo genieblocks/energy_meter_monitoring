@@ -509,9 +509,11 @@
       const tableHead = document.querySelector('#DataTables_Table_Report thead');
       const tableBody = document.querySelector('#DataTables_Table_Report tbody');
       
+      // Tablonun başlık ve gövdesini temizle
       tableHead.innerHTML = '';
       tableBody.innerHTML = '';
 
+      // Tablo başlıkları
       const headers = ['Sayaç Seri Numarası', 'Sayaç Tarihi', 'Sayaç Saati', 'Mevcut Tarih', 'Mevcut Saat', 'Zaman Farkı'];
       const headerRow = document.createElement('tr');
 
@@ -522,36 +524,40 @@
       });
       tableHead.appendChild(headerRow);
 
-      // Gelen veri yapısına göre tabloyu doldur
-      reportData.forEach(item => {
-        const row = document.createElement('tr');
+      // Gelen verinin mevcut olduğundan emin ol ve tabloyu doldur
+      if (reportData && reportData.length > 0) {
+        reportData.forEach(item => {
+          const row = document.createElement('tr');
 
-        const serialNumberCell = document.createElement('td');
-        serialNumberCell.textContent = item.serialNumber || '-';
-        row.appendChild(serialNumberCell);
+          const serialNumberCell = document.createElement('td');
+          serialNumberCell.textContent = item.SerialNumber || '-';
+          row.appendChild(serialNumberCell);
 
-        const meterDateCell = document.createElement('td');
-        meterDateCell.textContent = item.meterDate || '-';
-        row.appendChild(meterDateCell);
+          const meterDateCell = document.createElement('td');
+          meterDateCell.textContent = item.MeterDate || '-';
+          row.appendChild(meterDateCell);
 
-        const meterTimeCell = document.createElement('td');
-        meterTimeCell.textContent = item.meterTime || '-';
-        row.appendChild(meterTimeCell);
+          const meterTimeCell = document.createElement('td');
+          meterTimeCell.textContent = item.MeterTime || '-';
+          row.appendChild(meterTimeCell);
 
-        const currentDateCell = document.createElement('td');
-        currentDateCell.textContent = item.currentDate || '-';
-        row.appendChild(currentDateCell);
+          const currentDateCell = document.createElement('td');
+          currentDateCell.textContent = item.CurrentDate || '-';
+          row.appendChild(currentDateCell);
 
-        const currentTimeCell = document.createElement('td');
-        currentTimeCell.textContent = item.currentTime || '-';
-        row.appendChild(currentTimeCell);
+          const currentTimeCell = document.createElement('td');
+          currentTimeCell.textContent = item.CurrentTime || '-';
+          row.appendChild(currentTimeCell);
 
-        const timeDifferenceCell = document.createElement('td');
-        timeDifferenceCell.textContent = item.timeDifference || '-';
-        row.appendChild(timeDifferenceCell);
+          const timeDifferenceCell = document.createElement('td');
+          timeDifferenceCell.textContent = item.TimeDifference || '-';
+          row.appendChild(timeDifferenceCell);
 
-        tableBody.appendChild(row);
-      });
+          tableBody.appendChild(row);
+        });
+      } else {
+        console.warn("No data available to populate the modal table.");
+      }
     }
 
     // Cihaz tarih-saat raporu oluşturma butonuna tıklanınca çalışacak fonksiyon
