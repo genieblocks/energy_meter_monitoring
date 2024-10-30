@@ -374,7 +374,20 @@
         row.appendChild(reportTypeCell);
 
         const reportStatusCell = document.createElement('td');
-        reportStatusCell.textContent = report.Status;
+        const statusSpan = document.createElement('span');
+        statusSpan.classList.add('tag', 'tag-default');
+        
+        if (report.Status === 'Ready') {
+          statusSpan.classList.add('tag-success');
+          statusSpan.textContent = 'Hazır';
+        } else if (report.Status === 'Preparing') {
+          statusSpan.classList.add('tag-warning');
+          statusSpan.textContent = 'Hazırlanıyor';
+        } else {
+          statusSpan.textContent = report.Status || 'Durum Bilinmiyor';
+        }
+        
+        reportStatusCell.appendChild(statusSpan);
         row.appendChild(reportStatusCell);
 
         const creationTypeCell = document.createElement('td');
