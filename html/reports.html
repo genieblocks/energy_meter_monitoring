@@ -345,44 +345,18 @@
     }
 
     function populateTables(reports) {
-      // Clear previous table contents to avoid duplication
-      ['Electricity', 'Water', 'Heating', 'Cooling'].forEach(type => {
-        const tableBody = document.querySelector(`#DataTables_Table_${type}_Meter_List tbody`);
-        if (tableBody) {
-          tableBody.innerHTML = ''; // Clear existing rows
-        }
-      });
+      const tableBody = document.querySelector('#DataTables_Table_Electricity_Meter_List tbody');
 
-      // Populate each report into the correct table
+      if (!tableBody) {
+        console.error("Table body not found for ID: DataTables_Table_Electricity_Meter_List");
+        return;
+      }
+
+      // Clear existing table rows to avoid duplication
+      tableBody.innerHTML = '';
+
+      // Populate each report into the table
       reports.forEach(report => {
-        // Determine which table to populate based on report category
-        let tableId = '';
-        switch (report.ReportCategory) {
-          case 'electricityconsumption':
-            tableId = 'DataTables_Table_Electricity_Meter_List';
-            break;
-          case 'waterconsumption':
-            tableId = 'DataTables_Table_Water_Meter_List';
-            break;
-          case 'heatingconsumption':
-            tableId = 'DataTables_Table_Heating_Meter_List';
-            break;
-          case 'coolingconsumption':
-            tableId = 'DataTables_Table_Cooling_Meter_List';
-            break;
-          default:
-            console.warn(`Unknown category: ${report.ReportCategory}`);
-            return;
-        }
-
-        // Select the table body to append new rows
-        const tableBody = document.querySelector(`#${tableId} tbody`);
-        if (!tableBody) {
-          console.error(`Table body not found for ID: ${tableId}`);
-          return;
-        }
-
-        // Create a new row and populate it with report data
         const row = document.createElement('tr');
 
         const titleCell = document.createElement('td');
@@ -419,26 +393,24 @@
         durationCell.textContent = report.Duration || 'N/A';
         row.appendChild(durationCell);
 
-        // Append the row to the correct table body
+        // Append the row to the table body
         tableBody.appendChild(row);
       });
 
-      // Re-initialize DataTables for each table after population
+      // Initialize DataTable after population
       initializeDataTables();
     }
 
     function initializeDataTables() {
-      ['Electricity', 'Water', 'Heating', 'Cooling'].forEach(type => {
-        const tableId = `DataTables_Table_${type}_Meter_List`;
-        if ($.fn.DataTable.isDataTable(`#${tableId}`)) {
-          $(`#${tableId}`).DataTable().destroy();
-        }
-        $(`#${tableId}`).DataTable({
-          paging: true,
-          searching: true,
-          ordering: true,
-          info: true
-        });
+      const tableId = 'DataTables_Table_Electricity_Meter_List';
+      if ($.fn.DataTable.isDataTable(`#${tableId}`)) {
+        $(`#${tableId}`).DataTable().destroy();
+      }
+      $(`#${tableId}`).DataTable({
+        paging: true,
+        searching: true,
+        ordering: true,
+        info: true
       });
     }
 
