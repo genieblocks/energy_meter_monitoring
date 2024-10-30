@@ -139,10 +139,13 @@
                     role="grid" aria-describedby="DataTables_Table_Electricity_Meter_List_info">
                       <thead>
                         <tr>
-                          <th>Oluşturulma tarihi</th>
-                          <th>Konu Başlığı</th>
+                          <th>Rapor Başlığı</th>
                           <th>Rapor Tipi</th>
+                          <th>Durumu</th>
                           <th>Oluşturulma Tipi</th>
+                          <th>İstek Zamanı</th>
+                          <th>Oluşturulma Zamanı</th>
+                          <th>Gecen Süre</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -377,7 +380,7 @@
 
         // Create dynamic headers
         const headerRow = document.createElement('tr');
-        const headers = ['Oluşturulma tarihi', 'Konu Başlığı', 'Rapor Tipi', 'Oluşturulma Tipi'];
+        const headers = ['Rapor Başlığı', 'Rapor Tipi', 'Durumu', 'Oluşturulma Tipi', 'İstek Zamanı', 'Oluşturulma Zamanı', 'Gecen Süre'];
 
         headers.forEach(headerText => {
           const th = document.createElement('th');
@@ -391,10 +394,6 @@
         const row = document.createElement('tr');
 
         // Map ReportList fields to table columns
-        const creationDateCell = document.createElement('td');
-        creationDateCell.textContent = formatDate(report.CreationDate);
-        row.appendChild(creationDateCell);
-
         const titleCell = document.createElement('td');
         const titleLink = document.createElement('a');
         titleLink.href = "#";
@@ -408,10 +407,26 @@
         const reportTypeCell = document.createElement('td');
         reportTypeCell.textContent = report.ReportType;
         row.appendChild(reportTypeCell);
+        
+        const reportStatusCell = document.createElement('td');
+        reportStatusCell.textContent = report.Status;
+        row.appendChild(reportStatusCell);
 
         const creationTypeCell = document.createElement('td');
         creationTypeCell.textContent = report.CreationType;
         row.appendChild(creationTypeCell);
+
+        const reportRequestDateCell = document.createElement('td');
+        reportRequestDateCell.textContent = formatDate(report.ReportRequestDate);
+        row.appendChild(reportRequestDateCell);
+
+        const creationDateCell = document.createElement('td');
+        creationDateCell.textContent = formatDate(report.CreationDate);
+        row.appendChild(creationDateCell);
+
+        const durationCell = document.createElement('td');
+        durationCell.textContent = 0;
+        row.appendChild(durationCell);
 
         tableBody.appendChild(row);
       });
