@@ -355,9 +355,6 @@
       // Tablonun önceki içeriğini temizle
       tableBody.innerHTML = '';
 
-      // En yeni tarihten en eskiye sıralama
-      reports.sort((a, b) => new Date(b.ReportRequestDate) - new Date(a.ReportRequestDate));
-
       // Tabloda her bir rapor için satır oluştur
       reports.forEach(report => {
         const row = document.createElement('tr');
@@ -434,7 +431,8 @@
         paging: true,
         searching: true,
         ordering: true,
-        info: true
+        info: true,
+        order: [[4, 'desc']]  // 5. sütun olan `ReportRequestDate` sütununa göre en yeni tarihten en eskiye sıralama
       });
     }
 
