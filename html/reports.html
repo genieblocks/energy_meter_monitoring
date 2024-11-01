@@ -129,6 +129,7 @@
                       <li>
                         <button class="btn btn-sm btn-genie white" type="button" data-toggle="modal" data-target="#generateElectricityReportModal">Rapor Oluştur</button>
                       </li>
+                      <li><a data-action="reload"><I class="icon-reload"></I></a></li>
                       <li><a data-action="expand"><I class="icon-expand2"></I></a></li>
                     </ul>
                   </div>
@@ -294,6 +295,14 @@
     // const baseWebhookURL = "http://192.168.1.119:5678"; // gbenergy_lenovo URL
 
     document.addEventListener('DOMContentLoaded', () => {
+      // Reload button functionality
+      const reloadButton = document.querySelector('[data-action="reload"]');
+      if (reloadButton) {
+        reloadButton.addEventListener('click', () => {
+          location.reload(); // Reloads the entire page
+        });
+      }
+
       loadReportLists();
     });
 
