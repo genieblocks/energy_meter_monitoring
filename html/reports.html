@@ -377,7 +377,7 @@
           titleLink.setAttribute('data-target', '#reportModal');
           titleLink.classList.add('text-bold-600');
           titleLink.textContent = report.ReportTitle;
-          titleLink.onclick = () => fetchReportData(report.ReportTableName, report.ReportRequestDate);
+          titleLink.onclick = () => fetchReportData(report.ReportTableName, report.ReportRequestDate, report.ReportTitle); // Rapor başlığını da ilet
           titleCell.appendChild(titleLink);
         } else {
           titleCell.textContent = report.ReportTitle;
@@ -487,7 +487,7 @@
         }
     }
 
-    function fetchReportData(reportTableName, reportRequestDate) {
+    function fetchReportData(reportTableName, reportRequestDate, reportTitle) {
       $.blockUI({
         message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
         overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
@@ -504,7 +504,7 @@
       .then(response => response.json())
       .then(data => {
         console.log("Fetched Report Data:", data); // Debug için cevabı konsola yazdır
-        updateReportModalTable(data);
+        updateReportModalTable(data, reportTitle); // Rapor başlığını modal içine ilet
       })
       .catch(error => {
         console.error('Error fetching report data:', error.message);
@@ -514,11 +514,14 @@
       });
     }
 
-    function updateReportModalTable(reportData) {
+    function updateReportModalTable(reportData, reportTitle) {
       const data = reportData[0].data;
       const tableHead = document.querySelector('#DataTables_Table_Report thead');
       const tableBody = document.querySelector('#DataTables_Table_Report tbody');
       
+      // Modal başlığını güncelle
+      document.getElementById("myModalLabel1").textContent = `Rapor Detayı - ${reportTitle}`;
+
       tableHead.innerHTML = '';
       tableBody.innerHTML = '';
 
