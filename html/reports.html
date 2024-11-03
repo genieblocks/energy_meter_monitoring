@@ -206,9 +206,10 @@
               <label for="electricityReportTypeSelect">Rapor Tipi</label>
               <select id="electricityReportTypeSelect" name="interested" class="form-control" onchange="toggleFormGroups(this.value)">
                 <option value="none" selected="" disabled="">Rapor tipi seçiniz</option>
-                <option value="olay-raporu">Olay raporu</option>
-                <option value="alarm-raporu">Alarm raporu</option>
-                <option value="enerji-tuketim-raporu">Enerji tüketim raporu</option>
+                <!-- <option value="olay-raporu">Olay Raporu</option>
+                <option value="alarm-raporu">Alarm Raporu</option>
+                <option value="enerji-tuketim-raporu">Enerji Tüketim Raporu</option> -->
+                <option value="moxa-device-status-report">Moxa Cihaz Durum Rapor</option>
                 <option value="cihaz-tarih-saat-raporu">Cihaz Tarih-Saat Raporu</option>
               </select>
             </div>
@@ -476,10 +477,13 @@
     
     function handleReportGeneration() {
         const reportType = document.getElementById('electricityReportTypeSelect').value;
-        
+
         if (reportType === 'cihaz-tarih-saat-raporu') {
             // 'Cihaz Tarih-Saat Raporu' seçildiğinde rapor oluşturuluyor
             generateElectricityMeterTimeReport();
+        } else if (reportType === 'moxa-device-status-report') {
+            // 'Moxa Cihaz Durum Rapor' seçildiğinde rapor oluşturuluyor
+            generateMoxaDeviceStatusReport();
         } else {
             // Diğer rapor tiplerinde modal'lar arasında geçiş
             $('#generateElectricityReportModal').modal('hide');
@@ -632,6 +636,41 @@
         .catch(error => {
             console.error('Error fetching time report:', error.message);
             alert(`Error fetching time report: ${error.message}`);
+        })
+        .finally(() => {
+            $.unblockUI();
+        });
+    }
+
+    function generateMoxaDeviceStatusReport() {
+        $.blockUI({
+            message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
+            overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
+            css: { border: 0, padding: 0, backgroundColor: 'transparent' }
+        });
+
+        fetch(`${baseWebhookURL}/webhook/get-moxa-device-status-report`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            updateReportModalTable(data, "Moxa Cihaz Durum Raporu");
+            $('#generateElectricityReportModal').modal('hide'); // Modal'ı kapatıp report modal'ını aç
+            setTimeout(() => {
+                $('#reportModal').modal('show');
+            }, 500); // Modal'ın düzgün açılması için bir gecikme ekleniyor
+        })
+        .catch(error => {
+            console.error('Error fetching Moxa device status report:', error.message);
+            alert(`Moxa cihaz durum raporu alınırken bir hata oluştu: ${error.message}`);
         })
         .finally(() => {
             $.unblockUI();
