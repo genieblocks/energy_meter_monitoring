@@ -488,8 +488,11 @@
             console.warn("Geçerli bir rapor tipi seçilmedi.");
         }
 
-        // Modalı kapat
+        // Modalı kapat ve sayfayı yeniden yükle
         $('#generateElectricityReportModal').modal('hide');
+        $('#generateElectricityReportModal').on('hidden.bs.modal', function () {
+            location.reload();
+        });
     }
 
     function fetchReportData(reportTableName, reportRequestDate, reportTitle) {
