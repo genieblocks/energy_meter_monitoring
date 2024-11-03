@@ -487,6 +487,9 @@
         } else {
             console.warn("Geçerli bir rapor tipi seçilmedi.");
         }
+
+        // Modalı kapat
+        $('#generateElectricityReportModal').modal('hide');
     }
 
     function fetchReportData(reportTableName, reportRequestDate, reportTitle) {
