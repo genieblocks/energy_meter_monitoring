@@ -477,19 +477,15 @@
     
     function handleReportGeneration() {
         const reportType = document.getElementById('electricityReportTypeSelect').value;
-
+        
         if (reportType === 'cihaz-tarih-saat-raporu') {
-            // 'Cihaz Tarih-Saat Raporu' seçildiğinde rapor oluşturuluyor
-            generateElectricityMeterTimeReport();
+            // Cihaz Tarih-Saat Raporu sorgusu
+            initiateTimeReportRequest();
         } else if (reportType === 'moxa-device-status-report') {
-            // 'Moxa Cihaz Durum Rapor' seçildiğinde rapor oluşturuluyor
-            generateMoxaDeviceStatusReport();
+            // Moxa Cihaz Durum Raporu sorgusu
+            initiateMoxaDeviceStatusReportRequest();
         } else {
-            // Diğer rapor tiplerinde modal'lar arasında geçiş
-            $('#generateElectricityReportModal').modal('hide');
-            setTimeout(() => {
-                $('#reportModal').modal('show');
-            }, 500); // Modal'ın düzgün açılması için bir gecikme ekleniyor
+            console.warn("Geçerli bir rapor tipi seçilmedi.");
         }
     }
 
@@ -606,8 +602,7 @@
       }
     }
 
-    // Cihaz tarih-saat raporu oluşturma butonuna tıklanınca çalışacak fonksiyon
-    function generateElectricityMeterTimeReport() {
+    function initiateTimeReportRequest() {
         $.blockUI({
             message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
             overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
@@ -620,29 +615,16 @@
                 'Content-Type': 'application/json',
             }
         })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-            return response.json();
-        })
-        .then(data => {
-            updateReportModalTable(data);
-            $('#generateElectricityReportModal').modal('hide'); // Modal'ı kapatıp report modal'ını aç
-            setTimeout(() => {
-                $('#reportModal').modal('show');
-            }, 500); // Modal'ın düzgün açılması için bir gecikme ekleniyor
-        })
         .catch(error => {
-            console.error('Error fetching time report:', error.message);
-            alert(`Error fetching time report: ${error.message}`);
+            console.error('Error initiating time report request:', error.message);
+            alert(`Error initiating time report request: ${error.message}`);
         })
         .finally(() => {
             $.unblockUI();
         });
     }
 
-    function generateMoxaDeviceStatusReport() {
+    function initiateMoxaDeviceStatusReportRequest() {
         $.blockUI({
             message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
             overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
@@ -655,22 +637,9 @@
                 'Content-Type': 'application/json',
             }
         })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-            return response.json();
-        })
-        .then(data => {
-            updateReportModalTable(data, "Moxa Cihaz Durum Raporu");
-            $('#generateElectricityReportModal').modal('hide'); // Modal'ı kapatıp report modal'ını aç
-            setTimeout(() => {
-                $('#reportModal').modal('show');
-            }, 500); // Modal'ın düzgün açılması için bir gecikme ekleniyor
-        })
         .catch(error => {
-            console.error('Error fetching Moxa device status report:', error.message);
-            alert(`Moxa cihaz durum raporu alınırken bir hata oluştu: ${error.message}`);
+            console.error('Error initiating Moxa device status report request:', error.message);
+            alert(`Error initiating Moxa device status report request: ${error.message}`);
         })
         .finally(() => {
             $.unblockUI();
