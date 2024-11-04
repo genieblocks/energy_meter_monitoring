@@ -349,8 +349,8 @@ document.addEventListener('DOMContentLoaded', function() {
     tableBodyIEC.innerHTML = ''; // Mevcut satırları temizle
 
     if (data[0].success && Array.isArray(data[0].data)) {
-      // Benzersiz `Block` değerlerini al ve menüye ekle
-      const uniqueBlocks = [...new Set(data[0].data.map(item => item.Block))];
+      // Benzersiz `Block` değerlerini al, sıralama yap ve menüye ekle
+      const uniqueBlocks = [...new Set(data[0].data.map(item => item.Block))].sort();
       const consumptionMenu = document.querySelector('.menu-content');
       consumptionMenu.innerHTML = ''; // Mevcut menü öğelerini temizle
 
@@ -361,45 +361,25 @@ document.addEventListener('DOMContentLoaded', function() {
         consumptionMenu.appendChild(menuItem);
       });
 
+      // İlk blok aktif olarak ayarla
+      if (uniqueBlocks.length > 0) {
+        currentBlock = uniqueBlocks[0];
+        updateContent(currentBlock, data[0].data);
+        document.querySelector(`a[data-block="${currentBlock}"]`).classList.add('active');
+      }
+
       // Tıklanan bloğa göre tabloyu filtrele ve başlığı güncelle
       document.querySelectorAll('.block-link').forEach(link => {
         link.addEventListener('click', function(event) {
           event.preventDefault();
           currentBlock = event.target.getAttribute('data-block');
           
-          // `form-repeater` başlığını güncelle
-          document.querySelector('#repeat-form').innerText = `Blok ${currentBlock}`;
+          // Tıklanan bloğu aktif yap
+          document.querySelectorAll('.block-link').forEach(l => l.classList.remove('active'));
+          event.target.classList.add('active');
           
-          // `iecTable` içeriğini filtrele
-          const filteredData = data[0].data.filter(connection => connection.Block === currentBlock);
-          tableBodyIEC.innerHTML = ''; // Tabloyu sıfırla
-
-          filteredData.forEach(connection => {
-            const row = document.createElement('tr');
-            row.innerHTML = `
-              <td>${connection.BuildingNo}</td>
-              <td>${connection.Flat}</td>
-              <td>${connection.Subscriber}</td>
-              <td>${connection.Note}</td>
-              <td>${connection.ElectricityUsage}</td>
-              <td>${connection.HotWaterUsage}</td>
-              <td>${connection.ColdWaterUsage}</td>
-              <td>${connection.HeatingUsage}</td>
-              <td>${connection.CoolingUsage}</td>
-              <td>
-                <span class="dropdown">
-                  <button id="btnSearchDrop01" type="button" data-toggle="dropdown" aria-haspopup="true"
-                  aria-expanded="true" class="btn btn-genie dropdown-toggle dropdown-menu-right"><i class="ft-settings"></i></button>
-                  <span aria-labelledby="btnSearchDrop01" class="dropdown-menu mt-1 dropdown-menu-right">
-                    <a href="#" class="dropdown-item"><i class="fa fa-eye"></i> Detay</a>
-                    <a href="#" class="dropdown-item"><i class="fa fa-pencil"></i> Düzenle</a>
-                    <a href="#" class="dropdown-item"><i class="fa fa-trash"></i> Sil</a>
-                  </span>
-                </span>
-              </td>
-            `;
-            tableBodyIEC.appendChild(row);
-          });
+          // İçeriği güncelle
+          updateContent(currentBlock, data[0].data);
         });
       });
     } else {
@@ -411,6 +391,44 @@ document.addEventListener('DOMContentLoaded', function() {
     // UI'yi aç ve spinnerı kaldır
     $.unblockUI();
   });
+
+  // İçeriği güncelleme fonksiyonu
+  function updateContent(block, data) {
+    // `form-repeater` başlığını güncelle
+    document.querySelector('#repeat-form').innerText = `Blok ${block}`;
+    
+    // `iecTable` içeriğini filtrele
+    const tableBodyIEC = document.querySelector('#iecTable tbody');
+    const filteredData = data.filter(connection => connection.Block === block);
+    tableBodyIEC.innerHTML = ''; // Tabloyu sıfırla
+
+    filteredData.forEach(connection => {
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td>${connection.BuildingNo}</td>
+        <td>${connection.Flat}</td>
+        <td>${connection.Subscriber}</td>
+        <td>${connection.Note}</td>
+        <td>${connection.ElectricityUsage}</td>
+        <td>${connection.HotWaterUsage}</td>
+        <td>${connection.ColdWaterUsage}</td>
+        <td>${connection.HeatingUsage}</td>
+        <td>${connection.CoolingUsage}</td>
+        <td>
+          <span class="dropdown">
+            <button id="btnSearchDrop01" type="button" data-toggle="dropdown" aria-haspopup="true"
+            aria-expanded="true" class="btn btn-genie dropdown-toggle dropdown-menu-right"><i class="ft-settings"></i></button>
+            <span aria-labelledby="btnSearchDrop01" class="dropdown-menu mt-1 dropdown-menu-right">
+              <a href="#" class="dropdown-item"><i class="fa fa-eye"></i> Detay</a>
+              <a href="#" class="dropdown-item"><i class="fa fa-pencil"></i> Düzenle</a>
+              <a href="#" class="dropdown-item"><i class="fa fa-trash"></i> Sil</a>
+            </span>
+          </span>
+        </td>
+      `;
+      tableBodyIEC.appendChild(row);
+    });
+  }
 });
 
 document.addEventListener('DOMContentLoaded', function() {
