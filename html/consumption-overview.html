@@ -685,7 +685,7 @@ document.addEventListener('DOMContentLoaded', function() {
     css: { border: 0, padding: 0, backgroundColor: 'transparent' }
   });
 
-  // IEC 62056-21 verilerini çek ve tabloya ekle
+  // IEC 62056-21 verilerini çek ve tabloya ve menüye ekle
   fetch(`${baseWebhookURL}/webhook/get-table-content`, {
     method: 'POST',
     headers: {
@@ -699,6 +699,7 @@ document.addEventListener('DOMContentLoaded', function() {
     tableBodyIEC.innerHTML = ''; // Mevcut satırları temizle
 
     if (data[0].success && Array.isArray(data[0].data)) {
+      // Tabloya verileri ekle
       data[0].data.forEach(connection => {
         const row = document.createElement('tr');
         row.innerHTML = `
@@ -711,22 +712,34 @@ document.addEventListener('DOMContentLoaded', function() {
           <td>${connection.ColdWaterUsage}</td>
           <td>${connection.HeatingUsage}</td>
           <td>${connection.CoolingUsage}</td>
-            <td>
-              <span class="dropdown">
-                <button id="btnSearchDrop01" type="button" data-toggle="dropdown" aria-haspopup="true"
-                aria-expanded="true" class="btn btn-genie dropdown-toggle dropdown-menu-right"><i class="ft-settings"></i></button>
-                <span aria-labelledby="btnSearchDrop01" class="dropdown-menu mt-1 dropdown-menu-right">
-                  <a href="#" class="dropdown-item"><i class="fa fa-eye"></i> Detay</a>
-                  <a href="#" class="dropdown-item"><i class="fa fa-pencil"></i> Düzenle</a>
-                  <a href="#" class="dropdown-item"><i class="fa fa-trash"></i> Sil</a>
-                </span>
+          <td>
+            <span class="dropdown">
+              <button id="btnSearchDrop01" type="button" data-toggle="dropdown" aria-haspopup="true"
+              aria-expanded="true" class="btn btn-genie dropdown-toggle dropdown-menu-right"><i class="ft-settings"></i></button>
+              <span aria-labelledby="btnSearchDrop01" class="dropdown-menu mt-1 dropdown-menu-right">
+                <a href="#" class="dropdown-item"><i class="fa fa-eye"></i> Detay</a>
+                <a href="#" class="dropdown-item"><i class="fa fa-pencil"></i> Düzenle</a>
+                <a href="#" class="dropdown-item"><i class="fa fa-trash"></i> Sil</a>
               </span>
-            </td>
+            </span>
+          </td>
         `;
         tableBodyIEC.appendChild(row);
       });
+
+      // Benzersiz `Block` değerlerini al ve menüye ekle
+      const uniqueBlocks = [...new Set(data[0].data.map(item => item.Block))];
+      const consumptionMenu = document.querySelector('.menu-content'); // `menu-content` sınıfını kullanan menüyü seç
+      consumptionMenu.innerHTML = ''; // Mevcut menü öğelerini temizle
+
+      uniqueBlocks.forEach(block => {
+        const menuItem = document.createElement('li');
+        menuItem.className = 'menu-item';
+        menuItem.innerHTML = `<a href="consumption-overview.html" data-i18n="nav.starter_kit.semi_dark_layout">Blok ${block}</a>`;
+        consumptionMenu.appendChild(menuItem);
+      });
     } else {
-      console.error('IECProtocolConnections tablosu verileri yüklenemedi:', data[0].message);
+      console.error('Facility tablosu verileri yüklenemedi:', data[0].message);
     }
   })
   .catch(error => console.error('Error:', error))
