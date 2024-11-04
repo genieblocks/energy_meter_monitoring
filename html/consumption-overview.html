@@ -356,7 +356,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
       uniqueBlocks.forEach(block => {
         const menuItem = document.createElement('li');
-        menuItem.className = 'menu-item';
+        menuItem.className = 'menu-item'; // Başlangıçta `menu-item` olarak ayarla
         menuItem.innerHTML = `<a href="#" data-block="${block}" class="block-link">Blok ${block}</a>`;
         consumptionMenu.appendChild(menuItem);
       });
@@ -365,7 +365,7 @@ document.addEventListener('DOMContentLoaded', function() {
       if (uniqueBlocks.length > 0) {
         currentBlock = uniqueBlocks[0];
         updateContent(currentBlock, data[0].data);
-        document.querySelector(`a[data-block="${currentBlock}"]`).classList.add('active');
+        document.querySelector(`a[data-block="${currentBlock}"]`).parentElement.classList.add('active');
       }
 
       // Tıklanan bloğa göre tabloyu filtrele ve başlığı güncelle
@@ -374,9 +374,9 @@ document.addEventListener('DOMContentLoaded', function() {
           event.preventDefault();
           currentBlock = event.target.getAttribute('data-block');
           
-          // Tıklanan bloğu aktif yap
-          document.querySelectorAll('.block-link').forEach(l => l.classList.remove('active'));
-          event.target.classList.add('active');
+          // Tıklanan bloğun `li` öğesini aktif yap ve diğerlerinden kaldır
+          document.querySelectorAll('.menu-content .menu-item, .menu-content .active').forEach(l => l.classList.remove('active'));
+          event.target.parentElement.classList.add('active');
           
           // İçeriği güncelle
           updateContent(currentBlock, data[0].data);
