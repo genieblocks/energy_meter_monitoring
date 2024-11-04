@@ -529,6 +529,7 @@
                   <th>Bina No</th>
                   <th>Daire</th>
                   <th>Abone</th>
+                  <th>Not</th>
                   <th>Elektrik Tük. (kWh)</th>
                   <th>Su Tük. (Soğuk) (m3)</th>
                   <th>Su Tük. (Sıcak) (m3)</th>
@@ -690,7 +691,7 @@ document.addEventListener('DOMContentLoaded', function() {
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ tableName: 'DummySubscriber' })
+    body: JSON.stringify({ tableName: 'Facility' })
   })
   .then(response => response.json())
   .then(data => {
@@ -704,6 +705,7 @@ document.addEventListener('DOMContentLoaded', function() {
           <td>${connection.BuildingNo}</td>
           <td>${connection.Flat}</td>
           <td>${connection.Subscriber}</td>
+          <td>${connection.Note}</td>
           <td>${connection.ElectricityUsage}</td>
           <td>${connection.HotWaterUsage}</td>
           <td>${connection.ColdWaterUsage}</td>
