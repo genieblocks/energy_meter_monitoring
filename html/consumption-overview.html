@@ -392,7 +392,6 @@ document.addEventListener('DOMContentLoaded', function() {
     $.unblockUI();
   });
 
-  // İçeriği güncelleme fonksiyonu
   function updateContent(block, data) {
     // `form-repeater` başlığını güncelle
     document.querySelector('#repeat-form').innerText = `Blok ${block}`;
@@ -405,15 +404,15 @@ document.addEventListener('DOMContentLoaded', function() {
     filteredData.forEach(connection => {
       const row = document.createElement('tr');
       row.innerHTML = `
-        <td>${connection.BuildingNo}</td>
-        <td>${connection.Flat}</td>
-        <td>${connection.Subscriber}</td>
-        <td>${connection.Note}</td>
-        <td>${connection.ElectricityUsage}</td>
-        <td>${connection.HotWaterUsage}</td>
-        <td>${connection.ColdWaterUsage}</td>
-        <td>${connection.HeatingUsage}</td>
-        <td>${connection.CoolingUsage}</td>
+        <td>${connection.BuildingNo ?? '-'}</td>
+        <td>${connection.Flat ?? '-'}</td>
+        <td>${connection.Subscriber ?? '-'}</td>
+        <td>${connection.Note ?? '-'}</td>
+        <td>${connection.ElectricityUsage ?? '-'}</td>
+        <td>${connection.HotWaterUsage ?? '-'}</td>
+        <td>${connection.ColdWaterUsage ?? '-'}</td>
+        <td>${connection.HeatingUsage ?? '-'}</td>
+        <td>${connection.CoolingUsage ?? '-'}</td>
         <td>
           <span class="dropdown">
             <button id="btnSearchDrop01" type="button" data-toggle="dropdown" aria-haspopup="true"
@@ -429,7 +428,6 @@ document.addEventListener('DOMContentLoaded', function() {
       tableBodyIEC.appendChild(row);
     });
   }
-});
 
 document.addEventListener('DOMContentLoaded', function() {
   const tableBodyIEC = document.querySelector('#iecTable tbody');
