@@ -203,6 +203,23 @@
     </div>
   </div>
 </section>
+<!-- Add Modal Flat Details-->
+<div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="detailModalLabel" aria-hidden="true"></div>
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="detailModalLabel"></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- Modal içeriği burada yer alacak -->
+        Detaylı bilgiler...
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- Add Row Modal for IEC 62056-21-->
 <div class="modal fade" id="addRowModalIEC" tabindex="-1" role="dialog" aria-labelledby="addRowModalLabel" aria-hidden="true">
@@ -324,26 +341,6 @@
   // const baseWebhookURL = "http://127.0.0.1:5678"; // Değiştirmek istediğiniz temel URL
   const baseWebhookURL = "http://192.168.2.250:5678"; // Değiştirmek istediğiniz temel URL
   // const baseWebhookURL = "http://192.168.1.146:5678"; // Değiştirmek istediğiniz temel URL
-
-// Modal yapısı için HTML ekleyelim
-document.body.insertAdjacentHTML('beforeend', `
-<div class="modal fade text-left" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="detailModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-sm" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="detailModalLabel"></h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <!-- Modal içeriği burada yer alacak -->
-        Detaylı bilgiler...
-      </div>
-    </div>
-  </div>
-</div>
-`);
 
 document.addEventListener('DOMContentLoaded', function() {
   // UI'yi kilitle ve spinner göster
