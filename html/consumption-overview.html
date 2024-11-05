@@ -206,7 +206,7 @@
 
 <!-- Add Modal Flat Details-->
 <div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="detailModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="detailModalLabel"></h5>
@@ -215,8 +215,23 @@
         </button>
       </div>
       <div class="modal-body">
-        <!-- Modal içeriği burada yer alacak -->
-        Detaylı bilgiler...
+        <table class="table table-hover table-bordered">
+          <thead>
+            <tr>
+              <th>Sayaç Tipi</th>
+              <th>Sayaç İsmi</th>
+              <th>Seri Numarası</th>
+              <th>Sayaç Değeri</th>
+              <th>Düzenle</th>
+            </tr>
+          </thead>
+          <tbody id="detailTableBody">
+            <!-- Dinamik olarak doldurulacak -->
+          </tbody>
+        </table>
+        <div class="form-group text-right">
+          <button id="defineMeterButton" class="btn btn-primary">Sayaç Tanımla</button>
+        </div>
       </div>
     </div>
   </div>
@@ -342,6 +357,55 @@
   // const baseWebhookURL = "http://127.0.0.1:5678"; // Değiştirmek istediğiniz temel URL
   const baseWebhookURL = "http://192.168.2.250:5678"; // Değiştirmek istediğiniz temel URL
   // const baseWebhookURL = "http://192.168.1.146:5678"; // Değiştirmek istediğiniz temel URL
+
+// Her detay butonuna tıklama olayını dinle
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('.detail-button').forEach(button => {
+    button.addEventListener('click', function(event) {
+      event.preventDefault();
+      const row = button.closest('tr');
+      const connection = {
+        BuildingNo: row.cells[0].innerText,
+        Flat: row.cells[1].innerText,
+        Subscriber: row.cells[2].innerText
+      };
+      showDetailModal(connection);
+    });
+  });
+});
+
+// Detay modalını açan ve içeriği dinamik olarak dolduran fonksiyon
+function showDetailModal(connection) {
+  const detailTableBody = document.getElementById('detailTableBody');
+  detailTableBody.innerHTML = ''; // Mevcut içeriği temizle
+
+  // Örnek sayaç verisi (gerçek veriler yerine örnek veri eklenebilir)
+  const meterData = [
+    { type: "Elektrik sayacı", name: "Giriş", serial: "30171275", value: "330 kWh" },
+    { type: "Su sayacı (Sıcak)", name: "Mutfak", serial: "30171276", value: "56 m3" },
+    { type: "Kalorimetre (Soğuk)", name: "Salon", serial: "30171277", value: "4 kWh" }
+  ];
+
+  // Tabloda sayaç bilgilerini görüntüle
+  meterData.forEach(meter => {
+    const row = document.createElement('tr');
+    row.innerHTML = `
+      <td>${meter.type}</td>
+      <td>${meter.name}</td>
+      <td>${meter.serial}</td>
+      <td>${meter.value}</td>
+      <td><button class="btn btn-warning btn-sm">Düzenle</button></td>
+    `;
+    detailTableBody.appendChild(row);
+  });
+
+  // Modal başlığı güncelle
+  const title = `Bina No: ${connection.BuildingNo ?? '-'} Daire: ${connection.Flat ?? '-'} Abone: ${connection.Subscriber ?? '-'}`;
+  document.getElementById('detailModalLabel').innerText = title;
+
+  // Modalı göster
+  $('#detailModal').modal('show');
+}
 
 document.addEventListener('DOMContentLoaded', function() {
   // UI'yi kilitle ve spinner göster
