@@ -231,7 +231,7 @@
         </table>
         <div class="form-group">
           <button id="defineMeterButton" class="btn btn-info btn-lg" data-toggle="modal" data-target="#addRowModalMeter">
-            <i class="icon-plus4"></i> Sayaç Tanımla
+            Sayaç Tanımla
           </button>
         </div>
       </div>
@@ -398,7 +398,18 @@ function showDetailModal(connection) {
       <td>${meter.name}</td>
       <td>${meter.serial}</td>
       <td>${meter.value}</td>
-      <td><button class="btn btn-warning btn-sm">Düzenle</button></td>
+      <td>
+        <span class="dropdown">
+          <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-genie dropdown-toggle dropdown-menu-right">
+            <i class="ft-settings"></i>
+          </button>
+          <span class="dropdown-menu mt-1 dropdown-menu-right">
+            <a href="#" class="dropdown-item detail-button"><i class="fa fa-eye"></i> Detay</a>
+            <a href="#" class="dropdown-item edit-button"><i class="fa fa-pencil"></i> Düzenle</a>
+            <a href="#" class="dropdown-item delete-button"><i class="fa fa-trash"></i> Sil</a>
+          </span>
+        </span>
+      </td>
     `;
     detailTableBody.appendChild(row);
   });
@@ -542,6 +553,29 @@ document.querySelectorAll('.dropdown-toggle').forEach(button => {
       }
     }, 100); // Small delay to allow dropdown to show before hiding if necessary
   });
+});
+
+// Detay, Düzenle ve Sil butonları için olay dinleyiciler ekleyin
+document.addEventListener('click', function(event) {
+  const target = event.target;
+  
+  if (target.closest('.detail-button')) {
+    event.preventDefault();
+    // Detay işlevi burada yer alır
+    console.log('Detay butonuna basıldı');
+  }
+  
+  if (target.closest('.edit-button')) {
+    event.preventDefault();
+    // Düzenle işlevi burada yer alır
+    console.log('Düzenle butonuna basıldı');
+  }
+  
+  if (target.closest('.delete-button')) {
+    event.preventDefault();
+    // Sil işlevi burada yer alır
+    console.log('Sil butonuna basıldı');
+  }
 });
 
 // Dropdown menüyü tamamen gizle
