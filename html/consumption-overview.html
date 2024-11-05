@@ -521,17 +521,26 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 });
 
-document.addEventListener('DOMContentLoaded', function() {
-  const dropdownButton = document.getElementById('btnSearchDrop01');
-  
-  dropdownButton.addEventListener('click', function(event) {
-    event.stopPropagation(); // Dropdown açıldığında diğer olayları durdur
-  });
-  
-  // Dropdown menüsü açıkken bir tıklama algılandığında kapanmasını sağla
-  document.addEventListener('click', function() {
-    $('.dropdown-menu').removeClass('show'); // Bootstrap sınıfını kaldırarak dropdown'u gizle
-    $('.dropdown-menu').css('display', 'none'); // Dropdown'un görünürlüğünü kaldır
+// Close the dropdown when clicking outside
+document.addEventListener('click', function(event) {
+  const dropdown = document.querySelector('.dropdown-menu.show');
+  if (dropdown && !dropdown.contains(event.target)) {
+    dropdown.classList.remove('show');
+    dropdown.parentNode.querySelector('.dropdown-toggle').setAttribute('aria-expanded', 'false');
+  }
+});
+
+// Ensure dropdown is properly hidden after closing
+document.querySelectorAll('.dropdown-toggle').forEach(button => {
+  button.addEventListener('click', function() {
+    setTimeout(() => {
+      const dropdown = button.nextElementSibling;
+      if (!dropdown.classList.contains('show')) {
+        dropdown.style.display = 'none';  // Hide the dropdown completely
+      } else {
+        dropdown.style.display = '';      // Reset display if dropdown is active
+      }
+    }, 100); // Small delay to allow dropdown to show before hiding if necessary
   });
 });
 
