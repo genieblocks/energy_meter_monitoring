@@ -325,6 +325,26 @@
   const baseWebhookURL = "http://192.168.2.250:5678"; // Değiştirmek istediğiniz temel URL
   // const baseWebhookURL = "http://192.168.1.146:5678"; // Değiştirmek istediğiniz temel URL
 
+// Modal yapısı için HTML ekleyelim
+document.body.insertAdjacentHTML('beforeend', `
+<div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="detailModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="detailModalLabel"></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- Modal içeriği burada yer alacak -->
+        Detaylı bilgiler...
+      </div>
+    </div>
+  </div>
+</div>
+`);
+
 document.addEventListener('DOMContentLoaded', function() {
   // UI'yi kilitle ve spinner göster
   $.blockUI({
@@ -393,10 +413,7 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
   function updateContent(block, data) {
-    // `form-repeater` başlığını güncelle
     document.querySelector('#repeat-form').innerText = `Blok ${block}`;
-    
-    // `iecTable` içeriğini filtrele
     const tableBodyIEC = document.querySelector('#iecTable tbody');
     const filteredData = data.filter(connection => connection.Block === block);
     tableBodyIEC.innerHTML = ''; // Tabloyu sıfırla
@@ -418,7 +435,7 @@ document.addEventListener('DOMContentLoaded', function() {
             <button id="btnSearchDrop01" type="button" data-toggle="dropdown" aria-haspopup="true"
             aria-expanded="true" class="btn btn-genie dropdown-toggle dropdown-menu-right"><i class="ft-settings"></i></button>
             <span aria-labelledby="btnSearchDrop01" class="dropdown-menu mt-1 dropdown-menu-right">
-              <a href="#" class="dropdown-item"><i class="fa fa-eye"></i> Detay</a>
+              <a href="#" class="dropdown-item detail-button"><i class="fa fa-eye"></i> Detay</a>
               <a href="#" class="dropdown-item"><i class="fa fa-pencil"></i> Düzenle</a>
               <a href="#" class="dropdown-item"><i class="fa fa-trash"></i> Sil</a>
             </span>
@@ -426,6 +443,14 @@ document.addEventListener('DOMContentLoaded', function() {
         </td>
       `;
       tableBodyIEC.appendChild(row);
+
+      // "Detay" butonuna basıldığında modal başlığını ayarla ve modalı aç
+      row.querySelector('.detail-button').addEventListener('click', function(event) {
+        event.preventDefault();
+        const title = `Bina No: ${connection.BuildingNo ?? '-'} Daire: ${connection.Flat ?? '-'} Abone: ${connection.Subscriber ?? '-'}`;
+        document.getElementById('detailModalLabel').innerText = title;
+        $('#detailModal').modal('show');
+      });
     });
   }
 });
