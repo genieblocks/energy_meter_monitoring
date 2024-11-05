@@ -358,18 +358,20 @@
   const baseWebhookURL = "http://192.168.2.250:5678"; // Değiştirmek istediğiniz temel URL
   // const baseWebhookURL = "http://192.168.1.146:5678"; // Değiştirmek istediğiniz temel URL
 
-// Her detay butonuna tıklama olayını dinle
+// "Detay" butonuna basıldığında modal başlığını ayarla ve modalı aç
 document.addEventListener('DOMContentLoaded', function() {
-  document.querySelectorAll('.detail-button').forEach(button => {
-    button.addEventListener('click', function(event) {
-      event.preventDefault();
-      const row = button.closest('tr');
-      const connection = {
-        BuildingNo: row.cells[0].innerText,
-        Flat: row.cells[1].innerText,
-        Subscriber: row.cells[2].innerText
-      };
-      showDetailModal(connection);
+  document.querySelectorAll('#iecTable tbody').forEach(tableBody => {
+    tableBody.addEventListener('click', function(event) {
+      if (event.target.classList.contains('detail-button')) {
+        event.preventDefault();
+        const row = event.target.closest('tr');
+        const connection = {
+          BuildingNo: row.cells[0].innerText,
+          Flat: row.cells[1].innerText,
+          Subscriber: row.cells[2].innerText
+        };
+        showDetailModal(connection);
+      }
     });
   });
 });
