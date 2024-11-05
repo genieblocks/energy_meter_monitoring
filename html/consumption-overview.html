@@ -522,6 +522,20 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 document.addEventListener('DOMContentLoaded', function() {
+  const dropdownButton = document.getElementById('btnSearchDrop01');
+  
+  dropdownButton.addEventListener('click', function(event) {
+    event.stopPropagation(); // Dropdown açıldığında diğer olayları durdur
+  });
+  
+  // Dropdown menüsü açıkken bir tıklama algılandığında kapanmasını sağla
+  document.addEventListener('click', function() {
+    $('.dropdown-menu').removeClass('show'); // Bootstrap sınıfını kaldırarak dropdown'u gizle
+    $('.dropdown-menu').css('display', 'none'); // Dropdown'un görünürlüğünü kaldır
+  });
+});
+
+document.addEventListener('DOMContentLoaded', function() {
   const tableBodyIEC = document.querySelector('#iecTable tbody');
 
   document.getElementById('addRowFormIEC').addEventListener('submit', function(e) {
