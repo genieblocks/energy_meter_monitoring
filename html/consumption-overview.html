@@ -433,6 +433,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const urlParams = new URLSearchParams(window.location.search);
   const blockParam = urlParams.get('block');
 
+  // Mevcut bloklardan alınan blockParam ile eşleşeni aktif yap ve içeriği güncelle
   if (blockParam) {
     activateBlock(blockParam);
   }
@@ -447,19 +448,21 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
   function activateBlock(block) {
-    // Sol menüdeki blokları güncelle
-    document.querySelectorAll('.menu-content .menu-item, .menu-content .active').forEach(item => item.classList.remove('active'));
+    // Sol menüdeki uygun bloğu aktif yap
+    document.querySelectorAll('.menu-content .menu-item').forEach(item => item.classList.remove('active'));
     const blockLink = document.querySelector(`.menu-content .block-link[data-block="${block}"]`);
     if (blockLink) {
       blockLink.parentElement.classList.add('active');
     }
+
+    // Blok başlığını güncelle
+    document.getElementById('repeat-form').innerText = `Blok ${block}`;
 
     // Blok içeriğini güncelle
     fetchContentForBlock(block);
   }
 
   function fetchContentForBlock(block) {
-    // Burada uygun veri ile içeriği güncelle
     fetch(`${baseWebhookURL}/webhook/get-table-content`, {
       method: 'POST',
       headers: {
@@ -476,6 +479,39 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     })
     .catch(error => console.error('Error:', error));
+  }
+
+  function updateContent(block, data) {
+    const tableBodyIEC = document.querySelector('#iecTable tbody');
+    const filteredData = data.filter(connection => connection.Block === block);
+    tableBodyIEC.innerHTML = ''; // Tabloyu sıfırla
+
+    filteredData.forEach(connection => {
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td>${connection.BuildingNo ?? '-'}</td>
+        <td>${connection.Flat ?? '-'}</td>
+        <td>${connection.Subscriber ?? '-'}</td>
+        <td>${connection.Note ?? '-'}</td>
+        <td>${connection.ElectricityUsage ?? '-'}</td>
+        <td>${connection.HotWaterUsage ?? '-'}</td>
+        <td>${connection.ColdWaterUsage ?? '-'}</td>
+        <td>${connection.HeatingUsage ?? '-'}</td>
+        <td>${connection.CoolingUsage ?? '-'}</td>
+        <td>
+          <span class="dropdown">
+            <button id="btnSearchDrop01" type="button" data-toggle="dropdown" aria-haspopup="true"
+            aria-expanded="true" class="btn btn-genie dropdown-toggle dropdown-menu-right"><i class="ft-settings"></i></button>
+            <span aria-labelledby="btnSearchDrop01" class="dropdown-menu mt-1 dropdown-menu-right">
+              <a href="#" class="dropdown-item detail-button"><i class="fa fa-eye"></i> Detay</a>
+              <a href="#" class="dropdown-item"><i class="fa fa-pencil"></i> Düzenle</a>
+              <a href="#" class="dropdown-item"><i class="fa fa-trash"></i> Sil</a>
+            </span>
+          </span>
+        </td>
+      `;
+      tableBodyIEC.appendChild(row);
+    });
   }
 });
 
