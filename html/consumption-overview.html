@@ -429,21 +429,53 @@ function showDetailModal(connection) {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-  // URL'deki block parametresini al
+  // URL'deki "block" parametresini al
   const urlParams = new URLSearchParams(window.location.search);
   const blockParam = urlParams.get('block');
 
   if (blockParam) {
-    // Sol menüdeki uygun bloğu aktif yap
-    const blockLink = document.querySelector(`.menu-content .block-link[data-block="${blockParam}"]`);
+    activateBlock(blockParam);
+  }
+
+  // Blok bağlantılarına tıklama olayı ekle
+  document.querySelectorAll('.block-link').forEach(link => {
+    link.addEventListener('click', function(event) {
+      event.preventDefault();
+      const selectedBlock = event.target.getAttribute('data-block');
+      activateBlock(selectedBlock);
+    });
+  });
+
+  function activateBlock(block) {
+    // Sol menüdeki blokları güncelle
+    document.querySelectorAll('.menu-content .menu-item, .menu-content .active').forEach(item => item.classList.remove('active'));
+    const blockLink = document.querySelector(`.menu-content .block-link[data-block="${block}"]`);
     if (blockLink) {
-      // Diğer aktif blokları temizle
-      document.querySelectorAll('.menu-content .menu-item, .menu-content .active').forEach(item => item.classList.remove('active'));
       blockLink.parentElement.classList.add('active');
-      
-      // Blok içeriğini güncelle
-      updateContent(blockParam, data[0].data);
     }
+
+    // Blok içeriğini güncelle
+    fetchContentForBlock(block);
+  }
+
+  function fetchContentForBlock(block) {
+    // Burada uygun veri ile içeriği güncelle
+    fetch(`${baseWebhookURL}/webhook/get-table-content`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ tableName: 'Facility' })
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data[0].success && Array.isArray(data[0].data)) {
+        updateContent(block, data[0].data);
+      } else {
+        console.error('Facility tablosu verileri yüklenemedi:', data[0].message);
+      }
+    })
+    .catch(error => console.error('Error:', error));
   }
 });
 
