@@ -205,7 +205,7 @@
   const baseURL = "http://192.168.2.250";
 </script>
 <script>
-  ImageMapPro.init('#image-map-pro', {
+    const imageMapProSettings = {
       "id": "6a9b4235-e000-4087-b038-3b68c6f358e5",
       "general": {
           "name": "Akaretler-Sıraevler"
@@ -280,7 +280,7 @@
               }],
               "actions": {
                   "click": "follow-link",
-                  "link": '${baseURL}/html/consumption-overview.html?block=A',
+                  "link":  "",
                   "open_link_in_new_window": false
               },
               "x_image_background": 1.5292185657429245,
@@ -744,7 +744,7 @@
               }],
               "actions": {
                   "click": "follow-link",
-                  "link": '${baseURL}/html/consumption-overview.html?block=B1',
+                  "link": "",
                   "open_link_in_new_window": false
               },
               "x_image_background": 11.143867924528301,
@@ -842,7 +842,7 @@
               }],
               "actions": {
                   "click": "follow-link",
-                  "link": '${baseURL}/html/consumption-overview.html?block=B2',
+                  "link":  "",
                   "open_link_in_new_window": false
               },
               "x_image_background": 25.707547169811324,
@@ -937,7 +937,7 @@
               }],
               "actions": {
                   "click": "follow-link",
-                  "link": '${baseURL}/html/consumption-overview.html?block=C1',
+                  "link": "",
                   "open_link_in_new_window": false
               },
               "x_image_background": 32.6061320754717,
@@ -1029,7 +1029,7 @@
               }],
               "actions": {
                   "click": "follow-link",
-                  "link": '${baseURL}/html/consumption-overview.html?block=C2',
+                  "link": "",
                   "open_link_in_new_window": false
               },
               "x_image_background": 44.51650943396226,
@@ -1139,7 +1139,7 @@
               }],
               "actions": {
                   "click": "follow-link",
-                  "link": '${baseURL}/html/consumption-overview.html?block=D',
+                  "link": "",
                   "open_link_in_new_window": false
               },
               "x_image_background": 26.3561320754717,
@@ -1321,7 +1321,7 @@
               }],
               "actions": {
                   "click": "follow-link",
-                  "link": '${baseURL}/html/consumption-overview.html?block=E1',
+                  "link": "",
                   "open_link_in_new_window": false
               },
               "x_image_background": 45.22405660377358,
@@ -1431,7 +1431,7 @@
               }],
               "actions": {
                   "click": "follow-link",
-                  "link": '${baseURL}/html/consumption-overview.html?block=E2',
+                  "link": "",
                   "open_link_in_new_window": false
               },
               "x_image_background": 59.66981132075472,
@@ -1535,7 +1535,7 @@
               }],
               "actions": {
                   "click": "follow-link",
-                  "link": '${baseURL}/html/consumption-overview.html?block=F1',
+                  "link":  "",
                   "open_link_in_new_window": false
               },
               "x_image_background": 68.86792452830188,
@@ -1630,7 +1630,7 @@
               }],
               "actions": {
                   "click": "follow-link",
-                  "link": '${baseURL}/html/consumption-overview.html?block=F2',
+                  "link":  "",
                   "open_link_in_new_window": false
               },
               "x_image_background": 78.18396226415094,
@@ -1731,7 +1731,7 @@
               }],
               "actions": {
                   "click": "follow-link",
-                  "link": '${baseURL}/html/consumption-overview.html?block=G',
+                  "link": "",
                   "open_link_in_new_window": false
               },
               "x_image_background": 32.81886622590839,
@@ -1818,6 +1818,20 @@
           }]
       }],
       "version": "6.0.21"
-  })
+    };
+
+    // Linkleri baseURL ile güncelleyen fonksiyon
+    function updateLinks(settings, baseURL) {
+      settings.artboards.forEach((artboard) => {
+        artboard.children.forEach((child) => {
+          child.actions.link = `${baseURL}/html/consumption-overview.html?block=${child.title}`;
+        });
+      });
+    }
+
+    // Linkleri güncelleyip ImageMapPro'yu başlat
+    updateLinks(imageMapProSettings, baseURL);
+    ImageMapPro.init('#image-map-pro', imageMapProSettings);
+
 </script>
 </html>
