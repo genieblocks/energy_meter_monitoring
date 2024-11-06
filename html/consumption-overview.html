@@ -360,23 +360,6 @@
   const baseWebhookURL = "http://192.168.2.250:5678"; // Değiştirmek istediğiniz temel URL
   // const baseWebhookURL = "http://192.168.1.146:5678"; // Değiştirmek istediğiniz temel URL
 
-// "Detay" butonuna basıldığında modal başlığını ayarla ve modalı aç
-document.addEventListener('DOMContentLoaded', function() {
-  document.querySelectorAll('#iecTable tbody').forEach(tableBody => {
-    tableBody.addEventListener('click', function(event) {
-      if (event.target.classList.contains('detail-button')) {
-        event.preventDefault();
-        const row = event.target.closest('tr');
-        const connection = {
-          BuildingNo: row.cells[0].innerText,
-          Flat: row.cells[1].innerText,
-          Subscriber: row.cells[2].innerText
-        };
-        showDetailModal(connection);
-      }
-    });
-  });
-});
 
 // Detay modalını açan ve içeriği dinamik olarak dolduran fonksiyon
 function showDetailModal(connection) {
@@ -432,8 +415,14 @@ document.addEventListener('DOMContentLoaded', function() {
   // URL'deki "block" parametresini al
   const urlParams = new URLSearchParams(window.location.search);
   const blockParam = urlParams.get('block');
+  let currentBlock = blockParam || ""; // Başlangıç bloğu URL parametresine göre belirlenir
 
-  let initialBlock = blockParam || ""; // Başlangıç bloğu URL parametresine göre belirlenir
+  // UI'yi kilitle ve spinner göster
+  $.blockUI({
+    message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
+    overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
+    css: { border: 0, padding: 0, backgroundColor: 'transparent' }
+  });
 
   // IEC 62056-21 verilerini çek ve tabloya ve menüye ekle
   fetch(`${baseWebhookURL}/webhook/get-table-content`, {
@@ -456,14 +445,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
       uniqueBlocks.forEach(block => {
         const menuItem = document.createElement('li');
-        menuItem.className = 'menu-item'; // Başlangıçta `menu-item` olarak ayarla
+        menuItem.className = 'menu-item';
         menuItem.innerHTML = `<a href="#" data-block="${block}" class="block-link">Blok ${block}</a>`;
         consumptionMenu.appendChild(menuItem);
       });
 
       // Eğer URL'de "block" parametresi varsa, o blok seçilir, yoksa ilk blok seçilir
-      initialBlock = initialBlock || uniqueBlocks[0];
-      activateBlock(initialBlock, data[0].data);
+      currentBlock = currentBlock || uniqueBlocks[0];
+      activateBlock(currentBlock, data[0].data);
 
       // Tıklanan bloğa göre tabloyu filtrele ve başlığı güncelle
       document.querySelectorAll('.block-link').forEach(link => {
@@ -477,7 +466,10 @@ document.addEventListener('DOMContentLoaded', function() {
       console.error('Facility tablosu verileri yüklenemedi:', data[0].message);
     }
   })
-  .catch(error => console.error('Error:', error));
+  .catch(error => console.error('Error:', error))
+  .finally(() => {
+    $.unblockUI(); // UI'yi aç ve spinnerı kaldır
+  });
 
   function activateBlock(block, data) {
     // Sol menüdeki uygun bloğu aktif yap
@@ -517,118 +509,8 @@ document.addEventListener('DOMContentLoaded', function() {
             aria-expanded="true" class="btn btn-genie dropdown-toggle dropdown-menu-right"><i class="ft-settings"></i></button>
             <span aria-labelledby="btnSearchDrop01" class="dropdown-menu mt-1 dropdown-menu-right">
               <a href="#" class="dropdown-item detail-button"><i class="fa fa-eye"></i> Detay</a>
-              <a href="#" class="dropdown-item"><i class="fa fa-pencil"></i> Düzenle</a>
-              <a href="#" class="dropdown-item"><i class="fa fa-trash"></i> Sil</a>
-            </span>
-          </span>
-        </td>
-      `;
-      tableBodyIEC.appendChild(row);
-    });
-  }
-});
-
-document.querySelectorAll('.block-link').forEach(link => {
-  link.addEventListener('click', function(event) {
-    event.preventDefault();
-    const selectedBlock = event.target.getAttribute('data-block');
-    updateContent(selectedBlock, data[0].data); // `data` değişkenini uygun veriyle değiştirin
-  });
-});
-
-document.addEventListener('DOMContentLoaded', function() {
-  // UI'yi kilitle ve spinner göster
-  $.blockUI({
-    message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
-    overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
-    css: { border: 0, padding: 0, backgroundColor: 'transparent' }
-  });
-
-  let currentBlock = ''; // Seçilen bloğu takip etmek için değişken
-
-  // IEC 62056-21 verilerini çek ve tabloya ve menüye ekle
-  fetch(`${baseWebhookURL}/webhook/get-table-content`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({ tableName: 'Facility' })
-  })
-  .then(response => response.json())
-  .then(data => {
-    const tableBodyIEC = document.querySelector('#iecTable tbody');
-    tableBodyIEC.innerHTML = ''; // Mevcut satırları temizle
-
-    if (data[0].success && Array.isArray(data[0].data)) {
-      // Benzersiz `Block` değerlerini al, sıralama yap ve menüye ekle
-      const uniqueBlocks = [...new Set(data[0].data.map(item => item.Block))].sort();
-      const consumptionMenu = document.querySelector('.menu-content');
-      consumptionMenu.innerHTML = ''; // Mevcut menü öğelerini temizle
-
-      uniqueBlocks.forEach(block => {
-        const menuItem = document.createElement('li');
-        menuItem.className = 'menu-item'; // Başlangıçta `menu-item` olarak ayarla
-        menuItem.innerHTML = `<a href="#" data-block="${block}" class="block-link">Blok ${block}</a>`;
-        consumptionMenu.appendChild(menuItem);
-      });
-
-      // İlk blok aktif olarak ayarla
-      if (uniqueBlocks.length > 0) {
-        currentBlock = uniqueBlocks[0];
-        updateContent(currentBlock, data[0].data);
-        document.querySelector(`a[data-block="${currentBlock}"]`).parentElement.classList.add('active');
-      }
-
-      // Tıklanan bloğa göre tabloyu filtrele ve başlığı güncelle
-      document.querySelectorAll('.block-link').forEach(link => {
-        link.addEventListener('click', function(event) {
-          event.preventDefault();
-          currentBlock = event.target.getAttribute('data-block');
-          
-          // Tıklanan bloğun `li` öğesini aktif yap ve diğerlerinden kaldır
-          document.querySelectorAll('.menu-content .menu-item, .menu-content .active').forEach(l => l.classList.remove('active'));
-          event.target.parentElement.classList.add('active');
-          
-          // İçeriği güncelle
-          updateContent(currentBlock, data[0].data);
-        });
-      });
-    } else {
-      console.error('Facility tablosu verileri yüklenemedi:', data[0].message);
-    }
-  })
-  .catch(error => console.error('Error:', error))
-  .finally(() => {
-    // UI'yi aç ve spinnerı kaldır
-    $.unblockUI();
-  });
-
-  function updateContent(block, data) {
-    document.querySelector('#repeat-form').innerText = `Blok ${block}`;
-    const tableBodyIEC = document.querySelector('#iecTable tbody');
-    const filteredData = data.filter(connection => connection.Block === block);
-    tableBodyIEC.innerHTML = ''; // Tabloyu sıfırla
-
-    filteredData.forEach(connection => {
-      const row = document.createElement('tr');
-      row.innerHTML = `
-        <td>${connection.BuildingNo ?? '-'}</td>
-        <td>${connection.Flat ?? '-'}</td>
-        <td>${connection.Subscriber ?? '-'}</td>
-        <td>${connection.Note ?? '-'}</td>
-        <td>${connection.ElectricityUsage ?? '-'}</td>
-        <td>${connection.HotWaterUsage ?? '-'}</td>
-        <td>${connection.ColdWaterUsage ?? '-'}</td>
-        <td>${connection.HeatingUsage ?? '-'}</td>
-        <td>${connection.CoolingUsage ?? '-'}</td>
-        <td>
-          <span class="dropdown">
-            <button id="btnSearchDrop01" type="button" data-toggle="dropdown" aria-haspopup="true"
-            aria-expanded="true" class="btn btn-genie dropdown-toggle dropdown-menu-right"><i class="ft-settings"></i></button>
-            <span aria-labelledby="btnSearchDrop01" class="dropdown-menu mt-1 dropdown-menu-right">
-              <a href="#" class="dropdown-item detail-button"><i class="fa fa-eye"></i> Detay</a>
-              <a href="#" class="dropdown-item"><i class="fa fa-pencil"></i> Düzenle</a>
-              <a href="#" class="dropdown-item"><i class="fa fa-trash"></i> Sil</a>
+              <a href="#" class="dropdown-item edit-button"><i class="fa fa-pencil"></i> Düzenle</a>
+              <a href="#" class="dropdown-item delete-button"><i class="fa fa-trash"></i> Sil</a>
             </span>
           </span>
         </td>
@@ -645,6 +527,16 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 });
+
+document.querySelectorAll('.block-link').forEach(link => {
+  link.addEventListener('click', function(event) {
+    event.preventDefault();
+    const selectedBlock = event.target.getAttribute('data-block');
+    updateContent(selectedBlock, data[0].data); // `data` değişkenini uygun veriyle değiştirin
+  });
+});
+
+
 
 // Close the dropdown when clicking outside
 document.addEventListener('click', function(event) {
