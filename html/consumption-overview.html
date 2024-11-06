@@ -433,21 +433,53 @@ document.addEventListener('DOMContentLoaded', function() {
   const urlParams = new URLSearchParams(window.location.search);
   const blockParam = urlParams.get('block');
 
-  // Mevcut bloklardan alınan blockParam ile eşleşeni aktif yap ve içeriği güncelle
-  if (blockParam) {
-    activateBlock(blockParam);
-  }
+  let initialBlock = blockParam || ""; // Başlangıç bloğu URL parametresine göre belirlenir
 
-  // Blok bağlantılarına tıklama olayı ekle
-  document.querySelectorAll('.block-link').forEach(link => {
-    link.addEventListener('click', function(event) {
-      event.preventDefault();
-      const selectedBlock = event.target.getAttribute('data-block');
-      activateBlock(selectedBlock);
-    });
-  });
+  // IEC 62056-21 verilerini çek ve tabloya ve menüye ekle
+  fetch(`${baseWebhookURL}/webhook/get-table-content`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ tableName: 'Facility' })
+  })
+  .then(response => response.json())
+  .then(data => {
+    const tableBodyIEC = document.querySelector('#iecTable tbody');
+    tableBodyIEC.innerHTML = ''; // Mevcut satırları temizle
 
-  function activateBlock(block) {
+    if (data[0].success && Array.isArray(data[0].data)) {
+      // Benzersiz `Block` değerlerini al, sıralama yap ve menüye ekle
+      const uniqueBlocks = [...new Set(data[0].data.map(item => item.Block))].sort();
+      const consumptionMenu = document.querySelector('.menu-content');
+      consumptionMenu.innerHTML = ''; // Mevcut menü öğelerini temizle
+
+      uniqueBlocks.forEach(block => {
+        const menuItem = document.createElement('li');
+        menuItem.className = 'menu-item'; // Başlangıçta `menu-item` olarak ayarla
+        menuItem.innerHTML = `<a href="#" data-block="${block}" class="block-link">Blok ${block}</a>`;
+        consumptionMenu.appendChild(menuItem);
+      });
+
+      // Eğer URL'de "block" parametresi varsa, o blok seçilir, yoksa ilk blok seçilir
+      initialBlock = initialBlock || uniqueBlocks[0];
+      activateBlock(initialBlock, data[0].data);
+
+      // Tıklanan bloğa göre tabloyu filtrele ve başlığı güncelle
+      document.querySelectorAll('.block-link').forEach(link => {
+        link.addEventListener('click', function(event) {
+          event.preventDefault();
+          const selectedBlock = event.target.getAttribute('data-block');
+          activateBlock(selectedBlock, data[0].data);
+        });
+      });
+    } else {
+      console.error('Facility tablosu verileri yüklenemedi:', data[0].message);
+    }
+  })
+  .catch(error => console.error('Error:', error));
+
+  function activateBlock(block, data) {
     // Sol menüdeki uygun bloğu aktif yap
     document.querySelectorAll('.menu-content .menu-item').forEach(item => item.classList.remove('active'));
     const blockLink = document.querySelector(`.menu-content .block-link[data-block="${block}"]`);
@@ -459,26 +491,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('repeat-form').innerText = `Blok ${block}`;
 
     // Blok içeriğini güncelle
-    fetchContentForBlock(block);
-  }
-
-  function fetchContentForBlock(block) {
-    fetch(`${baseWebhookURL}/webhook/get-table-content`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ tableName: 'Facility' })
-    })
-    .then(response => response.json())
-    .then(data => {
-      if (data[0].success && Array.isArray(data[0].data)) {
-        updateContent(block, data[0].data);
-      } else {
-        console.error('Facility tablosu verileri yüklenemedi:', data[0].message);
-      }
-    })
-    .catch(error => console.error('Error:', error));
+    updateContent(block, data);
   }
 
   function updateContent(block, data) {
