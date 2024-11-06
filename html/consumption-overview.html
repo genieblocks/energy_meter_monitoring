@@ -429,6 +429,33 @@ function showDetailModal(connection) {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
+  // URL'deki block parametresini al
+  const urlParams = new URLSearchParams(window.location.search);
+  const blockParam = urlParams.get('block');
+
+  if (blockParam) {
+    // Sol menüdeki uygun bloğu aktif yap
+    const blockLink = document.querySelector(`.menu-content .block-link[data-block="${blockParam}"]`);
+    if (blockLink) {
+      // Diğer aktif blokları temizle
+      document.querySelectorAll('.menu-content .menu-item, .menu-content .active').forEach(item => item.classList.remove('active'));
+      blockLink.parentElement.classList.add('active');
+      
+      // Blok içeriğini güncelle
+      updateContent(blockParam, data[0].data);
+    }
+  }
+});
+
+document.querySelectorAll('.block-link').forEach(link => {
+  link.addEventListener('click', function(event) {
+    event.preventDefault();
+    const selectedBlock = event.target.getAttribute('data-block');
+    updateContent(selectedBlock, data[0].data); // `data` değişkenini uygun veriyle değiştirin
+  });
+});
+
+document.addEventListener('DOMContentLoaded', function() {
   // UI'yi kilitle ve spinner göster
   $.blockUI({
     message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
