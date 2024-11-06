@@ -198,6 +198,13 @@
   <!-- END PAGE LEVEL JS-->
 </body>
 <script>
+  // const baseWebhookURL = "http://127.0.0.1:5678"; // Değiştirmek istediğiniz temel URL
+  const baseWebhookURL = "http://192.168.2.250:5678"; // Değiştirmek istediğiniz temel URL
+  // const baseWebhookURL = "http://192.168.1.146:5678"; // Değiştirmek istediğiniz temel URL
+
+  const baseURL = "http://192.168.2.250";
+</script>
+<script>
   ImageMapPro.init('#image-map-pro', {
       "id": "6a9b4235-e000-4087-b038-3b68c6f358e5",
       "general": {
@@ -216,7 +223,7 @@
       },
       "artboards": [{
           "background_type": "image",
-          "image_url": "../assets/images/akaretlerGraph.png",
+          "image_url": "/Users/oztugevsizler/Documents/software/web/image-map-pro-jquery-interactive-image-map-builder-20241023/images/akaretlerGraph.png",
           "width": 1000,
           "height": 625,
           "use_image_size": true,
@@ -233,7 +240,9 @@
                   "background_opacity": 0
               },
               "mouseover_style": {
-                  "background_opacity": 0.5
+                  "background_color": "#ffffff",
+                  "background_opacity": 0.5,
+                  "stroke_width": 2
               },
               "tooltip_content": [{
                   "type": "Heading",
@@ -271,7 +280,7 @@
               }],
               "actions": {
                   "click": "follow-link",
-                  "link": "http://192.168.2.250/html/consumption-overview.html?block=A",
+                  "link": "${baseURL}/html/consumption-overview.html?block=A",
                   "open_link_in_new_window": false
               },
               "x_image_background": 1.5292185657429245,
@@ -695,7 +704,9 @@
                   "background_opacity": 0
               },
               "mouseover_style": {
-                  "background_opacity": 0.5
+                  "background_color": "#ffffff",
+                  "background_opacity": 0.5,
+                  "stroke_width": 2
               },
               "tooltip_content": [{
                   "type": "Heading",
@@ -733,7 +744,7 @@
               }],
               "actions": {
                   "click": "follow-link",
-                  "link": "http://192.168.2.250/html/consumption-overview.html?block=B1",
+                  "link": "${baseURL}/html/consumption-overview.html?block=B1",
                   "open_link_in_new_window": false
               },
               "x_image_background": 11.143867924528301,
@@ -791,7 +802,9 @@
                   "background_opacity": 0
               },
               "mouseover_style": {
-                  "background_opacity": 0.5
+                  "background_color": "#ffffff",
+                  "background_opacity": 0.5,
+                  "stroke_width": 2
               },
               "tooltip_content": [{
                   "type": "Heading",
@@ -829,7 +842,7 @@
               }],
               "actions": {
                   "click": "follow-link",
-                  "link": "http://192.168.2.250/html/consumption-overview.html?block=B2",
+                  "link": "${baseURL}/html/consumption-overview.html?block=B2",
                   "open_link_in_new_window": false
               },
               "x_image_background": 25.707547169811324,
@@ -884,7 +897,9 @@
                   "background_opacity": 0
               },
               "mouseover_style": {
-                  "background_opacity": 0.5
+                  "background_color": "#ffffff",
+                  "background_opacity": 0.5,
+                  "stroke_width": 2
               },
               "tooltip_content": [{
                   "type": "Heading",
@@ -922,7 +937,7 @@
               }],
               "actions": {
                   "click": "follow-link",
-                  "link": "http://192.168.2.250/html/consumption-overview.html?block=C1",
+                  "link": "${baseURL}/html/consumption-overview.html?block=C1",
                   "open_link_in_new_window": false
               },
               "x_image_background": 32.6061320754717,
@@ -974,7 +989,9 @@
                   "background_opacity": 0
               },
               "mouseover_style": {
-                  "background_opacity": 0.5
+                  "background_color": "#ffffff",
+                  "background_opacity": 0.5,
+                  "stroke_width": 2
               },
               "tooltip_content": [{
                   "type": "Heading",
@@ -1012,7 +1029,7 @@
               }],
               "actions": {
                   "click": "follow-link",
-                  "link": "http://192.168.2.250/html/consumption-overview.html?block=C2",
+                  "link": "${baseURL}/html/consumption-overview.html?block=C2",
                   "open_link_in_new_window": false
               },
               "x_image_background": 44.51650943396226,
@@ -1082,7 +1099,9 @@
                   "background_opacity": 0
               },
               "mouseover_style": {
-                  "background_opacity": 0.5
+                  "background_color": "#ffffff",
+                  "background_opacity": 0.5,
+                  "stroke_width": 2
               },
               "tooltip_content": [{
                   "type": "Heading",
@@ -1120,7 +1139,7 @@
               }],
               "actions": {
                   "click": "follow-link",
-                  "link": "http://192.168.2.250/html/consumption-overview.html?block=D",
+                  "link": "${baseURL}/html/consumption-overview.html?block=D",
                   "open_link_in_new_window": false
               },
               "x_image_background": 26.3561320754717,
@@ -1262,7 +1281,9 @@
                   "background_opacity": 0
               },
               "mouseover_style": {
-                  "background_opacity": 0.5
+                  "background_color": "#ffffff",
+                  "background_opacity": 0.5,
+                  "stroke_width": 2
               },
               "tooltip_content": [{
                   "type": "Heading",
@@ -1300,7 +1321,7 @@
               }],
               "actions": {
                   "click": "follow-link",
-                  "link": "http://192.168.2.250/html/consumption-overview.html?block=E1",
+                  "link": "${baseURL}/html/consumption-overview.html?block=E1",
                   "open_link_in_new_window": false
               },
               "x_image_background": 45.22405660377358,
@@ -1370,7 +1391,9 @@
                   "background_opacity": 0
               },
               "mouseover_style": {
-                  "background_opacity": 0.5
+                  "background_color": "#ffffff",
+                  "background_opacity": 0.5,
+                  "stroke_width": 2
               },
               "tooltip_content": [{
                   "type": "Heading",
@@ -1408,7 +1431,7 @@
               }],
               "actions": {
                   "click": "follow-link",
-                  "link": "http://192.168.2.250/html/consumption-overview.html?block=E2",
+                  "link": "${baseURL}/html/consumption-overview.html?block=E2",
                   "open_link_in_new_window": false
               },
               "x_image_background": 59.66981132075472,
@@ -1472,7 +1495,9 @@
                   "background_opacity": 0
               },
               "mouseover_style": {
-                  "background_opacity": 0.5
+                  "background_color": "#ffffff",
+                  "background_opacity": 0.5,
+                  "stroke_width": 2
               },
               "tooltip_content": [{
                   "type": "Heading",
@@ -1510,7 +1535,7 @@
               }],
               "actions": {
                   "click": "follow-link",
-                  "link": "http://192.168.2.250/html/consumption-overview.html?block=F1",
+                  "link": "${baseURL}/html/consumption-overview.html?block=F1",
                   "open_link_in_new_window": false
               },
               "x_image_background": 68.86792452830188,
@@ -1565,7 +1590,9 @@
                   "background_opacity": 0
               },
               "mouseover_style": {
-                  "background_opacity": 0.5
+                  "background_color": "#ffffff",
+                  "background_opacity": 0.5,
+                  "stroke_width": 2
               },
               "tooltip_content": [{
                   "type": "Heading",
@@ -1603,7 +1630,7 @@
               }],
               "actions": {
                   "click": "follow-link",
-                  "link": "http://192.168.2.250/html/consumption-overview.html?block=F2",
+                  "link": "${baseURL}/html/consumption-overview.html?block=F2",
                   "open_link_in_new_window": false
               },
               "x_image_background": 78.18396226415094,
@@ -1652,16 +1679,21 @@
               "id": "66a301b7-0fc3-46d0-a84a-4d381900fa7d",
               "title": "G",
               "type": "poly",
-              "x": 32.81886622590839,
+              "x": 32.76886622590839,
               "y": 3.75554084777832,
-              "width": 12.246226415094341,
+              "width": 12.296226415094338,
               "height": 14.014166666666664,
               "default_style": {
                   "background_color": "#b51a00",
-                  "background_opacity": 0.7467532467532467
+                  "background_opacity": 0.3,
+                  "stroke_color": "#b51a00",
+                  "stroke_width": 2
               },
               "mouseover_style": {
-                  "background_opacity": 0.5
+                  "background_color": "#ffb5af",
+                  "background_opacity": 0.5,
+                  "stroke_opacity": 1,
+                  "stroke_width": 2
               },
               "tooltip_content": [{
                   "type": "Heading",
@@ -1699,85 +1731,88 @@
               }],
               "actions": {
                   "click": "follow-link",
-                  "link": "http://192.168.2.250/html/consumption-overview.html?block=G",
+                  "link": "${baseURL}/html/consumption-overview.html?block=G",
                   "open_link_in_new_window": false
               },
               "x_image_background": 32.81886622590839,
               "y_image_background": 3.75554084777832,
               "points": [{
-                  "x": 79.071335028118,
+                  "x": 79.15643701089456,
                   "y": 94.88315395135874
               }, {
-                  "x": 80.40597796779906,
+                  "x": 80.48565290777961,
                   "y": 80.27591128025212
               }, {
-                  "x": 99.90563130729528,
+                  "x": 99.90601503759399,
                   "y": 70.2414223702206
               }, {
                   "x": 100,
                   "y": 38.73758696557054
               }, {
-                  "x": 96.5353208535552,
+                  "x": 96.54940923737918,
                   "y": 36.4214782660403
               }, {
-                  "x": 96.5353208535552,
+                  "x": 96.54940923737918,
                   "y": 24.9003984063745
               }, {
-                  "x": 71.79146444803939,
+                  "x": 71.9061684824305,
                   "y": 13.724207647023839
               }, {
-                  "x": 55.58866266203219,
+                  "x": 55.76925195763693,
                   "y": 8.847316679377323
               }, {
-                  "x": 51.51179130581085,
+                  "x": 51.70895833517957,
                   "y": 18.81974265413135
               }, {
-                  "x": 47.230775430677134,
+                  "x": 47.44535030425194,
                   "y": 8.24153534114081
               }, {
-                  "x": 36.09993377915256,
+                  "x": 36.35976986245045,
                   "y": 7.959763338286807
               }, {
-                  "x": 34.05312464002534,
+                  "x": 34.32128363911069,
                   "y": 6.63968472302435
               }, {
-                  "x": 33.44049682489877,
+                  "x": 33.711146945221024,
                   "y": 2.574316433871683
               }, {
-                  "x": 29.369848239734974,
+                  "x": 29.65705079024087,
                   "y": 0
               }, {
                   "x": 0,
                   "y": 13.750966284117258
               }, {
-                  "x": 0.9629458439257178,
+                  "x": 1.3107493538088306,
+                  "y": 15.398478339093385
+              }, {
+                  "x": 1.365659045573074,
                   "y": 31.218409942320264
               }, {
-                  "x": 1.190414541507911,
+                  "x": 1.5922027898813793,
                   "y": 63.87675782698381
               }, {
-                  "x": 1.4444187658886347,
+                  "x": 1.845174159889525,
                   "y": 66.89659273354344
               }, {
-                  "x": 11.314613666127444,
+                  "x": 11.675234003375794,
                   "y": 71.9272165071059
               }, {
-                  "x": 20.7553347199753,
+                  "x": 21.07756636489175,
                   "y": 78.04602485580068
               }, {
-                  "x": 31.295739927586467,
+                  "x": 31.5751112475065,
                   "y": 84.36403639174644
               }, {
-                  "x": 36.35120560819657,
+                  "x": 36.61001994782872,
                   "y": 88.45216150324077
               }, {
-                  "x": 36.59194206917803,
+                  "x": 36.84977750498694,
                   "y": 91.05369566510079
               }, {
-                  "x": 50.55465680610123,
+                  "x": 50.75571582016264,
                   "y": 97.74335493845513
               }, {
-                  "x": 60.79654880209543,
+                  "x": 60.95596133190123,
                   "y": 100
               }]
           }]
