@@ -2046,7 +2046,10 @@ var layout_gun = {
         tickfont: {color: 'rgb(104,112,119)'},
         tickformat: '%d-%b',
         range: [/* başlangıç ve bitiş tarihlerini 14 günlük olacak şekilde belirleyin */],
-        showticklabels: false // X eksenindeki değerleri göstermedik
+        showticklabels: false, // X eksenindeki değerleri göstermedik
+        showline: true, // X eksen çizgisini gösterdik
+        linewidth: 1, // Çizgi kalınlığı
+        linecolor: 'rgb(104,112,119)'
     },
     showlegend: false, // Legend'ı kaldırdık
     margin: {
@@ -2061,10 +2064,14 @@ var layout_gun = {
         showgrid: false,
         title: '',
         tickfont: {color: 'rgb(104,112,119)'},
+        zeroline: true, // Y ekseninde sıfır çizgisini gösterdik
         zerolinecolor: 'rgb(104,112,119)',
-        range: [0, maxCritical], // Y ekseni maksimum değere göre dinamik olarak ayarlandı
-        tickvals: [maxCritical], // Y ekseninde sadece maksimum değeri gösteriyoruz
-        ticktext: [maxCritical.toString()] // Maksimum değeri metin olarak gösteriyoruz
+        showline: true, // Y eksen çizgisini gösterdik
+        linewidth: 1, // Çizgi kalınlığı
+        linecolor: 'rgb(104,112,119)',
+        range: [0, maxCritical], // Y ekseni minimum 0 ve maksimum değere göre ayarlandı
+        tickvals: [0, maxCritical], // Y ekseninde 0 ve maksimum değer gösteriliyor
+        ticktext: ['0', maxCritical.toString()] // 0 ve maksimum değeri metin olarak gösteriyoruz
     },
     height: 200 // Yüksekliği çark simgesine göre ayarladık (örnek değer, gerektiğinde değiştirilebilir)
 };
