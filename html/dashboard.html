@@ -381,12 +381,29 @@
   // const baseWebhookURL = "http://192.168.1.146:5678"; // Değiştirmek istediğiniz temel URL
 
   const baseURL = "http://192.168.2.250";
-
-  $(document).ready(function() {
-        // Sol ve sağdaki kartların yüksekliklerini eşitlemek için matchHeight kullan
-        $('.left-card, .half-card').matchHeight({
-            byRow: false
-        });
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+      function adjustCardHeights() {
+        const leftCard = document.querySelector('.left-card');
+        const halfCards = document.querySelectorAll('.right-cards .half-card');
+  
+        if (leftCard && halfCards.length === 2) {
+          const leftCardHeight = leftCard.offsetHeight;
+          const halfHeight = leftCardHeight / 2;
+  
+          // Sağdaki iki kartın yüksekliğini sol kartın yüksekliğine göre ayarla
+          halfCards.forEach(card => {
+            card.style.height = `${halfHeight}px`;
+          });
+        }
+      }
+  
+      // Sayfa yüklendiğinde yüksekliği ayarla
+      adjustCardHeights();
+  
+      // Pencere boyutlandığında yeniden yüksekliği ayarla
+      window.addEventListener('resize', adjustCardHeights);
     });
 </script>
 <script>
