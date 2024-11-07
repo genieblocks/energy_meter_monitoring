@@ -2040,18 +2040,8 @@ var trace1 = {
 var data1 = [trace1];
 
 var layout_gun = {
-    title: {
-        text: 'Son 14 gün', // Başlık
-        font: {
-            color: 'rgb(104,112,119)',
-            size: 14
-        },
-        x: 0.5, // Ortalamak için
-        xanchor: 'center',
-        y: 0.95 // Başlık pozisyonu için y ayarlandı
-    },
     xaxis: {
-        title: 'Tarih', // X ekseni alt başlığı
+        title: 'Son 14 Gün', // X ekseni alt başlığı
         titlefont: {
             color: 'rgb(104,112,119)',
             size: 12
@@ -2061,7 +2051,7 @@ var layout_gun = {
         },
         tickformat: '%d-%b', // Tarih formatı
         range: [/* Başlangıç ve bitiş tarihlerini 14 günlük olacak şekilde belirleyin */],
-        showticklabels: true, // X eksenindeki değerleri göster
+        showticklabels: false,
         showline: true, // X eksen çizgisini göster
         linewidth: 1, // Çizgi kalınlığı
         linecolor: 'rgb(104,112,119)'
