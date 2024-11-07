@@ -2041,22 +2041,28 @@ var data1 = [trace1];
 
 var layout_gun = {
     title: {
-        text: 'Son 14 gün',
+        text: 'Son 14 gün', // Başlık
         font: {
             color: 'rgb(104,112,119)',
             size: 14
         },
         x: 0.5, // Ortalamak için
         xanchor: 'center',
-        y: 0.9
+        y: 0.95 // Başlık pozisyonu için y ayarlandı
     },
     xaxis: {
-        titlefont: {color: 'rgb(104,112,119)'},
-        tickfont: {color: 'rgb(104,112,119)'},
-        tickformat: '%d-%b',
-        range: [/* başlangıç ve bitiş tarihlerini 14 günlük olacak şekilde belirleyin */],
-        showticklabels: false, // X eksenindeki değerleri göstermedik
-        showline: true, // X eksen çizgisini gösterdik
+        title: 'Tarih', // X ekseni alt başlığı
+        titlefont: {
+            color: 'rgb(104,112,119)',
+            size: 12
+        },
+        tickfont: {
+            color: 'rgb(104,112,119)'
+        },
+        tickformat: '%d-%b', // Tarih formatı
+        range: [/* Başlangıç ve bitiş tarihlerini 14 günlük olacak şekilde belirleyin */],
+        showticklabels: true, // X eksenindeki değerleri göster
+        showline: true, // X eksen çizgisini göster
         linewidth: 1, // Çizgi kalınlığı
         linecolor: 'rgb(104,112,119)'
     },
@@ -2064,8 +2070,8 @@ var layout_gun = {
     margin: {
         l: 30,
         r: 30,
-        t: 40, // Üst boşluk başlığı sığdırmak için ayarlandı
-        b: 10,
+        t: 60, // Üst boşluk başlık için genişletildi
+        b: 40, // Alt boşluk başlığı sığdırmak için ayarlandı
         pad: 5
     },
     yaxis: {
@@ -2082,7 +2088,7 @@ var layout_gun = {
         tickvals: [0, maxCritical], // Y ekseninde 0 ve maksimum değer gösteriliyor
         ticktext: ['0', maxCritical.toString()] // 0 ve maksimum değeri metin olarak gösteriyoruz
     },
-    height: 150 // Yüksekliği çark simgesine göre ayarladık (örnek değer, gerektiğinde değiştirilebilir)
+    height: 150 // Grafik yüksekliği ayarlandı
 };
 
 Plotly.plot('graph-gun', data1, layout_gun, {displayModeBar: false});
