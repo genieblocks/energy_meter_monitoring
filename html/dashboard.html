@@ -193,7 +193,7 @@
                             </div>
                         </div>
                     </div>
-                    <div id="sp-line-total-sales"></div>
+                    <div id="graph-gun"></div>
                 </div>
               </div>
             </div>
@@ -304,14 +304,13 @@
   <!-- END VENDOR JS-->
   <!-- BEGIN PAGE VENDOR JS-->
   <script src="../assets/js/image-map-pro.min.js"></script>
+  <script src="../app-assets/vendors/js/charts/plotly-latest.min.js"></script>
   <!-- END PAGE VENDOR JS-->
   <!-- BEGIN TEMPLATE JS-->
   <script src="../app-assets/js/core/app-menu.js"></script>
   <script src="../app-assets/js/core/app.js"></script>
   <!-- END TEMPLATE JS-->
   <!-- BEGIN PAGE LEVEL JS-->
-  <script src="../app-assets/js/scripts/ui/breadcrumbs-with-stats.js"></script>
-  <script src="../app-assets/js/scripts/pages/dashboard-analytics.js"></script>
   <!-- END PAGE LEVEL JS-->
 
 <script>
@@ -1949,6 +1948,245 @@
     // Linkleri güncelleyip ImageMapPro'yu başlat
     updateLinks(imageMapProSettings, baseURL);
     ImageMapPro.init('#image-map-pro', imageMapProSettings);
+</script>
+<script>
+json = [
+    {
+      "Timestamp": "2018-03-08 00:00:00",
+      "Critical": 19.6,
+      "Equipment": 7
+    },
+    {
+      "Timestamp": "2018-03-08 01:00:00",
+      "Critical": 14.8,
+      "Equipment": 6
+    },
+    {
+      "Timestamp": "2018-03-08 02:00:00",
+      "Critical": 13.1,
+      "Equipment": 6
+    },
+    {
+      "Timestamp": "2018-03-08 03:00:00",
+      "Critical": 12.6,
+      "Equipment": 6
+    },
+    {
+      "Timestamp": "2018-03-08 04:00:00",
+      "Critical": 6.1,
+      "Equipment": 6
+    },
+    {
+      "Timestamp": "2018-03-08 05:00:00",
+      "Critical": 5.1,
+      "Equipment": 6
+    },
+    {
+      "Timestamp": "2018-03-08 06:00:00",
+      "Critical": 4.5,
+      "Equipment": 6
+    },
+    {
+      "Timestamp": "2018-03-08 07:00:00",
+      "Critical": 4.5,
+      "Equipment": 6
+    },
+    {
+      "Timestamp": "2018-03-08 08:00:00",
+      "Critical": 3.8,
+      "Equipment": 6
+    },
+    {
+      "Timestamp": "2018-03-08 09:00:00",
+      "Critical": 4.2,
+      "Equipment": 6
+    },
+    {
+      "Timestamp": "2018-03-08 10:00:00",
+      "Critical": 4,
+      "Equipment": 6
+    },
+    {
+      "Timestamp": "2018-03-08 11:00:00",
+      "Critical": 9.2,
+      "Equipment": 6
+    },
+    {
+      "Timestamp": "2018-03-08 12:00:00",
+      "Critical": 12.2,
+      "Equipment": 6
+    },
+    {
+      "Timestamp": "2018-03-08 13:00:00",
+      "Critical": 13.3,
+      "Equipment": 7
+    },
+    {
+      "Timestamp": "2018-03-08 14:00:00",
+      "Critical": 15.4,
+      "Equipment": 8
+    },
+    {
+      "Timestamp": "2018-03-08 15:00:00",
+      "Critical": 13.7,
+      "Equipment": 8
+    },
+    {
+      "Timestamp": "2018-03-08 16:00:00",
+      "Critical": 13.8,
+      "Equipment": 7
+    },
+    {
+      "Timestamp": "2018-03-08 17:00:00",
+      "Critical": 4,
+      "Equipment": 7
+    },
+    {
+      "Timestamp": "2018-03-08 18:00:00",
+      "Critical": null,
+      "Equipment": null
+    },
+    {
+      "Timestamp": "2018-03-08 19:00:00",
+      "Critical": null,
+      "Equipment": null
+    },
+    {
+      "Timestamp": "2018-03-08 20:00:00",
+      "Critical": null,
+      "Equipment": null
+    },
+    {
+      "Timestamp": "2018-03-08 21:00:00",
+      "Critical": null,
+      "Equipment": null
+    },
+    {
+      "Timestamp": "2018-03-08 22:00:00",
+      "Critical": null,
+      "Equipment": null
+    },
+    {
+      "Timestamp": "2018-03-08 23:00:00",
+      "Critical": null,
+      "Equipment": null
+    }
+   ]
+
+// var rawDataURL = 'https://raw.githubusercontent.com/plotly/datasets/master/2016-weather-data-seattle.csv';
+var xField = 'Date';
+var yField = 'Mean_TemperatureC';
+
+    
+var result = [];
+for (var i in json) {
+    result[i] = [];
+    result[i]['Timestamp'] = json[i].Timestamp;
+    result[i]['Critical'] = json[i].Critical;
+    result[i]['Equipment'] = json[i].Equipment;
+}
+// console.log(result[0]['Critical']);
+// console.log(result[1]['Equipment']);
+// console.log(result[2]['Life Safety']);
+
+// take the columns
+var col0 = result.map(function(value,index) { return value['Timestamp']; });
+// console.log(col0);
+
+var col1 = result.map(function(value,index) { return value['Critical']; });
+// console.log(col1);
+
+var col2 = result.map(function(value,index) { return value['Equipment']; });
+// console.log(col2);
+
+
+var trace1 = {
+  x: col0,
+  y: col1,
+  type: 'bar',
+  name: 'Aktif Enerji',
+  marker: {
+    color: 'rgb(53,158,251)'
+  }
+};
+var trace2 = {
+  x: col0,
+  y: col2,
+  mode: 'lines',
+  yaxis: 'y2',
+  name: 'Sıcaklık',
+  marker: {
+    color: 'rgb(242,156,52)'
+  }
+};
+
+var data1 = [ trace1 ,  trace2 ];
+
+// var layout = {
+//   title:'Line and Scatter Plot'
+// };
+
+
+// TESTER = document.getElementById('tester');
+
+// Plotly.plot( TESTER, data,layout);
+
+/* Current Plotly.js version */
+// console.log( Plotly.BUILD );
+// var layout = {
+//     // title: 'Demand comparison by branch',
+//     xaxis: {
+//         rangeselector: selectorOptions,
+//         rangeslider: {}
+//     },
+//     yaxis: {
+//         fixedrange: true,
+//         title: 'kWh'
+//     }
+// };
+
+var layout_gun = {
+    // title: 'Demand comparison by branch',
+    // xaxis: {
+    //     rangeselector: selectorOptions,
+    //     rangeslider: {}
+    // },
+    xaxis: {
+        titlefont: {color: 'rgb(104,112,119)'},
+        tickfont: {color: 'rgb(104,112,119)'}
+    },
+    showlegend: true,
+    legend: {"orientation": "h"},
+    margin: {
+        l: 40,
+        r: 40,
+        t: 10,
+        b: 80,
+        pad: 5
+    },
+    yaxis: {
+        fixedrange: true,
+        showgrid: false,
+        title: 'Enerji',
+        titlefont: {color: 'rgb(104,112,119)'},
+        tickfont: {color: 'rgb(104,112,119)'},
+        zerolinecolor: 'rgb(104,112,119)'
+    },
+    yaxis2: {
+        showgrid: false,
+        zeroline: false,
+        visible: false,
+        // title: 'Ortalama Sıcaklık',
+        // titlefont: {color: 'rgb(148, 103, 189)'},
+        // tickfont: {color: 'rgb(148, 103, 189)'},
+        overlaying: 'y',
+        range: [-5, 45],
+        side: 'right'
+    }
+};
+
+Plotly.plot('graph-gun', data1, layout_gun,{displayModeBar: false});
+// Plotly.plot('graph-capacitive', data2, layout);
 </script>
 </body>
 </html>
