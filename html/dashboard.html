@@ -2044,8 +2044,9 @@ var layout_gun = {
     xaxis: {
         titlefont: {color: 'rgb(104,112,119)'},
         tickfont: {color: 'rgb(104,112,119)'},
-        tickformat: '%d-%b', // Gün formatı
-        range: [/* başlangıç ve bitiş tarihlerini 14 günlük olacak şekilde belirleyin */]
+        tickformat: '%d-%b',
+        range: [/* başlangıç ve bitiş tarihlerini 14 günlük olacak şekilde belirleyin */],
+        showticklabels: false // X eksenindeki değerleri göstermedik
     },
     showlegend: false, // Legend'ı kaldırdık
     margin: {
@@ -2062,8 +2063,10 @@ var layout_gun = {
         tickfont: {color: 'rgb(104,112,119)'},
         zerolinecolor: 'rgb(104,112,119)',
         range: [0, maxCritical], // Y ekseni maksimum değere göre dinamik olarak ayarlandı
+        tickvals: [maxCritical], // Y ekseninde sadece maksimum değeri gösteriyoruz
+        ticktext: [maxCritical.toString()] // Maksimum değeri metin olarak gösteriyoruz
     },
-    height: 100 // Yüksekliği çark simgesine göre ayarladık (örnek değer, gerektiğinde değiştirilebilir)
+    height: 200 // Yüksekliği çark simgesine göre ayarladık (örnek değer, gerektiğinde değiştirilebilir)
 };
 
 Plotly.plot('graph-gun', data1, layout_gun, {displayModeBar: false});
