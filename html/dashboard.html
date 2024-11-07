@@ -172,7 +172,7 @@
               </div>
             </div>
             <div class="col-xl-4 col-md-4 col-sm-12 right-cards">
-              <div class="card half-card">
+              <div class="card half-card" style="height: 320px;">
                   <div class="card-header no-border">
                       <h4 class="card-title">Cihaz Raporu</h4>
                       <a class="heading-elements-toggle"><i class="ft-more-horizontal font-medium-3"></i></a>
@@ -231,7 +231,7 @@
                       </div>
                   </div>
               </div>
-              <div class="card half-card">
+              <div class="card half-card" style="height: 320px;">
                     <div class="card-header no-border">
                         <h4 class="card-title">Jeneratör Çalışma Süresi</h4>
                         <a class="heading-elements-toggle"><i class="ft-more-horizontal font-medium-3"></i></a>
@@ -381,30 +381,6 @@
   // const baseWebhookURL = "http://192.168.1.146:5678"; // Değiştirmek istediğiniz temel URL
 
   const baseURL = "http://192.168.2.250";
-</script>
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-      function adjustCardHeights() {
-        const leftCard = document.querySelector('.left-card');
-        const halfCards = document.querySelectorAll('.right-cards .half-card');
-  
-        if (leftCard && halfCards.length === 2) {
-          const leftCardHeight = leftCard.offsetHeight;
-          const halfHeight = leftCardHeight / 2;
-  
-          // Sağdaki iki kartın yüksekliğini sol kartın yüksekliğine göre ayarla
-          halfCards.forEach(card => {
-            card.style.height = `${halfHeight}px`;
-          });
-        }
-      }
-  
-      // Sayfa yüklendiğinde yüksekliği ayarla
-      adjustCardHeights();
-  
-      // Pencere boyutlandığında yeniden yüksekliği ayarla
-      window.addEventListener('resize', adjustCardHeights);
-    });
 </script>
 <script>
     const imageMapProSettings = {
