@@ -2085,20 +2085,10 @@ for (var i in json) {
     result[i]['Critical'] = json[i].Critical;
     result[i]['Equipment'] = json[i].Equipment;
 }
-// console.log(result[0]['Critical']);
-// console.log(result[1]['Equipment']);
-// console.log(result[2]['Life Safety']);
 
 // take the columns
-var col0 = result.map(function(value,index) { return value['Timestamp']; });
-// console.log(col0);
-
-var col1 = result.map(function(value,index) { return value['Critical']; });
-// console.log(col1);
-
-var col2 = result.map(function(value,index) { return value['Equipment']; });
-// console.log(col2);
-
+var col0 = result.map(function(value, index) { return value['Timestamp']; });
+var col1 = result.map(function(value, index) { return value['Critical']; });
 
 var trace1 = {
   x: col0,
@@ -2109,51 +2099,15 @@ var trace1 = {
     color: 'rgb(53,158,251)'
   }
 };
-var trace2 = {
-  x: col0,
-  y: col2,
-  mode: 'lines',
-  yaxis: 'y2',
-  name: 'Sıcaklık',
-  marker: {
-    color: 'rgb(242,156,52)'
-  }
-};
 
-var data1 = [ trace1 ,  trace2 ];
-
-// var layout = {
-//   title:'Line and Scatter Plot'
-// };
-
-
-// TESTER = document.getElementById('tester');
-
-// Plotly.plot( TESTER, data,layout);
-
-/* Current Plotly.js version */
-// console.log( Plotly.BUILD );
-// var layout = {
-//     // title: 'Demand comparison by branch',
-//     xaxis: {
-//         rangeselector: selectorOptions,
-//         rangeslider: {}
-//     },
-//     yaxis: {
-//         fixedrange: true,
-//         title: 'kWh'
-//     }
-// };
+var data1 = [trace1];
 
 var layout_gun = {
-    // title: 'Demand comparison by branch',
-    // xaxis: {
-    //     rangeselector: selectorOptions,
-    //     rangeslider: {}
-    // },
     xaxis: {
         titlefont: {color: 'rgb(104,112,119)'},
-        tickfont: {color: 'rgb(104,112,119)'}
+        tickfont: {color: 'rgb(104,112,119)'},
+        tickformat: '%d-%b', // Gün formatı
+        range: [/* başlangıç ve bitiş tarihlerini 14 günlük olacak şekilde belirleyin */]
     },
     showlegend: true,
     legend: {"orientation": "h"},
@@ -2167,26 +2121,15 @@ var layout_gun = {
     yaxis: {
         fixedrange: true,
         showgrid: false,
-        title: 'Enerji',
-        titlefont: {color: 'rgb(104,112,119)'},
+        title: '',
         tickfont: {color: 'rgb(104,112,119)'},
-        zerolinecolor: 'rgb(104,112,119)'
-    },
-    yaxis2: {
-        showgrid: false,
-        zeroline: false,
-        visible: false,
-        // title: 'Ortalama Sıcaklık',
-        // titlefont: {color: 'rgb(148, 103, 189)'},
-        // tickfont: {color: 'rgb(148, 103, 189)'},
-        overlaying: 'y',
-        range: [-5, 45],
-        side: 'right'
+        zerolinecolor: 'rgb(104,112,119)',
+        range: [0, 24], // Saat skalası, 0'dan maksimum saate kadar
     }
 };
 
-Plotly.plot('graph-gun', data1, layout_gun,{displayModeBar: false});
-// Plotly.plot('graph-capacitive', data2, layout);
+Plotly.plot('graph-gun', data1, layout_gun, {displayModeBar: false});
+
 </script>
 </body>
 </html>
