@@ -2040,6 +2040,16 @@ var trace1 = {
 var data1 = [trace1];
 
 var layout_gun = {
+    title: {
+        text: 'Son 14 gün',
+        font: {
+            color: 'rgb(104,112,119)',
+            size: 14
+        },
+        x: 0.5, // Ortalamak için
+        xanchor: 'center',
+        y: 0.9
+    },
     xaxis: {
         titlefont: {color: 'rgb(104,112,119)'},
         tickfont: {color: 'rgb(104,112,119)'},
@@ -2054,7 +2064,7 @@ var layout_gun = {
     margin: {
         l: 30,
         r: 30,
-        t: 10,
+        t: 40, // Üst boşluk başlığı sığdırmak için ayarlandı
         b: 10,
         pad: 5
     },
