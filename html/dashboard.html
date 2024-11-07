@@ -173,7 +173,7 @@
               </div>
               <div class="card">
                 <div class="card-header no-border">
-                  <h4 class="card-title">Jeneratör</h4>
+                  <h4 class="card-title">Jeneratör Çalışma Süresi</h4>
                   <a class="heading-elements-toggle"><i class="ft-more-horizontal font-medium-3"></i></a>
                   <div class="heading-elements">
                       <ul class="list-inline mb-0">
@@ -2033,7 +2033,6 @@ var trace1 = {
   x: col0,
   y: col1,
   type: 'bar',
-  name: 'Aktif Enerji',
   marker: {
     color: 'rgb(53,158,251)'
   }
@@ -2045,10 +2044,10 @@ var layout_gun = {
     xaxis: {
         titlefont: {color: 'rgb(104,112,119)'},
         tickfont: {color: 'rgb(104,112,119)'},
-        tickformat: '%d-%b' // Gün formatı
+        tickformat: '%d-%b', // Gün formatı
+        range: [/* başlangıç ve bitiş tarihlerini 14 günlük olacak şekilde belirleyin */]
     },
-    showlegend: true,
-    legend: {"orientation": "h"},
+    showlegend: false, // Legend'ı kaldırdık
     margin: {
         l: 40,
         r: 40,
@@ -2063,7 +2062,8 @@ var layout_gun = {
         tickfont: {color: 'rgb(104,112,119)'},
         zerolinecolor: 'rgb(104,112,119)',
         range: [0, maxCritical], // Y ekseni maksimum değere göre dinamik olarak ayarlandı
-    }
+    },
+    height: 400 // Yüksekliği çark simgesine göre ayarladık (örnek değer, gerektiğinde değiştirilebilir)
 };
 
 Plotly.plot('graph-gun', data1, layout_gun, {displayModeBar: false});
