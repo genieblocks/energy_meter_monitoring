@@ -164,15 +164,15 @@
         <section id="card-overlay">
 
           <div class="row match-height">
-            <div class="col-xl-8 col-md-8 col-sm-12">
+            <div class="col-xl-8 col-md-8 col-sm-12 left-card">
               <div class="card">
                 <div class="card-content">
                   <div id="image-map-pro"></div>
                 </div>
               </div>
             </div>
-            <div class="col-xl-4 col-md-4 col-sm-12">
-              <div class="card" style="height: 320px;">
+            <div class="col-xl-4 col-md-4 col-sm-12 right-cards">
+              <div class="card half-card">
                   <div class="card-header no-border">
                       <h4 class="card-title">Cihaz Raporu</h4>
                       <a class="heading-elements-toggle"><i class="ft-more-horizontal font-medium-3"></i></a>
@@ -231,7 +231,7 @@
                       </div>
                   </div>
               </div>
-              <div class="card" style="height: 320px;">
+              <div class="card half-card">
                     <div class="card-header no-border">
                         <h4 class="card-title">Jeneratör Çalışma Süresi</h4>
                         <a class="heading-elements-toggle"><i class="ft-more-horizontal font-medium-3"></i></a>
@@ -381,6 +381,13 @@
   // const baseWebhookURL = "http://192.168.1.146:5678"; // Değiştirmek istediğiniz temel URL
 
   const baseURL = "http://192.168.2.250";
+
+  $(document).ready(function() {
+        // Sol ve sağdaki kartların yüksekliklerini eşitlemek için matchHeight kullan
+        $('.left-card, .half-card').matchHeight({
+            byRow: false
+        });
+    });
 </script>
 <script>
     const imageMapProSettings = {
