@@ -517,12 +517,10 @@ document.addEventListener('DOMContentLoaded', function() {
       `;
       tableBodyIEC.appendChild(row);
 
-      // "Detay" butonuna basıldığında modal başlığını ayarla ve modalı aç
+      // Bind the detail button to showDetailModal
       row.querySelector('.detail-button').addEventListener('click', function(event) {
         event.preventDefault();
-        const title = `Bina No: ${connection.BuildingNo ?? '-'} Daire: ${connection.Flat ?? '-'} Abone: ${connection.Subscriber ?? '-'}`;
-        document.getElementById('detailModalLabel').innerText = title;
-        $('#detailModal').modal('show');
+        showDetailModal(connection);
       });
     });
   }
