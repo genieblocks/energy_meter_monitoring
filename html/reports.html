@@ -512,7 +512,7 @@
       .then(response => response.json())
       .then(data => {
         console.log("Fetched Report Data:", data); // Debug için cevabı konsola yazdır
-        updateReportModalTable(data, reportTitle, reportTable); // Rapor başlığını modal içine ilet
+        updateReportModalTable(data, reportTitle, reportTableName); // Rapor başlığını modal içine ilet
       })
       .catch(error => {
         console.error('Error fetching report data:', error.message);
@@ -522,7 +522,7 @@
       });
     }
 
-    function updateReportModalTable(reportData, reportTitle, reportTable) {
+    function updateReportModalTable(reportData, reportTitle, reportTableName) {
       const data = reportData[0].data;
       const tableHead = document.querySelector('#DataTables_Table_Report thead');
       const tableBody = document.querySelector('#DataTables_Table_Report tbody');
