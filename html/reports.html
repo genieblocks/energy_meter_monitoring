@@ -561,7 +561,6 @@
       data.forEach(item => {
           const row = document.createElement('tr');
 
-          // Büyük/küçük harf uyumluluğunu sağlamak için her bir alanı kontrol edelim
           if (reportTableName === 'ElectricMeterDateTimeSyncReport') {
               const serialNumberCell = document.createElement('td');
               serialNumberCell.textContent = item.SerialNumber || '-';
@@ -592,14 +591,23 @@
               row.appendChild(ipAddressCell);
 
               const statusCell = document.createElement('td');
-              statusCell.textContent = item.OnlineStatus || '-';
+              const statusBadge = document.createElement('span');
+              if (item.OnlineStatus === 'Online') {
+                  statusBadge.classList.add('badge', 'badge-success');
+                  statusBadge.textContent = 'Online';
+              } else if (item.OnlineStatus === 'Offline') {
+                  statusBadge.classList.add('badge', 'badge-danger');
+                  statusBadge.textContent = 'Offline';
+              } else {
+                  statusBadge.textContent = item.OnlineStatus || '-';
+              }
+              statusCell.appendChild(statusBadge);
               row.appendChild(statusCell);
           }
 
           tableBody.appendChild(row);
       });
 
-      // Re-initialize DataTable for tableContentDataTable
       const tableId = '#DataTables_Table_Report';
       if (!$.fn.DataTable.isDataTable(tableId)) {
           $(tableId).DataTable({
@@ -613,19 +621,16 @@
                   infoEmpty: "Gösterilecek kayıt yok",
                   infoFiltered: "(toplam _MAX_ kayıt içinde filtrelendi)",
                   paginate: {
-                  first: "İlk",
-                  last: "Son",
-                  next: "Sonraki",
-                  previous: "Önceki"
+                      first: "İlk",
+                      last: "Son",
+                      next: "Sonraki",
+                      previous: "Önceki"
                   },
                   zeroRecords: "Eşleşen kayıt bulunamadı"
               }
           });
-          console.log(`DataTable initialized for: ${tableId}`);
-      } else {
-          console.log(`DataTable already initialized for: ${tableId}`);
       }
-  }
+    }
 
     function initiateTimeReportRequest() {
         $.blockUI({
