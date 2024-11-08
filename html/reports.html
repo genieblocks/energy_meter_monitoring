@@ -512,7 +512,7 @@
       .then(response => response.json())
       .then(data => {
         console.log("Fetched Report Data:", data); // Debug için cevabı konsola yazdır
-        updateReportModalTable(data, reportTitle); // Rapor başlığını modal içine ilet
+        updateReportModalTable(data, reportTitle, reportTable); // Rapor başlığını modal içine ilet
       })
       .catch(error => {
         console.error('Error fetching report data:', error.message);
@@ -522,7 +522,7 @@
       });
     }
 
-    function updateReportModalTable(reportData, reportTitle) {
+    function updateReportModalTable(reportData, reportTitle, reportTable) {
       const data = reportData[0].data;
       const tableHead = document.querySelector('#DataTables_Table_Report thead');
       const tableBody = document.querySelector('#DataTables_Table_Report tbody');
@@ -539,9 +539,18 @@
           return;
       }
 
-      const headers = ['Sayaç Seri Numarası', 'Sayaç Tarihi', 'Sayaç Saati', 'Mevcut Tarih', 'Mevcut Saat', 'Zaman Farkı'];
-      const headerRow = document.createElement('tr');
+      // Gelen reportTable değerine göre başlıkları belirle
+      let headers = [];
+      if (reportTable === 'ElectricMeterDateTimeSyncReport') {
+          headers = ['Sayaç Seri Numarası', 'Sayaç Tarihi', 'Sayaç Saati', 'Mevcut Tarih', 'Mevcut Saat', 'Zaman Farkı'];
+      } else if (reportTable === 'MoxaDeviceStatusReport') {
+          headers = ['Moxa IP Adresi', 'Durumu'];
+      } else {
+          console.warn("Bilinmeyen reportTable değeri:", reportTable);
+          return;
+      }
 
+      const headerRow = document.createElement('tr');
       headers.forEach(headerText => {
           const th = document.createElement('th');
           th.textContent = headerText;
@@ -553,29 +562,39 @@
           const row = document.createElement('tr');
 
           // Büyük/küçük harf uyumluluğunu sağlamak için her bir alanı kontrol edelim
-          const serialNumberCell = document.createElement('td');
-          serialNumberCell.textContent = item.SerialNumber || '-';
-          row.appendChild(serialNumberCell);
+          if (reportTable === 'ElectricMeterDateTimeSyncReport') {
+              const serialNumberCell = document.createElement('td');
+              serialNumberCell.textContent = item.SerialNumber || '-';
+              row.appendChild(serialNumberCell);
 
-          const meterDateCell = document.createElement('td');
-          meterDateCell.textContent = item.MeterDate || '-';
-          row.appendChild(meterDateCell);
+              const meterDateCell = document.createElement('td');
+              meterDateCell.textContent = item.MeterDate || '-';
+              row.appendChild(meterDateCell);
 
-          const meterTimeCell = document.createElement('td');
-          meterTimeCell.textContent = item.MeterTime || '-';
-          row.appendChild(meterTimeCell);
+              const meterTimeCell = document.createElement('td');
+              meterTimeCell.textContent = item.MeterTime || '-';
+              row.appendChild(meterTimeCell);
 
-          const currentDateCell = document.createElement('td');
-          currentDateCell.textContent = item.CurrentDate || '-';
-          row.appendChild(currentDateCell);
+              const currentDateCell = document.createElement('td');
+              currentDateCell.textContent = item.CurrentDate || '-';
+              row.appendChild(currentDateCell);
 
-          const currentTimeCell = document.createElement('td');
-          currentTimeCell.textContent = item.CurrentTime || '-';
-          row.appendChild(currentTimeCell);
+              const currentTimeCell = document.createElement('td');
+              currentTimeCell.textContent = item.CurrentTime || '-';
+              row.appendChild(currentTimeCell);
 
-          const timeDifferenceCell = document.createElement('td');
-          timeDifferenceCell.textContent = item.TimeDifference || '-';
-          row.appendChild(timeDifferenceCell);
+              const timeDifferenceCell = document.createElement('td');
+              timeDifferenceCell.textContent = item.TimeDifference || '-';
+              row.appendChild(timeDifferenceCell);
+          } else if (reportTable === 'MoxaDeviceStatusReport') {
+              const ipAddressCell = document.createElement('td');
+              ipAddressCell.textContent = item.IPAddress || '-';
+              row.appendChild(ipAddressCell);
+
+              const statusCell = document.createElement('td');
+              statusCell.textContent = item.Status || '-';
+              row.appendChild(statusCell);
+          }
 
           tableBody.appendChild(row);
       });
@@ -606,7 +625,7 @@
       } else {
           console.log(`DataTable already initialized for: ${tableId}`);
       }
-    }
+  }
 
     function initiateTimeReportRequest() {
         $.blockUI({
