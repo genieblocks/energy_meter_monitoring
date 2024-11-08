@@ -539,14 +539,14 @@
           return;
       }
 
-      // Gelen reportTable değerine göre başlıkları belirle
+      // Gelen reportTableName değerine göre başlıkları belirle
       let headers = [];
-      if (reportTable === 'ElectricMeterDateTimeSyncReport') {
+      if (reportTableName === 'ElectricMeterDateTimeSyncReport') {
           headers = ['Sayaç Seri Numarası', 'Sayaç Tarihi', 'Sayaç Saati', 'Mevcut Tarih', 'Mevcut Saat', 'Zaman Farkı'];
-      } else if (reportTable === 'MoxaDeviceStatusReport') {
+      } else if (reportTableName === 'MoxaDeviceStatusReport') {
           headers = ['Moxa IP Adresi', 'Durumu'];
       } else {
-          console.warn("Bilinmeyen reportTable değeri:", reportTable);
+          console.warn("Bilinmeyen reportTableName değeri:", reportTableName);
           return;
       }
 
@@ -562,7 +562,7 @@
           const row = document.createElement('tr');
 
           // Büyük/küçük harf uyumluluğunu sağlamak için her bir alanı kontrol edelim
-          if (reportTable === 'ElectricMeterDateTimeSyncReport') {
+          if (reportTableName === 'ElectricMeterDateTimeSyncReport') {
               const serialNumberCell = document.createElement('td');
               serialNumberCell.textContent = item.SerialNumber || '-';
               row.appendChild(serialNumberCell);
@@ -586,7 +586,7 @@
               const timeDifferenceCell = document.createElement('td');
               timeDifferenceCell.textContent = item.TimeDifference || '-';
               row.appendChild(timeDifferenceCell);
-          } else if (reportTable === 'MoxaDeviceStatusReport') {
+          } else if (reportTableName === 'MoxaDeviceStatusReport') {
               const ipAddressCell = document.createElement('td');
               ipAddressCell.textContent = item.IPAddress || '-';
               row.appendChild(ipAddressCell);
