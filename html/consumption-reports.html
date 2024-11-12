@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html class="loading" lang="en" data-textdirection="ltr">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+  <meta name="description" content="GenieBlocks Cloud Platform is flexable IoT platform that manage your devices.">
+  <meta name="keywords" content="GenieBlocks, IoT Platform, cloud, IoT device, edge device, ota, secure, aiot">
+  <meta name="author" content="GenieBlocks">
+  <title>GenieBlocks Cloud Platform</title>
+  <link rel="apple-touch-icon" href="../app-assets/images/ico/apple-icon-120.png">
+  <link rel="shortcut icon" type="image/x-icon" href="../app-assets/images/ico/favicon.ico">
+  <link
+    href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i%7CMuli:300,400,500,700"
+    rel="stylesheet">
+  <!-- BEGIN VENDOR CSS-->
+  <link rel="stylesheet" type="text/css" href="../app-assets/css/bootstrap.css">
+  <link rel="stylesheet" type="text/css" href="../app-assets/fonts/icomoon.css">
+  <link rel="stylesheet" type="text/css" href="../app-assets/fonts/flag-icon-css/css/flag-icon.min.css">
+  <link rel="stylesheet" type="text/css" href="../app-assets/vendors/css/sliders/slick/slick.css">
+  <link rel="stylesheet" type="text/css" href="../app-assets/vendors/css/extensions/pace.css">
+
+  <link rel="stylesheet" type="text/css" href="../app-assets/css/vendors.css">
+  <link rel="stylesheet" type="text/css" href="../app-assets/vendors/css/tables/datatable/jquery.dataTables.min.css">
+  <link rel="stylesheet" type="text/css" href="../app-assets/vendors/css/pickers/daterange/daterangepicker.css">
+  <link rel="stylesheet" type="text/css" href="../app-assets/vendors/css/pickers/datetime/bootstrap-datetimepicker.css">
+  <link rel="stylesheet" type="text/css" href="../app-assets/vendors/css/pickers/pickadate/pickadate.css">
+  <!-- END VENDOR CSS-->
+  <!-- END VENDOR CSS-->
+  <!-- BEGIN TEMPLATE CSS-->
+  <link rel="stylesheet" type="text/css" href="../app-assets/css/bootstrap-extended.css">
+  <link rel="stylesheet" type="text/css" href="../app-assets/css/app.css">
+  <link rel="stylesheet" type="text/css" href="../app-assets/css/colors.css">
+  <link rel="stylesheet" type="text/css" href="../app-assets/css/components.css">
+  <!-- END TEMPLATE CSS-->
+  <!-- BEGIN Page Level CSS-->
+  <link rel="stylesheet" type="text/css" href="../app-assets/css/core/menu/menu-types/vertical-menu.css">
+  <link rel="stylesheet" type="text/css" href="../app-assets/css/plugins/pickers/daterange/daterange.css">
+  <!-- END Page Level CSS-->
+  <!-- BEGIN Custom CSS-->
+  <link rel="stylesheet" type="text/css" href="../assets/css/style.css">
+  <!-- END Custom CSS-->
+</head>
+
+<body class="vertical-layout vertical-menu 2-columns menu-expanded" data-open="click" data-menu="vertical-menu"
+  data-col="2-columns">
+
+  <!-- ////////////////////////////////////////////////////////////////////////////-->
+
+
+  <div class="main-menu menu-fixed menu-dark menu-accordion menu-shadow" data-scroll-to-active="true">
+    <div class="main-menu-content">
+      <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
+        <li class="nav-item"><a style="padding-left: 9px" href="#">
+            <img class="brand-logo" alt="GenieBlocks logo" src="../app-assets/images/logo/logo-light-sm.png">
+            <span class="mt-1" data-i18n="">
+              <h3 class="brand-text"><span class="white">&nbsp;&nbsp;&nbsp;&nbsp;Genie</span><span
+                  class="font-weight-bold blue accent-4">Blocks</span></h3>
+            </span>
+          </a>
+        </li>
+        <li class="nav-item"><a href="dashboard.html"><i class="icon-home3"></i><span class="menu-title"
+          data-i18n="">Durum Panosu</span></a>
+        </li>
+        <li class="nav-item"><a href="consumption-overview.html"><i class="icon-stats-dots"></i><span class="menu-title"
+          data-i18n="">Tüketim İzleme</span></a>
+        </li>
+        <li class="active"><a href="consumption-reports.html"><i class="fa fa-clipboard"></i><span class="menu-title"
+            data-i18n="">Tüketim Raporları</span></a>
+        </li>
+        <li class="nav-item"><a href="devices-device-list.html"><i class="icon-sliders"></i><span class="menu-title"
+          data-i18n="">Sayaç Yönetimi</span></a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="app-content content bg-white">
+    <div class="content-body">
+      <nav
+        class="header-navbar navbar-expand-md navbar navbar-with-menu navbar-light navbar-border navbar-brand-center">
+        <div class="navbar-wrapper">
+          <div class="navbar-header">
+            <ul class="nav navbar-nav flex-row">
+              <li class="nav-item mobile-menu d-md-none mr-auto"><a
+                  class="nav-link nav-menu-main menu-toggle hidden-xs is-active" href="#"><i
+                    class="ft-menu font-large-1"></i></a></li>
+              <li class="nav-item d-md-none"><a class="navbar-brand" href="#"><img class="brand-logo"
+                    alt="genieblocks logo" src="../app-assets/images/logo/logo-light-sm.png">
+                </a></li>
+              <li class="nav-item d-md-none"><a class="nav-link open-navbar-container collapsed" data-toggle="collapse"
+                  data-target="#navbar-mobile" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a></li>
+            </ul>
+          </div>
+          <div class="navbar-container content">
+            <div class="collapse navbar-collapse" id="navbar-mobile">
+              <ul class="nav navbar-nav mr-auto float-left">
+                <li class="nav-item d-none d-md-block"><a class="nav-link nav-menu-main menu-toggle hidden-xs"
+                    href="#"><i class="ft-menu"></i></a></li>
+                <li class="nav-item"><a class="nav-link" href="#" role="button" aria-haspopup="true"
+                    aria-expanded="false">Raporlar</a></li>
+              </ul>
+              <ul class="nav navbar-nav float-right">
+              </ul>
+            </div>
+          </div>
+        </div>
+      </nav>
+      <div class="content-wrapper">
+        <!-- IEC 62056-21 section start -->
+        <section id="form-repeater">
+          <div class="row">
+            <div class="col-xs-12 col-md-12">
+              <div class="card border-genie">
+                <div class="card-header">
+                  <h4 class="card-title" id="repeat-form">Raporlar</h4>
+                  <a class="heading-elements-toggle"><I class="icon-ellipsis font-medium-3"></I></a>
+                  <div class="heading-elements">
+                    <ul class="list-inline mb-0">
+                      <li>
+                        <button class="btn btn-sm btn-genie white" type="button" data-toggle="modal" data-target="#generateElectricityReportModal">Rapor Oluştur</button>
+                      </li>
+                      <li><a data-action="reload"><I class="ft-rotate-cw"></I></a></li>
+                      <li><a data-action="expand"><I class="icon-expand2"></I></a></li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div class="card-block">
+                    <table class="table table-hover table-bordered zero-configuration dataTable" id="DataTables_Table_Electricity_Meter_List"
+                    role="grid" aria-describedby="DataTables_Table_Electricity_Meter_List_info">
+                      <thead>
+                        <tr>
+                          <th>Rapor Başlığı</th>
+                          <th>Rapor Tipi</th>
+                          <th>Durumu</th>
+                          <th>Oluşturulma Tipi</th>
+                          <th>İstek Zamanı</th>
+                          <th>Oluşturulma Zamanı</th>
+                          <th>Gecen Süre</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <!-- Dinamik içerik buraya eklenecek -->
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+
+    <!-- Report Modal -->
+    <div class="modal fade text-left" id="reportModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2"
+    aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title text-bold-600" id="myModalLabel1"><i class="fa fa-road2"></i> Rapor Detayı</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <table class="table table-hover table-bordered zero-configuration dataTable" id="DataTables_Table_Report" role="grid">
+            <thead>
+              <!-- Dinamik olarak başlıklar buraya eklenecek -->
+            </thead>
+            <tbody>
+              <!-- Dinamik olarak buraya satırlar eklenecek -->
+            </tbody>
+          </table>
+        </div>
+        <div class="modal-footer">
+          <input type="reset" class="btn btn-light btn-lg" data-dismiss="modal" value="Kapat">
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Elektrik Sayaç Raporu Oluşturma Modal -->
+  <div class="modal fade text-left" id="generateElectricityReportModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
+    <div class="modal-dialog modal-sm" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title text-bold-600" id="myModalLabel1"><i class="fa fa-road2"></i> Manuel Rapor Oluşturma Ekranı</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form>
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="electricityReportTypeSelect">Rapor Tipi</label>
+              <select id="electricityReportTypeSelect" name="interested" class="form-control" onchange="toggleFormGroups(this.value)">
+                <option value="none" selected="" disabled="">Rapor tipi seçiniz</option>
+                <!-- <option value="olay-raporu">Olay Raporu</option>
+                <option value="alarm-raporu">Alarm Raporu</option>
+                <option value="enerji-tuketim-raporu">Enerji Tüketim Raporu</option> -->
+                <option value="moxa-device-status-report">Moxa Cihaz Durum Rapor</option>
+                <option value="cihaz-tarih-saat-raporu">Cihaz Tarih-Saat Raporu</option>
+              </select>
+            </div>
+            <div id="date-range-group" class="form-group" style="display: none;">
+              <label>Tarih Aralığı Seçiniz</label>
+              <div class="input-group">
+                <input type="text" class="form-control daterange">
+                <span class="input-group-addon">
+                  <span class="icon-calendar3"></span>
+                </span>
+              </div>
+            </div>
+            <div id="invoice-group" class="form-group" style="display: none;">
+              <label>Fatura Tutarını Giriniz</label>
+              <div class="input-group">
+                <input type="text" class="form-control" id="basicInput">
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <input type="reset" class="btn btn-light btn-lg" data-dismiss="modal" value="İptal">
+            <input type="button" class="btn btn-genie white btn-lg" onclick="handleReportGeneration()" value="Oluştur">
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-- ////////////////////////////////////////////////////////////////////////////-->
+
+  <footer class="footer footer-static footer-light navbar-border">
+    <p class="clearfix blue-grey lighten-2 text-sm-center mb-0 px-2">
+      <span class="float-md-left d-block d-md-inline-block">Copyright &copy; 2022 <a class="text-bold-800 darken-2"
+          href="http://www.genieblocks.com" target="_blank">GenieBlocks </a>, All rights reserved. </span>
+      <span class="float-md-none d-block d-md-inline-block red">Production</span>
+      <span class="float-md-right d-block d-md-inline-blockd-none d-lg-block">Made with <i
+          class="ft-heart pink"></i></span></p>
+  </footer>
+
+  <!-- BEGIN VENDOR JS-->
+  <script src="../app-assets/js/core/libraries/jquery.min.js"></script>
+  <script src="../app-assets/vendors/js/ui/popper.min.js"></script>
+  <script src="../app-assets/js/core/libraries/bootstrap.min.js"></script>
+  <script src="../app-assets/vendors/js/ui/perfect-scrollbar.jquery.min.js"></script>
+  <script src="../app-assets/vendors/js/ui/unison.min.js"></script>
+  <script src="../app-assets/vendors/js/ui/blockUI.min.js"></script>
+  <script src="../app-assets/vendors/js/ui/jquery-sliding-menu.js"></script>
+  <!-- END VENDOR JS-->
+  <!-- BEGIN PAGE VENDOR JS-->
+  <script src="../app-assets/vendors/js/tables/datatable/datatables.min.js"></script>
+  <script src="../app-assets/vendors/js/tables/datatable/dataTables.buttons.min.js"></script>
+  <script src="../app-assets/vendors/js/pickers/dateTime/moment-with-locales.min.js"></script>
+  <script src="../app-assets/vendors/js/pickers/dateTime/bootstrap-datetimepicker.min.js"></script>
+  <script src="../app-assets/vendors/js/pickers/pickadate/picker.js"></script>
+  <script src="../app-assets/vendors/js/pickers/pickadate/picker.date.js"></script>
+  <script src="../app-assets/vendors/js/pickers/pickadate/picker.time.js"></script>
+  <script src="../app-assets/vendors/js/pickers/daterange/daterangepicker.js"></script>
+  <!-- END PAGE VENDOR JS-->
+  <!-- BEGIN TEMPLATE JS-->
+  <script src="../app-assets/js/core/app-menu.js"></script>
+  <script src="../app-assets/js/core/app.js"></script>
+  <!-- END TEMPLATE JS-->
+  <!-- BEGIN PAGE LEVEL JS-->
+  <script src="../app-assets/js/scripts/tables/datatables/datatable-basic.js"></script>
+  <script src="../app-assets/js/scripts/pickers/dateTime/picker-date-time.js"></script>
+  <script src="../app-assets/js/scripts/modal/components-modal.js"></script>
+  <!-- END PAGE LEVEL JS-->
+
+  <script>
+    // const baseWebhookURL = "http://127.0.0.1:5678"; // Değiştirmek istediğiniz temel URL
+    const baseWebhookURL = "http://192.168.2.250:5678"; // Bilgili Holding URL
+    // const baseWebhookURL = "http://192.168.1.146:5678"; // Değiştirmek istediğiniz temel URL
+    // const baseWebhookURL = "http://192.168.1.119:5678"; // gbenergy_lenovo URL
+
+    document.addEventListener('DOMContentLoaded', () => {
+      // Reload button functionality
+      const reloadButton = document.querySelector('[data-action="reload"]');
+      if (reloadButton) {
+        reloadButton.addEventListener('click', () => {
+          location.reload(); // Reloads the entire page
+        });
+      }
+
+      loadReportLists();
+    });
+
+    function loadReportLists() {
+      // Arayüzü veri alırken blokla
+      $.blockUI({
+        message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
+        overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
+        css: { border: 0, padding: 0, backgroundColor: 'transparent' }
+      });
+
+      fetch(`${baseWebhookURL}/webhook/get-table-content`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ tableName: 'ReportList' })
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log("Fetched ReportList data:", data); // Debug amacıyla cevabı konsola yazdırıyoruz
+
+        // Verinin yapısını kontrol ediyoruz
+        if (data && data.length > 0 && data[0].data && Array.isArray(data[0].data)) {
+          const reportList = data[0].data;
+          
+          if (reportList.length === 0) {
+            console.warn("Rapor listesi boş.");
+            alert("Hiç rapor bulunamadı.");
+          } else {
+            populateTables(reportList);
+          }
+        } else {
+          throw new Error("Beklenmeyen veri yapısı alındı.");
+        }
+      })
+      .catch(error => {
+        console.error('Error fetching reports:', error.message);
+        alert(`Raporlar yüklenirken bir hata oluştu: ${error.message}`);
+      })
+      .finally(() => {
+        $.unblockUI();
+      });
+    }
+
+    function populateTables(reports) {
+      const tableBody = document.querySelector('#DataTables_Table_Electricity_Meter_List tbody');
+
+      if (!tableBody) {
+        console.error("Table body not found for ID: DataTables_Table_Electricity_Meter_List");
+        return;
+      }
+
+      // Tablonun önceki içeriğini temizle
+      tableBody.innerHTML = '';
+
+      // Tabloda her bir rapor için satır oluştur
+      reports.forEach(report => {
+        const row = document.createElement('tr');
+
+        // Rapor Başlığı
+        const titleCell = document.createElement('td');
+        if (report.Status === "Ready") {
+          const titleLink = document.createElement('a');
+          titleLink.href = "#";
+          titleLink.setAttribute('data-toggle', 'modal');
+          titleLink.setAttribute('data-target', '#reportModal');
+          titleLink.classList.add('text-bold-600');
+          titleLink.textContent = report.ReportTitle;
+          titleLink.onclick = () => fetchReportData(report.ReportTableName, report.ReportRequestDate, report.ReportTitle); // Rapor başlığını da ilet
+          titleCell.appendChild(titleLink);
+        } else {
+          titleCell.textContent = report.ReportTitle;
+        }
+        row.appendChild(titleCell);
+
+        // Rapor Tipi
+        const reportTypeCell = document.createElement('td');
+        reportTypeCell.textContent = report.ReportType;
+        row.appendChild(reportTypeCell);
+
+        // Durum
+        const reportStatusCell = document.createElement('td');
+        const statusSpan = document.createElement('span');
+        statusSpan.classList.add('badge', 'badge-default');
+        if (report.Status === 'Ready') {
+          statusSpan.classList.add('badge-success');
+          statusSpan.textContent = 'Hazır';
+        } else if (report.Status === 'Preparing') {
+          statusSpan.classList.add('badge-warning');
+          statusSpan.textContent = 'Hazırlanıyor';
+        } else {
+          statusSpan.textContent = report.Status || 'Durum Bilinmiyor';
+        }
+        reportStatusCell.appendChild(statusSpan);
+        row.appendChild(reportStatusCell);
+
+        // Oluşturulma Tipi
+        const creationTypeCell = document.createElement('td');
+        creationTypeCell.textContent = report.CreationType;
+        row.appendChild(creationTypeCell);
+
+        // İstek Zamanı
+        const reportRequestDateCell = document.createElement('td');
+        reportRequestDateCell.textContent = formatDate(report.ReportRequestDate);
+        row.appendChild(reportRequestDateCell);
+
+        // Oluşturulma Zamanı ve Duration
+        const creationDateCell = document.createElement('td');
+        const durationCell = document.createElement('td');
+        if (report.CreationDate) {
+          creationDateCell.textContent = formatDate(report.CreationDate);
+          durationCell.textContent = calculateDuration(report.ReportRequestDate, report.CreationDate);
+        } else {
+          creationDateCell.textContent = '-';
+          durationCell.textContent = '-';
+        }
+        row.appendChild(creationDateCell);
+        row.appendChild(durationCell);
+
+        // Satırı tabloya ekle
+        tableBody.appendChild(row);
+      });
+
+      // Tablo verilerini yeniden başlat
+      initializeDataTables();
+    }
+
+    function initializeDataTables() {
+      const tableId = 'DataTables_Table_Electricity_Meter_List';
+      if ($.fn.DataTable.isDataTable(`#${tableId}`)) {
+        $(`#${tableId}`).DataTable().destroy();
+      }
+      $(`#${tableId}`).DataTable({
+        paging: true,
+        searching: true,
+        ordering: true,
+        info: true,
+        order: [[4, 'desc']],  // 5. sütun olan `ReportRequestDate` sütununa göre en yeni tarihten en eskiye sıralama
+        language: {
+          search: "Ara:",
+          lengthMenu: "Göster _MENU_ kayıtlar",
+          info: "Gösteriliyor _START_ ile _END_ arasında _TOTAL_ kayıt",
+          infoEmpty: "Gösterilecek kayıt yok",
+          infoFiltered: "(toplam _MAX_ kayıt içinde filtrelendi)",
+          paginate: {
+            first: "İlk",
+            last: "Son",
+            next: "Sonraki",
+            previous: "Önceki"
+          },
+          zeroRecords: "Eşleşen kayıt bulunamadı"
+        }
+      });
+    }
+
+    // İki tarih arasındaki süreyi hesaplar
+    function calculateDuration(start, end) {
+      const startDate = new Date(start);
+      const endDate = new Date(end);
+      const durationMs = endDate - startDate;
+      const durationMinutes = Math.floor(durationMs / (1000 * 60));
+      return `${durationMinutes} dakika`;
+    }
+
+    // Tarih formatı
+    function formatDate(dateString) {
+      const date = new Date(dateString);
+      // 3 saat geri çekilerek yeni bir tarih oluşturuluyor
+      date.setHours(date.getHours() - 3);
+      
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const day = String(date.getDate()).padStart(2, '0');
+      const hours = String(date.getHours()).padStart(2, '0');
+      const minutes = String(date.getMinutes()).padStart(2, '0');
+      
+      return `${year}.${month}.${day} ${hours}:${minutes}`;
+    }
+    
+    function handleReportGeneration() {
+        const reportType = document.getElementById('electricityReportTypeSelect').value;
+        
+        if (reportType === 'cihaz-tarih-saat-raporu') {
+            // Cihaz Tarih-Saat Raporu sorgusu
+            initiateTimeReportRequest();
+        } else if (reportType === 'moxa-device-status-report') {
+            // Moxa Cihaz Durum Raporu sorgusu
+            initiateMoxaDeviceStatusReportRequest();
+        } else {
+            console.warn("Geçerli bir rapor tipi seçilmedi.");
+        }
+
+        // Modalı kapat ve sayfayı yeniden yükle
+        $('#generateElectricityReportModal').modal('hide');
+        $('#generateElectricityReportModal').on('hidden.bs.modal', function () {
+            location.reload();
+        });
+    }
+
+    function fetchReportData(reportTableName, reportRequestDate, reportTitle) {
+      $.blockUI({
+        message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
+        overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
+        css: { border: 0, padding: 0, backgroundColor: 'transparent' }
+      });
+
+      fetch(`${baseWebhookURL}/webhook/get-report-data`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ tableName: reportTableName, reportRequestDate: reportRequestDate })
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log("Fetched Report Data:", data); // Debug için cevabı konsola yazdır
+        updateReportModalTable(data, reportTitle, reportTableName); // Rapor başlığını modal içine ilet
+      })
+      .catch(error => {
+        console.error('Error fetching report data:', error.message);
+      })
+      .finally(() => {
+        $.unblockUI();
+      });
+    }
+
+    function updateReportModalTable(reportData, reportTitle, reportTableName) {
+      const data = reportData[0].data;
+      const tableHead = document.querySelector('#DataTables_Table_Report thead');
+      const tableBody = document.querySelector('#DataTables_Table_Report tbody');
+      
+      // Modal başlığını güncelle
+      document.getElementById("myModalLabel1").textContent = `Rapor Detayı - ${reportTitle}`;
+
+      tableHead.innerHTML = '';
+      tableBody.innerHTML = '';
+
+      // Report data doğrulaması
+      if (!data || !Array.isArray(data) || data.length === 0) {
+          console.error("Report data is empty or undefined:", data);
+          return;
+      }
+
+      // Gelen reportTableName değerine göre başlıkları belirle
+      let headers = [];
+      if (reportTableName === 'ElectricMeterDateTimeSyncReport') {
+          headers = ['Sayaç Seri Numarası', 'Sayaç Tarihi', 'Sayaç Saati', 'Mevcut Tarih', 'Mevcut Saat', 'Zaman Farkı'];
+      } else if (reportTableName === 'MoxaDeviceStatusReport') {
+          headers = ['Moxa IP Adresi', 'Durumu'];
+      } else {
+          console.warn("Bilinmeyen reportTableName değeri:", reportTableName);
+          return;
+      }
+
+      const headerRow = document.createElement('tr');
+      headers.forEach(headerText => {
+          const th = document.createElement('th');
+          th.textContent = headerText;
+          headerRow.appendChild(th);
+      });
+      tableHead.appendChild(headerRow);
+
+      data.forEach(item => {
+          const row = document.createElement('tr');
+
+          if (reportTableName === 'ElectricMeterDateTimeSyncReport') {
+              const serialNumberCell = document.createElement('td');
+              serialNumberCell.textContent = item.SerialNumber || '-';
+              row.appendChild(serialNumberCell);
+
+              const meterDateCell = document.createElement('td');
+              meterDateCell.textContent = item.MeterDate || '-';
+              row.appendChild(meterDateCell);
+
+              const meterTimeCell = document.createElement('td');
+              meterTimeCell.textContent = item.MeterTime || '-';
+              row.appendChild(meterTimeCell);
+
+              const currentDateCell = document.createElement('td');
+              currentDateCell.textContent = item.CurrentDate || '-';
+              row.appendChild(currentDateCell);
+
+              const currentTimeCell = document.createElement('td');
+              currentTimeCell.textContent = item.CurrentTime || '-';
+              row.appendChild(currentTimeCell);
+
+              const timeDifferenceCell = document.createElement('td');
+              timeDifferenceCell.textContent = item.TimeDifference || '-';
+              row.appendChild(timeDifferenceCell);
+          } else if (reportTableName === 'MoxaDeviceStatusReport') {
+              const ipAddressCell = document.createElement('td');
+              ipAddressCell.textContent = item.IPAddress || '-';
+              row.appendChild(ipAddressCell);
+
+              const statusCell = document.createElement('td');
+              const statusBadge = document.createElement('span');
+              if (item.OnlineStatus === 'Online') {
+                  statusBadge.classList.add('badge', 'badge-success');
+                  statusBadge.textContent = 'Online';
+              } else if (item.OnlineStatus === 'Offline') {
+                  statusBadge.classList.add('badge', 'badge-danger');
+                  statusBadge.textContent = 'Offline';
+              } else {
+                  statusBadge.textContent = item.OnlineStatus || '-';
+              }
+              statusCell.appendChild(statusBadge);
+              row.appendChild(statusCell);
+          }
+
+          tableBody.appendChild(row);
+      });
+
+      const tableId = '#DataTables_Table_Report';
+      if (!$.fn.DataTable.isDataTable(tableId)) {
+          $(tableId).DataTable({
+              dom: '<"top"fl>rt<"bottom"Bp>',
+              buttons: ['copyHtml5','csvHtml5','excelHtml5'],
+              order: [[0, 'asc']],
+              language: {
+                  search: "Ara:",
+                  lengthMenu: "Göster _MENU_ kayıtlar",
+                  info: "Gösteriliyor _START_ ile _END_ arasında _TOTAL_ kayıt",
+                  infoEmpty: "Gösterilecek kayıt yok",
+                  infoFiltered: "(toplam _MAX_ kayıt içinde filtrelendi)",
+                  paginate: {
+                      first: "İlk",
+                      last: "Son",
+                      next: "Sonraki",
+                      previous: "Önceki"
+                  },
+                  zeroRecords: "Eşleşen kayıt bulunamadı"
+              }
+          });
+      }
+    }
+
+    function initiateTimeReportRequest() {
+        $.blockUI({
+            message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
+            overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
+            css: { border: 0, padding: 0, backgroundColor: 'transparent' }
+        });
+
+        fetch(`${baseWebhookURL}/webhook/get-electricity-meter-time-report`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+        .catch(error => {
+            console.error('Error initiating time report request:', error.message);
+            alert(`Error initiating time report request: ${error.message}`);
+        })
+        .finally(() => {
+            $.unblockUI();
+        });
+    }
+
+    function initiateMoxaDeviceStatusReportRequest() {
+        $.blockUI({
+            message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
+            overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
+            css: { border: 0, padding: 0, backgroundColor: 'transparent' }
+        });
+
+        fetch(`${baseWebhookURL}/webhook/get-moxa-device-status-report`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+        .catch(error => {
+            console.error('Error initiating Moxa device status report request:', error.message);
+            alert(`Error initiating Moxa device status report request: ${error.message}`);
+        })
+        .finally(() => {
+            $.unblockUI();
+        });
+    }
+    
+    function toggleFormGroups(reportType) {
+      // Başlangıçta tüm form gruplarını gizle
+      document.getElementById('date-range-group').style.display = 'none';
+      document.getElementById('invoice-group').style.display = 'none';
+
+      // Cihaz tarih-saat raporu hariç diğer rapor türlerinde form alanlarını göster
+      if (reportType === 'cihaz-tarih-saat-raporu') {
+        // Bu durumda başka bir alan gösterilmeyecek.
+      } else if (reportType === 'moxa-device-status-report') {
+        // Moxa Cihaz Durum Rapor seçildiğinde hiçbir alan gösterilmeyecek.
+      } else {
+        // Diğer rapor tiplerine göre form alanlarını göster
+        document.getElementById('date-range-group').style.display = 'block';
+        document.getElementById('invoice-group').style.display = 'block';
+      }
+    }
+  </script>
+
+</body>
+
+</html>
