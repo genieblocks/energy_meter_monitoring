@@ -831,7 +831,7 @@ function showNewDataForm(tableName) {
         css: { border: 0, padding: 0, backgroundColor: 'transparent' }
     });
 
-    fetch(`${baseWebhookURL}/webhook/get-table-columns`, {
+    fetch(`${baseWebhookURL}/webhook/get-table-column-names`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
