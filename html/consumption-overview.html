@@ -225,6 +225,7 @@
               <th>Sayaç İsmi</th>
               <th>Seri Numarası</th>
               <th>Sayaç Değeri</th>
+              <th>Okuma Zamanı</th>
               <th>Düzenle</th>
             </tr>
           </thead>
@@ -371,15 +372,15 @@ function showDetailModal(connection) {
 
   // Örnek sayaç verisi (gerçek veriler yerine örnek veri eklenebilir)
   const meterData = [
-    { type: "Elektrik sayacı", name: "Giriş", serial: "30171275", value: "330 kWh" },
-    { type: "Su sayacı (Soğuk)", name: "Mutfak", serial: "30143276", value: "24 m3" },
-    { type: "Su sayacı (Sıcak)", name: "Mutfak", serial: "30171276", value: "56 m3" },
-    { type: "Su sayacı (Soğuk)", name: "Çatı", serial: "30175272", value: "38 m3" },
-    { type: "Su sayacı (Sıcak)", name: "Çatı", serial: "30171209", value: "35 m3" },
-    { type: "Kalorimetre (Soğuk)", name: "Salon", serial: "30171279", value: "4 kWh" },
-    { type: "Kalorimetre (Sıcak)", name: "Salon", serial: "30451213", value: "2 kWh" },
-    { type: "Kalorimetre (Soğuk)", name: "Mutfak", serial: "30171215", value: "5 kWh" },
-    { type: "Kalorimetre (Sıcak)", name: "Mutfak", serial: "30451260", value: "9 kWh" }
+    { type: "Elektrik sayacı", name: "Giriş", serial: "30171275", value: "330 kWh", time: "20.11.2024 10:33" },
+    { type: "Su sayacı (Soğuk)", name: "Mutfak", serial: "30143276", value: "24 m3", time: "20.11.2024 10:33"  },
+    { type: "Su sayacı (Sıcak)", name: "Mutfak", serial: "30171276", value: "56 m3", time: "20.11.2024 10:33"  },
+    { type: "Su sayacı (Soğuk)", name: "Çatı", serial: "30175272", value: "38 m3", time: "20.11.2024 10:33"  },
+    { type: "Su sayacı (Sıcak)", name: "Çatı", serial: "30171209", value: "35 m3", time: "20.11.2024 10:33"  },
+    { type: "Kalorimetre (Soğuk)", name: "Salon", serial: "30171279", value: "4 kWh", time: "20.11.2024 10:33"  },
+    { type: "Kalorimetre (Sıcak)", name: "Salon", serial: "30451213", value: "2 kWh", time: "20.11.2024 10:33"  },
+    { type: "Kalorimetre (Soğuk)", name: "Mutfak", serial: "30171215", value: "5 kWh", time: "20.11.2024 10:33"  },
+    { type: "Kalorimetre (Sıcak)", name: "Mutfak", serial: "30451260", value: "9 kWh", time: "20.11.2024 10:33"  }
   ];
 
   // Tabloda sayaç bilgilerini görüntüle
