@@ -370,33 +370,41 @@ function showDetailModal(connection) {
   const detailTableBody = document.getElementById('detailTableBody');
   detailTableBody.innerHTML = ''; // Mevcut içeriği temizle
 
-  // FlatID değerini al ve ElectricMeters tablosundan ilgili veriyi çek
   const flatID = connection.FlatID;
   if (!flatID) {
     console.error("FlatID bulunamadı.");
     return;
   }
 
-  fetch(`${baseWebhookURL}/webhook/get-table-row`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      tableName: "ElectricMeters",
-      primaryKey: "RelatedID",
-      primaryKeyValue: flatID
+  // Tablolar ve sayaç tipleri için ayarları tanımlayın
+  const tables = [
+    { name: "ElectricMeters", meterType: "Elektrik" },
+    { name: "HeatingMeters", meterType: "Kalorimetre (Isıtma)" },
+    { name: "CoolingMeters", meterType: "Kalorimetre (Soğutma)" },
+    { name: "WaterMeters", meterType: "Su" }
+  ];
+
+  // Her tablo için veri çek ve tabloya ekle
+  tables.forEach(table => {
+    fetch(`${baseWebhookURL}/webhook/get-table-row`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        tableName: table.name,
+        primaryKey: "RelatedID",
+        primaryKeyValue: flatID
+      })
     })
-  })
     .then(response => response.json())
     .then(data => {
       if (data[0].success && data[0].data) {
-        // Gelen veriyi tabloya ekle
         const meterData = data[0].data;
         meterData.forEach(meter => {
           const row = document.createElement('tr');
           row.innerHTML = `
-            <td>${meter.MeterType ?? '-'}</td>
+            <td>${table.meterType}</td>
             <td>${meter.CustomName ?? '-'}</td>
             <td>${meter.SerialNumber ?? '-'}</td>
             <td>${meter.MeterValue ?? '-'}</td>
@@ -417,12 +425,13 @@ function showDetailModal(connection) {
           detailTableBody.appendChild(row);
         });
       } else {
-        console.error('ElectricMeters verisi alınırken bir hata oluştu:', data[0].message);
+        console.error(`${table.name} verisi alınırken bir hata oluştu:`, data[0].message);
       }
     })
     .catch(error => {
-      console.error('Veri çekilirken bir hata oluştu:', error);
+      console.error(`${table.name} verisi çekilirken bir hata oluştu:`, error);
     });
+  });
 
   // Modal başlığı güncelle
   const title = `Bina No: ${connection.BuildingNo ?? '-'} Daire: ${connection.Flat ?? '-'} Abone: ${connection.Subscriber ?? '-'}`;
