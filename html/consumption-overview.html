@@ -397,7 +397,7 @@ function showDetailModal(connection) {
           const row = document.createElement('tr');
           row.innerHTML = `
             <td>${meter.MeterType ?? '-'}</td>
-            <td>${meter.MeterName ?? '-'}</td>
+            <td>${meter.CustomName ?? '-'}</td>
             <td>${meter.SerialNumber ?? '-'}</td>
             <td>${meter.MeterValue ?? '-'}</td>
             <td>${meter.ReadingTime ?? '-'}</td>
