@@ -370,43 +370,59 @@ function showDetailModal(connection) {
   const detailTableBody = document.getElementById('detailTableBody');
   detailTableBody.innerHTML = ''; // Mevcut içeriği temizle
 
-  // Örnek sayaç verisi (gerçek veriler yerine örnek veri eklenebilir)
-  const meterData = [
-    { type: "Elektrik sayacı", name: "Giriş", serial: "30171275", value: "330 kWh", time: "20.11.2024 10:33" },
-    { type: "Su sayacı (Soğuk)", name: "Mutfak", serial: "30143276", value: "24 m3", time: "20.11.2024 10:33"  },
-    { type: "Su sayacı (Sıcak)", name: "Mutfak", serial: "30171276", value: "56 m3", time: "20.11.2024 10:33"  },
-    { type: "Su sayacı (Soğuk)", name: "Çatı", serial: "30175272", value: "38 m3", time: "20.11.2024 10:33"  },
-    { type: "Su sayacı (Sıcak)", name: "Çatı", serial: "30171209", value: "35 m3", time: "20.11.2024 10:33"  },
-    { type: "Kalorimetre (Soğuk)", name: "Salon", serial: "30171279", value: "4 kWh", time: "20.11.2024 10:33"  },
-    { type: "Kalorimetre (Sıcak)", name: "Salon", serial: "30451213", value: "2 kWh", time: "20.11.2024 10:33"  },
-    { type: "Kalorimetre (Soğuk)", name: "Mutfak", serial: "30171215", value: "5 kWh", time: "20.11.2024 10:33"  },
-    { type: "Kalorimetre (Sıcak)", name: "Mutfak", serial: "30451260", value: "9 kWh", time: "20.11.2024 10:33"  }
-  ];
+  // FlatID değerini al ve ElectricMeters tablosundan ilgili veriyi çek
+  const flatID = connection.FlatID;
+  if (!flatID) {
+    console.error("FlatID bulunamadı.");
+    return;
+  }
 
-  // Tabloda sayaç bilgilerini görüntüle
-  meterData.forEach(meter => {
-    const row = document.createElement('tr');
-    row.innerHTML = `
-      <td>${meter.type}</td>
-      <td>${meter.name}</td>
-      <td>${meter.serial}</td>
-      <td>${meter.value}</td>
-      <td>${meter.time}</td>
-      <td>
-        <span class="dropdown">
-          <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-genie dropdown-toggle dropdown-menu-right">
-            <i class="ft-settings"></i>
-          </button>
-          <span class="dropdown-menu mt-1 dropdown-menu-right">
-            <a href="#" class="dropdown-item detail-button"><i class="fa fa-eye"></i> Detay</a>
-            <a href="#" class="dropdown-item edit-button"><i class="fa fa-pencil"></i> Düzenle</a>
-            <a href="#" class="dropdown-item delete-button"><i class="fa fa-trash"></i> Sil</a>
-          </span>
-        </span>
-      </td>
-    `;
-    detailTableBody.appendChild(row);
-  });
+  fetch(`${baseWebhookURL}/webhook/get-table-row`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      tableName: "ElectricMeters",
+      primaryKey: "RelatedID",
+      primaryKeyValue: flatID
+    })
+  })
+    .then(response => response.json())
+    .then(data => {
+      if (data[0].success && data[0].data) {
+        // Gelen veriyi tabloya ekle
+        const meterData = data[0].data;
+        meterData.forEach(meter => {
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td>${meter.MeterType ?? '-'}</td>
+            <td>${meter.MeterName ?? '-'}</td>
+            <td>${meter.SerialNumber ?? '-'}</td>
+            <td>${meter.MeterValue ?? '-'}</td>
+            <td>${meter.ReadingTime ?? '-'}</td>
+            <td>
+              <span class="dropdown">
+                <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-genie dropdown-toggle dropdown-menu-right">
+                  <i class="ft-settings"></i>
+                </button>
+                <span class="dropdown-menu mt-1 dropdown-menu-right">
+                  <a href="#" class="dropdown-item detail-button"><i class="fa fa-eye"></i> Detay</a>
+                  <a href="#" class="dropdown-item edit-button"><i class="fa fa-pencil"></i> Düzenle</a>
+                  <a href="#" class="dropdown-item delete-button"><i class="fa fa-trash"></i> Sil</a>
+                </span>
+              </span>
+            </td>
+          `;
+          detailTableBody.appendChild(row);
+        });
+      } else {
+        console.error('ElectricMeters verisi alınırken bir hata oluştu:', data[0].message);
+      }
+    })
+    .catch(error => {
+      console.error('Veri çekilirken bir hata oluştu:', error);
+    });
 
   // Modal başlığı güncelle
   const title = `Bina No: ${connection.BuildingNo ?? '-'} Daire: ${connection.Flat ?? '-'} Abone: ${connection.Subscriber ?? '-'}`;
