@@ -401,28 +401,52 @@ function showDetailModal(connection) {
     .then(data => {
       if (data[0].success && data[0].data) {
         const meterData = data[0].data;
+
         meterData.forEach(meter => {
-          const row = document.createElement('tr');
-          row.innerHTML = `
-            <td>${table.meterType}</td>
-            <td>${meter.CustomName ?? '-'}</td>
-            <td>${meter.SerialNumber ?? '-'}</td>
-            <td>${meter.MeterValue ?? '-'}</td>
-            <td>${meter.ReadingTime ?? '-'}</td>
-            <td>
-              <span class="dropdown">
-                <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-genie dropdown-toggle dropdown-menu-right">
-                  <i class="ft-settings"></i>
-                </button>
-                <span class="dropdown-menu mt-1 dropdown-menu-right">
-                  <a href="#" class="dropdown-item detail-button"><i class="fa fa-eye"></i> Detay</a>
-                  <a href="#" class="dropdown-item edit-button"><i class="fa fa-pencil"></i> Düzenle</a>
-                  <a href="#" class="dropdown-item delete-button"><i class="fa fa-trash"></i> Sil</a>
-                </span>
-              </span>
-            </td>
-          `;
-          detailTableBody.appendChild(row);
+          // Seri numarasını ve tablo adını kullanarak MeterValue ve ReadingTime bilgilerini alın
+          fetch(`${baseWebhookURL}/get-latest-single-meter-values`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              tableName: table.name,
+              SerialNumber: meter.SerialNumber
+            })
+          })
+          .then(response => response.json())
+          .then(latestData => {
+            if (latestData[0].success && latestData[0].data) {
+              const latestValues = latestData[0].data;
+
+              const row = document.createElement('tr');
+              row.innerHTML = `
+                <td>${table.meterType}</td>
+                <td>${meter.CustomName ?? '-'}</td>
+                <td>${meter.SerialNumber ?? '-'}</td>
+                <td>${latestValues.MeterValue ?? '-'}</td>
+                <td>${latestValues.QueryStartTime ?? '-'}</td>
+                <td>
+                  <span class="dropdown">
+                    <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-genie dropdown-toggle dropdown-menu-right">
+                      <i class="ft-settings"></i>
+                    </button>
+                    <span class="dropdown-menu mt-1 dropdown-menu-right">
+                      <a href="#" class="dropdown-item detail-button"><i class="fa fa-eye"></i> Detay</a>
+                      <a href="#" class="dropdown-item edit-button"><i class="fa fa-pencil"></i> Düzenle</a>
+                      <a href="#" class="dropdown-item delete-button"><i class="fa fa-trash"></i> Sil</a>
+                    </span>
+                  </span>
+                </td>
+              `;
+              detailTableBody.appendChild(row);
+            } else {
+              console.error('Meter value verisi alınırken bir hata oluştu:', latestData[0].message);
+            }
+          })
+          .catch(error => {
+            console.error('Meter value API çağrısında bir hata oluştu:', error);
+          });
         });
       } else {
         console.error(`${table.name} verisi alınırken bir hata oluştu:`, data[0].message);
