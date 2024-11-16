@@ -416,6 +416,8 @@ function showDetailModal(connection) {
           })
           .then(response => response.json())
           .then(latestData => {
+            console.log(`Response for SerialNumber: ${meter.SerialNumber}, Table: ${table.name}`, latestData);
+
             if (latestData[0].success && latestData[0].data) {
               const latestValues = latestData[0].data;
 
