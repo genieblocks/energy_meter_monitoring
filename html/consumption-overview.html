@@ -404,7 +404,7 @@ function showDetailModal(connection) {
 
         meterData.forEach(meter => {
           // Seri numarasını ve tablo adını kullanarak MeterValue ve ReadingTime bilgilerini alın
-          fetch(`${baseWebhookURL}/get-latest-single-meter-values`, {
+          fetch(`${baseWebhookURL}/webhook/get-latest-single-meter-values`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
