@@ -399,7 +399,6 @@ function showDetailModal(connection) {
     })
     .then(response => response.json())
     .then(data => {
-      console.log(`Response for Table: ${table.name}`, data);
 
       if (data[0].success && data[0].data) {
         const meterData = data[0].data;
@@ -418,11 +417,9 @@ function showDetailModal(connection) {
           })
           .then(response => response.json())
           .then(latestData => {
-            console.log(`Response for SerialNumber: ${meter.SerialNumber}, Table: ${table.name}`, latestData);
 
             if (latestData[0].success && latestData[0].data) {
               const latestValues = latestData[0].data[0];
-              console.log(`MeterValue: ${latestValues.MeterValue}, QueryStartTime: ${latestValues.QueryStartTime}`);
 
               const row = document.createElement('tr');
               row.innerHTML = `
