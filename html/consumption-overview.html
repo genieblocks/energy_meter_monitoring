@@ -399,6 +399,8 @@ function showDetailModal(connection) {
     })
     .then(response => response.json())
     .then(data => {
+      console.log(`Response for Table: ${table.name}`, data);
+
       if (data[0].success && data[0].data) {
         const meterData = data[0].data;
 
