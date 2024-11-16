@@ -421,7 +421,7 @@ function showDetailModal(connection) {
             console.log(`Response for SerialNumber: ${meter.SerialNumber}, Table: ${table.name}`, latestData);
 
             if (latestData[0].success && latestData[0].data) {
-              const latestValues = latestData[0].data;
+              const latestValues = latestData[0].data[0];
               console.log(`MeterValue: ${latestValues.MeterValue}, QueryStartTime: ${latestValues.QueryStartTime}`);
 
               const row = document.createElement('tr');
