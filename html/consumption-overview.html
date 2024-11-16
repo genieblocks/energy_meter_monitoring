@@ -422,6 +422,7 @@ function showDetailModal(connection) {
 
             if (latestData[0].success && latestData[0].data) {
               const latestValues = latestData[0].data;
+              console.log(`MeterValue: ${latestValues.MeterValue}, QueryStartTime: ${latestValues.QueryStartTime}`);
 
               const row = document.createElement('tr');
               row.innerHTML = `
