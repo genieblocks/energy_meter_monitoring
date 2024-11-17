@@ -186,6 +186,7 @@
                   <th class="d-none">Su Tük. (Sıcak) (m3)</th>
                   <th class="d-none">Kalori. Sıcak Tük. (kWh)</th>
                   <th class="d-none">Kalori. Soğuk Tük. (kWh)</th>
+                  <th>Detay</th>
                   <th>Düzenle</th>
                 </tr>
               </thead>
@@ -684,7 +685,6 @@ function showDetailModal(connection) {
                       <i class="ft-settings"></i>
                     </button>
                     <span class="dropdown-menu mt-1 dropdown-menu-right">
-                      <a href="#" class="dropdown-item detail-button"><i class="fa fa-eye"></i> Detay</a>
                       <a href="#" class="dropdown-item edit-button"><i class="fa fa-pencil"></i> Düzenle</a>
                       <a href="#" class="dropdown-item delete-button"><i class="fa fa-trash"></i> Sil</a>
                     </span>
@@ -809,6 +809,11 @@ document.addEventListener('DOMContentLoaded', function() {
         <td class="d-none">${connection.ColdWaterUsage ?? '-'}</td>
         <td class="d-none">${connection.HeatingUsage ?? '-'}</td>
         <td class="d-none">${connection.CoolingUsage ?? '-'}</td>
+        <td class="d-none">
+          <button type="button" class="btn btn-sm btn-outline-info" id="detail-button">
+            <i class="fa fa-eye"></i>
+          </button>
+        </td>
         <td>
           <span class="dropdown">
             <button id="btnSearchDrop01" type="button" data-toggle="dropdown" aria-haspopup="true"
@@ -824,7 +829,7 @@ document.addEventListener('DOMContentLoaded', function() {
       tableBodyIEC.appendChild(row);
 
       // Bind the detail button to showDetailModal
-      row.querySelector('.detail-button').addEventListener('click', function(event) {
+      row.querySelector('#detail-button').addEventListener('click', function(event) {
         event.preventDefault();
         showDetailModal(connection);
       });
