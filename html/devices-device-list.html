@@ -415,6 +415,7 @@
             <thead>
               <tr>
                 <th>Sayaç Seri Numarası</th>
+                <th>Sayaç Çarpanı</th>
                 <th>Sayaç Markası</th>
                 <th>İletişim Protokolü</th>
                 <th>Bağlantı Noktası</th>
@@ -872,27 +873,54 @@ function appendRowToTable(meter, tableId) {
   const tableBody = document.querySelector(`${tableId} tbody`);
   const row = document.createElement('tr');
 
-  row.innerHTML = `
-    <td>${meter.SerialNumber || ''}</td>
-    <td>${meter.Brand || ''}</td>
-    <td>${meter.CommunicationProtocol || ''}</td>
-    <td>${meter.ConnectionPoint || ''}</td>
-    <td>
-      <button type="button" class="btn btn-sm btn-outline-info" id="table-show-button">
-          <i class="fa fa-eye"></i>
-      </button>
-    </td>
-    <td>
-      <button type="button" class="btn btn-sm btn-outline-success" id="table-edit-button">
-        <i class="fa fa-edit"></i>
-      </button>
-    </td>
-    <td>
-      <button type="button" class="btn btn-sm btn-outline-danger" id="table-delete-button">
-        <i class="fa fa-trash-o"></i>
-      </button>
-    </td>
-  `;
+  // Check if the table is for Electricity Meters
+  if (tableId === '#DataTables_Table_Electricity_Meter_List') {
+    row.innerHTML = `
+      <td>${meter.SerialNumber || ''}</td>
+      <td>${meter.MeterMultiplier || ''}</td>
+      <td>${meter.Brand || ''}</td>
+      <td>${meter.CommunicationProtocol || ''}</td>
+      <td>${meter.ConnectionPoint || ''}</td>
+      <td>
+        <button type="button" class="btn btn-sm btn-outline-info" id="table-show-button">
+            <i class="fa fa-eye"></i>
+        </button>
+      </td>
+      <td>
+        <button type="button" class="btn btn-sm btn-outline-success" id="table-edit-button">
+          <i class="fa fa-edit"></i>
+        </button>
+      </td>
+      <td>
+        <button type="button" class="btn btn-sm btn-outline-danger" id="table-delete-button">
+          <i class="fa fa-trash-o"></i>
+        </button>
+      </td>
+    `;
+  } else {
+    // For other tables
+    row.innerHTML = `
+      <td>${meter.SerialNumber || ''}</td>
+      <td>${meter.Brand || ''}</td>
+      <td>${meter.CommunicationProtocol || ''}</td>
+      <td>${meter.ConnectionPoint || ''}</td>
+      <td>
+        <button type="button" class="btn btn-sm btn-outline-info" id="table-show-button">
+            <i class="fa fa-eye"></i>
+        </button>
+      </td>
+      <td>
+        <button type="button" class="btn btn-sm btn-outline-success" id="table-edit-button">
+          <i class="fa fa-edit"></i>
+        </button>
+      </td>
+      <td>
+        <button type="button" class="btn btn-sm btn-outline-danger" id="table-delete-button">
+          <i class="fa fa-trash-o"></i>
+        </button>
+      </td>
+    `;
+  }
 
   tableBody.appendChild(row);
 }
