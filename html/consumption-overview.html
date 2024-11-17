@@ -226,6 +226,7 @@
               <th>Seri Numarası</th>
               <th>Sayaç Değeri</th>
               <th>Okuma Zamanı</th>
+              <th>Anlık Okuma</th>
               <th>Düzenle</th>
             </tr>
           </thead>
@@ -428,6 +429,11 @@ function showDetailModal(connection) {
                 <td>${meter.SerialNumber ?? '-'}</td>
                 <td>${latestValues.MeterValue ?? '-'}</td>
                 <td>${latestValues.QueryStartTime ?? '-'}</td>
+                <td>
+                  <button type="button" class="btn btn-sm btn-outline-info" id="table-show-button">
+                    <i class="fa fa-eye"></i>
+                  </button>
+                </td>
                 <td>
                   <span class="dropdown">
                     <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-genie dropdown-toggle dropdown-menu-right">
