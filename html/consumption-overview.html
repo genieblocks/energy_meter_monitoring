@@ -492,6 +492,38 @@ function updateSingleQueryModal(data) {
   }
 }
 
+// Detay modalında "Anlık Okuma" butonu işlevselliği
+document.addEventListener('click', function (event) {
+  if (event.target && event.target.id === 'table-show-button') {
+    const row = event.target.closest('tr');
+    if (!row) {
+      console.error('Hedef satır bulunamadı.');
+      return;
+    }
+
+    // Sayaç Tipi, Seri Numarası ve Bağlantı Noktası bilgilerini al
+    const meterType = row.children[0]?.innerText.trim(); // Sayaç Tipi
+    const serialNumber = row.children[2]?.innerText.trim(); // Seri Numarası
+    const connectionPoint = row.children[1]?.innerText.trim(); // Bağlantı Noktası
+
+    if (!serialNumber || !connectionPoint) {
+      console.error('Seri Numarası veya Bağlantı Noktası bilgisi eksik.');
+      return;
+    }
+
+    console.log(`Sayaç Tipi: ${meterType}, Seri Numarası: ${serialNumber}, Bağlantı Noktası: ${connectionPoint}`);
+
+    // Sayaç Tipine göre sorgu fonksiyonunu çağır
+    if (meterType === 'Elektrik') {
+      console.log('Elektrik sayacı sorgulanıyor...');
+      queryIecMeterData(serialNumber, connectionPoint);
+    } else {
+      console.log('Elektrik dışı sayaç sorgulanıyor...');
+      queryMeterData(serialNumber, connectionPoint);
+    }
+  }
+});
+
 // singleIecQueryModal
 function queryIecMeterData(serialNumber, connectionPoint) {
   $('#singleIecQueryModal').modal('show');
