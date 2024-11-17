@@ -180,12 +180,12 @@
                   <th>Bina No</th>
                   <th>Daire</th>
                   <th>Abone</th>
-                  <th>Not</th>
-                  <th>Elektrik Tük. (kWh)</th>
-                  <th>Su Tük. (Soğuk) (m3)</th>
-                  <th>Su Tük. (Sıcak) (m3)</th>
-                  <th>Kalori. Sıcak Tük. (kWh)</th>
-                  <th>Kalori. Soğuk Tük. (kWh)</th>
+                  <th class="d-none">Not</th>
+                  <th class="d-none">Elektrik Tük. (kWh)</th>
+                  <th class="d-none">Su Tük. (Soğuk) (m3)</th>
+                  <th class="d-none">Su Tük. (Sıcak) (m3)</th>
+                  <th class="d-none">Kalori. Sıcak Tük. (kWh)</th>
+                  <th class="d-none">Kalori. Soğuk Tük. (kWh)</th>
                   <th>Düzenle</th>
                 </tr>
               </thead>
@@ -803,12 +803,12 @@ document.addEventListener('DOMContentLoaded', function() {
         <td>${connection.BuildingNo ?? '-'}</td>
         <td>${connection.Flat ?? '-'}</td>
         <td>${connection.Subscriber ?? '-'}</td>
-        <td>${connection.Note ?? '-'}</td>
-        <td>${connection.ElectricityUsage ?? '-'}</td>
-        <td>${connection.HotWaterUsage ?? '-'}</td>
-        <td>${connection.ColdWaterUsage ?? '-'}</td>
-        <td>${connection.HeatingUsage ?? '-'}</td>
-        <td>${connection.CoolingUsage ?? '-'}</td>
+        <td class="d-none">${connection.Note ?? '-'}</td>
+        <td class="d-none">${connection.ElectricityUsage ?? '-'}</td>
+        <td class="d-none">${connection.HotWaterUsage ?? '-'}</td>
+        <td class="d-none">${connection.ColdWaterUsage ?? '-'}</td>
+        <td class="d-none">${connection.HeatingUsage ?? '-'}</td>
+        <td class="d-none">${connection.CoolingUsage ?? '-'}</td>
         <td>
           <span class="dropdown">
             <button id="btnSearchDrop01" type="button" data-toggle="dropdown" aria-haspopup="true"
