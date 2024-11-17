@@ -244,6 +244,78 @@
   </div>
 </div>
 
+<!-- Single Query Modal -->
+<div class="modal fade text-left" id="singleQueryModal" tabindex="-1" role="dialog" aria-labelledby="singleQueryModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title text-bold-600" id="singleQueryModalLabel"></h4>
+        <!-- <button type="button" class="ml-auto col-4 btn-sm btn-genie" id="newDataButton">Yeni Veri Ekle</button> -->
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <table class="table table-hover table-bordered zero-configuration dataTable w-auto" id="singleQueryDataTable" role="grid">
+            <thead>
+                <tr>
+                  <th>Seri Numarası</th>
+                  <th>Bağlantı Noktası</th>
+                  <th>Seri Port</th>
+                  <th>Üretici Kodu</th>
+                  <th>Değeri</th>
+                  <th>Hata</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Dinamik içerik buraya eklenecek -->
+            </tbody>
+        </table>
+        <div id="noContentMessage" class="alert alert-warning" style="display: none;">Cihaza Erişilemedi.
+        </div>
+      </div>
+      <div class="modal-footer">
+          <input type="reset" class="btn btn-light" data-dismiss="modal" value="Kapat">
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Single IEC Query Modal -->
+<div class="modal fade text-left" id="singleIecQueryModal" tabindex="-1" role="dialog" aria-labelledby="singleIecQueryModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title text-bold-600" id="singleIecQueryModalLabel"></h4>
+        <!-- <button type="button" class="ml-auto col-4 btn-sm btn-genie" id="newDataButton">Yeni Veri Ekle</button> -->
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <table class="table table-hover table-bordered zero-configuration dataTable w-auto" id="singleIecQueryDataTable" role="grid">
+            <thead>
+                <tr>
+                  <th>OBIS Kodu</th>
+                  <th>Açıklama</th>
+                  <th>Değer</th>
+                  <th>Hata</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Dinamik içerik buraya eklenecek -->
+            </tbody>
+        </table>
+        <div id="noContentMessage" class="alert alert-warning" style="display: none;">Cihaza Erişilemedi.
+        </div>
+      </div>
+      <div class="modal-footer">
+          <input type="reset" class="btn btn-light" data-dismiss="modal" value="Kapat">
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- Add Row Modal for IEC 62056-21-->
 <div class="modal fade" id="addRowModalIEC" tabindex="-1" role="dialog" aria-labelledby="addRowModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -365,6 +437,146 @@
   const baseWebhookURL = "http://192.168.2.250:5678"; // Değiştirmek istediğiniz temel URL
   // const baseWebhookURL = "http://192.168.1.146:5678"; // Değiştirmek istediğiniz temel URL
 
+
+// singleQueryModal
+function queryMeterData(serialNumber, connectionPoint) {
+  $('#singleQueryModal').modal('show');
+
+  // Sadece modal içeriği bloklanacak
+  $('#singleQueryModal .modal-content').block({
+    message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
+    overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
+    css: { border: 0, padding: 0, backgroundColor: 'transparent' }
+  });
+
+  fetch(`${baseWebhookURL}/webhook/query-meter-data`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ serialNumber: serialNumber, connectionPoint: connectionPoint })
+  })
+  .then(response => response.json())
+  .then(data => {
+    updateSingleQueryModal(data);
+    // Modal içeriği bloklamayı kaldır
+    $('#singleQueryModal .modal-content').unblock();
+  })
+  .catch(error => {
+    console.error("Error querying meter data:", error);
+    // Modal içeriği bloklamayı kaldır
+    $('#singleQueryModal .modal-content').unblock();
+  });
+}
+
+function updateSingleQueryModal(data) {
+  const tableBody = document.querySelector('#singleQueryDataTable tbody');
+  tableBody.innerHTML = '';
+
+  if (data.length > 0) {
+    document.getElementById('noContentMessage').style.display = 'none'; // Hide error message
+    data.forEach(meter => {
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td>${meter.device_addr || ''}</td>
+        <td>${meter.connectionPoint || ''}</td>
+        <td>${meter.serial_port || ''}</td>
+        <td>${meter.ManID || ''}</td>
+        <td>${meter.meterValue || ''}
+        <td>${meter.originalDataError || ''}</td>
+      `;
+      tableBody.appendChild(row);
+    });
+  } else {
+    document.getElementById('noContentMessage').style.display = 'block';
+  }
+}
+
+// singleIecQueryModal
+function queryIecMeterData(serialNumber, connectionPoint) {
+  $('#singleIecQueryModal').modal('show');
+
+  // Sadece modal içeriği bloklanacak
+  $('#singleIecQueryModal .modal-content').block({
+    message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
+    overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
+    css: { border: 0, padding: 0, backgroundColor: 'transparent' }
+  });
+
+  fetch(`${baseWebhookURL}/webhook/query-iec-meter-data`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ serialNumber: serialNumber, connectionPoint: connectionPoint })
+  })
+  .then(response => response.json())
+  .then(data => {
+    updateSingleIecQueryModal(data);
+    // Modal içeriği bloklamayı kaldır
+    $('#singleIecQueryModal .modal-content').unblock();
+  })
+  .catch(error => {
+    console.error("Error querying meter data:", error);
+    // Modal içeriği bloklamayı kaldır
+    $('#singleIecQueryModal .modal-content').unblock();
+  });
+}
+
+function updateSingleIecQueryModal(data) {
+  const tableBody = document.querySelector('#singleIecQueryDataTable tbody');
+  tableBody.innerHTML = '';
+
+  if (data.length > 0) {
+    document.getElementById('noContentMessage').style.display = 'none'; // Hide error message
+
+    // Extract the number from identification_msg (e.g., <1>)
+    const identificationMsg = data[0].identification_msg || '';
+    const versionMatch = identificationMsg.match(/<(\d+)>/);
+    const version = versionMatch ? parseInt(versionMatch[1], 10) : null;
+
+    // Select the correct OBIS description source
+    const obisDescriptionsSource = version === 3 ? obisDescriptionsTedas3 : obisDescriptionsTedas;
+
+    // Add the identification message as the first row
+    const identificationRow = document.createElement('tr');
+    identificationRow.innerHTML = `
+      <td>---</td>
+      <td>Haberleşme İstek Mesajı Cevabı</td>
+      <td>${identificationMsg}</td>
+      <td></td>
+    `;
+    tableBody.appendChild(identificationRow);
+
+    // Parse the meter data
+    const meterData = data[0].data.split('\r\n');
+
+    console.log("Parsed meter data:", meterData);
+
+    meterData.forEach((meter) => {
+      if (meter) {
+        const obisCode = meter.split('(')[0];
+        const obisValue = meter.substring(meter.indexOf('('));
+        const obisDescription = obisDescriptionsSource[obisCode] || "Açıklama Bulunamadı."; // Get Description or default
+
+        console.log("OBIS Code:", obisCode);
+        console.log("OBIS Description:", obisDescription);
+        console.log("OBIS Value:", obisValue);
+
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${obisCode || ''}</td>
+          <td>${obisDescription || ''}</td>
+          <td>${obisValue || ''}</td>
+          <td></td>
+        `;
+        tableBody.appendChild(row);
+      }
+    });
+  } else {
+    document.getElementById('noContentMessage').style.display = 'block';
+  }
+}
 
 // Detay modalını açan ve içeriği dinamik olarak dolduran fonksiyon
 function showDetailModal(connection) {
