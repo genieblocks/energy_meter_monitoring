@@ -225,6 +225,7 @@
               <th>Sayaç Tipi</th>
               <th>Sayaç İsmi</th>
               <th>Seri Numarası</th>
+              <th>Sayaç Çarpanı</th>
               <th>Sayaç Değeri</th>
               <th>Okuma Zamanı</th>
               <th>Anlık Okuma</th>
@@ -669,6 +670,10 @@ function showDetailModal(connection) {
                 ? formatDate(latestValues.QueryStartTime)
                 : '-';
 
+              const meterMultiplier = table.meterType === "Elektrik" 
+                ? (meter.MeterMultiplier ?? '-') 
+                : 1;
+
               const row = document.createElement('tr');
               row.setAttribute('data-connection-point', meter.ConnectionPoint); // connectionPoint saklanıyor
 
@@ -676,6 +681,7 @@ function showDetailModal(connection) {
                 <td>${table.meterType}</td>
                 <td>${meter.CustomName ?? '-'}</td>
                 <td>${meter.SerialNumber ?? '-'}</td>
+                <td>${meterMultiplier}</td>
                 <td>${latestValues.MeterValue ?? '-'}</td>
                 <td>${formattedDate}</td>
                 <td>
