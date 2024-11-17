@@ -504,7 +504,7 @@ document.addEventListener('click', function (event) {
     // Sayaç Tipi, Seri Numarası ve Bağlantı Noktası bilgilerini al
     const meterType = row.children[0]?.innerText.trim(); // Sayaç Tipi
     const serialNumber = row.children[2]?.innerText.trim(); // Seri Numarası
-    const connectionPoint = row.children[1]?.innerText.trim(); // Bağlantı Noktası
+    const connectionPoint = row.getAttribute('data-connection-point'); // Bağlantı Noktası
 
     if (!serialNumber || !connectionPoint) {
       console.error('Seri Numarası veya Bağlantı Noktası bilgisi eksik.');
