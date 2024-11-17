@@ -644,12 +644,10 @@ function showDetailModal(connection) {
     })
     .then(response => response.json())
     .then(data => {
-
       if (data[0].success && data[0].data) {
         const meterData = data[0].data;
 
         meterData.forEach(meter => {
-          // Seri numarasını ve tablo adını kullanarak MeterValue ve ReadingTime bilgilerini alın
           fetch(`${baseWebhookURL}/webhook/get-latest-single-meter-values`, {
             method: 'POST',
             headers: {
@@ -662,11 +660,12 @@ function showDetailModal(connection) {
           })
           .then(response => response.json())
           .then(latestData => {
-
             if (latestData[0].success && latestData[0].data) {
               const latestValues = latestData[0].data[0];
 
               const row = document.createElement('tr');
+              row.setAttribute('data-connection-point', meter.connectionPoint); // connectionPoint saklanıyor
+
               row.innerHTML = `
                 <td>${table.meterType}</td>
                 <td>${meter.CustomName ?? '-'}</td>
