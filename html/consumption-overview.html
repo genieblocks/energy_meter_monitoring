@@ -664,10 +664,10 @@ function showDetailModal(connection) {
               const latestValues = latestData[0].data[0];
 
               const row = document.createElement('tr');
-              row.setAttribute('data-connection-point', meter.connectionPoint); // connectionPoint saklanıyor
+              row.setAttribute('data-connection-point', meter.ConnectionPoint); // connectionPoint saklanıyor
 
               row.innerHTML = `
-                <td>${meter.ConnectionPoint}</td>
+                <td>${table.meterType}</td>
                 <td>${meter.CustomName ?? '-'}</td>
                 <td>${meter.SerialNumber ?? '-'}</td>
                 <td>${latestValues.MeterValue ?? '-'}</td>
