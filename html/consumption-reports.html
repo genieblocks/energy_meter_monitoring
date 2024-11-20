@@ -201,6 +201,7 @@
                 <!-- <option value="olay-raporu">Olay Raporu</option>
                 <option value="alarm-raporu">Alarm Raporu</option>
                 <option value="enerji-tuketim-raporu">Enerji Tüketim Raporu</option> -->
+                <option value="previous-month-electricity-report">Bir Önceki Ay Elektrik Tüketim Raporu</option>
                 <option value="moxa-device-status-report">Moxa Cihaz Durum Rapor</option>
                 <option value="cihaz-tarih-saat-raporu">Cihaz Tarih-Saat Raporu</option>
               </select>
@@ -471,18 +472,17 @@
     
     function handleReportGeneration() {
         const reportType = document.getElementById('electricityReportTypeSelect').value;
-        
+
         if (reportType === 'cihaz-tarih-saat-raporu') {
-            // Cihaz Tarih-Saat Raporu sorgusu
             initiateTimeReportRequest();
         } else if (reportType === 'moxa-device-status-report') {
-            // Moxa Cihaz Durum Raporu sorgusu
             initiateMoxaDeviceStatusReportRequest();
+        } else if (reportType === 'previous-month-electricity-report') {
+            initiatePreviousMonthElectricityReportRequest();
         } else {
             console.warn("Geçerli bir rapor tipi seçilmedi.");
         }
 
-        // Modalı kapat ve sayfayı yeniden yükle
         $('#generateElectricityReportModal').modal('hide');
         $('#generateElectricityReportModal').on('hidden.bs.modal', function () {
             location.reload();
@@ -624,6 +624,28 @@
               }
           });
       }
+    }
+
+    function initiatePreviousMonthElectricityReportRequest() {
+        $.blockUI({
+            message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
+            overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
+            css: { border: 0, padding: 0, backgroundColor: 'transparent' }
+        });
+
+        fetch(`${baseWebhookURL}/webhook/get-previous-month-electricity-report`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+        .catch(error => {
+            console.error('Error initiating previous month electricity report request:', error.message);
+            alert(`Error initiating report: ${error.message}`);
+        })
+        .finally(() => {
+            $.unblockUI();
+        });
     }
 
     function initiateTimeReportRequest() {
