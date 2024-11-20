@@ -539,6 +539,8 @@
           headers = ['Sayaç Seri Numarası', 'Sayaç Tarihi', 'Sayaç Saati', 'Mevcut Tarih', 'Mevcut Saat', 'Zaman Farkı'];
       } else if (reportTableName === 'MoxaDeviceStatusReport') {
           headers = ['Moxa IP Adresi', 'Durumu'];
+      } else if (reportTableName === 'PreviousMonthElectricityReport') {
+          headers = ['Blok', 'Bina No', 'Daire', 'Abone', 'Sayaç İsmi', 'Seri Numarası', 'Değeri (kWh)', 'Okuma Zamanı'];
       } else {
           console.warn("Bilinmeyen reportTableName değeri:", reportTableName);
           return;
@@ -597,6 +599,38 @@
               }
               statusCell.appendChild(statusBadge);
               row.appendChild(statusCell);
+          } else if (reportTableName === 'PreviousMonthElectricityReport') {
+              const blockCell = document.createElement('td');
+              blockCell.textContent = item.Block || '-';
+              row.appendChild(blockCell);
+
+              const buildingNoCell = document.createElement('td');
+              buildingNoCell.textContent = item.BuildingNo || '-';
+              row.appendChild(buildingNoCell);
+
+              const flatCell = document.createElement('td');
+              flatCell.textContent = item.Flat || '-';
+              row.appendChild(flatCell);
+
+              const subscriberCell = document.createElement('td');
+              subscriberCell.textContent = item.Subscriber || '-';
+              row.appendChild(subscriberCell);
+
+              const customNameCell = document.createElement('td');
+              customNameCell.textContent = item.CustomName || '-';
+              row.appendChild(customNameCell);
+
+              const serialNumberCell = document.createElement('td');
+              serialNumberCell.textContent = item.SerialNumber || '-';
+              row.appendChild(serialNumberCell);
+
+              const meterValueCell = document.createElement('td');
+              meterValueCell.textContent = item.MeterValue || '-';
+              row.appendChild(meterValueCell);
+
+              const queryStartTimeCell = document.createElement('td');
+              queryStartTimeCell.textContent = item.QueryStartTime || '-';
+              row.appendChild(queryStartTimeCell);
           }
 
           tableBody.appendChild(row);
