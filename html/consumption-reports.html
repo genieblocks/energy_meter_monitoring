@@ -702,6 +702,8 @@
         // Bu durumda başka bir alan gösterilmeyecek.
       } else if (reportType === 'moxa-device-status-report') {
         // Moxa Cihaz Durum Rapor seçildiğinde hiçbir alan gösterilmeyecek.
+      } else if (reportType === 'previous-month-electricity-report') {
+        // Bir Önceki Ay Elektrik Tüketim Raporu seçildiğinde hiçbir alan gösterilmeyecek.
       } else {
         // Diğer rapor tiplerine göre form alanlarını göster
         document.getElementById('date-range-group').style.display = 'block';
