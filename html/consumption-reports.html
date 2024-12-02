@@ -532,7 +532,7 @@
       if (a.Block < b.Block) return -1;
       if (a.Block > b.Block) return 1;
 
-      // Aynı bloktaysa, Bina No karşılaştırılır
+      // Aynı bloktaysa, Bina No karşılaştırılır (önce sayısal kısım sonra harfli ek)
       if (aParsedBuilding.number < bParsedBuilding.number) return -1;
       if (aParsedBuilding.number > bParsedBuilding.number) return 1;
 
@@ -570,11 +570,11 @@
     }
 
     function parseBuildingNo(buildingNo) {
-      // Bina numarasını parçalar: sayılar ve harfleri ayırmak için.
-      const match = buildingNo.match(/(\d+)([A-Za-z]*)/);
+      // Bina numarasını sayısal ve harfli olarak ayır
+      const match = buildingNo.match(/(\d+)(\/[A-Za-z]+)?/);
       if (match) {
-        const number = parseInt(match[1], 10) || 0; // Sayısal kısmı
-        const suffix = match[2] || ''; // Harf veya özel karakter kısmı
+        const number = parseInt(match[1], 10) || 0; // Sayısal kısım
+        const suffix = match[2] || ''; // /A, /B gibi harfli ekler
         return { number, suffix };
       }
       return { number: 0, suffix: '' };
