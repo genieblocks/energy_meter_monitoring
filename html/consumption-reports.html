@@ -525,17 +525,19 @@
     }
 
     function sortDataAndAddIndex(data) {
-      // Veriyi Blok, Bina No ve Daire'ye göre sıralama
+      // Veriyi Blok, Bina No ve Daire'ye göre sıralama (sayıları sayısal değerlere çevirerek)
       console.log("Orijinal veri:", data); // Debug amacıyla orijinal veriyi logla
+
       data.sort((a, b) => {
         if (a.Block < b.Block) return -1;
         if (a.Block > b.Block) return 1;
-        if (parseInt(a.BuildingNo) < parseInt(b.BuildingNo)) return -1;
-        if (parseInt(a.BuildingNo) > parseInt(b.BuildingNo)) return 1;
-        if (parseInt(a.Flat) < parseInt(b.Flat)) return -1;
-        if (parseInt(a.Flat) > parseInt(b.Flat)) return 1;
+        if (Number(a.BuildingNo) < Number(b.BuildingNo)) return -1;
+        if (Number(a.BuildingNo) > Number(b.BuildingNo)) return 1;
+        if (Number(a.Flat) < Number(b.Flat)) return -1;
+        if (Number(a.Flat) > Number(b.Flat)) return 1;
         return 0;
       });
+
       console.log("Sıralanmış veri:", data); // Debug amacıyla sıralanmış veriyi logla
 
       // Sıra numarası ekle
