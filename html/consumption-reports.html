@@ -526,6 +526,7 @@
 
     function sortDataAndAddIndex(data) {
       // Veriyi Blok, Bina No ve Daire'ye göre sıralama
+      console.log("Orijinal veri:", data); // Debug amacıyla orijinal veriyi logla
       data.sort((a, b) => {
         if (a.Block < b.Block) return -1;
         if (a.Block > b.Block) return 1;
@@ -535,11 +536,13 @@
         if (a.Flat > b.Flat) return 1;
         return 0;
       });
+      console.log("Sıralanmış veri:", data); // Debug amacıyla sıralanmış veriyi logla
 
       // Sıra numarası ekle
       data.forEach((item, index) => {
         item.Index = index + 1;
       });
+      console.log("Sıra numarası eklenmiş veri:", data); // Debug amacıyla sıra numarası eklenmiş veriyi logla
 
       return data;
     }
@@ -562,9 +565,9 @@
       }
 
       // Eğer 'PreviousMonthElectricityReport' tablosu ise veriyi sıralama ve sıra numarası ekleme
-      // if (reportTableName === 'PreviousMonthElectricityReport') {
-      //   data = sortDataAndAddIndex(data);
-      // }
+      if (reportTableName === 'PreviousMonthElectricityReport') {
+        data = sortDataAndAddIndex(data);
+      }
 
       // Gelen reportTableName değerine göre başlıkları belirle
       let headers = [];
