@@ -525,25 +525,31 @@
     }
 
     function customSort(a, b) {
-      const aParsed = parseBuildingNo(a.BuildingNo);
-      const bParsed = parseBuildingNo(b.BuildingNo);
+      const aParsedBuilding = parseBuildingNo(a.BuildingNo);
+      const bParsedBuilding = parseBuildingNo(b.BuildingNo);
 
       // Önce Blok karşılaştırılır
       if (a.Block < b.Block) return -1;
       if (a.Block > b.Block) return 1;
 
       // Aynı bloktaysa, Bina No karşılaştırılır
-      if (aParsed.number < bParsed.number) return -1;
-      if (aParsed.number > bParsed.number) return 1;
+      if (aParsedBuilding.number < bParsedBuilding.number) return -1;
+      if (aParsedBuilding.number > bParsedBuilding.number) return 1;
 
-      if (aParsed.suffix < bParsed.suffix) return -1;
-      if (aParsed.suffix > bParsed.suffix) return 1;
+      if (aParsedBuilding.suffix < bParsedBuilding.suffix) return -1;
+      if (aParsedBuilding.suffix > bParsedBuilding.suffix) return 1;
 
-      // Daire karşılaştırması
-      const aFlat = parseInt(a.Flat.replace(/[^0-9]/g, ''), 10);
-      const bFlat = parseInt(b.Flat.replace(/[^0-9]/g, ''), 10);
-      
-      return aFlat - bFlat;
+      // Aynı bina numarasında, daire karşılaştırması yapılır
+      const aParsedFlat = parseFlat(a.Flat);
+      const bParsedFlat = parseFlat(b.Flat);
+
+      if (aParsedFlat.number < bParsedFlat.number) return -1;
+      if (aParsedFlat.number > bParsedFlat.number) return 1;
+
+      if (aParsedFlat.suffix < bParsedFlat.suffix) return -1;
+      if (aParsedFlat.suffix > bParsedFlat.suffix) return 1;
+
+      return 0;
     }
 
     function sortDataAndAddIndex(data) {
@@ -564,7 +570,7 @@
     }
 
     function parseBuildingNo(buildingNo) {
-      // BuildingNo'yu parçalar: sayılar ve harfleri ayırmak için.
+      // Bina numarasını parçalar: sayılar ve harfleri ayırmak için.
       const match = buildingNo.match(/(\d+)([A-Za-z]*)/);
       if (match) {
         const number = parseInt(match[1], 10) || 0; // Sayısal kısmı
@@ -574,12 +580,15 @@
       return { number: 0, suffix: '' };
     }
 
-    function parseFlatNo(flatNo) {
-      const match = flatNo.match(/^(\d+)([A-Za-z]*)$/);
-      return {
-        numeric: match ? parseInt(match[1], 10) : Number.MAX_SAFE_INTEGER,
-        letter: match ? match[2] : ""
-      };
+    function parseFlat(flat) {
+      // Daire numarasını parçalar: sayılar ve harfleri ayırmak için.
+      const match = flat.match(/(\d+)([A-Za-z]*)/);
+      if (match) {
+        const number = parseInt(match[1], 10) || 0; // Sayısal kısmı
+        const suffix = match[2] || ''; // Harf veya özel karakter kısmı
+        return { number, suffix };
+      }
+      return { number: 0, suffix: '' };
     }
 
     function updateReportModalTable(reportData, reportTitle, reportTableName) {
