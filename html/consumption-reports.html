@@ -524,34 +524,34 @@
       });
     }
 
+    function customSort(a, b) {
+      const aParsed = parseBuildingNo(a.BuildingNo);
+      const bParsed = parseBuildingNo(b.BuildingNo);
+
+      // Önce Blok karşılaştırılır
+      if (a.Block < b.Block) return -1;
+      if (a.Block > b.Block) return 1;
+
+      // Aynı bloktaysa, Bina No karşılaştırılır
+      if (aParsed.prefix < bParsed.prefix) return -1;
+      if (aParsed.prefix > bParsed.prefix) return 1;
+
+      if (aParsed.number < bParsed.number) return -1;
+      if (aParsed.number > bParsed.number) return 1;
+
+      // Daire karşılaştırması
+      const aFlat = parseInt(a.Flat.replace(/[^0-9]/g, ''), 10);
+      const bFlat = parseInt(b.Flat.replace(/[^0-9]/g, ''), 10);
+      
+      return aFlat - bFlat;
+    }
+
     function sortDataAndAddIndex(data) {
       // Veriyi Blok, Bina No ve Daire'ye göre sıralama
       console.log("Orijinal veri:", data); // Debug amacıyla orijinal veriyi logla
-      data.sort((a, b) => {
-        // Blok sıralaması
-        if (a.Block < b.Block) return -1;
-        if (a.Block > b.Block) return 1;
 
-        // Bina No sıralaması
-        const aBuildingNo = parseBuildingNo(a.BuildingNo);
-        const bBuildingNo = parseBuildingNo(b.BuildingNo);
-        if (aBuildingNo.numeric !== bBuildingNo.numeric) {
-          return aBuildingNo.numeric - bBuildingNo.numeric;
-        }
-        if (aBuildingNo.letter < bBuildingNo.letter) return -1;
-        if (aBuildingNo.letter > bBuildingNo.letter) return 1;
+      data.sort(customSort);
 
-        // Daire sıralaması
-        const aFlat = parseFlatNo(a.Flat);
-        const bFlat = parseFlatNo(b.Flat);
-        if (aFlat.numeric !== bFlat.numeric) {
-          return aFlat.numeric - bFlat.numeric;
-        }
-        if (aFlat.letter < bFlat.letter) return -1;
-        if (aFlat.letter > bFlat.letter) return 1;
-
-        return 0;
-      });
       console.log("Sıralanmış veri:", data); // Debug amacıyla sıralanmış veriyi logla
 
       // Sıra numarası ekle
@@ -564,11 +564,14 @@
     }
 
     function parseBuildingNo(buildingNo) {
-      const match = buildingNo.match(/^(\d+)([A-Za-z]*)$/);
-      return {
-        numeric: match ? parseInt(match[1], 10) : Number.MAX_SAFE_INTEGER,
-        letter: match ? match[2] : ""
-      };
+      // BuildingNo'yu parçalar: sayılar ve harfleri ayırmak için.
+      const match = buildingNo.match(/([A-Za-z]*)(\d*)/);
+      if (match) {
+        const prefix = match[1] || ''; // Harf kısmı
+        const number = parseInt(match[2], 10) || 0; // Sayısal kısmı
+        return { prefix, number };
+      }
+      return { prefix: '', number: 0 };
     }
 
     function parseFlatNo(flatNo) {
