@@ -525,7 +525,7 @@
     }
 
     function customSort(a, b) {
-        // Blok sıralaması
+        // Blok sıralaması (alfabetik)
         if (a.Block < b.Block) return -1;
         if (a.Block > b.Block) return 1;
 
@@ -533,10 +533,11 @@
         const aParsedBuilding = parseBuildingNo(a.BuildingNo);
         const bParsedBuilding = parseBuildingNo(b.BuildingNo);
 
+        // Önce sayısal kısmı karşılaştır
         if (aParsedBuilding.number < bParsedBuilding.number) return -1;
         if (aParsedBuilding.number > bParsedBuilding.number) return 1;
 
-        // Eğer sayısal değerler aynı ise, bina no harf ekine göre sıralama yap
+        // Sayısal kısımlar eşitse, harf ekine göre sıralama
         if (!aParsedBuilding.suffix && bParsedBuilding.suffix) {
             return -1; // Boş olan önce gelir
         } else if (aParsedBuilding.suffix && !bParsedBuilding.suffix) {
@@ -547,15 +548,15 @@
             return 1;
         }
 
-        // Daire sıralaması
+        // Daire sıralaması (sayısal ve harf kombinasyonları dikkate alınacak)
         const aParsedFlat = parseFlat(a.Flat);
         const bParsedFlat = parseFlat(b.Flat);
 
-        // Önce dairenin sayısal kısmını karşılaştır
+        // Önce sayısal kısmı karşılaştır
         if (aParsedFlat.number < bParsedFlat.number) return -1;
         if (aParsedFlat.number > bParsedFlat.number) return 1;
 
-        // Eğer sayısal kısımlar aynıysa, harfli ekleri karşılaştır (boş olan önce gelir)
+        // Sayısal kısımlar eşitse, harf ekine göre sıralama
         if (!aParsedFlat.suffix && bParsedFlat.suffix) {
             return -1; // Boş olan önce gelir
         } else if (aParsedFlat.suffix && !bParsedFlat.suffix) {
@@ -566,7 +567,7 @@
             return 1;
         }
 
-        return 0;
+        return 0; // Eğer tüm karşılaştırmalar eşitse
     }
 
     function sortDataAndAddIndex(data) {
