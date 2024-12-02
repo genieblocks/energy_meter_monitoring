@@ -563,6 +563,22 @@
       return data;
     }
 
+    function parseBuildingNo(buildingNo) {
+      const match = buildingNo.match(/^(\d+)([A-Za-z]*)$/);
+      return {
+        numeric: match ? parseInt(match[1], 10) : Number.MAX_SAFE_INTEGER,
+        letter: match ? match[2] : ""
+      };
+    }
+
+    function parseFlatNo(flatNo) {
+      const match = flatNo.match(/^(\d+)([A-Za-z]*)$/);
+      return {
+        numeric: match ? parseInt(match[1], 10) : Number.MAX_SAFE_INTEGER,
+        letter: match ? match[2] : ""
+      };
+    }
+
     function updateReportModalTable(reportData, reportTitle, reportTableName) {
       let data = reportData[0].data;
       const tableHead = document.querySelector('#DataTables_Table_Report thead');
