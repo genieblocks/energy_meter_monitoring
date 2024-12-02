@@ -428,13 +428,10 @@
         searching: true,
         ordering: true,
         info: true,
-        columnDefs: [
-          { targets: [1, 2], type: 'natural' } // Bina No ve Daire için doğal sıralama
-        ],
         order: [
           [0, 'asc'], // Blok (alfabetik sıralama)
-          [1, 'asc'], // Bina No (sayısal sıralama)
-          [2, 'asc']  // Daire (sayısal sıralama)
+          [1, 'asc', { orderDataType: 'num' }], // Bina No (sayısal sıralama)
+          [2, 'asc', { orderDataType: 'num' }]  // Daire (sayısal sıralama)
         ],
         language: {
           search: "Ara:",
@@ -449,7 +446,11 @@
             previous: "Önceki"
           },
           zeroRecords: "Eşleşen kayıt bulunamadı"
-        }
+        },
+        columnDefs: [
+          { targets: 1, type: 'num' }, // Bina No sayısal sıralama
+          { targets: 2, type: 'num' }  // Daire sayısal sıralama
+        ]
       });
     }
 
