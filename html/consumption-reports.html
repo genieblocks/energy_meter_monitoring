@@ -525,21 +525,22 @@
     }
 
     function customSort(a, b) {
-        const aParsedBuilding = parseBuildingNo(a.BuildingNo);
-        const bParsedBuilding = parseBuildingNo(b.BuildingNo);
-
-        // Önce Blok karşılaştırılır
+        // Blok sıralaması
         if (a.Block < b.Block) return -1;
         if (a.Block > b.Block) return 1;
 
-        // Aynı bloktaysa, Bina No karşılaştırılır (önce sayısal kısım sonra harfli ek)
+        // Bina No sıralaması (sayısal ve harf kombinasyonları dikkate alınacak)
+        const aParsedBuilding = parseBuildingNo(a.BuildingNo);
+        const bParsedBuilding = parseBuildingNo(b.BuildingNo);
+
         if (aParsedBuilding.number < bParsedBuilding.number) return -1;
         if (aParsedBuilding.number > bParsedBuilding.number) return 1;
 
+        // Eğer sayısal değerler aynı ise, harf eklerine göre sıralama yap
         if (aParsedBuilding.suffix < bParsedBuilding.suffix) return -1;
         if (aParsedBuilding.suffix > bParsedBuilding.suffix) return 1;
 
-        // Aynı bina numarasında, daire karşılaştırması yapılır
+        // Daire sıralaması
         const aParsedFlat = parseFlat(a.Flat);
         const bParsedFlat = parseFlat(b.Flat);
 
@@ -547,7 +548,7 @@
         if (aParsedFlat.number < bParsedFlat.number) return -1;
         if (aParsedFlat.number > bParsedFlat.number) return 1;
 
-        // Eğer sayısal kısımlar aynıysa, harfli ekleri karşılaştır (önce boş, sonra harfli ekler sıralanır)
+        // Eğer sayısal kısımlar aynıysa, harfli ekleri karşılaştır (boş olan önce gelir)
         if (!aParsedFlat.suffix && bParsedFlat.suffix) {
             return -1; // Boş olan önce gelir
         } else if (aParsedFlat.suffix && !bParsedFlat.suffix) {
@@ -584,7 +585,7 @@
         const match = buildingNo.match(/(\d+)([A-Za-z]*)?/);
         if (match) {
             const number = parseInt(match[1], 10) || 0; // Sayısal kısım
-            const suffix = match[2] || ''; // Harfli ek kısmı
+            const suffix = match[2] ? match[2].toUpperCase() : ''; // Harfli ek kısmı (büyük harfe çevirerek tutarlılık sağla)
             return { number, suffix };
         }
         return { number: 0, suffix: '' };
@@ -595,7 +596,7 @@
         const match = flat.match(/(\d+)([A-Za-z]*)?/);
         if (match) {
             const number = parseInt(match[1], 10) || 0; // Sayısal kısım
-            const suffix = match[2] || ''; // Harf veya özel karakter kısmı
+            const suffix = match[2] ? match[2].toUpperCase() : ''; // Harf veya özel karakter kısmı (büyük harfe çevirerek tutarlılık sağla)
             return { number, suffix };
         }
         return { number: 0, suffix: '' };
