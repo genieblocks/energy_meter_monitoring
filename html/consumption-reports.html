@@ -562,9 +562,9 @@
       }
 
       // Eğer 'PreviousMonthElectricityReport' tablosu ise veriyi sıralama ve sıra numarası ekleme
-      if (reportTableName === 'PreviousMonthElectricityReport') {
-        data = sortDataAndAddIndex(data);
-      }
+      // if (reportTableName === 'PreviousMonthElectricityReport') {
+      //   data = sortDataAndAddIndex(data);
+      // }
 
       // Gelen reportTableName değerine göre başlıkları belirle
       let headers = [];
@@ -634,9 +634,9 @@
               row.appendChild(statusCell);
           } else if (reportTableName === 'PreviousMonthElectricityReport') {
               // Sıra No
-              const indexCell = document.createElement('td');
-              indexCell.textContent = item.Index || '-';
-              row.appendChild(indexCell);
+              // const indexCell = document.createElement('td');
+              // indexCell.textContent = item.Index || '-';
+              // row.appendChild(indexCell);
 
               // Blok
               const blockCell = document.createElement('td');
