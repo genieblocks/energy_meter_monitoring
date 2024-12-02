@@ -548,7 +548,7 @@
     }
 
     function updateReportModalTable(reportData, reportTitle, reportTableName) {
-      const data = reportData[0].data;
+      let data = reportData[0].data;
       const tableHead = document.querySelector('#DataTables_Table_Report thead');
       const tableBody = document.querySelector('#DataTables_Table_Report tbody');
       
