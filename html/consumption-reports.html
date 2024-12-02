@@ -524,6 +524,26 @@
       });
     }
 
+    function sortDataAndAddIndex(data) {
+      // Veriyi Blok, Bina No ve Daire'ye göre sıralama
+      data.sort((a, b) => {
+        if (a.Block < b.Block) return -1;
+        if (a.Block > b.Block) return 1;
+        if (a.BuildingNo < b.BuildingNo) return -1;
+        if (a.BuildingNo > b.BuildingNo) return 1;
+        if (a.Flat < b.Flat) return -1;
+        if (a.Flat > b.Flat) return 1;
+        return 0;
+      });
+
+      // Sıra numarası ekle
+      data.forEach((item, index) => {
+        item.Index = index + 1;
+      });
+
+      return data;
+    }
+
     function updateReportModalTable(reportData, reportTitle, reportTableName) {
       const data = reportData[0].data;
       const tableHead = document.querySelector('#DataTables_Table_Report thead');
@@ -541,6 +561,11 @@
           return;
       }
 
+      // Eğer 'PreviousMonthElectricityReport' tablosu ise veriyi sıralama ve sıra numarası ekleme
+      if (reportTableName === 'PreviousMonthElectricityReport') {
+        data = sortDataAndAddIndex(data);
+      }
+
       // Gelen reportTableName değerine göre başlıkları belirle
       let headers = [];
       if (reportTableName === 'ElectricMeterDateTimeSyncReport') {
@@ -548,7 +573,7 @@
       } else if (reportTableName === 'MoxaDeviceStatusReport') {
           headers = ['Moxa IP Adresi', 'Durumu'];
       } else if (reportTableName === 'PreviousMonthElectricityReport') {
-          headers = ['Blok', 'Bina No', 'Daire', 'Abone', 'Sayaç İsmi', 'Seri Numarası', 'Değeri (kWh)', 'Okuma Zamanı'];
+          headers = ['Sıra No', 'Blok', 'Bina No', 'Daire', 'Abone', 'Sayaç İsmi', 'Seri Numarası', 'Değeri (kWh)', 'Okuma Zamanı'];
       } else {
           console.warn("Bilinmeyen reportTableName değeri:", reportTableName);
           return;
@@ -608,34 +633,47 @@
               statusCell.appendChild(statusBadge);
               row.appendChild(statusCell);
           } else if (reportTableName === 'PreviousMonthElectricityReport') {
+              // Sıra No
+              const indexCell = document.createElement('td');
+              indexCell.textContent = item.Index || '-';
+              row.appendChild(indexCell);
+
+              // Blok
               const blockCell = document.createElement('td');
               blockCell.textContent = item.Block || '-';
               row.appendChild(blockCell);
 
+              // Bina No
               const buildingNoCell = document.createElement('td');
               buildingNoCell.textContent = item.BuildingNo || '-';
               row.appendChild(buildingNoCell);
 
+              // Daire
               const flatCell = document.createElement('td');
               flatCell.textContent = item.Flat || '-';
               row.appendChild(flatCell);
 
+              // Abone
               const subscriberCell = document.createElement('td');
               subscriberCell.textContent = item.Subscriber || '-';
               row.appendChild(subscriberCell);
 
+              // Sayaç İsmi
               const customNameCell = document.createElement('td');
               customNameCell.textContent = item.CustomName || '-';
               row.appendChild(customNameCell);
 
+              // Seri Numarası
               const serialNumberCell = document.createElement('td');
               serialNumberCell.textContent = item.SerialNumber || '-';
               row.appendChild(serialNumberCell);
 
+              // Değeri (kWh)
               const meterValueCell = document.createElement('td');
               meterValueCell.textContent = item.MeterValue || '-';
               row.appendChild(meterValueCell);
 
+              // Okuma Zamanı
               const queryStartTimeCell = document.createElement('td');
               queryStartTimeCell.textContent = item.QueryStartTime || '-';
               row.appendChild(queryStartTimeCell);
