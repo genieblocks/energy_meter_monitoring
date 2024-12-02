@@ -552,7 +552,7 @@
         if (aParsedFlat.suffix < bParsedFlat.suffix) return -1;
         if (aParsedFlat.suffix > bParsedFlat.suffix) return 1;
       } else if (!aParsedFlat.suffix && bParsedFlat.suffix) {
-        // Sayısal kısım aynı ve biri harfli diğeri değilse, sayısal olan önce gelir
+        // Sayısal kısım aynı ve biri harfli diğeri değilse, harfli olan sonra gelir
         return -1;
       } else if (aParsedFlat.suffix && !bParsedFlat.suffix) {
         return 1;
