@@ -528,77 +528,25 @@
         console.log("---------------");
         console.log(`Karşılaştırılan öğeler:\nA: ${JSON.stringify(a)}\nB: ${JSON.stringify(b)}`);
 
-        // Blok sıralaması (alfabetik)
-        if (a.Block < b.Block) {
-            console.log("Blok sıralaması: A daha önce");
-            return -1;
-        }
-        if (a.Block > b.Block) {
-            console.log("Blok sıralaması: B daha önce");
-            return 1;
+        // Blok sıralaması (alfabetik ve sayısal olarak `compareMixed` kullanarak)
+        const blockComparison = compareMixed(a.Block, b.Block);
+        if (blockComparison !== 0) {
+            console.log(`Blok sıralaması: ${blockComparison < 0 ? "A daha önce" : "B daha önce"}`);
+            return blockComparison;
         }
 
-        // Bina No sıralaması (sayısal ve harf kombinasyonları dikkate alınacak)
-        const aParsedBuilding = parseBuildingNo(a.BuildingNo);
-        const bParsedBuilding = parseBuildingNo(b.BuildingNo);
-
-        console.log(`A bina numarası: ${aParsedBuilding.number}, A bina eki: ${aParsedBuilding.suffix}`);
-        console.log(`B bina numarası: ${bParsedBuilding.number}, B bina eki: ${bParsedBuilding.suffix}`);
-
-        if (aParsedBuilding.number < bParsedBuilding.number) {
-            console.log("Bina numarası sıralaması: A daha önce");
-            return -1;
-        }
-        if (aParsedBuilding.number > bParsedBuilding.number) {
-            console.log("Bina numarası sıralaması: B daha önce");
-            return 1;
+        // Bina No sıralaması (`compareMixed` kullanılarak)
+        const buildingComparison = compareMixed(a.BuildingNo, b.BuildingNo);
+        if (buildingComparison !== 0) {
+            console.log(`Bina numarası sıralaması: ${buildingComparison < 0 ? "A daha önce" : "B daha önce"}`);
+            return buildingComparison;
         }
 
-        // Eğer sayısal değerler aynı ise, bina no harf ekine göre sıralama yap
-        if (!aParsedBuilding.suffix && bParsedBuilding.suffix) {
-            console.log("Bina eki sıralaması: A'nın eki yok, A daha önce");
-            return -1; // Boş olan önce gelir
-        } else if (aParsedBuilding.suffix && !bParsedBuilding.suffix) {
-            console.log("Bina eki sıralaması: B'nin eki yok, B daha önce");
-            return 1; // Harfli olan daha sonra gelir
-        } else if (aParsedBuilding.suffix < bParsedBuilding.suffix) {
-            console.log("Bina eki sıralaması: A daha önce");
-            return -1;
-        } else if (aParsedBuilding.suffix > bParsedBuilding.suffix) {
-            console.log("Bina eki sıralaması: B daha önce");
-            return 1;
-        }
-
-        // Daire sıralaması (sayısal ve harf kombinasyonları dikkate alınacak)
-        const aParsedFlat = parseFlat(a.Flat);
-        const bParsedFlat = parseFlat(b.Flat);
-
-        console.log(`A daire numarası: ${aParsedFlat.number}, A daire eki: ${aParsedFlat.suffix}`);
-        console.log(`B daire numarası: ${bParsedFlat.number}, B daire eki: ${bParsedFlat.suffix}`);
-
-        // Önce dairenin sayısal kısmını karşılaştır
-        if (aParsedFlat.number < bParsedFlat.number) {
-            console.log("Daire numarası sıralaması: A daha önce");
-            return -1;
-        }
-        if (aParsedFlat.number > bParsedFlat.number) {
-            console.log("Daire numarası sıralaması: B daha önce");
-            return 1;
-        }
-
-        // Eğer sayısal kısımlar aynıysa, harfli ekleri karşılaştır (boş olan önce gelir)
-        if (!aParsedFlat.suffix && bParsedFlat.suffix) {
-            console.log("Daire eki sıralaması: A'nın eki yok, A daha önce");
-            return -1; // Boş olan önce gelir
-        } else if (aParsedFlat.suffix && !bParsedFlat.suffix) {
-            console.log("Daire eki sıralaması: B'nin eki yok, B daha önce");
-            return 1; // Harfli olan daha sonra gelir
-        } else if (aParsedFlat.suffix < bParsedFlat.suffix) {
-            console.log("Daire eki sıralaması: A daha önce");
-            return -1;
-        } else if (aParsedFlat.suffix > bParsedFlat.suffix) {
-            console.log("Daire eki sıralaması: B daha önce");
-            return 1;
+        // Daire No sıralaması (`compareMixed` kullanılarak)
+        const flatComparison = compareMixed(a.Flat, b.Flat);
+        if (flatComparison !== 0) {
+            console.log(`Daire numarası sıralaması: ${flatComparison < 0 ? "A daha önce" : "B daha önce"}`);
+            return flatComparison;
         }
 
         console.log("Öğeler eşit");
@@ -622,6 +570,30 @@
       return data;
     }
 
+    function parseMixed(input) {
+        const match = input.match(/(\d+|[A-Za-z]+)/g);
+        return match ? match.map(part => (isNaN(part) ? part : parseInt(part, 10))) : [];
+    }
+
+    function compareMixed(a, b) {
+        const aParts = parseMixed(a);
+        const bParts = parseMixed(b);
+
+        for (let i = 0; i < Math.max(aParts.length, bParts.length); i++) {
+            if (aParts[i] === undefined) return -1;
+            if (bParts[i] === undefined) return 1;
+
+            if (typeof aParts[i] === "number" && typeof bParts[i] === "number") {
+                if (aParts[i] !== bParts[i]) return aParts[i] - bParts[i];
+            } else if (typeof aParts[i] === "string" && typeof bParts[i] === "string") {
+                if (aParts[i] !== bParts[i]) return aParts[i].localeCompare(bParts[i]);
+            } else {
+                return typeof aParts[i] === "number" ? -1 : 1;
+            }
+        }
+
+        return 0;
+    }
 
     function parseBuildingNo(buildingNo) {
         const match = buildingNo.match(/(\d+)([A-Za-z]*)?/);
