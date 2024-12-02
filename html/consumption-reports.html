@@ -634,9 +634,9 @@
               row.appendChild(statusCell);
           } else if (reportTableName === 'PreviousMonthElectricityReport') {
               // Sıra No
-              // const indexCell = document.createElement('td');
-              // indexCell.textContent = item.Index || '-';
-              // row.appendChild(indexCell);
+              const indexCell = document.createElement('td');
+              indexCell.textContent = item.Index || '-';
+              row.appendChild(indexCell);
 
               // Blok
               const blockCell = document.createElement('td');
