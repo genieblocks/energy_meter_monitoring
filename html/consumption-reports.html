@@ -624,22 +624,20 @@
 
 
     function parseBuildingNo(buildingNo) {
-        // Bina numarasını sayısal ve harfli olarak ayır
         const match = buildingNo.match(/(\d+)([A-Za-z]*)?/);
         if (match) {
             const number = parseInt(match[1], 10) || 0; // Sayısal kısım
-            const suffix = match[2] ? match[2].toUpperCase() : ''; // Harfli ek kısmı (büyük harfe çevirerek tutarlılık sağla)
+            const suffix = match[2] ? match[2].toUpperCase() : ''; // Harfli ek kısmı
             return { number, suffix };
         }
         return { number: 0, suffix: '' };
     }
 
     function parseFlat(flat) {
-        // Daire numarasını sayılar ve harfleri ayırmak için
         const match = flat.match(/(\d+)([A-Za-z]*)?/);
         if (match) {
             const number = parseInt(match[1], 10) || 0; // Sayısal kısım
-            const suffix = match[2] ? match[2].toUpperCase() : ''; // Harf veya özel karakter kısmı (büyük harfe çevirerek tutarlılık sağla)
+            const suffix = match[2] ? match[2].toUpperCase() : ''; // Harfli ek kısmı
             return { number, suffix };
         }
         return { number: 0, suffix: '' };
