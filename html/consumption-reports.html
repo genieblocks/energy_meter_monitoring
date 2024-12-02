@@ -525,16 +525,28 @@
     }
 
     function sortDataAndAddIndex(data) {
-      // Veriyi Blok, Bina No ve Daire'ye göre sıralama (sayıları sayısal değerlere çevirerek)
+      // Özel karakterleri ve boşlukları temizle ve sayısal değerlere çevir
+      function cleanAndConvertToNumber(value) {
+        const cleanedValue = value.replace(/[^0-9]/g, ''); // Sayısal olmayan karakterleri temizle
+        return cleanedValue ? parseInt(cleanedValue, 10) : 0; // Sayıya çevir, boşsa 0 döndür
+      }
+
       console.log("Orijinal veri:", data); // Debug amacıyla orijinal veriyi logla
 
+      // Veriyi Blok, Bina No ve Daire'ye göre sıralama
       data.sort((a, b) => {
         if (a.Block < b.Block) return -1;
         if (a.Block > b.Block) return 1;
-        if (Number(a.BuildingNo) < Number(b.BuildingNo)) return -1;
-        if (Number(a.BuildingNo) > Number(b.BuildingNo)) return 1;
-        if (Number(a.Flat) < Number(b.Flat)) return -1;
-        if (Number(a.Flat) > Number(b.Flat)) return 1;
+        const buildingNoA = cleanAndConvertToNumber(a.BuildingNo);
+        const buildingNoB = cleanAndConvertToNumber(b.BuildingNo);
+        if (buildingNoA !== buildingNoB) return buildingNoA - buildingNoB;
+        if (a.BuildingNo < b.BuildingNo) return -1;
+        if (a.BuildingNo > b.BuildingNo) return 1;
+        const flatA = cleanAndConvertToNumber(a.Flat);
+        const flatB = cleanAndConvertToNumber(b.Flat);
+        if (flatA !== flatB) return flatA - flatB;
+        if (a.Flat < b.Flat) return -1;
+        if (a.Flat > b.Flat) return 1;
         return 0;
       });
 
