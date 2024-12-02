@@ -536,9 +536,16 @@
         if (aParsedBuilding.number < bParsedBuilding.number) return -1;
         if (aParsedBuilding.number > bParsedBuilding.number) return 1;
 
-        // Eğer sayısal değerler aynı ise, harf eklerine göre sıralama yap
-        if (aParsedBuilding.suffix < bParsedBuilding.suffix) return -1;
-        if (aParsedBuilding.suffix > bParsedBuilding.suffix) return 1;
+        // Eğer sayısal değerler aynı ise, bina no harf ekine göre sıralama yap
+        if (!aParsedBuilding.suffix && bParsedBuilding.suffix) {
+            return -1; // Boş olan önce gelir
+        } else if (aParsedBuilding.suffix && !bParsedBuilding.suffix) {
+            return 1; // Harfli olan daha sonra gelir
+        } else if (aParsedBuilding.suffix < bParsedBuilding.suffix) {
+            return -1;
+        } else if (aParsedBuilding.suffix > bParsedBuilding.suffix) {
+            return 1;
+        }
 
         // Daire sıralaması
         const aParsedFlat = parseFlat(a.Flat);
