@@ -525,31 +525,34 @@
     }
 
     function sortDataAndAddIndex(data) {
-      // Özel karakterleri ve boşlukları temizle ve sayısal değerlere çevir
-      function cleanAndConvertToNumber(value) {
-        const cleanedValue = value.replace(/[^0-9]/g, ''); // Sayısal olmayan karakterleri temizle
-        return cleanedValue ? parseInt(cleanedValue, 10) : 0; // Sayıya çevir, boşsa 0 döndür
-      }
-
-      console.log("Orijinal veri:", data); // Debug amacıyla orijinal veriyi logla
-
       // Veriyi Blok, Bina No ve Daire'ye göre sıralama
+      console.log("Orijinal veri:", data); // Debug amacıyla orijinal veriyi logla
       data.sort((a, b) => {
         if (a.Block < b.Block) return -1;
         if (a.Block > b.Block) return 1;
-        const buildingNoA = cleanAndConvertToNumber(a.BuildingNo);
-        const buildingNoB = cleanAndConvertToNumber(b.BuildingNo);
-        if (buildingNoA !== buildingNoB) return buildingNoA - buildingNoB;
         if (a.BuildingNo < b.BuildingNo) return -1;
         if (a.BuildingNo > b.BuildingNo) return 1;
-        const flatA = cleanAndConvertToNumber(a.Flat);
-        const flatB = cleanAndConvertToNumber(b.Flat);
-        if (flatA !== flatB) return flatA - flatB;
-        if (a.Flat < b.Flat) return -1;
-        if (a.Flat > b.Flat) return 1;
-        return 0;
-      });
+        
+        // Daire sıralaması için sayısal ve harfli sıralama
+        const flatA = a.Flat.match(/^(\d+)([A-Za-z]*)$/);
+        const flatB = b.Flat.match(/^(\d+)([A-Za-z]*)$/);
 
+        if (flatA && flatB) {
+          const numA = parseInt(flatA[1], 10);
+          const numB = parseInt(flatB[1], 10);
+
+          if (numA !== numB) {
+            return numA - numB;
+          }
+
+          const suffixA = flatA[2];
+          const suffixB = flatB[2];
+
+          return suffixA.localeCompare(suffixB);
+        }
+
+        return a.Flat.localeCompare(b.Flat);
+      });
       console.log("Sıralanmış veri:", data); // Debug amacıyla sıralanmış veriyi logla
 
       // Sıra numarası ekle
