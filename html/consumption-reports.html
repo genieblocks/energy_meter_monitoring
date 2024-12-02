@@ -428,6 +428,9 @@
         searching: true,
         ordering: true,
         info: true,
+        columnDefs: [
+          { targets: [1, 2], type: 'natural' } // Bina No ve Daire için doğal sıralama
+        ],
         order: [
           [0, 'asc'], // Blok (alfabetik sıralama)
           [1, 'asc'], // Bina No (sayısal sıralama)
