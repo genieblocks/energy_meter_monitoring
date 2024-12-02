@@ -528,30 +528,29 @@
       // Veriyi Blok, Bina No ve Daire'ye göre sıralama
       console.log("Orijinal veri:", data); // Debug amacıyla orijinal veriyi logla
       data.sort((a, b) => {
+        // Blok sıralaması
         if (a.Block < b.Block) return -1;
         if (a.Block > b.Block) return 1;
-        if (a.BuildingNo < b.BuildingNo) return -1;
-        if (a.BuildingNo > b.BuildingNo) return 1;
-        
-        // Daire sıralaması için sayısal ve harfli sıralama
-        const flatA = a.Flat.match(/^(\d+)([A-Za-z]*)$/);
-        const flatB = b.Flat.match(/^(\d+)([A-Za-z]*)$/);
 
-        if (flatA && flatB) {
-          const numA = parseInt(flatA[1], 10);
-          const numB = parseInt(flatB[1], 10);
-
-          if (numA !== numB) {
-            return numA - numB;
-          }
-
-          const suffixA = flatA[2];
-          const suffixB = flatB[2];
-
-          return suffixA.localeCompare(suffixB);
+        // Bina No sıralaması
+        const aBuildingNo = parseBuildingNo(a.BuildingNo);
+        const bBuildingNo = parseBuildingNo(b.BuildingNo);
+        if (aBuildingNo.numeric !== bBuildingNo.numeric) {
+          return aBuildingNo.numeric - bBuildingNo.numeric;
         }
+        if (aBuildingNo.letter < bBuildingNo.letter) return -1;
+        if (aBuildingNo.letter > bBuildingNo.letter) return 1;
 
-        return a.Flat.localeCompare(b.Flat);
+        // Daire sıralaması
+        const aFlat = parseFlatNo(a.Flat);
+        const bFlat = parseFlatNo(b.Flat);
+        if (aFlat.numeric !== bFlat.numeric) {
+          return aFlat.numeric - bFlat.numeric;
+        }
+        if (aFlat.letter < bFlat.letter) return -1;
+        if (aFlat.letter > bFlat.letter) return 1;
+
+        return 0;
       });
       console.log("Sıralanmış veri:", data); // Debug amacıyla sıralanmış veriyi logla
 
