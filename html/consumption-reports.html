@@ -428,11 +428,7 @@
         searching: true,
         ordering: true,
         info: true,
-        order: [
-          [0, 'asc'], // Blok (alfabetik sıralama)
-          [1, 'asc', { orderDataType: 'num' }], // Bina No (sayısal sıralama)
-          [2, 'asc', { orderDataType: 'num' }]  // Daire (sayısal sıralama)
-        ],
+        order: [[4, 'desc']],  // 5. sütun olan `ReportRequestDate` sütununa göre en yeni tarihten en eskiye sıralama
         language: {
           search: "Ara:",
           lengthMenu: "Göster _MENU_ kayıtlar",
