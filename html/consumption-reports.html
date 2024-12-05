@@ -545,6 +545,23 @@
             return flatComparison;
         }
 
+        // Sayaç İsmi sıralaması ("SEBEKE SAYACI" için öncelik, sonra "JENERATOR SAYACI")
+        const getOrderPriority = (customName) => {
+            if (!customName) return 3; // Boşsa en son sırada
+            const firstChar = customName.charAt(0).toUpperCase();
+            if (firstChar === 'S' || firstChar === 'Ş') return 1; // "SEBEKE SAYACI" için öncelik
+            if (firstChar === 'J') return 2; // "JENERATOR SAYACI" için ikinci öncelik
+            return 3; // Diğerleri en son sırada
+        };
+
+        const aPriority = getOrderPriority(a.CustomName);
+        const bPriority = getOrderPriority(b.CustomName);
+
+        if (aPriority !== bPriority) {
+            console.log(`Sayaç İsmi sıralaması: ${aPriority < bPriority ? "A daha önce" : "B daha önce"}`);
+            return aPriority - bPriority;
+        }
+
         console.log("Öğeler eşit");
         return 0; // Eğer tüm karşılaştırmalar eşitse
     }
