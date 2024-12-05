@@ -177,7 +177,7 @@
             <table class="table table-hover table-bordered" id="iecTable">
               <thead>
                 <tr>
-                  <th>Sıra No</th> <!-- Sıra Numarası Başlığı -->
+                  <th class="d-none">Sıra No</th> <!-- Sıra Numarası Başlığı -->
                   <th>Bina No</th>
                   <th>Daire</th>
                   <th>Abone</th>
@@ -872,7 +872,7 @@ document.addEventListener('DOMContentLoaded', function() {
     filteredData.forEach(connection => {
       const row = document.createElement('tr');
       row.innerHTML = `
-        <td>${connection.Index ?? '-'}</td> <!-- Sıra Numarası -->
+        <td class="d-none">${connection.Index ?? '-'}</td> <!-- Sıra Numarası Gizlendi -->
         <td>${connection.BuildingNo ?? '-'}</td>
         <td>${connection.Flat ?? '-'}</td>
         <td>${connection.Subscriber ?? '-'}</td>
