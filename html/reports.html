@@ -293,7 +293,68 @@
       }
 
       loadReportLists();
+
+      // Rapor takibini başlat
+      startTrackingReports();
     });
+
+    // Raporların durumunu takip eden fonksiyon
+    function trackPreparingReports() {
+      // Tabloda "Hazırlanıyor" durumunda olan raporların kontrolü
+      const preparingReports = document.querySelectorAll(
+        '#DataTables_Table_Electricity_Meter_List tbody tr td span.badge-warning'
+      );
+
+      // Eğer "Hazırlanıyor" durumunda rapor yoksa döngüyü sonlandır
+      if (preparingReports.length === 0) {
+        console.log('No preparing reports found. Stopping tracking.');
+        return;
+      }
+
+      // Sunucuya sorgu göndererek tabloyu güncelle
+      console.log('Tracking preparing reports...');
+      fetch(`${baseWebhookURL}/webhook/get-table-content`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ tableName: 'ReportList' }),
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+          return response.json();
+        })
+        .then((data) => {
+          console.log('Fetched updated ReportList data:', data);
+          if (data && data.length > 0 && data[0].data && Array.isArray(data[0].data)) {
+            const reportList = data[0].data;
+            populateTables(reportList); // Tabloyu güncelle
+          }
+        })
+        .catch((error) => {
+          console.error('Error tracking preparing reports:', error.message);
+        })
+        .finally(() => {
+          // Eğer tablo hala "Hazırlanıyor" rapor içeriyorsa döngüyü sürdür
+          setTimeout(trackPreparingReports, 5000); // 5 saniyede bir kontrol
+        });
+    }
+
+    // Tabloda "Hazırlanıyor" raporları kontrol edip döngüyü başlatır
+    function startTrackingReports() {
+      const preparingReports = document.querySelectorAll(
+        '#DataTables_Table_Electricity_Meter_List tbody tr td span.badge-warning'
+      );
+
+      if (preparingReports.length > 0) {
+        console.log('Preparing reports found. Starting tracking loop.');
+        trackPreparingReports(); // Takip döngüsünü başlat
+      } else {
+        console.log('No preparing reports found. No tracking needed.');
+      }
+    }
 
     function loadReportLists() {
       // Arayüzü veri alırken blokla
