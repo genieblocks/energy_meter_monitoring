@@ -302,63 +302,61 @@
     function trackPreparingReports() {
         console.log("trackPreparingReports invoked.");
 
-        // DOM'dan "Hazırlanıyor" durumundaki raporları filtrele
-        const preparingReportsInDOM = document.querySelectorAll(
+        const preparingReports = document.querySelectorAll(
             '#DataTables_Table_Electricity_Meter_List tbody tr td span.badge-warning'
         );
 
-        console.log("Preparing reports in DOM:", preparingReportsInDOM.length);
+        console.log("Preparing reports in DOM:", preparingReports);
 
-        if (preparingReportsInDOM.length === 0) {
-            console.log("No preparing reports found in DOM. Exiting tracking.");
-            return; // Döngüden çık
+        if (preparingReports.length === 0) {
+            console.log('No preparing reports found. Exiting tracking.');
+            // İşlem tamamlandı, sayfayı yenile
+            location.reload();
+            return;
         }
 
-        console.log("Tracking preparing reports... Fetching data from server.");
+        console.log('Tracking preparing reports... Fetching data from server.');
         fetch(`${baseWebhookURL}/webhook/get-table-content`, {
-            method: "POST",
+            method: 'POST',
             headers: {
-                "Content-Type": "application/json",
+                'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ tableName: "ReportList" }),
+            body: JSON.stringify({ tableName: 'ReportList' }),
         })
             .then((response) => {
-                console.log("Server response status in trackPreparingReports:", response.status);
+                console.log('Server response status in trackPreparingReports:', response.status);
                 if (!response.ok) {
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }
                 return response.json();
             })
             .then((data) => {
-                console.log("Fetched updated ReportList data:", data);
+                console.log('Fetched updated Reports data:', data);
                 if (data && data.length > 0 && data[0].data && Array.isArray(data[0].data)) {
                     const reportList = data[0].data;
-
-                    // Tabloyu güncelle
-                    console.log("Updating table with fetched report list...");
-                    populateTables(reportList);
-
-                    // Gelen verilerde hala "Hazırlanıyor" durumunda olan rapor var mı kontrol et
-                    const stillPreparingReports = reportList.filter(
-                        (report) => report.Status === "Preparing"
-                    );
-
-                    console.log("Filtered preparing reports:", stillPreparingReports.length);
-
-                    if (stillPreparingReports.length === 0) {
-                        console.log("No more preparing reports found in fetched data. Stopping tracking.");
-                        return; // Döngüyü bitir
-                    }
-
-                    console.log("Preparing reports still found. Continuing tracking...");
-                    setTimeout(trackPreparingReports, 5000); // 5 saniye sonra tekrar kontrol
+                    console.log('Updating table with fetched report list:', reportList);
+                    populateTables(reportList); // Tabloyu güncelle
                 } else {
-                    console.warn("Unexpected data structure or empty response from server.");
-                    return; // Döngüyü bitir
+                    console.warn('Unexpected data structure from the server:', data);
                 }
             })
             .catch((error) => {
-                console.error("Error in trackPreparingReports:", error.message);
+                console.error('Error tracking preparing reports:', error.message);
+            })
+            .finally(() => {
+                console.log('Checking if any reports are still in "Preparing" state...');
+                const updatedPreparingReports = document.querySelectorAll(
+                    '#DataTables_Table_Electricity_Meter_List tbody tr td span.badge-warning'
+                );
+                console.log('Updated preparing reports found:', updatedPreparingReports);
+                if (updatedPreparingReports.length > 0) {
+                    console.log('Reports are still in "Preparing" state. Continuing tracking...');
+                    setTimeout(trackPreparingReports, 5000); // 5 saniyede bir kontrol
+                } else {
+                    console.log('No more "Preparing" reports found. Stopping tracking.');
+                    // İşlem tamamlandı, sayfayı yenile
+                    location.reload();
+                }
             });
     }
 
