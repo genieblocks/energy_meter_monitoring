@@ -453,13 +453,16 @@
       });
     }
 
-    // İki tarih arasındaki süreyi hesaplar
+    // İki tarih arasındaki süreyi dakika ve saniye olarak hesaplar ve kısaltılmış şekilde döndürür
     function calculateDuration(start, end) {
       const startDate = new Date(start);
       const endDate = new Date(end);
       const durationMs = endDate - startDate;
+
       const durationMinutes = Math.floor(durationMs / (1000 * 60));
-      return `${durationMinutes} dakika`;
+      const durationSeconds = Math.floor((durationMs % (1000 * 60)) / 1000);
+
+      return `${durationMinutes} dk ${durationSeconds} sn`;
     }
 
     // Tarih formatı
