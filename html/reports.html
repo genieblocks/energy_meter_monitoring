@@ -300,51 +300,75 @@
 
     // Raporların durumunu takip eden fonksiyon
     function trackPreparingReports() {
+      console.log("trackPreparingReports invoked.");
+      
       const preparingReports = document.querySelectorAll(
         '#DataTables_Table_Electricity_Meter_List tbody tr td span.badge-warning'
       );
+
+      console.log("Preparing reports found in DOM:", preparingReports);
 
       if (preparingReports.length === 0) {
         console.log('No preparing reports found. Stopping tracking.');
         return;
       }
 
-      console.log('Tracking preparing reports...');
+      console.log('Tracking preparing reports... Sending request to fetch updated data.');
       fetch(`${baseWebhookURL}/webhook/get-table-content`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+        },
         body: JSON.stringify({ tableName: 'ReportList' }),
       })
-        .then(response => {
+        .then((response) => {
+          console.log('Server response status:', response.status);
           if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
           }
           return response.json();
         })
-        .then(data => {
+        .then((data) => {
           console.log('Fetched updated ReportList data:', data);
           if (data && data.length > 0 && data[0].data && Array.isArray(data[0].data)) {
             const reportList = data[0].data;
-            populateTables(reportList);
+            console.log('Updating table with fetched report list:', reportList);
+            populateTables(reportList); // Tabloyu güncelle
+          } else {
+            console.warn('Unexpected data structure from the server:', data);
           }
         })
-        .catch(error => {
+        .catch((error) => {
           console.error('Error tracking preparing reports:', error.message);
         })
         .finally(() => {
-          setTimeout(trackPreparingReports, 5000); // 5 saniyede bir kontrol
+          console.log('Checking if any reports are still in "Preparing" state...');
+          const updatedPreparingReports = document.querySelectorAll(
+            '#DataTables_Table_Electricity_Meter_List tbody tr td span.badge-warning'
+          );
+          console.log('Updated preparing reports found:', updatedPreparingReports);
+          if (updatedPreparingReports.length > 0) {
+            console.log('Reports are still in "Preparing" state. Continuing tracking...');
+            setTimeout(trackPreparingReports, 5000); // 5 saniyede bir kontrol
+          } else {
+            console.log('No more "Preparing" reports found. Stopping tracking.');
+          }
         });
     }
 
     // Tabloda "Hazırlanıyor" raporları kontrol edip döngüyü başlatır
     function startTrackingReports() {
+      console.log("startTrackingReports invoked.");
+
       const preparingReports = document.querySelectorAll(
         '#DataTables_Table_Electricity_Meter_List tbody tr td span.badge-warning'
       );
 
+      console.log("Preparing reports detected in DOM at start:", preparingReports);
+
       if (preparingReports.length > 0) {
         console.log('Preparing reports found. Starting tracking loop.');
-        trackPreparingReports();
+        trackPreparingReports(); // Takip döngüsünü başlat
       } else {
         console.log('No preparing reports found. No tracking needed.');
       }
