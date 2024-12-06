@@ -206,9 +206,6 @@
               <label for="electricityReportTypeSelect">Rapor Tipi</label>
               <select id="electricityReportTypeSelect" name="interested" class="form-control" onchange="toggleFormGroups(this.value)">
                 <option value="none" selected="" disabled="">Rapor tipi seçiniz</option>
-                <!-- <option value="olay-raporu">Olay Raporu</option>
-                <option value="alarm-raporu">Alarm Raporu</option>
-                <option value="enerji-tuketim-raporu">Enerji Tüketim Raporu</option> -->
                 <option value="moxa-device-status-report">Moxa Cihaz Durum Rapor</option>
                 <option value="cihaz-tarih-saat-raporu">Cihaz Tarih-Saat Raporu</option>
               </select>
@@ -466,8 +463,14 @@
       // Tablonun önceki içeriğini temizle
       tableBody.innerHTML = '';
 
-      // Tabloda her bir rapor için satır oluştur
-      reports.forEach(report => {
+      // Yalnızca `OnlineStatus Report` ve `Synchronization Report` rapor türlerini filtrele
+      const filteredReports = reports.filter(report => 
+          report.ReportType === 'OnlineStatus Report' || 
+          report.ReportType === 'Synchronization Report'
+      );
+
+      // Tabloda her bir filtrelenmiş rapor için satır oluştur
+      filteredReports.forEach(report => {
         const row = document.createElement('tr');
 
         // Rapor Başlığı
