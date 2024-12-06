@@ -637,14 +637,34 @@ function updateSingleQueryModal(data) {
   }
 }
 
+// Genel ve dinamik başlık tanımlı hücre içeriği alma fonksiyonu
+function getCellValueByHeader(row, headerText) {
+  const table = row.closest('table');
+  const headers = Array.from(table.querySelectorAll('thead th'));
+  const headerIndex = headers.findIndex(header => header.innerText === headerText);
+  
+  if (headerIndex === -1) {
+    console.error(`Header "${headerText}" not found in the table.`);
+    return null;
+  }
+
+  return row.cells[headerIndex] ? row.cells[headerIndex].innerText : null;
+}
+
+// queryIecMeterData çağrısı yapılan yere dinamik çözüm uygulanıyor
 document.addEventListener('DOMContentLoaded', function() {
   document.querySelectorAll('#DataTables_Table_Electricity_Meter_List tbody').forEach(function(tableBody) {
     tableBody.addEventListener('click', function(event) {
       if (event.target && event.target.nodeName === 'BUTTON' && event.target.id === 'table-show-button') {
         const row = event.target.closest('tr');
-        const serialNumber = row.cells[0].innerText;
-        const connectionPoint = row.cells[3].innerText;
-        queryIecMeterData(serialNumber, connectionPoint);
+        const serialNumber = getCellValueByHeader(row, 'Sayaç Seri Numarası');
+        const connectionPoint = getCellValueByHeader(row, 'Bağlantı Noktası');
+
+        if (serialNumber && connectionPoint) {
+          queryIecMeterData(serialNumber, connectionPoint);
+        } else {
+          console.error("Serial Number or Connection Point could not be found.");
+        }
       }
     });
   });
