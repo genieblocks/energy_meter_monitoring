@@ -294,6 +294,16 @@
       startTrackingReports();
     });
 
+    // Rapor listesini filtreleyen yardımcı fonksiyon
+    function filterReportsByType(reports, allowedTypes = ['ElectricityConsumption Report']) {
+        if (!Array.isArray(reports)) {
+            console.error("Invalid reports data, expected an array:", reports);
+            return [];
+        }
+
+        return reports.filter(report => allowedTypes.includes(report.ReportType));
+    }
+
     let previousPreparingReportsCount = 0; // Önceki hazırlanan rapor sayısını tutan değişken
 
     // Raporların durumunu takip eden fonksiyon
@@ -320,10 +330,8 @@
                 if (data && data.length > 0 && data[0].data && Array.isArray(data[0].data)) {
                     const reportList = data[0].data;
 
-                    // Sadece "ElectricityConsumption Report" tipindeki raporları filtrele
-                    const electricityReports = reportList.filter(
-                        (report) => report.ReportType === "ElectricityConsumption Report"
-                    );
+                    // Filtrelenen raporları kullan
+                    const electricityReports = filterReportsByType(reportList);
 
                     const stillPreparingReports = electricityReports.filter(
                         (report) => report.Status === "Preparing"
@@ -380,8 +388,8 @@
             if (data && data.length > 0 && data[0].data && Array.isArray(data[0].data)) {
                 const reports = data[0].data;
 
-                // Sadece "ElectricityConsumption Report" tipindeki raporları filtrele
-                const electricityReports = reports.filter(report => report.ReportType === "ElectricityConsumption Report");
+                // Filtrelenen raporları kullan
+                const electricityReports = filterReportsByType(reports);
 
                 const preparingReports = electricityReports.filter(report => report.Status === 'Preparing');
 
@@ -460,8 +468,8 @@
       // Tablonun önceki içeriğini temizle
       tableBody.innerHTML = '';
 
-      // Sadece "ElectricityConsumption Report" tipindeki raporları filtrele
-      const filteredReports = reports.filter(report => report.ReportType === "ElectricityConsumption Report");
+      // Filtrelenen raporları kullan
+      const filteredReports = filterReportsByType(reports);
 
       // Filtrelenmiş raporlar üzerinden tabloda her bir rapor için satır oluştur
       filteredReports.forEach(report => {
