@@ -300,47 +300,39 @@
 
     // Raporların durumunu takip eden fonksiyon
     function trackPreparingReports() {
-        console.log("trackPreparingReports invoked.");
+      console.log("trackPreparingReports invoked.");
 
-        // Rapor listesini tekrar fetch ederek kontrol et
-        fetch(`${baseWebhookURL}/webhook/get-table-content`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ tableName: 'ReportList' }),
-        })
-        .then(response => {
-            console.log('Server response status in trackPreparingReports:', response.status);
-            if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-            return response.json();
-        })
+      fetch(`${baseWebhookURL}/webhook/get-table-content`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ tableName: 'ReportList' }),
+      })
+        .then(response => response.json())
         .then(data => {
-            console.log('Fetched updated ReportList data in trackPreparingReports:', data);
-
-            if (data && data.length > 0 && data[0].data && Array.isArray(data[0].data)) {
-                const reports = data[0].data;
-
-                const preparingReports = reports.filter(report => report.Status === 'Preparing');
-
-                console.log('Filtered preparing reports in trackPreparingReports:', preparingReports);
-
-                populateTables(reports); // Tabloyu güncelle
-
-                if (preparingReports.length > 0) {
-                    console.log('Preparing reports still found. Continuing tracking...');
-                    setTimeout(trackPreparingReports, 5000); // 5 saniyede bir kontrol
-                } else {
-                    console.log('No more preparing reports found. Stopping tracking.');
-                }
-            } else {
-                console.warn('Unexpected data structure in trackPreparingReports:', data);
-            }
+          console.log('Fetched updated ReportList data:', data);
+          if (data && data.length > 0 && data[0].data && Array.isArray(data[0].data)) {
+            const reportList = data[0].data;
+            console.log('Updating table with fetched report list:', reportList);
+            populateTables(reportList); // Tabloyu güncelle
+          } else {
+            console.warn('Unexpected data structure from the server:', data);
+          }
         })
-        .catch(error => {
-            console.error('Error in trackPreparingReports:', error.message);
+        .finally(() => {
+          const preparingReports = document.querySelectorAll(
+            '#DataTables_Table_Electricity_Meter_List tbody tr td span.badge-warning'
+          );
+
+          if (preparingReports.length > 0) {
+            console.log('Reports are still in "Preparing" state. Continuing tracking...');
+            setTimeout(trackPreparingReports, 5000); // 5 saniyede bir kontrol
+          } else {
+            console.log('No more "Preparing" reports found. Stopping tracking.');
+            // Tablo yeniden yüklendikten sonra DOM'u güncellemek için refresh işlemi yapılabilir.
+            loadReportLists();
+          }
         });
     }
 
@@ -441,6 +433,8 @@
         return;
       }
 
+      console.log('Populating table with reports:', reports);
+
       // Tablonun önceki içeriğini temizle
       tableBody.innerHTML = '';
 
@@ -457,7 +451,7 @@
           titleLink.setAttribute('data-target', '#reportModal');
           titleLink.classList.add('text-bold-600');
           titleLink.textContent = report.ReportTitle;
-          titleLink.onclick = () => fetchReportData(report.ReportTableName, report.ReportRequestDate, report.ReportTitle); // Rapor başlığını da ilet
+          titleLink.onclick = () => fetchReportData(report.ReportTableName, report.ReportRequestDate, report.ReportTitle);
           titleCell.appendChild(titleLink);
         } else {
           titleCell.textContent = report.ReportTitle;
@@ -512,8 +506,9 @@
         tableBody.appendChild(row);
       });
 
-      // Tablo verilerini yeniden başlat
+      // Tablo verilerini yeniden başlat ve DOM'u güncelle
       initializeDataTables();
+      console.log("Table populated and refreshed in DOM.");
     }
 
     function initializeDataTables() {
