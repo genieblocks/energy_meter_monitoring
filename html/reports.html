@@ -297,7 +297,7 @@
       // Rapor takibini başlat
       startTrackingReports();
     });
-    
+
     let previousPreparingReportsCount = 0; // Önceki hazırlanan rapor sayısını tutan değişken
 
     // Raporların durumunu takip eden fonksiyon
@@ -323,10 +323,6 @@
 
                 if (data && data.length > 0 && data[0].data && Array.isArray(data[0].data)) {
                     const reportList = data[0].data;
-
-                    // Tabloyu güncelle
-                    console.log("Updating table with fetched report list...");
-                    populateTables(reportList);
 
                     const stillPreparingReports = reportList.filter(
                         (report) => report.Status === "Preparing"
