@@ -452,8 +452,11 @@
       // Tablonun önceki içeriğini temizle
       tableBody.innerHTML = '';
 
-      // Tabloda her bir rapor için satır oluştur
-      reports.forEach(report => {
+      // Sadece "ElectricityConsumption Report" tipindeki raporları filtrele
+      const filteredReports = reports.filter(report => report.ReportType === "ElectricityConsumption Report");
+
+      // Filtrelenmiş raporlar üzerinden tabloda her bir rapor için satır oluştur
+      filteredReports.forEach(report => {
         const row = document.createElement('tr');
 
         // Rapor Başlığı
