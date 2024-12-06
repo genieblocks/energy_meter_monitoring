@@ -286,8 +286,111 @@
       }
 
       loadReportLists();
+
+      // Rapor takibini başlat
+      startTrackingReports();
     });
 
+    let previousPreparingReportsCount = 0; // Önceki hazırlanan rapor sayısını tutan değişken
+
+    // Raporların durumunu takip eden fonksiyon
+    function trackPreparingReports() {
+        console.log("trackPreparingReports invoked.");
+
+        fetch(`${baseWebhookURL}/webhook/get-table-content`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ tableName: "ReportList" }),
+        })
+            .then((response) => {
+                console.log("Server response status in trackPreparingReports:", response.status);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then((data) => {
+                console.log("Fetched updated ReportList data:", data);
+
+                if (data && data.length > 0 && data[0].data && Array.isArray(data[0].data)) {
+                    const reportList = data[0].data;
+
+                    const stillPreparingReports = reportList.filter(
+                        (report) => report.Status === "Preparing"
+                    );
+
+                    console.log("Filtered preparing reports:", stillPreparingReports.length);
+
+                    // Hazırlanan rapor sayısında azalma varsa sayfayı yenile
+                    if (stillPreparingReports.length < previousPreparingReportsCount) {
+                        console.log("A report has been prepared. Reloading the page.");
+                        location.reload();
+                        return;
+                    }
+
+                    // Önceki rapor sayısını güncelle
+                    previousPreparingReportsCount = stillPreparingReports.length;
+
+                    if (stillPreparingReports.length > 0) {
+                        console.log("Preparing reports still found. Continuing tracking...");
+                        setTimeout(trackPreparingReports, 5000); // 5 saniye sonra tekrar kontrol
+                    } else {
+                        console.log("No more preparing reports found. Stopping tracking.");
+                    }
+                } else {
+                    console.warn("Unexpected data structure or empty response from server.");
+                    return; // Döngüyü bitir
+                }
+            })
+            .catch((error) => {
+                console.error("Error in trackPreparingReports:", error.message);
+            });
+    }
+
+    function startTrackingReports() {
+        console.log("startTrackingReports invoked.");
+
+        // Rapor listesini tekrar fetch ederek kontrol et
+        fetch(`${baseWebhookURL}/webhook/get-table-content`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ tableName: 'ReportList' }),
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Fetched ReportList data in startTrackingReports:', data);
+
+            if (data && data.length > 0 && data[0].data && Array.isArray(data[0].data)) {
+                const reports = data[0].data;
+
+                const preparingReports = reports.filter(report => report.Status === 'Preparing');
+
+                console.log('Filtered preparing reports:', preparingReports);
+
+                if (preparingReports.length > 0) {
+                    console.log('Preparing reports found. Starting tracking loop.');
+                    trackPreparingReports();
+                } else {
+                    console.log('No preparing reports found. No tracking needed.');
+                }
+            } else {
+                console.warn('Unexpected data structure in startTrackingReports:', data);
+            }
+        })
+        .catch(error => {
+            console.error('Error in startTrackingReports:', error.message);
+        });
+    }
+    
     function loadReportLists() {
       // Arayüzü veri alırken blokla
       $.blockUI({
