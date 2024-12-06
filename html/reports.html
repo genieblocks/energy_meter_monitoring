@@ -329,7 +329,13 @@
                 if (data && data.length > 0 && data[0].data && Array.isArray(data[0].data)) {
                     const reportList = data[0].data;
 
-                    const stillPreparingReports = reportList.filter(
+                    // Yalnızca `OnlineStatus Report` ve `Synchronization Report` rapor türlerini filtrele
+                    const filteredReports = reportList.filter(
+                        (report) => report.ReportType === 'OnlineStatus Report' || 
+                                    report.ReportType === 'Synchronization Report'
+                    );
+
+                    const stillPreparingReports = filteredReports.filter(
                         (report) => report.Status === "Preparing"
                     );
 
@@ -364,7 +370,6 @@
     function startTrackingReports() {
         console.log("startTrackingReports invoked.");
 
-        // Rapor listesini tekrar fetch ederek kontrol et
         fetch(`${baseWebhookURL}/webhook/get-table-content`, {
             method: 'POST',
             headers: {
@@ -384,7 +389,13 @@
             if (data && data.length > 0 && data[0].data && Array.isArray(data[0].data)) {
                 const reports = data[0].data;
 
-                const preparingReports = reports.filter(report => report.Status === 'Preparing');
+                // Yalnızca `OnlineStatus Report` ve `Synchronization Report` rapor türlerini filtrele
+                const filteredReports = reports.filter(report => 
+                    report.ReportType === 'OnlineStatus Report' || 
+                    report.ReportType === 'Synchronization Report'
+                );
+
+                const preparingReports = filteredReports.filter(report => report.Status === 'Preparing');
 
                 console.log('Filtered preparing reports:', preparingReports);
 
