@@ -320,7 +320,12 @@
                 if (data && data.length > 0 && data[0].data && Array.isArray(data[0].data)) {
                     const reportList = data[0].data;
 
-                    const stillPreparingReports = reportList.filter(
+                    // Sadece "ElectricityConsumption Report" tipindeki raporları filtrele
+                    const electricityReports = reportList.filter(
+                        (report) => report.ReportType === "ElectricityConsumption Report"
+                    );
+
+                    const stillPreparingReports = electricityReports.filter(
                         (report) => report.Status === "Preparing"
                     );
 
