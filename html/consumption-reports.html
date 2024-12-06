@@ -233,12 +233,15 @@
   <!-- ////////////////////////////////////////////////////////////////////////////-->
 
   <footer class="footer footer-static footer-light navbar-border">
-    <p class="clearfix blue-grey lighten-2 text-sm-center mb-0 px-2">
-      <span class="float-md-left d-block d-md-inline-block">Copyright &copy; 2022 <a class="text-bold-800 darken-2"
-          href="http://www.genieblocks.com" target="_blank">GenieBlocks </a>, All rights reserved. </span>
-      <span class="float-md-none d-block d-md-inline-block red">Production</span>
-      <span class="float-md-right d-block d-md-inline-blockd-none d-lg-block">Made with <i
-          class="ft-heart pink"></i></span></p>
+      <p class="clearfix blue-grey lighten-2 text-sm-center mb-0 px-2">
+          <span class="float-md-left d-block d-md-inline-block">
+              Copyright &copy; <span id="dynamic-year"></span> <a class="text-bold-800 darken-2"
+              href="http://www.genieblocks.com" target="_blank">GenieBlocks</a>, All rights reserved.
+          </span>
+          <span class="float-md-none d-block d-md-inline-block red">Production</span>
+          <span class="float-md-right d-block d-md-inline-block d-none d-lg-block">Made with <i
+              class="ft-heart pink"></i></span>
+      </p>
   </footer>
 
   <!-- BEGIN VENDOR JS-->
@@ -277,6 +280,11 @@
     // const baseWebhookURL = "http://192.168.1.119:5678"; // gbenergy_lenovo URL
 
     document.addEventListener('DOMContentLoaded', () => {
+      const yearElement = document.getElementById('dynamic-year');
+      if (yearElement) {
+          const currentYear = new Date().getFullYear();
+          yearElement.textContent = currentYear;
+      }
       // Reload button functionality
       const reloadButton = document.querySelector('[data-action="reload"]');
       if (reloadButton) {
