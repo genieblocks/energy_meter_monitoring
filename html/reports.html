@@ -302,7 +302,6 @@
     function trackPreparingReports() {
         console.log("trackPreparingReports invoked.");
 
-        // DOM'dan "Hazırlanıyor" durumundaki raporları filtrele
         const preparingReportsInDOM = document.querySelectorAll(
             '#DataTables_Table_Electricity_Meter_List tbody tr td span.badge-warning'
         );
@@ -311,7 +310,7 @@
 
         if (preparingReportsInDOM.length === 0) {
             console.log("No preparing reports found in DOM. Exiting tracking.");
-            return; // Döngüden çık
+            return;
         }
 
         console.log("Tracking preparing reports... Fetching data from server.");
@@ -334,11 +333,9 @@
                 if (data && data.length > 0 && data[0].data && Array.isArray(data[0].data)) {
                     const reportList = data[0].data;
 
-                    // Tabloyu güncelle
                     console.log("Updating table with fetched report list...");
                     populateTables(reportList);
 
-                    // Gelen verilerde hala "Hazırlanıyor" durumunda olan rapor var mı kontrol et
                     const stillPreparingReports = reportList.filter(
                         (report) => report.Status === "Preparing"
                     );
@@ -347,14 +344,16 @@
 
                     if (stillPreparingReports.length === 0) {
                         console.log("No more preparing reports found in fetched data. Stopping tracking.");
-                        return; // Döngüyü bitir
+                        // Sayfayı yenile
+                        location.reload();
+                        return;
                     }
 
                     console.log("Preparing reports still found. Continuing tracking...");
-                    setTimeout(trackPreparingReports, 5000); // 5 saniye sonra tekrar kontrol
+                    setTimeout(trackPreparingReports, 5000);
                 } else {
                     console.warn("Unexpected data structure or empty response from server.");
-                    return; // Döngüyü bitir
+                    return;
                 }
             })
             .catch((error) => {
