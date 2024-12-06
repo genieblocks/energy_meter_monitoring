@@ -390,7 +390,7 @@
             console.error('Error in startTrackingReports:', error.message);
         });
     }
-    
+
     function loadReportLists() {
       // Arayüzü veri alırken blokla
       $.blockUI({
@@ -531,6 +531,7 @@
         searching: true,
         ordering: true,
         info: true,
+        pageLength: 25, // Varsayılan olarak 25 kayıt göster
         order: [[4, 'desc']],  // 5. sütun olan `ReportRequestDate` sütununa göre en yeni tarihten en eskiye sıralama
         language: {
           search: "Ara:",
