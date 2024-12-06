@@ -300,20 +300,9 @@
 
     // Raporların durumunu takip eden fonksiyon
     function trackPreparingReports() {
-        console.log('trackPreparingReports invoked.');
+        console.log("trackPreparingReports invoked.");
 
-        const preparingReports = document.querySelectorAll(
-            '#DataTables_Table_Electricity_Meter_List tbody tr td span.badge-warning'
-        );
-
-        console.log('Preparing reports currently in DOM:', preparingReports.length, preparingReports);
-
-        if (preparingReports.length === 0) {
-            console.log('No preparing reports found. Stopping tracking.');
-            return;
-        }
-
-        console.log('Fetching updated report list from server...');
+        // Rapor listesini tekrar fetch ederek kontrol et
         fetch(`${baseWebhookURL}/webhook/get-table-content`, {
             method: 'POST',
             headers: {
@@ -321,55 +310,80 @@
             },
             body: JSON.stringify({ tableName: 'ReportList' }),
         })
-            .then((response) => {
-                console.log('Server response status:', response.status);
-                return response.json();
-            })
-            .then((data) => {
-                console.log('Received data from server:', data);
+        .then(response => {
+            console.log('Server response status in trackPreparingReports:', response.status);
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Fetched updated ReportList data in trackPreparingReports:', data);
 
-                if (data && data.length > 0 && data[0].data && Array.isArray(data[0].data)) {
-                    console.log('Valid data received. Updating table...');
-                    populateTables(data[0].data);
-                } else {
-                    console.warn('Unexpected data structure from server:', data);
-                }
-            })
-            .catch((error) => {
-                console.error('Error during report tracking:', error.message);
-            })
-            .finally(() => {
-                console.log('Rechecking for preparing reports...');
-                const updatedPreparingReports = document.querySelectorAll(
-                    '#DataTables_Table_Electricity_Meter_List tbody tr td span.badge-warning'
-                );
-                console.log('Updated preparing reports in DOM:', updatedPreparingReports.length, updatedPreparingReports);
+            if (data && data.length > 0 && data[0].data && Array.isArray(data[0].data)) {
+                const reports = data[0].data;
 
-                if (updatedPreparingReports.length > 0) {
-                    console.log('Continuing tracking loop...');
-                    setTimeout(trackPreparingReports, 5000);
+                const preparingReports = reports.filter(report => report.Status === 'Preparing');
+
+                console.log('Filtered preparing reports in trackPreparingReports:', preparingReports);
+
+                populateTables(reports); // Tabloyu güncelle
+
+                if (preparingReports.length > 0) {
+                    console.log('Preparing reports still found. Continuing tracking...');
+                    setTimeout(trackPreparingReports, 5000); // 5 saniyede bir kontrol
                 } else {
-                    console.log('No more preparing reports. Stopping tracking.');
+                    console.log('No more preparing reports found. Stopping tracking.');
                 }
-            });
+            } else {
+                console.warn('Unexpected data structure in trackPreparingReports:', data);
+            }
+        })
+        .catch(error => {
+            console.error('Error in trackPreparingReports:', error.message);
+        });
     }
 
-    // Tabloda "Hazırlanıyor" raporları kontrol edip döngüyü başlatır
     function startTrackingReports() {
-        console.log('startTrackingReports invoked.');
+        console.log("startTrackingReports invoked.");
 
-        const preparingReports = document.querySelectorAll(
-            '#DataTables_Table_Electricity_Meter_List tbody tr td span.badge-warning'
-        );
+        // Rapor listesini tekrar fetch ederek kontrol et
+        fetch(`${baseWebhookURL}/webhook/get-table-content`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ tableName: 'ReportList' }),
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Fetched ReportList data in startTrackingReports:', data);
 
-        console.log('Preparing reports in DOM:', preparingReports.length, preparingReports);
+            if (data && data.length > 0 && data[0].data && Array.isArray(data[0].data)) {
+                const reports = data[0].data;
 
-        if (preparingReports.length > 0) {
-            console.log('Preparing reports detected. Starting trackPreparingReports loop.');
-            trackPreparingReports();
-        } else {
-            console.log('No preparing reports detected. Exiting tracking.');
-        }
+                const preparingReports = reports.filter(report => report.Status === 'Preparing');
+
+                console.log('Filtered preparing reports:', preparingReports);
+
+                if (preparingReports.length > 0) {
+                    console.log('Preparing reports found. Starting tracking loop.');
+                    trackPreparingReports();
+                } else {
+                    console.log('No preparing reports found. No tracking needed.');
+                }
+            } else {
+                console.warn('Unexpected data structure in startTrackingReports:', data);
+            }
+        })
+        .catch(error => {
+            console.error('Error in startTrackingReports:', error.message);
+        });
     }
 
     function loadReportLists() {
