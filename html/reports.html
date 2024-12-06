@@ -303,6 +303,16 @@
       startTrackingReports();
     });
 
+    // Rapor listesini filtreleyen yardımcı fonksiyon
+    function filterReportsByType(reports, allowedTypes = ['OnlineStatus Report', 'Synchronization Report']) {
+        if (!Array.isArray(reports)) {
+            console.error("Invalid reports data, expected an array:", reports);
+            return [];
+        }
+
+        return reports.filter(report => allowedTypes.includes(report.ReportType));
+    }
+
     let previousPreparingReportsCount = 0; // Önceki hazırlanan rapor sayısını tutan değişken
 
     // Raporların durumunu takip eden fonksiyon
@@ -329,11 +339,8 @@
                 if (data && data.length > 0 && data[0].data && Array.isArray(data[0].data)) {
                     const reportList = data[0].data;
 
-                    // Yalnızca `OnlineStatus Report` ve `Synchronization Report` rapor türlerini filtrele
-                    const filteredReports = reportList.filter(
-                        (report) => report.ReportType === 'OnlineStatus Report' || 
-                                    report.ReportType === 'Synchronization Report'
-                    );
+                    // Filtrelenmiş raporlar
+                    const filteredReports = filterReportsByType(reportList);
 
                     const stillPreparingReports = filteredReports.filter(
                         (report) => report.Status === "Preparing"
@@ -367,6 +374,7 @@
             });
     }
 
+    // Rapor takibini başlatan fonksiyon
     function startTrackingReports() {
         console.log("startTrackingReports invoked.");
 
@@ -389,11 +397,8 @@
             if (data && data.length > 0 && data[0].data && Array.isArray(data[0].data)) {
                 const reports = data[0].data;
 
-                // Yalnızca `OnlineStatus Report` ve `Synchronization Report` rapor türlerini filtrele
-                const filteredReports = reports.filter(report => 
-                    report.ReportType === 'OnlineStatus Report' || 
-                    report.ReportType === 'Synchronization Report'
-                );
+                // Filtrelenmiş raporlar
+                const filteredReports = filterReportsByType(reports);
 
                 const preparingReports = filteredReports.filter(report => report.Status === 'Preparing');
 
@@ -474,11 +479,8 @@
       // Tablonun önceki içeriğini temizle
       tableBody.innerHTML = '';
 
-      // Yalnızca `OnlineStatus Report` ve `Synchronization Report` rapor türlerini filtrele
-      const filteredReports = reports.filter(report => 
-          report.ReportType === 'OnlineStatus Report' || 
-          report.ReportType === 'Synchronization Report'
-      );
+      // Raporları filtrele
+      const filteredReports = filterReportsByType(reports);
 
       // Tabloda her bir filtrelenmiş rapor için satır oluştur
       filteredReports.forEach(report => {
