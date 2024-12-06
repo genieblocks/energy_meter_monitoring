@@ -380,7 +380,10 @@
             if (data && data.length > 0 && data[0].data && Array.isArray(data[0].data)) {
                 const reports = data[0].data;
 
-                const preparingReports = reports.filter(report => report.Status === 'Preparing');
+                // Sadece "ElectricityConsumption Report" tipindeki raporları filtrele
+                const electricityReports = reports.filter(report => report.ReportType === "ElectricityConsumption Report");
+
+                const preparingReports = electricityReports.filter(report => report.Status === 'Preparing');
 
                 console.log('Filtered preparing reports:', preparingReports);
 
