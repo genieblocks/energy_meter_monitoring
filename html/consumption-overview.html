@@ -119,56 +119,59 @@
         </div>
       </nav>
       <div class="content-wrapper">
-<!-- IEC 62056-21 section start -->
-<section id="form-repeater">
-  <div class="row">
-    <div class="col-xs-12 col-md-12">
-      <div class="card border-genie">
-        <div class="card-header">
-          <h4 class="card-title" id="repeat-form">Blok B1</h4>
-          <a class="heading-elements-toggle"><I class="icon-ellipsis font-medium-3"></I></a>
-          <div class="heading-elements">
-            <ul class="list-inline mb-0">
-              <li><a data-action="expand"><I class="icon-expand2"></I></a></li>
-            </ul>
-          </div>
-        </div>
-        <div class="card-body">
-          <div class="card-block">
-            <table class="table table-hover table-bordered" id="iecTable">
-              <thead>
-                <tr>
-                  <th class="d-none">Sıra No</th> <!-- Sıra Numarası Başlığı -->
-                  <th>Bina No</th>
-                  <th>Daire</th>
-                  <th>Abone</th>
-                  <th class="d-none">Not</th>
-                  <th class="d-none">Elektrik Tük. (kWh)</th>
-                  <th class="d-none">Su Tük. (Soğuk) (m3)</th>
-                  <th class="d-none">Su Tük. (Sıcak) (m3)</th>
-                  <th class="d-none">Kalori. Sıcak Tük. (kWh)</th>
-                  <th class="d-none">Kalori. Soğuk Tük. (kWh)</th>
-                  <th>Detay</th>
-                  <th>Düzenle</th>
-                </tr>
-              </thead>
-              <tbody>
-                <!-- Dynamic content will be inserted here -->
-              </tbody>
-            </table>
-            <div class="form-group overflow-hidden">
-              <div class="col-xs-12">
-                <button id="addRowButton" class="btn btn-info btn-lg" data-toggle="modal" data-target="#addRowModalIEC" style="display: none;">
-                  <i class="icon-plus4"></i> Ekle
-                </button>
+        <!-- IEC 62056-21 section start -->
+        <section id="form-repeater">
+          <div class="row">
+            <div class="col-xs-12 col-md-12">
+              <div class="card border-genie">
+                <div class="card-header">
+                  <h4 class="card-title" id="repeat-form">Blok B1</h4>
+                  <a class="heading-elements-toggle"><I class="icon-ellipsis font-medium-3"></I></a>
+                  <div class="heading-elements">
+                    <ul class="list-inline mb-0">
+                      <li><a data-action="expand"><I class="icon-expand2"></I></a></li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div class="card-block">
+                    <table class="table table-hover table-bordered" id="iecTable">
+                      <thead>
+                        <tr>
+                          <th class="d-none">Sıra No</th> <!-- Sıra Numarası Başlığı -->
+                          <th>Bina No</th>
+                          <th>Daire</th>
+                          <th>Abone</th>
+                          <th class="d-none">Not</th>
+                          <th class="d-none">Elektrik Tük. (kWh)</th>
+                          <th class="d-none">Su Tük. (Soğuk) (m3)</th>
+                          <th class="d-none">Su Tük. (Sıcak) (m3)</th>
+                          <th class="d-none">Kalori. Sıcak Tük. (kWh)</th>
+                          <th class="d-none">Kalori. Soğuk Tük. (kWh)</th>
+                          <th>Detay</th>
+                          <th>Düzenle</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <!-- Dynamic content will be inserted here -->
+                      </tbody>
+                    </table>
+                    <div class="form-group overflow-hidden">
+                      <div class="col-xs-12">
+                        <button id="addRowButton" class="btn btn-info btn-lg" data-toggle="modal" data-target="#addRowModalIEC" style="display: none;">
+                          <i class="icon-plus4"></i> Ekle
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        </section>
       </div>
     </div>
   </div>
-</section>
 
 <!-- Add Modal Flat Details-->
 <div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="detailModalLabel" aria-hidden="true">
