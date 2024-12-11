@@ -600,27 +600,22 @@ function queryMeterData(serialNumber, connectionPoint) {
     },
     body: JSON.stringify({ serialNumber: serialNumber, connectionPoint: connectionPoint })
   })
-  .then(response => {
-    if (!response.ok) {
-      // 400 gibi bir hata durumunda yanıtı JSON olarak çözümle
-      return response.json().then(errorData => {
-        console.error("Webhook Error Response:", errorData);
-        throw new Error(`Webhook error: ${response.status}`);
-      });
-    }
-    return response.json();
-  })
-  .then(data => {
-    updateSingleQueryModal(data);
-    // Modal içeriği bloklamayı kaldır
-    $('#singleQueryModal .modal-content').unblock();
-  })
-  .catch(error => {
-    console.error("Error querying meter data:", error);
-    alert("Hata: Sayaç verisi sorgulanırken bir sorun oluştu. Daha fazla bilgi için konsolu kontrol edin.");
-    // Modal içeriği bloklamayı kaldır
-    $('#singleQueryModal .modal-content').unblock();
-  });
+    .then(response => {
+      if (!response.ok) {
+        return response.json().then(err => {
+          throw new Error(err.message || 'Bilinmeyen bir hata oluştu.');
+        });
+      }
+      return response.json();
+    })
+    .then(data => {
+      updateSingleQueryModal(data);
+      $('#singleQueryModal .modal-content').unblock();
+    })
+    .catch(error => {
+      displayErrorInModal('#singleQueryModal', error.message);
+      $('#singleQueryModal .modal-content').unblock();
+    });
 }
 
 function updateSingleQueryModal(data) {
@@ -628,7 +623,7 @@ function updateSingleQueryModal(data) {
   tableBody.innerHTML = '';
 
   if (data.length > 0) {
-    document.getElementById('noContentMessage').style.display = 'none'; // Hide error message
+    document.getElementById('noContentMessage').style.display = 'none';
     data.forEach(meter => {
       const row = document.createElement('tr');
       row.innerHTML = `
@@ -643,6 +638,7 @@ function updateSingleQueryModal(data) {
   } else {
     document.getElementById('noContentMessage').style.display = 'block';
   }
+  document.querySelector('#singleQueryModal table').style.display = 'table';
 }
 
 // Genel ve dinamik başlık tanımlı hücre içeriği alma fonksiyonu
@@ -678,6 +674,25 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 
+function displayErrorInModal(modalId, errorMessage) {
+  const modalBody = document.querySelector(`${modalId} .modal-body`);
+  const table = modalBody.querySelector('table');
+  const errorDiv = document.createElement('div');
+
+  // Mevcut hata mesajı temizleniyor
+  modalBody.querySelectorAll('.alert-danger').forEach(alert => alert.remove());
+
+  // Tabloları gizle
+  if (table) table.style.display = 'none';
+
+  // Hata mesajını göster
+  errorDiv.className = 'alert alert-danger';
+  errorDiv.textContent = `Hata: ${errorMessage}`;
+  modalBody.appendChild(errorDiv);
+
+  console.error(`Error in ${modalId}:`, errorMessage);
+}
+
 function queryIecMeterData(serialNumber, connectionPoint) {
   $('#singleIecQueryModal').modal('show');
 
@@ -695,45 +710,41 @@ function queryIecMeterData(serialNumber, connectionPoint) {
     },
     body: JSON.stringify({ serialNumber: serialNumber, connectionPoint: connectionPoint })
   })
-  .then(response => {
-    if (!response.ok) {
-      // 400 gibi bir hata durumunda yanıtı JSON olarak çözümle
-      return response.json().then(errorData => {
-        console.error("Webhook Error Response:", errorData);
-        throw new Error(`Webhook error: ${response.status}`);
-      });
-    }
-    return response.json();
-  })
-  .then(data => {
-    updateSingleIecQueryModal(data);
-    // Modal içeriği bloklamayı kaldır
-    $('#singleIecQueryModal .modal-content').unblock();
-  })
-  .catch(error => {
-    console.error("Error querying IEC meter data:", error);
-    alert("Hata: IEC sayaç verisi sorgulanırken bir sorun oluştu. Daha fazla bilgi için konsolu kontrol edin.");
-    // Modal içeriği bloklamayı kaldır
-    $('#singleIecQueryModal .modal-content').unblock();
-  });
+    .then(response => {
+      if (!response.ok) {
+        return response.json().then(err => {
+          throw new Error(err.message || 'Bilinmeyen bir hata oluştu.');
+        });
+      }
+      return response.json();
+    })
+    .then(data => {
+      updateSingleIecQueryModal(data);
+      $('#singleIecQueryModal .modal-content').unblock();
+    })
+    .catch(error => {
+      displayErrorInModal('#singleIecQueryModal', error.message);
+      $('#singleIecQueryModal .modal-content').unblock();
+    });
 }
 
 function updateSingleIecQueryModal(data) {
   const tableBody = document.querySelector('#singleIecQueryDataTable tbody');
-  tableBody.innerHTML = '';
+  tableBody.innerHTML = ''; // Tabloyu temizle
 
   if (data.length > 0) {
-    document.getElementById('noContentMessage').style.display = 'none'; // Hide error message
+    // Hata mesajını gizle
+    document.getElementById('noContentMessage').style.display = 'none';
 
-    // Extract the number from identification_msg (e.g., <1>)
+    // Identification mesajını ayıkla (ör: <1>)
     const identificationMsg = data[0].identification_msg || '';
     const versionMatch = identificationMsg.match(/<(\d+)>/);
     const version = versionMatch ? parseInt(versionMatch[1], 10) : null;
 
-    // Select the correct OBIS description source
+    // Doğru OBIS açıklama kaynağını seç
     const obisDescriptionsSource = version === 3 ? obisDescriptionsTedas3 : obisDescriptionsTedas;
 
-    // Add the identification message as the first row
+    // Identification mesajını tabloya ekle
     const identificationRow = document.createElement('tr');
     identificationRow.innerHTML = `
       <td>---</td>
@@ -742,14 +753,15 @@ function updateSingleIecQueryModal(data) {
     `;
     tableBody.appendChild(identificationRow);
 
-    // Parse the meter data
+    // Sayaç verisini ayrıştır
     const meterData = data[0].data.split('\r\n');
     meterData.forEach((meter) => {
       if (meter) {
-        const obisCode = meter.split('(')[0];
-        const obisValue = meter.substring(meter.indexOf('('));
-        const obisDescription = obisDescriptionsSource[obisCode] || "Açıklama Bulunamadı.";
+        const obisCode = meter.split('(')[0].trim(); // OBIS kodunu ayıkla
+        const obisValue = meter.substring(meter.indexOf('(')).trim(); // Değeri ayıkla
+        const obisDescription = obisDescriptionsSource[obisCode] || "Açıklama Bulunamadı."; // OBIS açıklamasını getir
 
+        // Tabloya yeni satır ekle
         const row = document.createElement('tr');
         row.innerHTML = `
           <td>${obisCode || ''}</td>
@@ -760,6 +772,7 @@ function updateSingleIecQueryModal(data) {
       }
     });
   } else {
+    // Veri yoksa hata mesajını göster
     document.getElementById('noContentMessage').style.display = 'block';
   }
 }
