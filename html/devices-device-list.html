@@ -584,10 +584,15 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function queryMeterData(serialNumber, connectionPoint) {
-  $('#singleQueryModal').modal('show');
+  const modalId = 'singleQueryModal';
+  const tableId = '#singleQueryDataTable';
+  const noContentMessageId = 'noContentMessage';
 
-  // Modal içeriği bloklanacak
-  $('#singleQueryModal .modal-content').block({
+  resetModal(modalId, tableId, noContentMessageId);
+
+  // Modalı göster ve içerik yüklenirken blokla
+  $(`#${modalId}`).modal('show');
+  $(`#${modalId} .modal-content`).block({
     message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
     overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
     css: { border: 0, padding: 0, backgroundColor: 'transparent' }
@@ -595,35 +600,34 @@ function queryMeterData(serialNumber, connectionPoint) {
 
   fetch(`${baseWebhookURL}/webhook/query-meter-data`, {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ serialNumber: serialNumber, connectionPoint: connectionPoint })
   })
     .then(response => {
       if (!response.ok) {
-        return response.json().then(err => {
-          throw new Error(err.message || 'Bilinmeyen bir hata oluştu.');
+        return response.json().then(errorData => {
+          throw new Error(errorData.message || 'Webhook çağrısında hata oluştu.');
         });
       }
       return response.json();
     })
     .then(data => {
-      updateSingleQueryModal(data);
-      $('#singleQueryModal .modal-content').unblock();
+      updateSingleQueryModal(data, modalId, tableId, noContentMessageId);
     })
     .catch(error => {
-      displayErrorInModal('#singleQueryModal', error.message);
-      $('#singleQueryModal .modal-content').unblock();
+      console.error('Hata:', error);
+      displayErrorInModal(modalId, tableId, noContentMessageId, error.message);
     });
 }
 
 function updateSingleQueryModal(data, modalId, tableId, noContentMessageId) {
-  // Modal açılmadan önce sıfırla
+  const modal = document.getElementById(modalId);
+
+  // Modal içeriğini sıfırla
   resetModal(modalId, tableId, noContentMessageId);
 
-  const tableBody = document.querySelector(`${tableId} tbody`);
-  const noContentMessage = document.getElementById(noContentMessageId);
+  const tableBody = modal.querySelector(`${tableId} tbody`);
+  const noContentMessage = modal.querySelector(`#${noContentMessageId}`);
 
   if (data && data.length > 0) {
     // Veri varsa tabloyu doldur
@@ -643,7 +647,11 @@ function updateSingleQueryModal(data, modalId, tableId, noContentMessageId) {
   } else {
     // Veri yoksa hata mesajını göster
     noContentMessage.style.display = 'block';
+    noContentMessage.textContent = 'Cihaza erişilemedi veya veri bulunamadı.';
   }
+
+  // Modal içeriği bloklamayı kaldır
+  $(`#${modalId} .modal-content`).unblock();
 }
 
 // Genel ve dinamik başlık tanımlı hücre içeriği alma fonksiyonu
@@ -681,22 +689,27 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function resetModal(modalId, tableId, noContentMessageId) {
   // Modal içeriğini temizler
-  const tableBody = document.querySelector(`${tableId} tbody`);
-  const noContentMessage = document.getElementById(noContentMessageId);
+  const modal = document.getElementById(modalId);
+  const tableBody = modal.querySelector(`${tableId} tbody`);
+  const noContentMessage = modal.querySelector(`#${noContentMessageId}`);
 
   if (tableBody) tableBody.innerHTML = ''; // Tabloyu temizle
   if (noContentMessage) noContentMessage.style.display = 'none'; // Hata mesajını gizle
 }
 
 function displayErrorInModal(modalId, tableId, noContentMessageId, errorMessage) {
-  // Modal içeriğini temizle ve hata mesajını göster
-  resetModal(modalId, tableId, noContentMessageId);
+  const modal = document.getElementById(modalId);
+  const tableBody = modal.querySelector(`${tableId} tbody`);
+  const noContentMessage = modal.querySelector(`#${noContentMessageId}`);
 
-  const noContentMessage = document.getElementById(noContentMessageId);
+  if (tableBody) tableBody.innerHTML = ''; // Tabloyu temizle
   if (noContentMessage) {
     noContentMessage.style.display = 'block';
-    noContentMessage.textContent = errorMessage;
+    noContentMessage.textContent = errorMessage || 'Bilinmeyen bir hata oluştu.';
   }
+
+  // Modal içeriği bloklamayı kaldır
+  $(`#${modalId} .modal-content`).unblock();
 }
 
 function queryIecMeterData(serialNumber, connectionPoint) {
