@@ -692,18 +692,18 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function resetModal(modalId, tableId, noContentMessageId) {
-  // Modal içeriğini temizler
   const modal = document.getElementById(modalId);
   if (!modal) {
     console.error(`Modal with ID "${modalId}" not found.`);
     return;
   }
-  
+
   const tableBody = modal.querySelector(`${tableId} tbody`);
   const noContentMessage = modal.querySelector(`#${noContentMessageId}`);
 
-  if (tableBody) tableBody.innerHTML = ''; // Tabloyu temizle
-  if (noContentMessage) noContentMessage.style.display = 'none'; // Hata mesajını gizle
+  // Tabloyu ve hata mesajını sıfırla
+  if (tableBody) tableBody.innerHTML = '';
+  if (noContentMessage) noContentMessage.style.display = 'none';
 }
 
 function displayErrorInModal(modalId, tableId, noContentMessageId, errorMessage) {
@@ -716,21 +716,25 @@ function displayErrorInModal(modalId, tableId, noContentMessageId, errorMessage)
   const tableBody = modal.querySelector(`${tableId} tbody`);
   const noContentMessage = modal.querySelector(`#${noContentMessageId}`);
 
-  if (tableBody) tableBody.innerHTML = ''; // Tabloyu temizle
+  // Tabloyu temizle ve hata mesajını göster
+  if (tableBody) tableBody.innerHTML = '';
   if (noContentMessage) {
     noContentMessage.style.display = 'block';
     noContentMessage.textContent = errorMessage || 'Bilinmeyen bir hata oluştu.';
   }
-
-  // Modal içeriği bloklamayı kaldır
-  $(`#${modalId} .modal-content`).unblock();
 }
 
 function queryIecMeterData(serialNumber, connectionPoint) {
-  $('#singleIecQueryModal').modal('show');
+  const modalId = 'singleIecQueryModal';
+  const tableId = '#singleIecQueryDataTable';
+  const noContentMessageId = 'noContentMessage';
 
-  // Modal içeriği bloklanacak
-  $('#singleIecQueryModal .modal-content').block({
+  // Modal içeriğini sıfırla
+  resetModal(modalId, tableId, noContentMessageId);
+
+  // Modalı göster ve içerik yüklenirken blokla
+  $(`#${modalId}`).modal('show');
+  $(`#${modalId} .modal-content`).block({
     message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
     overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
     css: { border: 0, padding: 0, backgroundColor: 'transparent' }
@@ -752,12 +756,17 @@ function queryIecMeterData(serialNumber, connectionPoint) {
       return response.json();
     })
     .then(data => {
-      updateSingleIecQueryModal(data);
-      $('#singleIecQueryModal .modal-content').unblock();
+      if (data && data.length > 0) {
+        updateSingleIecQueryModal(data);
+      } else {
+        displayErrorInModal(modalId, tableId, noContentMessageId, 'Cihaza erişilemedi veya veri bulunamadı.');
+      }
     })
     .catch(error => {
-      displayErrorInModal('#singleIecQueryModal', error.message);
-      $('#singleIecQueryModal .modal-content').unblock();
+      displayErrorInModal(modalId, tableId, noContentMessageId, error.message);
+    })
+    .finally(() => {
+      $(`#${modalId} .modal-content`).unblock();
     });
 }
 
