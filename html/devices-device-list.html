@@ -239,32 +239,29 @@
       <div class="modal-content">
         <div class="modal-header">
           <h4 class="modal-title text-bold-600" id="singleQueryModalLabel"></h4>
-          <!-- <button type="button" class="ml-auto col-4 btn-sm btn-genie" id="newDataButton">Yeni Veri Ekle</button> -->
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
+            <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
           <table class="table table-hover table-bordered zero-configuration dataTable w-auto" id="singleQueryDataTable" role="grid">
-              <thead>
-                  <tr>
-                    <th>Seri Numarası</th>
-                    <th>Bağlantı Noktası</th>
-                    <th>Seri Port</th>
-                    <th>Üretici Kodu</th>
-                    <th>Değeri</th>
-                    <th>Hata</th>
-                  </tr>
-              </thead>
-              <tbody>
-                  <!-- Dinamik içerik buraya eklenecek -->
-              </tbody>
+            <thead>
+              <tr>
+                <th>Seri Numarası</th>
+                <th>Bağlantı Noktası</th>
+                <th>Seri Port</th>
+                <th>Üretici Kodu</th>
+                <th>Değeri</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Dinamik içerik buraya eklenecek -->
+            </tbody>
           </table>
-          <div id="noContentMessage" class="alert alert-warning" style="display: none;">Cihaza Erişilemedi.
-          </div>
+          <div id="noContentMessage" class="alert alert-warning" style="display: none;">Cihaza Erişilemedi.</div>
         </div>
         <div class="modal-footer">
-            <input type="reset" class="btn btn-light" data-dismiss="modal" value="Kapat">
+          <input type="reset" class="btn btn-light" data-dismiss="modal" value="Kapat">
         </div>
       </div>
     </div>
@@ -276,30 +273,27 @@
       <div class="modal-content">
         <div class="modal-header">
           <h4 class="modal-title text-bold-600" id="singleIecQueryModalLabel"></h4>
-          <!-- <button type="button" class="ml-auto col-4 btn-sm btn-genie" id="newDataButton">Yeni Veri Ekle</button> -->
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
+            <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
           <table class="table table-hover table-bordered zero-configuration dataTable w-auto" id="singleIecQueryDataTable" role="grid">
-              <thead>
-                  <tr>
-                    <th>OBIS Kodu</th>
-                    <th>Açıklama</th>
-                    <th>Değer</th>
-                    <th>Hata</th>
-                  </tr>
-              </thead>
-              <tbody>
-                  <!-- Dinamik içerik buraya eklenecek -->
-              </tbody>
+            <thead>
+              <tr>
+                <th>OBIS Kodu</th>
+                <th>Açıklama</th>
+                <th>Değer</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Dinamik içerik buraya eklenecek -->
+            </tbody>
           </table>
-          <div id="noContentMessage" class="alert alert-warning" style="display: none;">Cihaza Erişilemedi.
-          </div>
+          <div id="noContentMessage" class="alert alert-warning" style="display: none;">Cihaza Erişilemedi.</div>
         </div>
         <div class="modal-footer">
-            <input type="reset" class="btn btn-light" data-dismiss="modal" value="Kapat">
+          <input type="reset" class="btn btn-light" data-dismiss="modal" value="Kapat">
         </div>
       </div>
     </div>
@@ -642,8 +636,7 @@ function updateSingleQueryModal(data) {
         <td>${meter.connectionPoint || ''}</td>
         <td>${meter.serial_port || ''}</td>
         <td>${meter.ManID || ''}</td>
-        <td>${meter.meterValue || ''}
-        <td>${meter.originalDataError || ''}</td>
+        <td>${meter.meterValue || ''}</td>
       `;
       tableBody.appendChild(row);
     });
@@ -746,31 +739,22 @@ function updateSingleIecQueryModal(data) {
       <td>---</td>
       <td>Haberleşme İstek Mesajı Cevabı</td>
       <td>${identificationMsg}</td>
-      <td></td>
     `;
     tableBody.appendChild(identificationRow);
 
     // Parse the meter data
     const meterData = data[0].data.split('\r\n');
-
-    console.log("Parsed meter data:", meterData);
-
     meterData.forEach((meter) => {
       if (meter) {
         const obisCode = meter.split('(')[0];
         const obisValue = meter.substring(meter.indexOf('('));
-        const obisDescription = obisDescriptionsSource[obisCode] || "Açıklama Bulunamadı."; // Get Description or default
-
-        console.log("OBIS Code:", obisCode);
-        console.log("OBIS Description:", obisDescription);
-        console.log("OBIS Value:", obisValue);
+        const obisDescription = obisDescriptionsSource[obisCode] || "Açıklama Bulunamadı.";
 
         const row = document.createElement('tr');
         row.innerHTML = `
           <td>${obisCode || ''}</td>
           <td>${obisDescription || ''}</td>
           <td>${obisValue || ''}</td>
-          <td></td>
         `;
         tableBody.appendChild(row);
       }
