@@ -622,6 +622,10 @@ function queryMeterData(serialNumber, connectionPoint) {
 
 function updateSingleQueryModal(data, modalId, tableId, noContentMessageId) {
   const modal = document.getElementById(modalId);
+  if (!modal) {
+    console.error(`Modal with ID "${modalId}" not found.`);
+    return;
+  }
 
   // Modal içeriğini sıfırla
   resetModal(modalId, tableId, noContentMessageId);
@@ -690,6 +694,11 @@ document.addEventListener('DOMContentLoaded', function() {
 function resetModal(modalId, tableId, noContentMessageId) {
   // Modal içeriğini temizler
   const modal = document.getElementById(modalId);
+  if (!modal) {
+    console.error(`Modal with ID "${modalId}" not found.`);
+    return;
+  }
+  
   const tableBody = modal.querySelector(`${tableId} tbody`);
   const noContentMessage = modal.querySelector(`#${noContentMessageId}`);
 
@@ -699,6 +708,11 @@ function resetModal(modalId, tableId, noContentMessageId) {
 
 function displayErrorInModal(modalId, tableId, noContentMessageId, errorMessage) {
   const modal = document.getElementById(modalId);
+  if (!modal) {
+    console.error(`Modal with ID "${modalId}" not found.`);
+    return;
+  }
+
   const tableBody = modal.querySelector(`${tableId} tbody`);
   const noContentMessage = modal.querySelector(`#${noContentMessageId}`);
 
