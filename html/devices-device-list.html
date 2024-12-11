@@ -678,7 +678,7 @@ document.addEventListener('DOMContentLoaded', function() {
 function queryIecMeterData(serialNumber, connectionPoint) {
   $('#singleIecQueryModal').modal('show');
 
-  // Sadece modal içeriği bloklanacak
+  // Modal içeriği bloklanacak
   $('#singleIecQueryModal .modal-content').block({
     message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
     overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
@@ -692,14 +692,24 @@ function queryIecMeterData(serialNumber, connectionPoint) {
     },
     body: JSON.stringify({ serialNumber: serialNumber, connectionPoint: connectionPoint })
   })
-  .then(response => response.json())
+  .then(response => {
+    if (!response.ok) {
+      // 400 gibi bir hata durumunda yanıtı JSON olarak çözümle
+      return response.json().then(errorData => {
+        console.error("Webhook Error Response:", errorData);
+        throw new Error(`Webhook error: ${response.status}`);
+      });
+    }
+    return response.json();
+  })
   .then(data => {
     updateSingleIecQueryModal(data);
     // Modal içeriği bloklamayı kaldır
     $('#singleIecQueryModal .modal-content').unblock();
   })
   .catch(error => {
-    console.error("Error querying meter data:", error);
+    console.error("Error querying IEC meter data:", error);
+    alert("Hata: IEC sayaç verisi sorgulanırken bir sorun oluştu. Daha fazla bilgi için konsolu kontrol edin.");
     // Modal içeriği bloklamayı kaldır
     $('#singleIecQueryModal .modal-content').unblock();
   });
