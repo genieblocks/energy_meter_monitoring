@@ -692,24 +692,31 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function resetModal(modalId, tableId, noContentMessageId) {
+  console.log(`Modal sıfırlanıyor: ${modalId}`);
   const modal = document.getElementById(modalId);
   if (!modal) {
-    console.error(`Modal with ID "${modalId}" not found.`);
+    console.error(`Modal bulunamadı: ID="${modalId}"`);
     return;
   }
 
   const tableBody = modal.querySelector(`${tableId} tbody`);
   const noContentMessage = modal.querySelector(`#${noContentMessageId}`);
 
-  // Tabloyu ve hata mesajını sıfırla
-  if (tableBody) tableBody.innerHTML = '';
-  if (noContentMessage) noContentMessage.style.display = 'none';
+  if (tableBody) {
+    console.log(`Tablo sıfırlanıyor: ${tableId}`);
+    tableBody.innerHTML = '';
+  }
+  if (noContentMessage) {
+    console.log(`Hata mesajı gizleniyor: ${noContentMessageId}`);
+    noContentMessage.style.display = 'none';
+  }
 }
 
 function displayErrorInModal(modalId, tableId, noContentMessageId, errorMessage) {
+  console.log(`Hata modalında gösteriliyor: ${modalId}`);
   const modal = document.getElementById(modalId);
   if (!modal) {
-    console.error(`Modal with ID "${modalId}" not found.`);
+    console.error(`Modal bulunamadı: ID="${modalId}"`);
     return;
   }
 
@@ -717,10 +724,16 @@ function displayErrorInModal(modalId, tableId, noContentMessageId, errorMessage)
   const noContentMessage = modal.querySelector(`#${noContentMessageId}`);
 
   // Tabloyu temizle ve hata mesajını göster
-  if (tableBody) tableBody.innerHTML = '';
+  if (tableBody) {
+    console.log(`Tablo temizleniyor: ${tableId}`);
+    tableBody.innerHTML = '';
+  }
   if (noContentMessage) {
+    console.log(`Hata mesajı gösteriliyor: ${errorMessage}`);
     noContentMessage.style.display = 'block';
     noContentMessage.textContent = errorMessage || 'Bilinmeyen bir hata oluştu.';
+  } else {
+    console.error(`Hata mesajı göstermek için gerekli element bulunamadı: ${noContentMessageId}`);
   }
 }
 
@@ -733,6 +746,7 @@ function queryIecMeterData(serialNumber, connectionPoint) {
   resetModal(modalId, tableId, noContentMessageId);
 
   // Modalı göster ve içerik yüklenirken blokla
+  console.log(`Modal açılıyor: ${modalId}`);
   $(`#${modalId}`).modal('show');
   $(`#${modalId} .modal-content`).block({
     message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
@@ -740,6 +754,7 @@ function queryIecMeterData(serialNumber, connectionPoint) {
     css: { border: 0, padding: 0, backgroundColor: 'transparent' }
   });
 
+  console.log(`POST isteği gönderiliyor: serialNumber=${serialNumber}, connectionPoint=${connectionPoint}`);
   fetch(`${baseWebhookURL}/webhook/query-iec-meter-data`, {
     method: 'POST',
     headers: {
@@ -748,24 +763,30 @@ function queryIecMeterData(serialNumber, connectionPoint) {
     body: JSON.stringify({ serialNumber: serialNumber, connectionPoint: connectionPoint })
   })
     .then(response => {
+      console.log(`API yanıtı alındı: ${response.status} ${response.statusText}`);
       if (!response.ok) {
         return response.json().then(err => {
+          console.error('API hata yanıtı:', err);
           throw new Error(err.message || 'Bilinmeyen bir hata oluştu.');
         });
       }
       return response.json();
     })
     .then(data => {
+      console.log('API başarılı yanıt verisi:', data);
       if (data && data.length > 0) {
         updateSingleIecQueryModal(data);
       } else {
+        console.warn('Cihaza erişim başarısız veya veri bulunamadı.');
         displayErrorInModal(modalId, tableId, noContentMessageId, 'Cihaza erişilemedi veya veri bulunamadı.');
       }
     })
     .catch(error => {
+      console.error('Hata yakalandı:', error.message);
       displayErrorInModal(modalId, tableId, noContentMessageId, error.message);
     })
     .finally(() => {
+      console.log(`Modal kilidi kaldırılıyor: ${modalId}`);
       $(`#${modalId} .modal-content`).unblock();
     });
 }
