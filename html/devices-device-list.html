@@ -728,10 +728,18 @@ function displayErrorInModal(modalId, tableId, noContentMessageId, errorMessage)
     console.log(`Tablo temizleniyor: ${tableId}`);
     tableBody.innerHTML = '';
   }
+
   if (noContentMessage) {
     console.log(`Hata mesajı gösteriliyor: ${errorMessage}`);
+    let displayedMessage = 'Bilinmeyen bir hata oluştu.';
+    if (typeof errorMessage === 'string') {
+      displayedMessage = errorMessage; // Düz metin mesajı
+    } else if (typeof errorMessage === 'object' && errorMessage.message) {
+      displayedMessage = errorMessage.message; // JSON formatında gelen hata mesajı
+    }
+
     noContentMessage.style.display = 'block';
-    noContentMessage.textContent = errorMessage || 'Bilinmeyen bir hata oluştu.';
+    noContentMessage.textContent = displayedMessage;
   } else {
     console.error(`Hata mesajı göstermek için gerekli element bulunamadı: ${noContentMessageId}`);
   }
@@ -767,7 +775,7 @@ function queryIecMeterData(serialNumber, connectionPoint) {
       if (!response.ok) {
         return response.json().then(err => {
           console.error('API hata yanıtı:', err);
-          throw new Error(err.message || 'Bilinmeyen bir hata oluştu.');
+          throw err; // JSON formatında hata fırlat
         });
       }
       return response.json();
@@ -783,7 +791,7 @@ function queryIecMeterData(serialNumber, connectionPoint) {
     })
     .catch(error => {
       console.error('Hata yakalandı:', error.message);
-      displayErrorInModal(modalId, tableId, noContentMessageId, error.message);
+      displayErrorInModal(modalId, tableId, noContentMessageId, error);
     })
     .finally(() => {
       console.log(`Modal kilidi kaldırılıyor: ${modalId}`);
