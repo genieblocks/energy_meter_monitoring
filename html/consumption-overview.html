@@ -409,10 +409,15 @@
 
 // singleQueryModal
 function queryMeterData(serialNumber, connectionPoint) {
-  $('#singleQueryModal').modal('show');
+  const modalId = 'singleQueryModal';
+  const tableId = '#singleQueryDataTable';
+  const noContentMessageId = 'noContentMessage';
 
-  // Sadece modal içeriği bloklanacak
-  $('#singleQueryModal .modal-content').block({
+  resetModal(modalId, tableId, noContentMessageId);
+
+  // Modalı göster ve içerik yüklenirken blokla
+  $(`#${modalId}`).modal('show');
+  $(`#${modalId} .modal-content`).block({
     message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
     overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
     css: { border: 0, padding: 0, backgroundColor: 'transparent' }
@@ -420,44 +425,119 @@ function queryMeterData(serialNumber, connectionPoint) {
 
   fetch(`${baseWebhookURL}/webhook/query-meter-data`, {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ serialNumber: serialNumber, connectionPoint: connectionPoint })
   })
-  .then(response => response.json())
-  .then(data => {
-    updateSingleQueryModal(data);
-    // Modal içeriği bloklamayı kaldır
-    $('#singleQueryModal .modal-content').unblock();
-  })
-  .catch(error => {
-    console.error("Error querying meter data:", error);
-    // Modal içeriği bloklamayı kaldır
-    $('#singleQueryModal .modal-content').unblock();
-  });
+    .then(response => {
+      if (!response.ok) {
+        return response.text().then(errText => {
+          throw new Error(errText); // Hata string olarak dönerse doğrudan fırlat
+        });
+      }
+      return response.json();
+    })
+    .then(data => {
+      if (Array.isArray(data) && data.length > 0) {
+        updateSingleQueryModal(data, modalId, tableId, noContentMessageId);
+      } else {
+        throw new Error('Cihaza erişilemedi veya veri bulunamadı.');
+      }
+    })
+    .catch(error => {
+      displayErrorInModal(modalId, tableId, noContentMessageId, error.message || error);
+    })
+    .finally(() => {
+      // Modal içeriği her durumda bloktan çıkarılıyor
+      $(`#${modalId} .modal-content`).unblock();
+    });
 }
 
-function updateSingleQueryModal(data) {
-  const tableBody = document.querySelector('#singleQueryDataTable tbody');
-  tableBody.innerHTML = '';
+function resetModal(modalId, tableId, noContentMessageId) {
+  const modal = document.getElementById(modalId);
+  if (!modal) {
+    console.error(`Modal bulunamadı: ID="${modalId}"`);
+    return;
+  }
 
-  if (data.length > 0) {
-    document.getElementById('noContentMessage').style.display = 'none'; // Hide error message
-    data.forEach(meter => {
+  const tableBody = modal.querySelector(`${tableId} tbody`);
+  const noContentMessage = modal.querySelector(`#${noContentMessageId}`);
+
+  if (tableBody) {
+    tableBody.innerHTML = '';
+  }
+  if (noContentMessage) {
+    noContentMessage.style.display = 'none';
+  }
+}
+
+function displayErrorInModal(modalId, tableId, noContentMessageId, error) {
+  const modal = document.getElementById(modalId);
+  if (!modal) {
+    console.error(`Modal bulunamadı: ID="${modalId}"`);
+    return;
+  }
+
+  const tableBody = modal.querySelector(`${tableId} tbody`);
+  const noContentMessage = modal.querySelector(`#${noContentMessageId}`);
+
+  if (tableBody) {
+    tableBody.innerHTML = '';
+  }
+
+  let displayedMessage = 'Bilinmeyen bir hata oluştu.';
+  if (typeof error === 'string') {
+    try {
+      const errorData = JSON.parse(error);
+      if (Array.isArray(errorData) && errorData[0]?.error) {
+        displayedMessage = errorData[0].error;
+      } else {
+        displayedMessage = error;
+      }
+    } catch (e) {
+      displayedMessage = error;
+    }
+  }
+
+  if (noContentMessage) {
+    noContentMessage.style.display = 'block';
+    noContentMessage.textContent = displayedMessage;
+  } else {
+    console.error(`Hata mesajı göstermek için gerekli element bulunamadı: ${noContentMessageId}`);
+  }
+}
+
+function updateSingleQueryModal(data, modalId, tableId, noContentMessageId) {
+  const modal = document.getElementById(modalId);
+  if (!modal) {
+    console.error(`Modal with ID "${modalId}" not found.`);
+    return;
+  }
+
+  resetModal(modalId, tableId, noContentMessageId);
+
+  const tableBody = modal.querySelector(`${tableId} tbody`);
+  const noContentMessage = modal.querySelector(`#${noContentMessageId}`);
+
+  if (data && Array.isArray(data) && data.length > 0) {
+    noContentMessage.style.display = 'none';
+
+    data.forEach(item => {
       const row = document.createElement('tr');
       row.innerHTML = `
-        <td>${meter.device_addr || ''}</td>
-        <td>${meter.connectionPoint || ''}</td>
-        <td>${meter.serial_port || ''}</td>
-        <td>${meter.ManID || ''}</td>
-        <td>${meter.meterValue || ''}
+        <td>${item.device_addr || ''}</td>
+        <td>${item.connectionPoint || ''}</td>
+        <td>${item.serial_port || ''}</td>
+        <td>${item.ManID || ''}</td>
+        <td>${item.meterValue || ''}</td>
       `;
       tableBody.appendChild(row);
     });
   } else {
-    document.getElementById('noContentMessage').style.display = 'block';
+    noContentMessage.style.display = 'block';
+    noContentMessage.textContent = 'Cihaza erişilemedi veya veri bulunamadı.';
   }
+
+  $(`#${modalId} .modal-content`).unblock();
 }
 
 // Detay modalında "Anlık Okuma" butonu işlevselliği
@@ -494,10 +574,15 @@ document.addEventListener('click', function (event) {
 
 // singleIecQueryModal
 function queryIecMeterData(serialNumber, connectionPoint) {
-  $('#singleIecQueryModal').modal('show');
+  const modalId = 'singleIecQueryModal';
+  const tableId = '#singleIecQueryDataTable';
+  const noContentMessageId = 'noContentMessage';
 
-  // Sadece modal içeriği bloklanacak
-  $('#singleIecQueryModal .modal-content').block({
+  resetModal(modalId, tableId, noContentMessageId);
+
+  // Modalı göster ve içerik yüklenirken blokla
+  $(`#${modalId}`).modal('show');
+  $(`#${modalId} .modal-content`).block({
     message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
     overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
     css: { border: 0, padding: 0, backgroundColor: 'transparent' }
@@ -510,35 +595,48 @@ function queryIecMeterData(serialNumber, connectionPoint) {
     },
     body: JSON.stringify({ serialNumber: serialNumber, connectionPoint: connectionPoint })
   })
-  .then(response => response.json())
-  .then(data => {
-    updateSingleIecQueryModal(data);
-    // Modal içeriği bloklamayı kaldır
-    $('#singleIecQueryModal .modal-content').unblock();
-  })
-  .catch(error => {
-    console.error("Error querying meter data:", error);
-    // Modal içeriği bloklamayı kaldır
-    $('#singleIecQueryModal .modal-content').unblock();
-  });
+    .then(response => {
+      if (!response.ok) {
+        return response.text().then(errText => {
+          throw new Error(errText); // Hata string olarak dönerse doğrudan fırlat
+        });
+      }
+      return response.json();
+    })
+    .then(data => {
+      if (data && data.length > 0) {
+        updateSingleIecQueryModal(data);
+      } else {
+        console.warn('Cihaza erişim başarısız veya veri bulunamadı.');
+        displayErrorInModal(modalId, tableId, noContentMessageId, 'Cihaza erişilemedi veya veri bulunamadı.');
+      }
+    })
+    .catch(error => {
+      displayErrorInModal(modalId, tableId, noContentMessageId, error.message || error);
+    })
+    .finally(() => {
+      $(`#${modalId} .modal-content`).unblock();
+    });
 }
 
 function updateSingleIecQueryModal(data) {
+  // Modal açılmadan önce sıfırla
+  resetModal('singleIecQueryModal', '#singleIecQueryDataTable', 'noContentMessage');
+
   const tableBody = document.querySelector('#singleIecQueryDataTable tbody');
-  tableBody.innerHTML = '';
+  const noContentMessage = document.getElementById('noContentMessage');
 
-  if (data.length > 0) {
-    document.getElementById('noContentMessage').style.display = 'none'; // Hide error message
+  if (data && data.length > 0) {
+    noContentMessage.style.display = 'none'; // Hata mesajını gizle
 
-    // Extract the number from identification_msg (e.g., <1>)
+    // Identification mesajını ayıkla
     const identificationMsg = data[0].identification_msg || '';
     const versionMatch = identificationMsg.match(/<(\d+)>/);
     const version = versionMatch ? parseInt(versionMatch[1], 10) : null;
 
-    // Select the correct OBIS description source
     const obisDescriptionsSource = version === 3 ? obisDescriptionsTedas3 : obisDescriptionsTedas;
 
-    // Add the identification message as the first row
+    // Identification mesajını tabloya ekle
     const identificationRow = document.createElement('tr');
     identificationRow.innerHTML = `
       <td>---</td>
@@ -547,20 +645,13 @@ function updateSingleIecQueryModal(data) {
     `;
     tableBody.appendChild(identificationRow);
 
-    // Parse the meter data
+    // Sayaç verisini ayrıştır
     const meterData = data[0].data.split('\r\n');
-
-    console.log("Parsed meter data:", meterData);
-
     meterData.forEach((meter) => {
       if (meter) {
-        const obisCode = meter.split('(')[0];
-        const obisValue = meter.substring(meter.indexOf('('));
-        const obisDescription = obisDescriptionsSource[obisCode] || "Açıklama Bulunamadı."; // Get Description or default
-
-        console.log("OBIS Code:", obisCode);
-        console.log("OBIS Description:", obisDescription);
-        console.log("OBIS Value:", obisValue);
+        const obisCode = meter.split('(')[0].trim();
+        const obisValue = meter.substring(meter.indexOf('(')).trim();
+        const obisDescription = obisDescriptionsSource[obisCode] || "Açıklama Bulunamadı.";
 
         const row = document.createElement('tr');
         row.innerHTML = `
@@ -572,7 +663,7 @@ function updateSingleIecQueryModal(data) {
       }
     });
   } else {
-    document.getElementById('noContentMessage').style.display = 'block';
+    noContentMessage.style.display = 'block'; // Hata mesajını göster
   }
 }
 
