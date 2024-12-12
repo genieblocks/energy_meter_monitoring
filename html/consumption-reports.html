@@ -612,6 +612,8 @@
             initiateMoxaDeviceStatusReportRequest();
         } else if (reportType === 'previous-month-electricity-report') {
             initiatePreviousMonthElectricityReportRequest();
+        } else if (reportType === 'subscribers-meter-list-report') {
+            initiateSubscribersMeterListReportRequest();
         } else {
             console.warn("Geçerli bir rapor tipi seçilmedi.");
         }
@@ -979,6 +981,28 @@
         .catch(error => {
             console.error('Error initiating Moxa device status report request:', error.message);
             alert(`Error initiating Moxa device status report request: ${error.message}`);
+        })
+        .finally(() => {
+            $.unblockUI();
+        });
+    }
+
+    function initiateSubscribersMeterListReportRequest() {
+        $.blockUI({
+            message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
+            overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
+            css: { border: 0, padding: 0, backgroundColor: 'transparent' }
+        });
+
+        fetch(`${baseWebhookURL}/webhook/get-subscribers-meter-list-report`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+        .catch(error => {
+            console.error('Error initiating Subscribers Meter List Report request:', error.message);
+            alert(`Error initiating report: ${error.message}`);
         })
         .finally(() => {
             $.unblockUI();
