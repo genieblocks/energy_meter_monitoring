@@ -231,7 +231,6 @@
                   <th>Seri Port</th>
                   <th>Üretici Kodu</th>
                   <th>Değeri</th>
-                  <th>Hata</th>
                 </tr>
             </thead>
             <tbody>
@@ -266,7 +265,6 @@
                   <th>OBIS Kodu</th>
                   <th>Açıklama</th>
                   <th>Değer</th>
-                  <th>Hata</th>
                 </tr>
             </thead>
             <tbody>
@@ -454,7 +452,6 @@ function updateSingleQueryModal(data) {
         <td>${meter.serial_port || ''}</td>
         <td>${meter.ManID || ''}</td>
         <td>${meter.meterValue || ''}
-        <td>${meter.originalDataError || ''}</td>
       `;
       tableBody.appendChild(row);
     });
@@ -547,7 +544,6 @@ function updateSingleIecQueryModal(data) {
       <td>---</td>
       <td>Haberleşme İstek Mesajı Cevabı</td>
       <td>${identificationMsg}</td>
-      <td></td>
     `;
     tableBody.appendChild(identificationRow);
 
@@ -571,7 +567,6 @@ function updateSingleIecQueryModal(data) {
           <td>${obisCode || ''}</td>
           <td>${obisDescription || ''}</td>
           <td>${obisValue || ''}</td>
-          <td></td>
         `;
         tableBody.appendChild(row);
       }
