@@ -712,7 +712,7 @@ function resetModal(modalId, tableId, noContentMessageId) {
   }
 }
 
-function displayErrorInModal(modalId, tableId, noContentMessageId, errorMessage) {
+function displayErrorInModal(modalId, tableId, noContentMessageId, error) {
   console.log(`Hata modalında gösteriliyor: ${modalId}`);
   const modal = document.getElementById(modalId);
   if (!modal) {
@@ -730,11 +730,20 @@ function displayErrorInModal(modalId, tableId, noContentMessageId, errorMessage)
   }
 
   let displayedMessage = 'Bilinmeyen bir hata oluştu.';
-  if (typeof errorMessage === 'string') {
-    // Hata mesajını doğrudan al
-    displayedMessage = errorMessage;
+  if (typeof error === 'string') {
+    try {
+      // JSON formatında hata mesajı varsa ayrıştır
+      const errorData = JSON.parse(error);
+      if (Array.isArray(errorData) && errorData[0]?.error) {
+        displayedMessage = errorData[0].error;
+      } else {
+        displayedMessage = error; // JSON değilse string olarak yazdır
+      }
+    } catch (e) {
+      displayedMessage = error; // JSON değilse doğrudan yazdır
+    }
   } else {
-    console.log('Gelen hata beklenen formatta değil:', errorMessage);
+    console.log('Gelen hata mesajı beklenen formatta değil:', error);
   }
 
   if (noContentMessage) {
@@ -745,6 +754,7 @@ function displayErrorInModal(modalId, tableId, noContentMessageId, errorMessage)
     console.error(`Hata mesajı göstermek için gerekli element bulunamadı: ${noContentMessageId}`);
   }
 
+  // Loglama için hata mesajını ekranda göster
   console.log('Gösterilen hata mesajı:', displayedMessage);
 }
 
