@@ -605,18 +605,22 @@ function queryMeterData(serialNumber, connectionPoint) {
   })
     .then(response => {
       if (!response.ok) {
-        return response.json().then(errorData => {
-          throw new Error(errorData.message || 'Webhook çağrısında hata oluştu.');
+        return response.text().then(errText => {
+          throw new Error(errText || 'Webhook çağrısında hata oluştu.');
         });
       }
       return response.json();
     })
     .then(data => {
-      updateSingleQueryModal(data, modalId, tableId, noContentMessageId);
+      if (Array.isArray(data) && data.length > 0) {
+        updateSingleQueryModal(data, modalId, tableId, noContentMessageId);
+      } else {
+        throw new Error('Cihaza erişilemedi veya veri bulunamadı.');
+      }
     })
     .catch(error => {
-      console.error('Hata:', error);
-      displayErrorInModal(modalId, tableId, noContentMessageId, error.message);
+      console.error('Hata:', error.message || error);
+      displayErrorInModal(modalId, tableId, noContentMessageId, error.message || error);
     });
 }
 
@@ -627,34 +631,30 @@ function updateSingleQueryModal(data, modalId, tableId, noContentMessageId) {
     return;
   }
 
-  // Modal içeriğini sıfırla
   resetModal(modalId, tableId, noContentMessageId);
 
   const tableBody = modal.querySelector(`${tableId} tbody`);
   const noContentMessage = modal.querySelector(`#${noContentMessageId}`);
 
-  if (data && data.length > 0) {
-    // Veri varsa tabloyu doldur
+  if (data && Array.isArray(data) && data.length > 0) {
     noContentMessage.style.display = 'none';
 
-    data.forEach(meter => {
+    data.forEach(item => {
       const row = document.createElement('tr');
       row.innerHTML = `
-        <td>${meter.device_addr || ''}</td>
-        <td>${meter.connectionPoint || ''}</td>
-        <td>${meter.serial_port || ''}</td>
-        <td>${meter.ManID || ''}</td>
-        <td>${meter.meterValue || ''}</td>
+        <td>${item.device_addr || ''}</td>
+        <td>${item.connectionPoint || ''}</td>
+        <td>${item.serial_port || ''}</td>
+        <td>${item.ManID || ''}</td>
+        <td>${item.meterValue || ''}</td>
       `;
       tableBody.appendChild(row);
     });
   } else {
-    // Veri yoksa hata mesajını göster
     noContentMessage.style.display = 'block';
     noContentMessage.textContent = 'Cihaza erişilemedi veya veri bulunamadı.';
   }
 
-  // Modal içeriği bloklamayı kaldır
   $(`#${modalId} .modal-content`).unblock();
 }
 
