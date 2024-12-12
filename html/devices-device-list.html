@@ -774,7 +774,6 @@ function queryIecMeterData(serialNumber, connectionPoint) {
     .then(response => {
       if (!response.ok) {
         return response.text().then(errText => {
-          console.error('API hata yanıtı:', errText);
           throw new Error(errText); // Hata string olarak dönerse doğrudan fırlat
         });
       }
@@ -789,7 +788,6 @@ function queryIecMeterData(serialNumber, connectionPoint) {
       }
     })
     .catch(error => {
-      console.error('Hata yakalandı:', error.message || error);
       displayErrorInModal(modalId, tableId, noContentMessageId, error.message || error);
     })
     .finally(() => {
