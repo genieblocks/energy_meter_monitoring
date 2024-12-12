@@ -493,7 +493,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const currentYear = new Date().getFullYear();
         yearElement.textContent = currentYear;
     }
-    
+
     // Initialize the table
     fetchTableData();
 
@@ -765,6 +765,7 @@ function updateModalWithData(data, tableName) {
             dom: '<"top"fl>rt<"bottom"Bp>',
             buttons: ['copyHtml5','csvHtml5'],
             order: [[0, 'asc']],
+            pageLength: 50,
             language: {
                 search: "Ara:",
                 lengthMenu: "Göster _MENU_ kayıtlar",
