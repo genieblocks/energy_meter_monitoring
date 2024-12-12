@@ -731,10 +731,10 @@ function displayErrorInModal(modalId, tableId, noContentMessageId, errorMessage)
 
   let displayedMessage = 'Bilinmeyen bir hata oluştu.';
   if (typeof errorMessage === 'string') {
-    // Error string formatını doğrudan kullan
+    // Hata mesajını doğrudan al
     displayedMessage = errorMessage;
   } else {
-    console.log('Gelen hata mesajı beklenen formatta değil:', errorMessage);
+    console.log('Gelen hata beklenen formatta değil:', errorMessage);
   }
 
   if (noContentMessage) {
@@ -745,7 +745,6 @@ function displayErrorInModal(modalId, tableId, noContentMessageId, errorMessage)
     console.error(`Hata mesajı göstermek için gerekli element bulunamadı: ${noContentMessageId}`);
   }
 
-  // Loglama için hata mesajını ekranda göster
   console.log('Gösterilen hata mesajı:', displayedMessage);
 }
 
@@ -754,7 +753,6 @@ function queryIecMeterData(serialNumber, connectionPoint) {
   const tableId = '#singleIecQueryDataTable';
   const noContentMessageId = 'noContentMessage';
 
-  // Modal içeriğini sıfırla
   resetModal(modalId, tableId, noContentMessageId);
 
   // Modalı göster ve içerik yüklenirken blokla
@@ -777,9 +775,9 @@ function queryIecMeterData(serialNumber, connectionPoint) {
     .then(response => {
       console.log(`API yanıtı alındı: ${response.status} ${response.statusText}`);
       if (!response.ok) {
-        return response.json().then(err => {
-          console.error('API hata yanıtı:', err);
-          throw err; // JSON formatında hata fırlat
+        return response.text().then(errText => {
+          console.error('API hata yanıtı:', errText);
+          throw new Error(errText); // Hata string olarak dönerse doğrudan fırlat
         });
       }
       return response.json();
@@ -794,8 +792,8 @@ function queryIecMeterData(serialNumber, connectionPoint) {
       }
     })
     .catch(error => {
-      console.error('Hata yakalandı:', error.message);
-      displayErrorInModal(modalId, tableId, noContentMessageId, error);
+      console.error('Hata yakalandı:', error.message || error);
+      displayErrorInModal(modalId, tableId, noContentMessageId, error.message || error);
     })
     .finally(() => {
       console.log(`Modal kilidi kaldırılıyor: ${modalId}`);
