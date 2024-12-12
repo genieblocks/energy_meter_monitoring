@@ -606,7 +606,7 @@ function queryMeterData(serialNumber, connectionPoint) {
     .then(response => {
       if (!response.ok) {
         return response.text().then(errText => {
-          throw new Error(errText || 'Webhook çağrısında hata oluştu.');
+          throw new Error(errText); // Hata string olarak dönerse doğrudan fırlat
         });
       }
       return response.json();
@@ -696,7 +696,6 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function resetModal(modalId, tableId, noContentMessageId) {
-  console.log(`Modal sıfırlanıyor: ${modalId}`);
   const modal = document.getElementById(modalId);
   if (!modal) {
     console.error(`Modal bulunamadı: ID="${modalId}"`);
@@ -707,17 +706,14 @@ function resetModal(modalId, tableId, noContentMessageId) {
   const noContentMessage = modal.querySelector(`#${noContentMessageId}`);
 
   if (tableBody) {
-    console.log(`Tablo sıfırlanıyor: ${tableId}`);
     tableBody.innerHTML = '';
   }
   if (noContentMessage) {
-    console.log(`Hata mesajı gizleniyor: ${noContentMessageId}`);
     noContentMessage.style.display = 'none';
   }
 }
 
 function displayErrorInModal(modalId, tableId, noContentMessageId, error) {
-  console.log(`Hata modalında gösteriliyor: ${modalId}`);
   const modal = document.getElementById(modalId);
   if (!modal) {
     console.error(`Modal bulunamadı: ID="${modalId}"`);
@@ -727,39 +723,30 @@ function displayErrorInModal(modalId, tableId, noContentMessageId, error) {
   const tableBody = modal.querySelector(`${tableId} tbody`);
   const noContentMessage = modal.querySelector(`#${noContentMessageId}`);
 
-  // Tabloyu temizle ve hata mesajını göster
   if (tableBody) {
-    console.log(`Tablo temizleniyor: ${tableId}`);
     tableBody.innerHTML = '';
   }
 
   let displayedMessage = 'Bilinmeyen bir hata oluştu.';
   if (typeof error === 'string') {
     try {
-      // JSON formatında hata mesajı varsa ayrıştır
       const errorData = JSON.parse(error);
       if (Array.isArray(errorData) && errorData[0]?.error) {
         displayedMessage = errorData[0].error;
       } else {
-        displayedMessage = error; // JSON değilse string olarak yazdır
+        displayedMessage = error;
       }
     } catch (e) {
-      displayedMessage = error; // JSON değilse doğrudan yazdır
+      displayedMessage = error;
     }
-  } else {
-    console.log('Gelen hata mesajı beklenen formatta değil:', error);
   }
 
   if (noContentMessage) {
-    console.log(`Hata mesajı gösteriliyor: ${displayedMessage}`);
     noContentMessage.style.display = 'block';
     noContentMessage.textContent = displayedMessage;
   } else {
     console.error(`Hata mesajı göstermek için gerekli element bulunamadı: ${noContentMessageId}`);
   }
-
-  // Loglama için hata mesajını ekranda göster
-  console.log('Gösterilen hata mesajı:', displayedMessage);
 }
 
 function queryIecMeterData(serialNumber, connectionPoint) {
