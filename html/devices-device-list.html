@@ -619,7 +619,6 @@ function queryMeterData(serialNumber, connectionPoint) {
       }
     })
     .catch(error => {
-      console.error('Hata:', error.message || error);
       displayErrorInModal(modalId, tableId, noContentMessageId, error.message || error);
     })
     .finally(() => {
