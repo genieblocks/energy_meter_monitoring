@@ -729,20 +729,24 @@ function displayErrorInModal(modalId, tableId, noContentMessageId, errorMessage)
     tableBody.innerHTML = '';
   }
 
-  if (noContentMessage) {
-    console.log(`Hata mesajı gösteriliyor: ${errorMessage}`);
-    let displayedMessage = 'Bilinmeyen bir hata oluştu.';
-    if (typeof errorMessage === 'string') {
-      displayedMessage = errorMessage; // Düz metin mesajı
-    } else if (typeof errorMessage === 'object' && errorMessage.message) {
-      displayedMessage = errorMessage.message; // JSON formatında gelen hata mesajı
-    }
+  let displayedMessage = 'Bilinmeyen bir hata oluştu.';
+  if (typeof errorMessage === 'string') {
+    // Error string formatını doğrudan kullan
+    displayedMessage = errorMessage;
+  } else {
+    console.log('Gelen hata mesajı beklenen formatta değil:', errorMessage);
+  }
 
+  if (noContentMessage) {
+    console.log(`Hata mesajı gösteriliyor: ${displayedMessage}`);
     noContentMessage.style.display = 'block';
     noContentMessage.textContent = displayedMessage;
   } else {
     console.error(`Hata mesajı göstermek için gerekli element bulunamadı: ${noContentMessageId}`);
   }
+
+  // Loglama için hata mesajını ekranda göster
+  console.log('Gösterilen hata mesajı:', displayedMessage);
 }
 
 function queryIecMeterData(serialNumber, connectionPoint) {
