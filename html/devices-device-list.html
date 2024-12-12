@@ -621,6 +621,10 @@ function queryMeterData(serialNumber, connectionPoint) {
     .catch(error => {
       console.error('Hata:', error.message || error);
       displayErrorInModal(modalId, tableId, noContentMessageId, error.message || error);
+    })
+    .finally(() => {
+      // Modal içeriği her durumda bloktan çıkarılıyor
+      $(`#${modalId} .modal-content`).unblock();
     });
 }
 
