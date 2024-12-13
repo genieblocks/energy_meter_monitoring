@@ -791,7 +791,7 @@
       } else if (reportTableName === 'PreviousMonthElectricityReport') {
           headers = ['Sıra No', 'Blok', 'Bina No', 'Daire', 'Abone', 'Sayaç İsmi', 'Seri Numarası', 'Değeri (kWh)', 'Okuma Zamanı'];
       } else if (reportTableName === 'SubscribersMeterListReport') {
-          headers = ['Sıra No', 'Blok', 'Bina No', 'Daire', 'Abone', 'Sayaç İsmi', 'Seri Numarası', 'Değeri (kWh)', 'Okuma Zamanı'];
+          headers = ['Sıra No', 'Blok', 'Bina No', 'Daire', 'Abone', 'Sayaç Tipi', 'Sayaç İsmi', 'Seri Numarası', 'Sayaç Markası', 'Sayaç Çarpanı', 'Bağlantı Noktası', 'Faturalandırma'];
       } else {
           console.warn("Bilinmeyen reportTableName değeri:", reportTableName);
           return;
@@ -921,6 +921,11 @@
               subscriberCell.textContent = item.Subscriber || '-';
               row.appendChild(subscriberCell);
 
+              // Sayaç Tipi
+              const meterTypeCell = document.createElement('td');
+              meterTypeCell.textContent = item.MeterType || '-';
+              row.appendChild(meterTypeCell);
+
               // Sayaç İsmi
               const customNameCell = document.createElement('td');
               customNameCell.textContent = item.CustomName || '-';
@@ -931,15 +936,25 @@
               serialNumberCell.textContent = item.SerialNumber || '-';
               row.appendChild(serialNumberCell);
 
-              // Değeri (kWh)
-              const meterValueCell = document.createElement('td');
-              meterValueCell.textContent = item.MeterValue || '-';
-              row.appendChild(meterValueCell);
+              // Sayaç Markası
+              const meterBrandCell = document.createElement('td');
+              meterBrandCell.textContent = item.BrandValue || '-';
+              row.appendChild(meterBrandCell);
 
-              // Okuma Zamanı
-              const queryStartTimeCell = document.createElement('td');
-              queryStartTimeCell.textContent = item.QueryStartTime || '-';
-              row.appendChild(queryStartTimeCell);
+              // Sayaç Çarpanı
+              const meterMultiplierCell = document.createElement('td');
+              meterMultiplierCell.textContent = item.MeterMultiplier || '-';
+              row.appendChild(meterMultiplierCell);
+
+              // Bağlantı Noktası
+              const connectionPointCell = document.createElement('td');
+              connectionPointCell.textContent = item.ConnectionPoint || '-';
+              row.appendChild(connectionPointCell);
+
+              // Faturalandırma
+              const isVisibleInInvoiceReport = document.createElement('td');
+              isVisibleInInvoiceReport.textContent = item.IsVisibleInInvoiceReport || '-';
+              row.appendChild(isVisibleInInvoiceReport);
           }
 
           tableBody.appendChild(row);
