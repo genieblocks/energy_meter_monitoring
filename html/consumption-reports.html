@@ -896,6 +896,51 @@
               const queryStartTimeCell = document.createElement('td');
               queryStartTimeCell.textContent = item.QueryStartTime || '-';
               row.appendChild(queryStartTimeCell);
+          } else if (reportTableName === 'SubscribersMeterListReport') {
+              // Sıra No
+              const indexCell = document.createElement('td');
+              indexCell.textContent = item.Index || '-';
+              row.appendChild(indexCell);
+
+              // Blok
+              const blockCell = document.createElement('td');
+              blockCell.textContent = item.Block || '-';
+              row.appendChild(blockCell);
+
+              // Bina No
+              const buildingNoCell = document.createElement('td');
+              buildingNoCell.textContent = item.BuildingNo || '-';
+              row.appendChild(buildingNoCell);
+
+              // Daire
+              const flatCell = document.createElement('td');
+              flatCell.textContent = item.Flat || '-';
+              row.appendChild(flatCell);
+
+              // Abone
+              const subscriberCell = document.createElement('td');
+              subscriberCell.textContent = item.Subscriber || '-';
+              row.appendChild(subscriberCell);
+
+              // Sayaç İsmi
+              const customNameCell = document.createElement('td');
+              customNameCell.textContent = item.CustomName || '-';
+              row.appendChild(customNameCell);
+
+              // Seri Numarası
+              const serialNumberCell = document.createElement('td');
+              serialNumberCell.textContent = item.SerialNumber || '-';
+              row.appendChild(serialNumberCell);
+
+              // Değeri (kWh)
+              const meterValueCell = document.createElement('td');
+              meterValueCell.textContent = item.MeterValue || '-';
+              row.appendChild(meterValueCell);
+
+              // Okuma Zamanı
+              const queryStartTimeCell = document.createElement('td');
+              queryStartTimeCell.textContent = item.QueryStartTime || '-';
+              row.appendChild(queryStartTimeCell);
           }
 
           tableBody.appendChild(row);
