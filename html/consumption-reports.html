@@ -923,7 +923,22 @@
 
               // Sayaç Tipi
               const meterTypeCell = document.createElement('td');
-              meterTypeCell.textContent = item.MeterType || '-';
+              switch (item.MeterType) {
+                  case 'WaterMeter':
+                      meterTypeCell.textContent = 'Su';
+                      break;
+                  case 'ElectricMeter':
+                      meterTypeCell.textContent = 'Elektrik';
+                      break;
+                  case 'CoolingMeter':
+                      meterTypeCell.textContent = 'Kalorimetre (Soğutma)';
+                      break;
+                  case 'HeatingMeter':
+                      meterTypeCell.textContent = 'Kalorimetre (Isıtma)';
+                      break;
+                  default:
+                      meterTypeCell.textContent = '-';
+              }
               row.appendChild(meterTypeCell);
 
               // Sayaç İsmi
@@ -952,9 +967,9 @@
               row.appendChild(connectionPointCell);
 
               // Faturalandırma
-              const isVisibleInInvoiceReport = document.createElement('td');
-              isVisibleInInvoiceReport.textContent = item.IsVisibleInInvoiceReport;
-              row.appendChild(isVisibleInInvoiceReport);
+              const isVisibleInInvoiceReportCell = document.createElement('td');
+              isVisibleInInvoiceReportCell.textContent = item.IsVisibleInInvoiceReport ? 'Evet' : 'Hayır';
+              row.appendChild(isVisibleInInvoiceReportCell);
           }
 
           tableBody.appendChild(row);
