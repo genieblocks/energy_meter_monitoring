@@ -777,9 +777,9 @@
           return;
       }
 
-      // Eğer 'PreviousMonthElectricityReport' tablosu ise veriyi sıralama ve sıra numarası ekleme
-      if (reportTableName === 'PreviousMonthElectricityReport') {
-        data = sortDataAndAddIndex(data);
+      // Veriyi sıralama ve sıra numarası ekleme
+      if (reportTableName === 'PreviousMonthElectricityReport' || reportTableName === 'SubscribersMeterListReport') {
+          data = sortDataAndAddIndex(data);
       }
 
       // Gelen reportTableName değerine göre başlıkları belirle
@@ -789,6 +789,8 @@
       } else if (reportTableName === 'MoxaDeviceStatusReport') {
           headers = ['Moxa IP Adresi', 'Durumu'];
       } else if (reportTableName === 'PreviousMonthElectricityReport') {
+          headers = ['Sıra No', 'Blok', 'Bina No', 'Daire', 'Abone', 'Sayaç İsmi', 'Seri Numarası', 'Değeri (kWh)', 'Okuma Zamanı'];
+      } else if (reportTableName === 'SubscribersMeterListReport') {
           headers = ['Sıra No', 'Blok', 'Bina No', 'Daire', 'Abone', 'Sayaç İsmi', 'Seri Numarası', 'Değeri (kWh)', 'Okuma Zamanı'];
       } else {
           console.warn("Bilinmeyen reportTableName değeri:", reportTableName);
