@@ -550,7 +550,7 @@ document.addEventListener('click', function (event) {
     }
 
     // Sayaç Tipi, Seri Numarası ve Bağlantı Noktası bilgilerini al
-    const meterType = row.children[0]?.innerText.trim(); // Sayaç Tipi
+    const meterCategory = row.children[0]?.innerText.trim(); // Sayaç Tipi
     const serialNumber = row.children[2]?.innerText.trim(); // Seri Numarası
     const connectionPoint = row.getAttribute('data-connection-point'); // Bağlantı Noktası
 
@@ -559,10 +559,10 @@ document.addEventListener('click', function (event) {
       return;
     }
 
-    console.log(`Sayaç Tipi: ${meterType}, Seri Numarası: ${serialNumber}, Bağlantı Noktası: ${connectionPoint}`);
+    console.log(`Sayaç Tipi: ${meterCategory}, Seri Numarası: ${serialNumber}, Bağlantı Noktası: ${connectionPoint}`);
 
     // Sayaç Tipine göre sorgu fonksiyonunu çağır
-    if (meterType === 'Elektrik') {
+    if (meterCategory === 'Elektrik') {
       console.log('Elektrik sayacı sorgulanıyor...');
       queryIecMeterData(serialNumber, connectionPoint);
     } else {
@@ -680,10 +680,10 @@ function showDetailModal(connection) {
 
   // Tablolar ve sayaç tipleri için ayarları tanımlayın
   const tables = [
-    { name: "ElectricMeters", meterType: "Elektrik" },
-    { name: "HeatingMeters", meterType: "Kalorimetre (Isıtma)" },
-    { name: "CoolingMeters", meterType: "Kalorimetre (Soğutma)" },
-    { name: "WaterMeters", meterType: "Su" }
+    { name: "ElectricMeters", meterCategory: "Elektrik" },
+    { name: "HeatingMeters", meterCategory: "Kalorimetre (Isıtma)" },
+    { name: "CoolingMeters", meterCategory: "Kalorimetre (Soğutma)" },
+    { name: "WaterMeters", meterCategory: "Su" }
   ];
 
   // Her tablo için veri çek ve tabloya ekle
@@ -724,7 +724,7 @@ function showDetailModal(connection) {
                 ? formatDate(latestValues.QueryStartTime)
                 : '-';
 
-              const meterMultiplier = table.meterType === "Elektrik" 
+              const meterMultiplier = table.meterCategory === "Elektrik" 
                 ? (meter.MeterMultiplier ?? '-') 
                 : 1;
 
@@ -732,7 +732,7 @@ function showDetailModal(connection) {
               row.setAttribute('data-connection-point', meter.ConnectionPoint); // connectionPoint saklanıyor
 
               row.innerHTML = `
-                <td>${table.meterType}</td>
+                <td>${table.meterCategory}</td>
                 <td>${meter.CustomName ?? '-'}</td>
                 <td>${meter.SerialNumber ?? '-'}</td>
                 <td>${meterMultiplier}</td>
