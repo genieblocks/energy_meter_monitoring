@@ -408,10 +408,16 @@
 
 
 // singleQueryModal
-function queryMeterData(serialNumber, connectionPoint) {
+function queryMeterData(serialNumber, connectionPoint, meterCategory) {
   const modalId = 'singleQueryModal';
   const tableId = '#singleQueryDataTable';
   const noContentMessageId = 'noContentMessage';
+
+  // meterCategory'ye göre meterType belirle
+  let meterType = '';
+  if (meterCategory === "Kalorimetre (Isıtma)") meterType = "heating";
+  else if (meterCategory === "Kalorimetre (Soğutma)") meterType = "cooling";
+  else if (meterCategory === "Su") meterType = "water";
 
   resetModal(modalId, tableId, noContentMessageId);
 
@@ -426,12 +432,16 @@ function queryMeterData(serialNumber, connectionPoint) {
   fetch(`${baseWebhookURL}/webhook/query-meter-data`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ serialNumber: serialNumber, connectionPoint: connectionPoint })
+    body: JSON.stringify({
+      serialNumber: serialNumber,
+      connectionPoint: connectionPoint,
+      meterType: meterType  // meterType gönderiliyor
+    })
   })
     .then(response => {
       if (!response.ok) {
         return response.text().then(errText => {
-          throw new Error(errText); // Hata string olarak dönerse doğrudan fırlat
+          throw new Error(errText);
         });
       }
       return response.json();
@@ -447,7 +457,6 @@ function queryMeterData(serialNumber, connectionPoint) {
       displayErrorInModal(modalId, tableId, noContentMessageId, error.message || error);
     })
     .finally(() => {
-      // Modal içeriği her durumda bloktan çıkarılıyor
       $(`#${modalId} .modal-content`).unblock();
     });
 }
@@ -567,7 +576,7 @@ document.addEventListener('click', function (event) {
       queryIecMeterData(serialNumber, connectionPoint);
     } else {
       console.log('Elektrik dışı sayaç sorgulanıyor...');
-      queryMeterData(serialNumber, connectionPoint);
+      queryMeterData(serialNumber, connectionPoint, meterCategory);
     }
   }
 });
