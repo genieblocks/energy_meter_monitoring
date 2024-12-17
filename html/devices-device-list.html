@@ -560,30 +560,43 @@
     const baseWebhookURL = "http://192.168.2.250:5678"; // Değiştirmek istediğiniz temel URL
     // const baseWebhookURL = "http://192.168.1.146:5678"; // Değiştirmek istediğiniz temel URL
 
-document.addEventListener('DOMContentLoaded', function() {
-  document.querySelectorAll('#DataTables_Table_Water_Meter_List tbody, #DataTables_Table_Calorimeter_Hot_Meter_List tbody, #DataTables_Table_Calorimeter_Cold_Meter_List tbody').forEach(function(tableBody) {
-    tableBody.addEventListener('click', function(event) {
-      if (event.target && event.target.nodeName === 'BUTTON' && event.target.id === 'table-show-button') {
-        const row = event.target.closest('tr');
-        const serialNumber = getCellValueByHeader(row, 'Sayaç Seri Numarası');
-        const connectionPoint = getCellValueByHeader(row, 'Bağlantı Noktası');
+document.addEventListener('DOMContentLoaded', function () {
+  // Tablo ve MeterType tanımları
+  const tableConfig = [
+    { selector: '#DataTables_Table_Water_Meter_List tbody', meterType: 'water' },
+    { selector: '#DataTables_Table_Calorimeter_Hot_Meter_List tbody', meterType: 'heating' },
+    { selector: '#DataTables_Table_Calorimeter_Cold_Meter_List tbody', meterType: 'cooling' }
+  ];
 
-        if (serialNumber && connectionPoint) {
-          queryMeterData(serialNumber, connectionPoint);
-        } else {
-          console.error("Serial Number or Connection Point could not be found.");
+  // Her tablo için event listener ekle
+  tableConfig.forEach(config => {
+    document.querySelectorAll(config.selector).forEach(function (tableBody) {
+      tableBody.addEventListener('click', function (event) {
+        if (event.target && event.target.nodeName === 'BUTTON' && event.target.id === 'table-show-button') {
+          const row = event.target.closest('tr');
+          const serialNumber = getCellValueByHeader(row, 'Sayaç Seri Numarası');
+          const connectionPoint = getCellValueByHeader(row, 'Bağlantı Noktası');
+
+          if (serialNumber && connectionPoint) {
+            // MeterType'i ekleyerek queryMeterData'yı çağır
+            queryMeterData(serialNumber, connectionPoint, config.meterType);
+          } else {
+            console.error("Serial Number or Connection Point could not be found.");
+          }
         }
-      }
+      });
     });
   });
+
+  // Yıl bilgisini güncelle
   const yearElement = document.getElementById('dynamic-year');
   if (yearElement) {
-      const currentYear = new Date().getFullYear();
-      yearElement.textContent = currentYear;
+    const currentYear = new Date().getFullYear();
+    yearElement.textContent = currentYear;
   }
 });
 
-function queryMeterData(serialNumber, connectionPoint) {
+function queryMeterData(serialNumber, connectionPoint, meterType) {
   const modalId = 'singleQueryModal';
   const tableId = '#singleQueryDataTable';
   const noContentMessageId = 'noContentMessage';
@@ -601,12 +614,12 @@ function queryMeterData(serialNumber, connectionPoint) {
   fetch(`${baseWebhookURL}/webhook/query-meter-data`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ serialNumber: serialNumber, connectionPoint: connectionPoint })
+    body: JSON.stringify({ serialNumber: serialNumber, connectionPoint: connectionPoint, meterType: meterType })
   })
     .then(response => {
       if (!response.ok) {
         return response.text().then(errText => {
-          throw new Error(errText); // Hata string olarak dönerse doğrudan fırlat
+          throw new Error(errText);
         });
       }
       return response.json();
@@ -622,7 +635,6 @@ function queryMeterData(serialNumber, connectionPoint) {
       displayErrorInModal(modalId, tableId, noContentMessageId, error.message || error);
     })
     .finally(() => {
-      // Modal içeriği her durumda bloktan çıkarılıyor
       $(`#${modalId} .modal-content`).unblock();
     });
 }
