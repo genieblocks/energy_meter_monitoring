@@ -657,11 +657,11 @@ function updateSingleQueryModal(data, modalId, tableId, noContentMessageId) {
     data.forEach(item => {
       const row = document.createElement('tr');
       row.innerHTML = `
-        <td>${item.device_addr || ''}</td>
-        <td>${item.connectionPoint || ''}</td>
-        <td>${item.serial_port || ''}</td>
-        <td>${item.ManID || ''}</td>
-        <td>${item.meterValue || ''}</td>
+        <td>${item.device_addr}</td>
+        <td>${item.connectionPoint}</td>
+        <td>${item.serial_port}</td>
+        <td>${item.ManID}</td>
+        <td>${item.meterValue}</td>
       `;
       tableBody.appendChild(row);
     });
