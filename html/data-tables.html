@@ -611,13 +611,33 @@ function updateTable(data) {
             tableBody.insertAdjacentHTML('beforeend', row);
         });
 
-        // Re-initialize DataTable with Excel button
+        // Dosya ismi: "Veri_Tablolari_Listesi_Tarih_Saat"
+        const now = new Date();
+        const formattedDate = now.toISOString().split('T')[0]; // YYYY-MM-DD formatı
+        const formattedTime = now.toTimeString().split(' ')[0].replace(/:/g, '-'); // HH-MM-SS formatı
+        const fileName = `Veri_Tablolari_Listesi_${formattedDate}_${formattedTime}`;
+
+        // Re-initialize DataTable with Excel and CSV button options
         tableElement.DataTable({
             dom: '<"top"fl>rt<"bottom"Bp>',
             buttons: [
-                'copyHtml5',
-                'csvHtml5',
-                'excelHtml5' // Excel formatını ekledik
+                {
+                    extend: 'copyHtml5',
+                    text: 'Kopyala',
+                    title: 'Veri Tabloları Listesi'
+                },
+                {
+                    extend: 'csvHtml5',
+                    text: 'CSV Olarak İndir',
+                    title: 'Veri Tabloları Listesi',
+                    filename: fileName
+                },
+                {
+                    extend: 'excelHtml5',
+                    text: 'Excel Olarak İndir',
+                    title: 'Veri Tabloları Listesi',
+                    filename: fileName
+                }
             ],
             order: [[0, 'asc']],
             pageLength: 50,
