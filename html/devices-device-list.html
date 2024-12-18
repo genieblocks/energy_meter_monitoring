@@ -1059,7 +1059,13 @@ function initializeDataTable(tableId) {
     "#DataTables_Table_Calorimeter_Cold_Meter_List": "Kalorimetre Soğutma Sayaç Listesi"
   };
 
-  const fileName = fileNameMap[tableId] || "Veri Listesi";
+  const fileNameBase = fileNameMap[tableId] || "Veri Listesi";
+
+  // Tarih ve saat formatı
+  const now = new Date();
+  const formattedDate = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+  const formattedTime = `${String(now.getHours()).padStart(2, '0')}-${String(now.getMinutes()).padStart(2, '0')}-${String(now.getSeconds()).padStart(2, '0')}`;
+  const fileName = `${fileNameBase}_${formattedDate}_${formattedTime}`;
 
   // DataTable'i başlat
   if (!$.fn.DataTable.isDataTable(tableId)) {
