@@ -1051,11 +1051,37 @@ function appendRowToTable(meter, tableId) {
 }
 
 function initializeDataTable(tableId) {
-  // Initialize DataTable only if it hasn't been initialized yet
+  // Tablo ID'ye göre dosya isimleri
+  const fileNameMap = {
+    "#DataTables_Table_Electricity_Meter_List": "Elektrik Sayaç Listesi",
+    "#DataTables_Table_Water_Meter_List": "Su Sayaç Listesi",
+    "#DataTables_Table_Calorimeter_Hot_Meter_List": "Kalorimetre Isıtma Sayaç Listesi",
+    "#DataTables_Table_Calorimeter_Cold_Meter_List": "Kalorimetre Soğutma Sayaç Listesi"
+  };
+
+  const fileName = fileNameMap[tableId] || "Veri Listesi";
+
+  // DataTable'i başlat
   if (!$.fn.DataTable.isDataTable(tableId)) {
     $(tableId).DataTable({
       dom: '<"top"fl>rt<"bottom"Bp>',
-      buttons: ['copyHtml5', 'csvHtml5'],
+      buttons: [
+        {
+          extend: 'copyHtml5',
+          text: 'Kopyala',
+          title: fileName
+        },
+        {
+          extend: 'csvHtml5',
+          text: 'CSV Olarak İndir',
+          title: fileName
+        },
+        {
+          extend: 'excelHtml5',
+          text: 'Excel Olarak İndir',
+          title: fileName
+        }
+      ],
       order: [[0, 'asc']],
       language: {
         search: "Ara:",
