@@ -587,7 +587,7 @@ function updateTable(data) {
     }
 
     const tableData = data[0].data;
-    
+
     if (tableData.length === 0) {
         document.getElementById('tableStatusMessage').innerHTML = '<p class="text-warning">Kayıtlı tablo yoktur. Tablo oluşturun.</p>';
         document.getElementById('dataTablesTable').style.display = 'none';
@@ -604,42 +604,20 @@ function updateTable(data) {
                     <td>${table.lastUpdated}</td>
                     <td>${table.rows}</td>
                     <td>${table.size}</td>
-                    <td>
-                        <button type="button" class="btn btn-sm btn-outline-info" id="table-show-button">
-                            <i class="fa fa-eye"></i>
-                        </button>
-                    </td>
-                    <td>
-                        <button type="button" class="btn btn-sm btn-outline-success" id="table-edit-button">
-                            <i class="fa fa-edit"></i>
-                        </button>
-                    </td>
-                    <td>
-                        <button type="button" class="btn btn-sm btn-outline-danger" id="table-delete-button">
-                            <i class="fa fa-trash-o"></i>
-                        </button>
-                    </td>
-                </tr>
-            `;
+                    <td><button type="button" class="btn btn-sm btn-outline-info" id="table-show-button"><i class="fa fa-eye"></i></button></td>
+                    <td><button type="button" class="btn btn-sm btn-outline-success" id="table-edit-button"><i class="fa fa-edit"></i></button></td>
+                    <td><button type="button" class="btn btn-sm btn-outline-danger" id="table-delete-button"><i class="fa fa-trash-o"></i></button></td>
+                </tr>`;
             tableBody.insertAdjacentHTML('beforeend', row);
         });
-        // Re-initialize DataTable
+
+        // Re-initialize DataTable with Excel button
         tableElement.DataTable({
             dom: '<"top"fl>rt<"bottom"Bp>',
-            columns: [
-                { title: "Table Name" },
-                { title: "Data Retention" },
-                { title: "Created at" },
-                { title: "Last Updated" },
-                { title: "Rows" },
-                { title: "Size" },
-                { title: "Show", orderable: false },
-                { title: "Edit", orderable: false },
-                { title: "Delete", orderable: false }
-            ],
             buttons: [
                 'copyHtml5',
-                'csvHtml5'
+                'csvHtml5',
+                'excelHtml5' // Excel formatını ekledik
             ],
             order: [[0, 'asc']],
             pageLength: 50,
@@ -649,17 +627,13 @@ function updateTable(data) {
                 info: "Gösteriliyor _START_ ile _END_ arasında _TOTAL_ kayıt",
                 infoEmpty: "Gösterilecek kayıt yok",
                 infoFiltered: "(toplam _MAX_ kayıt içinde filtrelendi)",
-                paginate: {
-                first: "İlk",
-                last: "Son",
-                next: "Sonraki",
-                previous: "Önceki"
-                },
+                paginate: { first: "İlk", last: "Son", next: "Sonraki", previous: "Önceki" },
                 zeroRecords: "Eşleşen kayıt bulunamadı"
             }
         });
     }
 }
+
   
 // Show table content with error handling
 function showTableContent(tableName) {
@@ -696,9 +670,7 @@ function updateModalWithData(data, tableName) {
     tableBody.innerHTML = ''; // Clear existing rows
     tableHead.innerHTML = ''; // Clear existing headers
 
-    $('#tableContentModal .modal-title').text(tableName); // Update modal title with table name
-
-    console.log('Received data:', data); // Log received data
+    $('#tableContentModal .modal-title').text(tableName);
 
     if (!data || !data[0]) {
         alert('Beklenmedik veri formatı.');
@@ -710,80 +682,35 @@ function updateModalWithData(data, tableName) {
         const rows = firstEntry.data;
         if (rows && rows.length > 0) {
             const headers = Object.keys(rows[0]);
-            headers.forEach(header => {
-                tableHead.insertAdjacentHTML('beforeend', `<th>${header}</th>`);
-            });
-            tableHead.insertAdjacentHTML('beforeend', `<th>Düzenle</th>`); // Düzenle sütunu başlığı ekleyin
-            tableHead.insertAdjacentHTML('beforeend', `<th>Sil</th>`); // Sil sütunu başlığı ekleyin
+            headers.forEach(header => tableHead.insertAdjacentHTML('beforeend', `<th>${header}</th>`));
+            tableHead.insertAdjacentHTML('beforeend', `<th>Düzenle</th><th>Sil</th>`);
+
             rows.forEach(row => {
                 const rowHtml = `<tr>${Object.values(row).map(value => `<td>${value}</td>`).join('')}
-                    <td>
-                        <button type="button" class="btn btn-sm btn-outline-success" id="row-edit-button">
-                            <i class="fa fa-edit"></i>
-                        </button>
-                    </td>
-                    <td>
-                        <button type="button" class="btn btn-sm btn-outline-danger" id="row-delete-button">
-                            <i class="fa fa-trash-o"></i>
-                        </button>
-                    </td>
+                    <td><button type="button" class="btn btn-sm btn-outline-success"><i class="fa fa-edit"></i></button></td>
+                    <td><button type="button" class="btn btn-sm btn-outline-danger"><i class="fa fa-trash-o"></i></button></td>
                 </tr>`;
                 tableBody.insertAdjacentHTML('beforeend', rowHtml);
             });
-
-        } else {
-            tableBody.insertAdjacentHTML('beforeend', '<tr><td colspan="100%">Tablo içeriği bulunamadı.</td></tr>');
-        }
-    } else {
-        const columns = firstEntry.data;
-        if (columns && columns.length > 0) {
-            columns.forEach(col => {
-                tableHead.insertAdjacentHTML('beforeend', `<th>${col.COLUMN_NAME}</th>`);
-            });
-            tableHead.insertAdjacentHTML('beforeend', `<th>Sil</th>`); // Sil sütunu başlığı ekleyin
-            tableBody.insertAdjacentHTML('beforeend', '<tr><td colspan="100%">Tablo içeriği bulunamadı.</td></tr>');
         } else {
             tableBody.insertAdjacentHTML('beforeend', '<tr><td colspan="100%">Tablo içeriği bulunamadı.</td></tr>');
         }
     }
 
-    // Add event listener for delete buttons
-    document.querySelectorAll('#row-delete-button').forEach(button => {
-        button.addEventListener('click', function() {
-            const tableRow = this.closest('tr');
-            const rowData = Array.from(tableRow.children).slice(0, -1).map(td => td.textContent);
-            const primaryKey = tableHead.children[0].textContent; // Silinecek sütunun başlığı
-            if (confirm('Bu veriyi silmek istediğinizden emin misiniz?')) {
-                deleteTableRow(tableName, primaryKey, rowData[0]); // İlk sütun birincil anahtar olarak varsayıldı
-            }
-        });
-    });
-
-    // Re-initialize DataTable for tableContentDataTable
+    // Re-initialize DataTable with Excel button
     const tableId = '#tableContentDataTable';
     if (!$.fn.DataTable.isDataTable(tableId)) {
         $(tableId).DataTable({
             dom: '<"top"fl>rt<"bottom"Bp>',
-            buttons: ['copyHtml5','csvHtml5'],
+            buttons: ['copyHtml5', 'csvHtml5', 'excelHtml5'], // Excel butonunu ekledik
             order: [[0, 'asc']],
             language: {
                 search: "Ara:",
+                zeroRecords: "Eşleşen kayıt bulunamadı",
                 lengthMenu: "Göster _MENU_ kayıtlar",
-                info: "Gösteriliyor _START_ ile _END_ arasında _TOTAL_ kayıt",
-                infoEmpty: "Gösterilecek kayıt yok",
-                infoFiltered: "(toplam _MAX_ kayıt içinde filtrelendi)",
-                paginate: {
-                first: "İlk",
-                last: "Son",
-                next: "Sonraki",
-                previous: "Önceki"
-                },
-                zeroRecords: "Eşleşen kayıt bulunamadı"
+                paginate: { first: "İlk", last: "Son", next: "Sonraki", previous: "Önceki" }
             }
         });
-        console.log(`DataTable initialized for: ${tableId}`);
-    } else {
-        console.log(`DataTable already initialized for: ${tableId}`);
     }
 }
 
