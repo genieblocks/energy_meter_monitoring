@@ -808,8 +808,10 @@
           headers = ['Sayaç Seri Numarası', 'Sayaç Tarihi', 'Sayaç Saati', 'Mevcut Tarih', 'Mevcut Saat', 'Zaman Farkı'];
       } else if (reportTableName === 'MoxaDeviceStatusReport') {
           headers = ['Moxa IP Adresi', 'Durumu'];
-      } else if (reportTableName === 'PreviousMonthElectricityReport') {
+      } else if (['LatestHeatUsageReport', 'LatestCoolUsageReport', 'LatestElectricityUsageReport', 'PreviousMonthElectricityReport'].includes(reportTableName)) {
           headers = ['Sıra No', 'Blok', 'Bina No', 'Daire', 'Abone', 'Sayaç İsmi', 'Seri Numarası', 'Değeri (kWh)', 'Okuma Zamanı'];
+      } else if (reportTableName === 'LatestWaterUsageReport') {
+          headers = ['Sıra No', 'Blok', 'Bina No', 'Daire', 'Abone', 'Sayaç İsmi', 'Seri Numarası', 'Değeri (m3)', 'Okuma Zamanı'];
       } else if (reportTableName === 'SubscribersMeterListReport') {
           headers = ['Sıra No', 'Blok', 'Bina No', 'Daire', 'Abone', 'Sayaç Tipi', 'Sayaç İsmi', 'Seri Numarası', 'Sayaç Markası', 'Sayaç Çarpanı', 'Bağlantı Noktası', 'Faturalandırma'];
       } else {
@@ -870,7 +872,7 @@
               }
               statusCell.appendChild(statusBadge);
               row.appendChild(statusCell);
-          } else if (reportTableName === 'PreviousMonthElectricityReport') {
+          } else if (['LatestHeatUsageReport', 'LatestCoolUsageReport', 'LatestElectricityUsageReport', 'LatestWaterUsageReport', 'PreviousMonthElectricityReport'].includes(reportTableName)) {
               // Sıra No
               const indexCell = document.createElement('td');
               indexCell.textContent = item.Index || '-';
