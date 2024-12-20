@@ -300,7 +300,13 @@
     });
 
     // Rapor listesini filtreleyen yardımcı fonksiyon
-    function filterReportsByType(reports, allowedTypes = ['ElectricityConsumption Report', 'SubscribersMeter Report']) {
+    function filterReportsByType(reports, allowedTypes = [
+        'ElectricityConsumption Report', 
+        'SubscribersMeter Report',
+        'HeatConsumption Report',
+        'CoolConsumption Report',
+        'WaterConsumption Report'
+    ]) {
         if (!Array.isArray(reports)) {
             console.error("Invalid reports data, expected an array:", reports);
             return [];
