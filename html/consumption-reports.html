@@ -1036,10 +1036,10 @@
 
     function initiateReportRequest(reportType) {
         const reportEndpoints = {
-            "latest-electricity-usage-report": "/webhook/get-latest-electricity-report",
-            "latest-water-usage-report": "/webhook/get-latest-water-report",
-            "latest-cool-usage-report": "/webhook/get-latest-cool-report",
-            "latest-heat-usage-report": "/webhook/get-latest-heat-report"
+            "latest-electricity-usage-report": "/webhook/get-latest-electricity-usage-report",
+            "latest-water-usage-report": "/webhook/get-latest-water-usage-report",
+            "latest-cool-usage-report": "/webhook/get-latest-cool-usage-report",
+            "latest-heat-usage-report": "/webhook/get-latest-heat-usage-report"
         };
 
         const endpoint = reportEndpoints[reportType];
