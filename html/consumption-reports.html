@@ -1162,24 +1162,33 @@
     }
     
     function toggleFormGroups(reportType) {
-      // Başlangıçta tüm form gruplarını gizle
-      document.getElementById('date-range-group').style.display = 'none';
-      document.getElementById('invoice-group').style.display = 'none';
+        // Tüm form gruplarını başlangıçta gizle
+        document.getElementById('date-range-group').style.display = 'none';
+        document.getElementById('invoice-group').style.display = 'none';
 
-      // Cihaz tarih-saat raporu hariç diğer rapor türlerinde form alanlarını göster
-      if (reportType === 'cihaz-tarih-saat-raporu') {
-        // Bu durumda başka bir alan gösterilmeyecek.
-      } else if (reportType === 'moxa-device-status-report') {
-        // Moxa Cihaz Durum Rapor seçildiğinde hiçbir alan gösterilmeyecek.
-      } else if (reportType === 'previous-month-electricity-report') {
-        // Bir Önceki Ay Elektrik Tüketim Raporu seçildiğinde hiçbir alan gösterilmeyecek.
-      } else if (reportType === 'subscribers-meter-list-report') {
-        // Abonelere Kayıtlı Sayaç Listesi seçildiğinde hiçbir alan gösterilmeyecek.
-      } else {
-        // Diğer rapor tiplerine göre form alanlarını göster
-        document.getElementById('date-range-group').style.display = 'block';
-        document.getElementById('invoice-group').style.display = 'block';
-      }
+        // Aşağıdaki rapor türlerinde hiçbir form alanı gösterilmeyecek
+        const noFormFieldsReports = [
+            'cihaz-tarih-saat-raporu',
+            'moxa-device-status-report',
+            'previous-month-electricity-report',
+            'subscribers-meter-list-report',
+            'latest-electricity-usage-report',
+            'latest-water-usage-report',
+            'latest-cool-usage-report',
+            'latest-heat-usage-report'
+        ];
+
+        if (noFormFieldsReports.includes(reportType)) {
+            // Hiçbir ek form alanı gösterilmeyecek
+            console.log(`No additional form fields for report type: ${reportType}`);
+            return;
+        }
+
+        // Diğer rapor türlerinde form alanları açılabilir (örnek)
+        if (reportType === 'specific-report-type') {
+            document.getElementById('date-range-group').style.display = 'block';
+            document.getElementById('invoice-group').style.display = 'block';
+        }
     }
   </script>
 
