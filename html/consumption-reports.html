@@ -200,6 +200,10 @@
                 <option value="none" selected="" disabled="">Rapor tipi seçiniz</option>
                 <option value="previous-month-electricity-report">Bir Önceki Ay Elektrik Tüketim Raporu</option>
                 <option value="subscribers-meter-list-report">Abonelere Kayıtlı Sayaç Listesi</option>
+                <option value="latest-electricity-usage-report">Güncel Elektrik Tüketim Raporu</option>
+                <option value="latest-water-usage-report">Güncel Su Tüketim Raporu</option>
+                <option value="latest-cool-usage-report">Güncel Soğuk Kalorimetre Tüketim Raporu</option>
+                <option value="latest-heat-usage-report">Güncel Sıcak Kalorimetre Tüketim Raporu</option>
               </select>
             </div>
             <div id="date-range-group" class="form-group" style="display: none;">
@@ -607,14 +611,21 @@
     function handleReportGeneration() {
         const reportType = document.getElementById('electricityReportTypeSelect').value;
 
-        if (reportType === 'cihaz-tarih-saat-raporu') {
+        if (reportType === "cihaz-tarih-saat-raporu") {
             initiateTimeReportRequest();
-        } else if (reportType === 'moxa-device-status-report') {
+        } else if (reportType === "moxa-device-status-report") {
             initiateMoxaDeviceStatusReportRequest();
-        } else if (reportType === 'previous-month-electricity-report') {
+        } else if (reportType === "previous-month-electricity-report") {
             initiatePreviousMonthElectricityReportRequest();
-        } else if (reportType === 'subscribers-meter-list-report') {
+        } else if (reportType === "subscribers-meter-list-report") {
             initiateSubscribersMeterListReportRequest();
+        } else if (
+            reportType === "latest-electricity-usage-report" ||
+            reportType === "latest-water-usage-report" ||
+            reportType === "latest-cool-usage-report" ||
+            reportType === "latest-heat-usage-report"
+        ) {
+            initiateReportRequest(reportType);
         } else {
             console.warn("Geçerli bir rapor tipi seçilmedi.");
         }
@@ -1015,6 +1026,51 @@
               }
           });
       }
+    }
+
+    function initiateReportRequest(reportType) {
+        const reportEndpoints = {
+            "latest-electricity-usage-report": "/webhook/get-latest-electricity-report",
+            "latest-water-usage-report": "/webhook/get-latest-water-report",
+            "latest-cool-usage-report": "/webhook/get-latest-cool-report",
+            "latest-heat-usage-report": "/webhook/get-latest-heat-report"
+        };
+
+        const endpoint = reportEndpoints[reportType];
+        if (!endpoint) {
+            console.error("Unknown report type:", reportType);
+            alert("Geçersiz rapor tipi seçildi!");
+            return;
+        }
+
+        $.blockUI({
+            message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
+            overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
+            css: { border: 0, padding: 0, backgroundColor: 'transparent' }
+        });
+
+        fetch(`${baseWebhookURL}${endpoint}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log(`Fetched report data for ${reportType}:`, data);
+        })
+        .catch(error => {
+            console.error(`Error initiating report request for ${reportType}:`, error.message);
+            alert(`Rapor oluşturulurken bir hata oluştu: ${error.message}`);
+        })
+        .finally(() => {
+            $.unblockUI();
+        });
     }
 
     function initiatePreviousMonthElectricityReportRequest() {
