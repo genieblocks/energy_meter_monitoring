@@ -788,14 +788,17 @@
       tableHead.innerHTML = '';
       tableBody.innerHTML = '';
 
-      // Report data doğrulaması
-      if (!data || !Array.isArray(data) || data.length === 0) {
-          console.error("Report data is empty or undefined:", data);
-          return;
-      }
-
       // Veriyi sıralama ve sıra numarası ekleme
-      if (reportTableName === 'PreviousMonthElectricityReport' || reportTableName === 'SubscribersMeterListReport') {
+      const sortableReportTables = [
+          'PreviousMonthElectricityReport', 
+          'SubscribersMeterListReport', 
+          'LatestHeatUsageReport', 
+          'LatestCoolUsageReport', 
+          'LatestElectricityUsageReport', 
+          'LatestWaterUsageReport'
+      ];
+
+      if (sortableReportTables.includes(reportTableName)) {
           data = sortDataAndAddIndex(data);
       }
 
