@@ -704,27 +704,16 @@ function updateModalWithData(data, tableName) {
         const rows = firstEntry.data;
         if (rows && rows.length > 0) {
             const headers = Object.keys(rows[0]);
-            headers.forEach(header => {
-                tableHead.insertAdjacentHTML('beforeend', `<th>${header}</th>`);
-            });
-            tableHead.insertAdjacentHTML('beforeend', `<th>Düzenle</th>`); // Düzenle sütunu başlığı ekleyin
-            tableHead.insertAdjacentHTML('beforeend', `<th>Sil</th>`); // Sil sütunu başlığı ekleyin
+            headers.forEach(header => tableHead.insertAdjacentHTML('beforeend', `<th>${header}</th>`));
+            tableHead.insertAdjacentHTML('beforeend', `<th>Düzenle</th><th>Sil</th>`);
+
             rows.forEach(row => {
                 const rowHtml = `<tr>${Object.values(row).map(value => `<td>${value}</td>`).join('')}
-                    <td>
-                        <button type="button" class="btn btn-sm btn-outline-success" id="row-edit-button">
-                            <i class="fa fa-edit"></i>
-                        </button>
-                    </td>
-                    <td>
-                        <button type="button" class="btn btn-sm btn-outline-danger" id="row-delete-button">
-                            <i class="fa fa-trash-o"></i>
-                        </button>
-                    </td>
+                    <td><button type="button" class="btn btn-sm btn-outline-success"><i class="fa fa-edit"></i></button></td>
+                    <td><button type="button" class="btn btn-sm btn-outline-danger"><i class="fa fa-trash-o"></i></button></td>
                 </tr>`;
                 tableBody.insertAdjacentHTML('beforeend', rowHtml);
             });
-
         } else {
             tableBody.insertAdjacentHTML('beforeend', '<tr><td colspan="100%">Tablo içeriği bulunamadı.</td></tr>');
         }
