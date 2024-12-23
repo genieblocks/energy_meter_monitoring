@@ -788,66 +788,76 @@
       }
   }
 
-    function initiateTimeReportRequest() {
-        $.blockUI({
-            message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
-            overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
-            css: { border: 0, padding: 0, backgroundColor: 'transparent' }
-        });
-
-        fetch(`${baseWebhookURL}/webhook/get-electricity-meter-time-report`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-        .catch(error => {
-            console.error('Error initiating time report request:', error.message);
-            alert(`Error initiating time report request: ${error.message}`);
-        })
-        .finally(() => {
-            $.unblockUI();
-        });
-    }
-
-    function initiateMoxaDeviceStatusReportRequest() {
-        $.blockUI({
-            message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
-            overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
-            css: { border: 0, padding: 0, backgroundColor: 'transparent' }
-        });
-
-        fetch(`${baseWebhookURL}/webhook/get-moxa-device-status-report`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-        .catch(error => {
-            console.error('Error initiating Moxa device status report request:', error.message);
-            alert(`Error initiating Moxa device status report request: ${error.message}`);
-        })
-        .finally(() => {
-            $.unblockUI();
-        });
-    }
-    
-    function toggleFormGroups(reportType) {
-      // Başlangıçta tüm form gruplarını gizle
-      document.getElementById('date-range-group').style.display = 'none';
-      document.getElementById('invoice-group').style.display = 'none';
-
-      // Cihaz tarih-saat raporu hariç diğer rapor türlerinde form alanlarını göster
-      if (reportType === 'cihaz-tarih-saat-raporu') {
-        // Bu durumda başka bir alan gösterilmeyecek.
-      } else if (reportType === 'moxa-device-status-report') {
-        // Moxa Cihaz Durum Rapor seçildiğinde hiçbir alan gösterilmeyecek.
-      } else {
-        // Diğer rapor tiplerine göre form alanlarını göster
-        document.getElementById('date-range-group').style.display = 'block';
-        document.getElementById('invoice-group').style.display = 'block';
+  // Modal kapatıldığında tabloyu temizleme
+  $('#reportModal').on('hidden.bs.modal', function () {
+      const tableReportElement = $('#DataTables_Table_Report');
+      if ($.fn.DataTable.isDataTable(tableReportElement)) {
+          tableReportElement.DataTable().clear().destroy(); // Clear and destroy DataTable instance
       }
+      $('#DataTables_Table_Report tbody').empty(); // Clear table body
+      $('#DataTables_Table_Report thead tr').empty(); // Clear table header
+  });
+
+  function initiateTimeReportRequest() {
+      $.blockUI({
+          message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
+          overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
+          css: { border: 0, padding: 0, backgroundColor: 'transparent' }
+      });
+
+      fetch(`${baseWebhookURL}/webhook/get-electricity-meter-time-report`, {
+          method: 'GET',
+          headers: {
+              'Content-Type': 'application/json',
+          }
+      })
+      .catch(error => {
+          console.error('Error initiating time report request:', error.message);
+          alert(`Error initiating time report request: ${error.message}`);
+      })
+      .finally(() => {
+          $.unblockUI();
+    });
+  }
+
+  function initiateMoxaDeviceStatusReportRequest() {
+      $.blockUI({
+          message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
+          overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
+          css: { border: 0, padding: 0, backgroundColor: 'transparent' }
+      });
+
+      fetch(`${baseWebhookURL}/webhook/get-moxa-device-status-report`, {
+          method: 'GET',
+          headers: {
+              'Content-Type': 'application/json',
+          }
+      })
+      .catch(error => {
+          console.error('Error initiating Moxa device status report request:', error.message);
+          alert(`Error initiating Moxa device status report request: ${error.message}`);
+      })
+      .finally(() => {
+          $.unblockUI();
+      });
+  }
+    
+  function toggleFormGroups(reportType) {
+    // Başlangıçta tüm form gruplarını gizle
+    document.getElementById('date-range-group').style.display = 'none';
+    document.getElementById('invoice-group').style.display = 'none';
+
+    // Cihaz tarih-saat raporu hariç diğer rapor türlerinde form alanlarını göster
+    if (reportType === 'cihaz-tarih-saat-raporu') {
+      // Bu durumda başka bir alan gösterilmeyecek.
+    } else if (reportType === 'moxa-device-status-report') {
+      // Moxa Cihaz Durum Rapor seçildiğinde hiçbir alan gösterilmeyecek.
+    } else {
+      // Diğer rapor tiplerine göre form alanlarını göster
+      document.getElementById('date-range-group').style.display = 'block';
+      document.getElementById('invoice-group').style.display = 'block';
     }
+  }
   </script>
 
 </body>
