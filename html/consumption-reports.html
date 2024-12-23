@@ -299,17 +299,17 @@
       startTrackingReports();
 
       // Modal kapatıldığında tabloyu temizleme işlemi
-      const reportModal = document.getElementById('reportModal');
-      if (reportModal) {
-          reportModal.addEventListener('hidden.bs.modal', function () {
-              const tableReportElement = $('#DataTables_Table_Report');
-              if ($.fn.DataTable.isDataTable(tableReportElement)) {
-                  tableReportElement.DataTable().clear().destroy(); // DataTable'ı temizle ve yok et
-              }
-              $('#DataTables_Table_Report tbody').empty(); // Tablo gövdesini temizle
-              $('#DataTables_Table_Report thead tr').empty(); // Tablo başlıklarını temizle
-          });
-      }
+      // const reportModal = document.getElementById('reportModal');
+      // if (reportModal) {
+      //     reportModal.addEventListener('hidden.bs.modal', function () {
+      //         const tableReportElement = $('#DataTables_Table_Report');
+      //         if ($.fn.DataTable.isDataTable(tableReportElement)) {
+      //             tableReportElement.DataTable().clear().destroy(); // DataTable'ı temizle ve yok et
+      //         }
+      //         $('#DataTables_Table_Report tbody').empty(); // Tablo gövdesini temizle
+      //         $('#DataTables_Table_Report thead tr').empty(); // Tablo başlıklarını temizle
+      //     });
+      // }
     });
 
     // Rapor listesini filtreleyen yardımcı fonksiyon
@@ -1051,6 +1051,16 @@
           });
       }
     }
+
+    // Modal kapatıldığında tabloyu temizleme
+    $('#reportModal').on('hidden.bs.modal', function () {
+        const tableReportElement = $('#DataTables_Table_Report');
+        if ($.fn.DataTable.isDataTable(tableReportElement)) {
+            tableReportElement.DataTable().clear().destroy(); // Clear and destroy DataTable instance
+        }
+        $('#DataTables_Table_Report tbody').empty(); // Clear table body
+        $('#DataTables_Table_Report thead tr').empty(); // Clear table header
+    });
 
     function initiateReportRequest(reportType) {
         const reportEndpoints = {
