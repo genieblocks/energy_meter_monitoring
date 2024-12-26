@@ -469,13 +469,13 @@ function resetModal(modalId, tableId, noContentMessageQueryId) {
   }
 
   const tableBody = modal.querySelector(`${tableId} tbody`);
-  const no-content-message-query = modal.querySelector(`#${noContentMessageQueryId}`);
+  const noContentMessageQuery = modal.querySelector(`#${noContentMessageQueryId}`);
 
   if (tableBody) {
     tableBody.innerHTML = '';
   }
-  if (no-content-message-query) {
-    no-content-message-query.style.display = 'none';
+  if (noContentMessageQuery) {
+    noContentMessageQuery.style.display = 'none';
   }
 }
 
@@ -487,7 +487,7 @@ function displayErrorInModal(modalId, tableId, noContentMessageQueryId, error) {
   }
 
   const tableBody = modal.querySelector(`${tableId} tbody`);
-  const no-content-message-query = modal.querySelector(`#${noContentMessageQueryId}`);
+  const noContentMessageQuery = modal.querySelector(`#${noContentMessageQueryId}`);
 
   if (tableBody) {
     tableBody.innerHTML = '';
@@ -507,9 +507,9 @@ function displayErrorInModal(modalId, tableId, noContentMessageQueryId, error) {
     }
   }
 
-  if (no-content-message-query) {
-    no-content-message-query.style.display = 'block';
-    no-content-message-query.textContent = displayedMessage;
+  if (noContentMessageQuery) {
+    noContentMessageQuery.style.display = 'block';
+    noContentMessageQuery.textContent = displayedMessage;
   } else {
     console.error(`Hata mesajı göstermek için gerekli element bulunamadı: ${noContentMessageQueryId}`);
   }
@@ -525,10 +525,10 @@ function updateSingleQueryModal(data, modalId, tableId, noContentMessageQueryId)
   resetModal(modalId, tableId, noContentMessageQueryId);
 
   const tableBody = modal.querySelector(`${tableId} tbody`);
-  const no-content-message-query = modal.querySelector(`#${noContentMessageQueryId}`);
+  const noContentMessageQuery = modal.querySelector(`#${noContentMessageQueryId}`);
 
   if (data && Array.isArray(data) && data.length > 0) {
-    no-content-message-query.style.display = 'none';
+    noContentMessageQuery.style.display = 'none';
 
     data.forEach(item => {
       const row = document.createElement('tr');
@@ -542,8 +542,8 @@ function updateSingleQueryModal(data, modalId, tableId, noContentMessageQueryId)
       tableBody.appendChild(row);
     });
   } else {
-    no-content-message-query.style.display = 'block';
-    no-content-message-query.textContent = 'Cihaza erişilemedi veya veri bulunamadı.';
+    noContentMessageQuery.style.display = 'block';
+    noContentMessageQuery.textContent = 'Cihaza erişilemedi veya veri bulunamadı.';
   }
 
   $(`#${modalId} .modal-content`).unblock();
@@ -633,10 +633,10 @@ function updateSingleIecQueryModal(data) {
   resetModal('singleIecQueryModal', '#singleIecQueryDataTable', 'no-content-message-query');
 
   const tableBody = document.querySelector('#singleIecQueryDataTable tbody');
-  const no-content-message-query = document.getElementById('no-content-message-query');
+  const noContentMessageQuery = document.getElementById('no-content-message-query');
 
   if (data && data.length > 0) {
-    no-content-message-query.style.display = 'none'; // Hata mesajını gizle
+    noContentMessageQuery.style.display = 'none'; // Hata mesajını gizle
 
     // Identification mesajını ayıkla
     const identificationMsg = data[0].identification_msg || '';
@@ -672,7 +672,7 @@ function updateSingleIecQueryModal(data) {
       }
     });
   } else {
-    no-content-message-query.style.display = 'block'; // Hata mesajını göster
+    noContentMessageQuery.style.display = 'block'; // Hata mesajını göster
   }
 }
 
