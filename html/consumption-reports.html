@@ -235,7 +235,7 @@
   <footer class="footer footer-static footer-light navbar-border">
       <p class="clearfix blue-grey lighten-2 text-sm-center mb-0 px-2">
           <span class="float-md-left d-block d-md-inline-block">
-              Copyright &copy; <span id="footer-footer-dynamic-year"></span> <a class="text-bold-800 darken-2"
+              Copyright &copy; <span id="footer-dynamic-year"></span> <a class="text-bold-800 darken-2"
               href="http://www.genieblocks.com" target="_blank">GenieBlocks</a>, All rights reserved.
           </span>
           <span class="float-md-none d-block d-md-inline-block red">Production</span>
@@ -280,7 +280,7 @@
     // const baseWebhookURL = "http://192.168.1.119:5678"; // gbenergy_lenovo URL
 
     document.addEventListener('DOMContentLoaded', () => {
-      const yearElement = document.getElementById('footer-footer-dynamic-year');
+      const yearElement = document.getElementById('footer-dynamic-year');
       if (yearElement) {
           const currentYear = new Date().getFullYear();
           yearElement.textContent = currentYear;
