@@ -122,7 +122,7 @@
             <div class="col-xs-12 col-md-12">
               <div class="card border-genie">
                 <div class="card-header">
-                  <h4 class="card-title" id="repeat-form">Raporlar</h4>
+                  <h4 class="card-title" id="report-form-header">Raporlar</h4>
                   <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
                   <div class="heading-elements">
                     <ul class="list-inline mb-0">
@@ -136,8 +136,8 @@
                 </div>
                 <div class="card-body">
                   <div class="card-block">
-                    <table class="table table-hover table-bordered zero-configuration dataTable" id="DataTables_Table_Electricity_Meter_List"
-                    role="grid" aria-describedby="DataTables_Table_Electricity_Meter_List_info">
+                    <table class="table table-hover table-bordered zero-configuration dataTable" id="reports-list-table"
+                    role="grid" aria-describedby="reports-list-table-info">
                       <thead>
                         <tr>
                           <th>Rapor Başlığı</th>
@@ -175,7 +175,7 @@
           </button>
         </div>
         <div class="modal-body">
-          <table class="table table-hover table-bordered zero-configuration dataTable" id="DataTables_Table_Report" role="grid">
+          <table class="table table-hover table-bordered zero-configuration dataTable" id="modal-report-table" role="grid">
             <thead>
               <!-- Dinamik olarak başlıklar buraya eklenecek -->
             </thead>
@@ -210,7 +210,7 @@
                 <option value="cihaz-tarih-saat-raporu">Cihaz Tarih-Saat Raporu</option>
               </select>
             </div>
-            <div id="date-range-group" class="form-group" style="display: none;">
+            <div id="report-date-range-group" class="form-group" style="display: none;">
               <label>Tarih Aralığı Seçiniz</label>
               <div class="input-group">
                 <input type="text" class="form-control daterange">
@@ -219,10 +219,10 @@
                 </span>
               </div>
             </div>
-            <div id="invoice-group" class="form-group" style="display: none;">
+            <div id="report-invoice-group" class="form-group" style="display: none;">
               <label>Fatura Tutarını Giriniz</label>
               <div class="input-group">
-                <input type="text" class="form-control" id="basicInput">
+                <input type="text" class="form-control" id="invoice-amount-input">
               </div>
             </div>
           </div>
@@ -239,7 +239,7 @@
   <footer class="footer footer-static footer-light navbar-border">
       <p class="clearfix blue-grey lighten-2 text-sm-center mb-0 px-2">
           <span class="float-md-left d-block d-md-inline-block">
-              Copyright &copy; <span id="dynamic-year"></span> <a class="text-bold-800 darken-2"
+              Copyright &copy; <span id="footer-dynamic-year"></span> <a class="text-bold-800 darken-2"
               href="http://www.genieblocks.com" target="_blank">GenieBlocks</a>, All rights reserved.
           </span>
           <span class="float-md-none d-block d-md-inline-block red">Production</span>
@@ -284,7 +284,7 @@
     // const baseWebhookURL = "http://192.168.1.119:5678"; // gbenergy_lenovo URL
 
     document.addEventListener('DOMContentLoaded', () => {
-      const yearElement = document.getElementById('dynamic-year');
+      const yearElement = document.getElementById('footer-dynamic-year');
       if (yearElement) {
           const currentYear = new Date().getFullYear();
           yearElement.textContent = currentYear;
@@ -467,10 +467,10 @@
     }
 
     function populateTables(reports) {
-      const tableBody = document.querySelector('#DataTables_Table_Electricity_Meter_List tbody');
+      const tableBody = document.querySelector('#reports-list-table tbody');
 
       if (!tableBody) {
-        console.error("Table body not found for ID: DataTables_Table_Electricity_Meter_List");
+        console.error("Table body not found for ID: reports-list-table");
         return;
       }
 
@@ -556,7 +556,7 @@
     }
 
     function initializeDataTables() {
-      const tableId = 'DataTables_Table_Electricity_Meter_List';
+      const tableId = 'reports-list-table';
       if ($.fn.DataTable.isDataTable(`#${tableId}`)) {
         $(`#${tableId}`).DataTable().destroy();
       }
@@ -662,8 +662,8 @@
 
     function updateReportModalTable(reportData, reportTitle, reportTableName) {
       const data = reportData[0].data;
-      const tableHead = document.querySelector('#DataTables_Table_Report thead');
-      const tableBody = document.querySelector('#DataTables_Table_Report tbody');
+      const tableHead = document.querySelector('#modal-report-table thead');
+      const tableBody = document.querySelector('#modal-report-table tbody');
       
       // Modal başlığını güncelle
       document.getElementById("myModalLabel1").textContent = `Rapor Detayı - ${reportTitle}`;
@@ -746,7 +746,7 @@
           tableBody.appendChild(row);
       });
 
-      const tableId = '#DataTables_Table_Report';
+      const tableId = '#modal-report-table';
       if (!$.fn.DataTable.isDataTable(tableId)) {
           $(tableId).DataTable({
               dom: '<"top"fl>rt<"bottom"Bp>',
@@ -790,12 +790,12 @@
 
   // Modal kapatıldığında tabloyu temizleme
   $('#reportModal').on('hidden.bs.modal', function () {
-      const tableReportElement = $('#DataTables_Table_Report');
+      const tableReportElement = $('#modal-report-table');
       if ($.fn.DataTable.isDataTable(tableReportElement)) {
           tableReportElement.DataTable().clear().destroy(); // Clear and destroy DataTable instance
       }
-      $('#DataTables_Table_Report tbody').empty(); // Clear table body
-      $('#DataTables_Table_Report thead tr').empty(); // Clear table header
+      $('#modal-report-table tbody').empty(); // Clear table body
+      $('#modal-report-table thead tr').empty(); // Clear table header
   });
 
   function initiateTimeReportRequest() {
@@ -844,8 +844,8 @@
     
   function toggleFormGroups(reportType) {
     // Başlangıçta tüm form gruplarını gizle
-    document.getElementById('date-range-group').style.display = 'none';
-    document.getElementById('invoice-group').style.display = 'none';
+    document.getElementById('report-date-range-group').style.display = 'none';
+    document.getElementById('report-invoice-group').style.display = 'none';
 
     // Cihaz tarih-saat raporu hariç diğer rapor türlerinde form alanlarını göster
     if (reportType === 'cihaz-tarih-saat-raporu') {
@@ -854,8 +854,8 @@
       // Moxa Cihaz Durum Rapor seçildiğinde hiçbir alan gösterilmeyecek.
     } else {
       // Diğer rapor tiplerine göre form alanlarını göster
-      document.getElementById('date-range-group').style.display = 'block';
-      document.getElementById('invoice-group').style.display = 'block';
+      document.getElementById('report-date-range-group').style.display = 'block';
+      document.getElementById('report-invoice-group').style.display = 'block';
     }
   }
   </script>
