@@ -18,8 +18,8 @@
   <link rel="stylesheet" type="text/css" href="../app-assets/css/bootstrap.css">
   <link rel="stylesheet" type="text/css" href="../app-assets/fonts/icomoon.css">
   <link rel="stylesheet" type="text/css" href="../app-assets/fonts/flag-icon-css/css/flag-icon.min.css">
-  <link rel="stylesheet" type="text/css" href="../app-assets/vendors/css/sliders/slick/slick.css">
-  <link rel="stylesheet" type="text/css" href="../app-assets/vendors/css/extensions/pace.css">
+  <!-- <link rel="stylesheet" type="text/css" href="../app-assets/vendors/css/sliders/slick/slick.css"> -->
+  <!-- <link rel="stylesheet" type="text/css" href="../app-assets/vendors/css/extensions/pace.css"> -->
 
   <link rel="stylesheet" type="text/css" href="../app-assets/css/vendors.css">
   <link rel="stylesheet" type="text/css" href="../app-assets/vendors/css/tables/datatable/jquery.dataTables.min.css">
@@ -108,7 +108,7 @@
         </div>
       </nav>
       <div class="content-wrapper">
-        <!-- IEC 62056-21 section start -->
+        <!-- Report Section Start -->
         <section id="form-repeater">
           <div class="row">
             <div class="col-xs-12 col-md-12">
@@ -128,8 +128,8 @@
                 </div>
                 <div class="card-body">
                   <div class="card-block">
-                    <table class="table table-hover table-bordered zero-configuration dataTable" id="DataTables_Table_Electricity_Meter_List"
-                    role="grid" aria-describedby="DataTables_Table_Electricity_Meter_List_info">
+                    <table class="table table-hover table-bordered zero-configuration dataTable" id="reports-list-table"
+                    role="grid" aria-describedby="reports-list-table-info">
                       <thead>
                         <tr>
                           <th>Rapor Başlığı</th>
@@ -156,18 +156,18 @@
   </div>
 
     <!-- Report Modal -->
-    <div class="modal fade text-left" id="reportModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2"
+    <div class="modal fade text-left" id="reportModal" tabindex="-1" role="dialog" aria-labelledby="report-generation-modal-title"
     aria-hidden="true">
     <div class="modal-dialog modal-xl" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h4 class="modal-title text-bold-600" id="myModalLabel1"><i class="fa fa-road2"></i> Rapor Detayı</h4>
+          <h4 class="modal-title text-bold-600" id="report-modal-title"><i class="fa fa-road2"></i> Rapor Detayı</h4>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
-          <table class="table table-hover table-bordered zero-configuration dataTable" id="DataTables_Table_Report" role="grid">
+          <table class="table table-hover table-bordered zero-configuration dataTable" id="modal-report-table" role="grid">
             <thead>
               <!-- Dinamik olarak başlıklar buraya eklenecek -->
             </thead>
@@ -183,11 +183,11 @@
     </div>
   </div>
   <!-- Elektrik Sayaç Raporu Oluşturma Modal -->
-  <div class="modal fade text-left" id="generateElectricityReportModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
+  <div class="modal fade text-left" id="generateElectricityReportModal" tabindex="-1" role="dialog" aria-labelledby="report-generation-modal-title" aria-hidden="true">
     <div class="modal-dialog modal-sm" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h4 class="modal-title text-bold-600" id="myModalLabel1"><i class="fa fa-road2"></i> Manuel Rapor Oluşturma Ekranı</h4>
+          <h4 class="modal-title text-bold-600" id="report-modal-title"><i class="fa fa-road2"></i> Manuel Rapor Oluşturma Ekranı</h4>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -206,7 +206,7 @@
                 <option value="latest-heat-usage-report">Güncel Sıcak Kalorimetre Tüketim Raporu</option>
               </select>
             </div>
-            <div id="date-range-group" class="form-group" style="display: none;">
+            <div id="dateRangeGroup" class="form-group" style="display: none;">
               <label>Tarih Aralığı Seçiniz</label>
               <div class="input-group">
                 <input type="text" class="form-control daterange">
@@ -215,10 +215,10 @@
                 </span>
               </div>
             </div>
-            <div id="invoice-group" class="form-group" style="display: none;">
+            <div id="invoiceInputGroup" class="form-group" style="display: none;">
               <label>Fatura Tutarını Giriniz</label>
               <div class="input-group">
-                <input type="text" class="form-control" id="basicInput">
+                <input type="text" class="form-control" id="invoice-amount-input">
               </div>
             </div>
           </div>
@@ -235,7 +235,7 @@
   <footer class="footer footer-static footer-light navbar-border">
       <p class="clearfix blue-grey lighten-2 text-sm-center mb-0 px-2">
           <span class="float-md-left d-block d-md-inline-block">
-              Copyright &copy; <span id="dynamic-year"></span> <a class="text-bold-800 darken-2"
+              Copyright &copy; <span id="footer-footer-dynamic-year"></span> <a class="text-bold-800 darken-2"
               href="http://www.genieblocks.com" target="_blank">GenieBlocks</a>, All rights reserved.
           </span>
           <span class="float-md-none d-block d-md-inline-block red">Production</span>
@@ -251,11 +251,11 @@
   <script src="../app-assets/vendors/js/ui/perfect-scrollbar.jquery.min.js"></script>
   <script src="../app-assets/vendors/js/ui/unison.min.js"></script>
   <script src="../app-assets/vendors/js/ui/blockUI.min.js"></script>
-  <script src="../app-assets/vendors/js/ui/jquery-sliding-menu.js"></script>
+  <!-- <script src="../app-assets/vendors/js/ui/jquery-sliding-menu.js"></script> -->
   <!-- END VENDOR JS-->
   <!-- BEGIN PAGE VENDOR JS-->
   <script src="../app-assets/vendors/js/tables/datatable/datatables.min.js"></script>
-  <script src="../app-assets/vendors/js/tables/datatable/dataTables.buttons.min.js"></script>
+  <!-- <script src="../app-assets/vendors/js/tables/datatable/dataTables.buttons.min.js"></script> -->
   <script src="../app-assets/vendors/js/pickers/dateTime/moment-with-locales.min.js"></script>
   <script src="../app-assets/vendors/js/pickers/dateTime/bootstrap-datetimepicker.min.js"></script>
   <script src="../app-assets/vendors/js/pickers/pickadate/picker.js"></script>
@@ -280,7 +280,7 @@
     // const baseWebhookURL = "http://192.168.1.119:5678"; // gbenergy_lenovo URL
 
     document.addEventListener('DOMContentLoaded', () => {
-      const yearElement = document.getElementById('dynamic-year');
+      const yearElement = document.getElementById('footer-footer-dynamic-year');
       if (yearElement) {
           const currentYear = new Date().getFullYear();
           yearElement.textContent = currentYear;
@@ -469,10 +469,10 @@
     }
 
     function populateTables(reports) {
-      const tableBody = document.querySelector('#DataTables_Table_Electricity_Meter_List tbody');
+      const tableBody = document.querySelector('#reports-list-table tbody');
 
       if (!tableBody) {
-        console.error("Table body not found for ID: DataTables_Table_Electricity_Meter_List");
+        console.error("Table body not found for ID: reports-list-table");
         return;
       }
 
@@ -555,7 +555,7 @@
     }
 
     function initializeDataTables() {
-      const tableId = 'DataTables_Table_Electricity_Meter_List';
+      const tableId = 'reports-list-table';
       if ($.fn.DataTable.isDataTable(`#${tableId}`)) {
         $(`#${tableId}`).DataTable().destroy();
       }
@@ -757,33 +757,13 @@
         return 0;
     }
 
-    function parseBuildingNo(buildingNo) {
-        const match = buildingNo.match(/(\d+)([A-Za-z]*)?/);
-        if (match) {
-            const number = parseInt(match[1], 10) || 0; // Sayısal kısım
-            const suffix = match[2] ? match[2].toUpperCase() : ''; // Harfli ek kısmı
-            return { number, suffix };
-        }
-        return { number: 0, suffix: '' };
-    }
-
-    function parseFlat(flat) {
-        const match = flat.match(/(\d+)([A-Za-z]*)?/);
-        if (match) {
-            const number = parseInt(match[1], 10) || 0; // Sayısal kısım
-            const suffix = match[2] ? match[2].toUpperCase() : ''; // Harfli ek kısmı
-            return { number, suffix };
-        }
-        return { number: 0, suffix: '' };
-    }
-
     function updateReportModalTable(reportData, reportTitle, reportTableName) {
       let data = reportData[0].data;
-      const tableHead = document.querySelector('#DataTables_Table_Report thead');
-      const tableBody = document.querySelector('#DataTables_Table_Report tbody');
+      const tableHead = document.querySelector('#modal-report-table thead');
+      const tableBody = document.querySelector('#modal-report-table tbody');
       
       // Modal başlığını güncelle
-      document.getElementById("myModalLabel1").textContent = `Rapor Detayı - ${reportTitle}`;
+      document.getElementById("report-modal-title").textContent = `Rapor Detayı - ${reportTitle}`;
 
       tableHead.innerHTML = '';
       tableBody.innerHTML = '';
@@ -997,7 +977,7 @@
           tableBody.appendChild(row);
       });
 
-      const tableId = '#DataTables_Table_Report';
+      const tableId = '#modal-report-table';
       if (!$.fn.DataTable.isDataTable(tableId)) {
           $(tableId).DataTable({
               dom: '<"top"fl>rt<"bottom"Bp>',
@@ -1041,12 +1021,12 @@
 
     // Modal kapatıldığında tabloyu temizleme
     $('#reportModal').on('hidden.bs.modal', function () {
-        const tableReportElement = $('#DataTables_Table_Report');
+        const tableReportElement = $('#modal-report-table');
         if ($.fn.DataTable.isDataTable(tableReportElement)) {
             tableReportElement.DataTable().clear().destroy(); // Clear and destroy DataTable instance
         }
-        $('#DataTables_Table_Report tbody').empty(); // Clear table body
-        $('#DataTables_Table_Report thead tr').empty(); // Clear table header
+        $('#modal-report-table tbody').empty(); // Clear table body
+        $('#modal-report-table thead tr').empty(); // Clear table header
     });
 
     function initiateReportRequest(reportType) {
@@ -1184,8 +1164,8 @@
     
     function toggleFormGroups(reportType) {
         // Tüm form gruplarını başlangıçta gizle
-        document.getElementById('date-range-group').style.display = 'none';
-        document.getElementById('invoice-group').style.display = 'none';
+        document.getElementById('dateRangeGroup').style.display = 'none';
+        document.getElementById('invoiceInputGroup').style.display = 'none';
 
         // Aşağıdaki rapor türlerinde hiçbir form alanı gösterilmeyecek
         const noFormFieldsReports = [
@@ -1207,8 +1187,8 @@
 
         // Diğer rapor türlerinde form alanları açılabilir (örnek)
         if (reportType === 'specific-report-type') {
-            document.getElementById('date-range-group').style.display = 'block';
-            document.getElementById('invoice-group').style.display = 'block';
+            document.getElementById('dateRangeGroup').style.display = 'block';
+            document.getElementById('invoiceInputGroup').style.display = 'block';
         }
     }
   </script>

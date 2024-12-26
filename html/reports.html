@@ -164,12 +164,12 @@
   </div>
 
     <!-- Report Modal -->
-    <div class="modal fade text-left" id="reportModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2"
+    <div class="modal fade text-left" id="reportModal" tabindex="-1" role="dialog" aria-labelledby="report-generation-modal-title"
     aria-hidden="true">
     <div class="modal-dialog modal-xl" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h4 class="modal-title text-bold-600" id="myModalLabel1"><i class="fa fa-road2"></i> Rapor Detayı</h4>
+          <h4 class="modal-title text-bold-600" id="report-modal-title"><i class="fa fa-road2"></i> Rapor Detayı</h4>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -191,11 +191,11 @@
     </div>
   </div>
   <!-- Rapor Oluşturma Modal -->
-  <div class="modal fade text-left" id="generateReportModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
+  <div class="modal fade text-left" id="generateReportModal" tabindex="-1" role="dialog" aria-labelledby="report-generation-modal-title" aria-hidden="true">
     <div class="modal-dialog modal-sm" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h4 class="modal-title text-bold-600" id="myModalLabel1"><i class="fa fa-road2"></i> Manuel Rapor Oluşturma Ekranı</h4>
+          <h4 class="modal-title text-bold-600" id="report-modal-title"><i class="fa fa-road2"></i> Manuel Rapor Oluşturma Ekranı</h4>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -666,7 +666,7 @@
       const tableBody = document.querySelector('#modal-report-table tbody');
       
       // Modal başlığını güncelle
-      document.getElementById("myModalLabel1").textContent = `Rapor Detayı - ${reportTitle}`;
+      document.getElementById("report-modal-title").textContent = `Rapor Detayı - ${reportTitle}`;
 
       tableHead.innerHTML = '';
       tableBody.innerHTML = '';
