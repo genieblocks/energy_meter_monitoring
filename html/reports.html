@@ -116,7 +116,7 @@
         </div>
       </nav>
       <div class="content-wrapper">
-        <!-- IEC 62056-21 section start -->
+        <!-- Report Section Start -->
         <section id="form-repeater">
           <div class="row">
             <div class="col-xs-12 col-md-12">
@@ -127,7 +127,7 @@
                   <div class="heading-elements">
                     <ul class="list-inline mb-0">
                       <li>
-                        <button class="btn btn-sm btn-genie white" type="button" data-toggle="modal" data-target="#generateElectricityReportModal">Rapor Oluştur</button>
+                        <button class="btn btn-sm btn-genie white" type="button" data-toggle="modal" data-target="#generateReportModal">Rapor Oluştur</button>
                       </li>
                       <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
                       <li><a data-action="expand"><i class="icon-expand2"></i></a></li>
@@ -190,8 +190,8 @@
       </div>
     </div>
   </div>
-  <!-- Elektrik Sayaç Raporu Oluşturma Modal -->
-  <div class="modal fade text-left" id="generateElectricityReportModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
+  <!-- Rapor Oluşturma Modal -->
+  <div class="modal fade text-left" id="generateReportModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
     <div class="modal-dialog modal-sm" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -203,14 +203,14 @@
         <form>
           <div class="modal-body">
             <div class="form-group">
-              <label for="electricityReportTypeSelect">Rapor Tipi</label>
-              <select id="electricityReportTypeSelect" name="interested" class="form-control" onchange="toggleFormGroups(this.value)">
+              <label for="reportTypeSelect">Rapor Tipi</label>
+              <select id="reportTypeSelect" name="interested" class="form-control" onchange="toggleFormGroups(this.value)">
                 <option value="none" selected="" disabled="">Rapor tipi seçiniz</option>
                 <option value="moxa-device-status-report">Moxa Cihaz Durum Rapor</option>
                 <option value="cihaz-tarih-saat-raporu">Cihaz Tarih-Saat Raporu</option>
               </select>
             </div>
-            <div id="report-date-range-group" class="form-group" style="display: none;">
+            <div id="dateRangeGroup" class="form-group" style="display: none;">
               <label>Tarih Aralığı Seçiniz</label>
               <div class="input-group">
                 <input type="text" class="form-control daterange">
@@ -219,7 +219,7 @@
                 </span>
               </div>
             </div>
-            <div id="report-invoice-group" class="form-group" style="display: none;">
+            <div id="invoiceInputGroup" class="form-group" style="display: none;">
               <label>Fatura Tutarını Giriniz</label>
               <div class="input-group">
                 <input type="text" class="form-control" id="invoice-amount-input">
@@ -613,7 +613,7 @@
     
     function handleReportGeneration() {
         console.log('handleReportGeneration invoked.');
-        const reportType = document.getElementById('electricityReportTypeSelect').value;
+        const reportType = document.getElementById('reportTypeSelect').value;
         console.log('Selected report type:', reportType);
 
         if (reportType === 'cihaz-tarih-saat-raporu') {
@@ -626,8 +626,8 @@
             console.warn("No valid report type selected.");
         }
 
-        $('#generateElectricityReportModal').modal('hide');
-        $('#generateElectricityReportModal').on('hidden.bs.modal', function () {
+        $('#generateReportModal').modal('hide');
+        $('#generateReportModal').on('hidden.bs.modal', function () {
             console.log('Modal hidden. Reloading page.');
             location.reload();
         });
@@ -844,8 +844,8 @@
     
   function toggleFormGroups(reportType) {
     // Başlangıçta tüm form gruplarını gizle
-    document.getElementById('report-date-range-group').style.display = 'none';
-    document.getElementById('report-invoice-group').style.display = 'none';
+    document.getElementById('dateRangeGroup').style.display = 'none';
+    document.getElementById('invoiceInputGroup').style.display = 'none';
 
     // Cihaz tarih-saat raporu hariç diğer rapor türlerinde form alanlarını göster
     if (reportType === 'cihaz-tarih-saat-raporu') {
@@ -854,8 +854,8 @@
       // Moxa Cihaz Durum Rapor seçildiğinde hiçbir alan gösterilmeyecek.
     } else {
       // Diğer rapor tiplerine göre form alanlarını göster
-      document.getElementById('report-date-range-group').style.display = 'block';
-      document.getElementById('report-invoice-group').style.display = 'block';
+      document.getElementById('dateRangeGroup').style.display = 'block';
+      document.getElementById('invoiceInputGroup').style.display = 'block';
     }
   }
   </script>
