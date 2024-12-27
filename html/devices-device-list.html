@@ -1229,7 +1229,7 @@ function fetchConnectionPoints(protocolType, meterType) {
   })
   .then(response => response.json())
   .then(data => {
-    const connectionPointSelect = document.querySelector(`#connectionPoint${capitalize(meterType)}`);
+    const connectionPointSelect = document.querySelector(`#${meterType}ConnectionPoint`);
     connectionPointSelect.innerHTML = '<option value="none" selected disabled>Bağlantı Noktası Seçiniz.</option>';
 
     if (data[0].success && Array.isArray(data[0].data)) {
@@ -1254,7 +1254,7 @@ function fetchConnections(connectionTable, meterType) {
   })
   .then(response => response.json())
   .then(data => {
-    const connectionPointSelect = document.querySelector(`#connectionPoint${capitalize(meterType)}`);
+    const connectionPointSelect = document.querySelector(`#${meterType}ConnectionPoint`);
     if (data[0].success && Array.isArray(data[0].data)) {
       data[0].data.forEach(connection => {
         const option = document.createElement('option');
