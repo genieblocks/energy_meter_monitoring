@@ -19,10 +19,10 @@
   <link rel="stylesheet" type="text/css" href="../app-assets/vendors/css/tables/datatable/jquery.dataTables.min.css">
   <link rel="stylesheet" type="text/css" href="../app-assets/vendors/css/extensions/sweetalert.css">
       <!-- font icons-->
-      <link rel="stylesheet" type="text/css" href="../app-assets/fonts/icomoon.css">
-      <link rel="stylesheet" type="text/css" href="../app-assets/fonts/flag-icon-css/css/flag-icon.min.css">
-      <link rel="stylesheet" type="text/css" href="../app-assets/vendors/css/sliders/slick/slick.css">
-      <link rel="stylesheet" type="text/css" href="../app-assets/vendors/css/extensions/pace.css">
+      <!-- <link rel="stylesheet" type="text/css" href="../app-assets/fonts/icomoon.css"> -->
+      <!-- <link rel="stylesheet" type="text/css" href="../app-assets/fonts/flag-icon-css/css/flag-icon.min.css"> -->
+      <!-- <link rel="stylesheet" type="text/css" href="../app-assets/vendors/css/sliders/slick/slick.css"> -->
+      <!-- <link rel="stylesheet" type="text/css" href="../app-assets/vendors/css/extensions/pace.css"> -->
       <link rel="stylesheet" type="text/css" href="../app-assets/fonts/feather/style.min.css">
       <link rel="stylesheet" type="text/css" href="../app-assets/fonts/font-awesome/css/font-awesome.min.css">
       <link rel="stylesheet" type="text/css" href="../app-assets/fonts/simple-line-icons/style.min.css">
@@ -275,7 +275,6 @@
     <div class="modal-content">
       <div class="modal-header">
         <h4 class="modal-title text-bold-600" id="singleQueryModalLabel"></h4>
-        <!-- <button type="button" class="ml-auto col-4 btn-sm btn-genie" id="newDataButton">Yeni Veri Ekle</button> -->
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
@@ -326,10 +325,10 @@
   <script src="../app-assets/vendors/js/ui/perfect-scrollbar.jquery.min.js"></script>
   <script src="../app-assets/vendors/js/ui/unison.min.js"></script>
   <script src="../app-assets/vendors/js/ui/blockUI.min.js"></script>
-  <script src="../app-assets/vendors/js/ui/jquery.matchHeight-min.js"></script>
-  <script src="../app-assets/vendors/js/ui/jquery-sliding-menu.js"></script>
-  <script src="../app-assets/vendors/js/sliders/slick/slick.min.js"></script>
-  <script src="../app-assets/vendors/js/extensions/pace.min.js"></script>
+  <!-- <script src="../app-assets/vendors/js/ui/jquery.matchHeight-min.js"></script> -->
+  <!-- <script src="../app-assets/vendors/js/ui/jquery-sliding-menu.js"></script> -->
+  <!-- <script src="../app-assets/vendors/js/sliders/slick/slick.min.js"></script> -->
+  <!-- <script src="../app-assets/vendors/js/extensions/pace.min.js"></script> -->
   <!-- END VENDOR JS-->
   <!-- BEGIN PAGE VENDOR JS-->
   <script src="../app-assets/vendors/js/tables/datatable/datatables.min.js"></script>
@@ -584,23 +583,6 @@ function fetchCoolingMetersUsageData() {
   .catch(error => {
     console.error("Error fetching CoolUsage data:", error);
   });
-}
-
-function appendRowToTable(meter, tableId) {
-  const tableBody = document.querySelector(`${tableId} tbody`);
-  const row = document.createElement('tr');
-
-  row.innerHTML = `
-    <td>${meter.SerialNumber || ''}</td>
-    <td>${meter.Error || ''}</td>
-    <td>${meter.ManufacturerID || ''}</td>
-    <td>${meter.MeterValue_kWh ? meter.MeterValue_kWh : `<span class="text-danger" data-toggle="tooltip" data-popup="tooltip-custom" data-bg-color="pink" data-original-title="${meter.Error}">!</span>`}</td>
-    <td>${meter.QueryStartTime || ''}</td>
-    <td>${meter.Timestamp || ''}</td>
-  `;
-
-  console.log(`Appending row: ${row.innerHTML}`);
-  tableBody.appendChild(row);
 }
 
 function initializeDataTable(tableId) {
