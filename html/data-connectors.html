@@ -28,8 +28,8 @@
   <!-- BEGIN TEMPLATE CSS-->
   <link rel="stylesheet" type="text/css" href="../app-assets/css/bootstrap-extended.css">
   <link rel="stylesheet" type="text/css" href="../app-assets/css/app.css">
-  <link rel="stylesheet" type="text/css" href="../app-assets/css/colors.css">
-  <link rel="stylesheet" type="text/css" href="../app-assets/css/components.css">
+  <!-- <link rel="stylesheet" type="text/css" href="../app-assets/css/colors.css"> -->
+  <!-- <link rel="stylesheet" type="text/css" href="../app-assets/css/components.css"> -->
   <!-- END TEMPLATE CSS-->
   <!-- BEGIN Page Level CSS-->
   <link rel="stylesheet" type="text/css" href="../app-assets/css/core/menu/menu-types/vertical-menu.css">
@@ -163,7 +163,7 @@
             </table>
             <div class="form-group overflow-hidden">
               <div class="col-xs-12">
-                <button id="addRowButton" class="btn btn-info btn-lg" data-toggle="modal" data-target="#addRowModalIEC">
+                <button id="addRowButtonIEC" class="btn btn-info btn-lg" data-toggle="modal" data-target="#addIecConnectionModal">
                   <I class="icon-plus4"></I> Ekle
                 </button>
               </div>
@@ -208,7 +208,7 @@
             </table>
             <div class="form-group overflow-hidden">
               <div class="col-xs-12">
-                <button id="addRowButtonMbus" class="btn btn-info btn-lg" data-toggle="modal" data-target="#addRowModalMbus">
+                <button id="addRowButtonMbus" class="btn btn-info btn-lg" data-toggle="modal" data-target="#addMbusConnectionModal">
                   <I class="icon-plus4"></I> Ekle
                 </button>
               </div>
@@ -223,7 +223,7 @@
     </div>
   </div>
 <!-- Add Row Modal for M-BUS -->
-<div class="modal fade" id="addRowModalMbus" tabindex="-1" role="dialog" aria-labelledby="addRowModalLabelMbus" aria-hidden="true">
+<div class="modal fade" id="addMbusConnectionModal" tabindex="-1" role="dialog" aria-labelledby="addRowModalLabelMbus" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -236,12 +236,12 @@
         <!-- Form içeriği -->
         <form id="addRowFormMbus">
           <div class="form-group">
-            <label for="modal-mbus-name">Bağlantı İsmi</label>
-            <input type="text" class="form-control" id="modal-mbus-name" placeholder="İsim giriniz">
+            <label for="modal-mbus-connection-name">Bağlantı İsmi</label>
+            <input type="text" class="form-control" id="modal-mbus-connection-name" placeholder="İsim giriniz">
           </div>
           <div class="form-group">
-            <label for="modal-serial-port-mbus">Seri Port</label>
-            <select class="form-control" id="modal-serial-port-mbus">
+            <label for="modal-mbus-serial-port">Seri Port</label>
+            <select class="form-control" id="modal-mbus-serial-port">
               <option>Seri Port Seçiniz</option>
               <option>COM 1</option>
               <option>COM 2</option>
@@ -251,16 +251,16 @@
             </select>
           </div>
           <div class="form-group">
-            <label for="modal-baud-rate-mbus">Baud Rate (bps)</label>
-            <select class="form-control" id="modal-baud-rate-mbus">
+            <label for="modal-mbus-baud-rate">Baud Rate (bps)</label>
+            <select class="form-control" id="modal-mbus-baud-rate">
               <option>Baud Rate Seçiniz</option>
               <option>2400</option>
               <option>9600</option>
             </select>
           </div>
           <div class="form-group">
-            <label for="modal-retry-mbus">Tekrar Deneme Sayısı</label>
-            <select class="form-control" id="modal-retry-mbus">
+            <label for="modal-mbus-retry-count">Tekrar Deneme Sayısı</label>
+            <select class="form-control" id="modal-mbus-retry-count">
               <option>Tekrar Deneme Sayısı Seçiniz</option>
               <option>0</option>
               <option>1</option>
@@ -270,8 +270,8 @@
             </select>
           </div>
           <div class="form-group">
-            <label for="modal-time-out-mbus">Zaman Aşımı (milisaniye)</label>
-            <select class="form-control" id="modal-time-out-mbus">
+            <label for="modal-mbus-timeout">Zaman Aşımı (milisaniye)</label>
+            <select class="form-control" id="modal-mbus-timeout">
               <option>Zaman Aşımı</option>
               <option>500</option>
               <option>1000</option>
@@ -287,7 +287,7 @@
 </div>
 
 <!-- Add Row Modal for IEC 62056-21-->
-<div class="modal fade" id="addRowModalIEC" tabindex="-1" role="dialog" aria-labelledby="addRowModalLabel" aria-hidden="true">
+<div class="modal fade" id="addIecConnectionModal" tabindex="-1" role="dialog" aria-labelledby="addRowModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -300,18 +300,18 @@
         <!-- Form içeriği -->
         <form id="addRowFormIEC">
           <div class="form-group">
-            <label for="modal-iec-name">Bağlantı İsmi</label>
-            <input type="text" class="form-control" id="modal-iec-name" placeholder="İsim giriniz">
+            <label for="modal-iec-connection-name">Bağlantı İsmi</label>
+            <input type="text" class="form-control" id="modal-iec-connection-name" placeholder="İsim giriniz">
           </div>
           <div class="form-group">
-            <label for="modal-serial-port-iec">Seri Port</label>
-            <select class="form-control" id="modal-serial-port-iec">
+            <label for="modal-iec-serial-port">Seri Port</label>
+            <select class="form-control" id="modal-iec-serial-port">
               <option>Seri Port Seçiniz</option>
             </select>
           </div>
           <div class="form-group">
-            <label for="modal-baud-rate-iec">Baud Rate (bps)</label>
-            <select class="form-control" id="modal-baud-rate-iec">
+            <label for="modal-iec-baud-rate">Baud Rate (bps)</label>
+            <select class="form-control" id="modal-iec-baud-rate">
               <option>Baud Rate Seçiniz</option>
               <option>300</option>
               <option>600</option>
@@ -323,8 +323,8 @@
             </select>
           </div>
           <div class="form-group">
-            <label for="modal-retry-iec">Tekrar Deneme Sayısı</label>
-            <select class="form-control" id="modal-retry-iec">
+            <label for="modal-iec-retry-count">Tekrar Deneme Sayısı</label>
+            <select class="form-control" id="modal-iec-retry-count">
               <option>Tekrar Deneme Sayısı Seçiniz</option>
               <option>0</option>
               <option>1</option>
@@ -334,8 +334,8 @@
             </select>
           </div>
           <div class="form-group">
-            <label for="modal-time-out-iec">Zaman Aşımı</label>
-            <select class="form-control" id="modal-time-out-iec">
+            <label for="modal-iec-timeout">Zaman Aşımı</label>
+            <select class="form-control" id="modal-iec-timeout">
               <option>Zaman Aşımı (milisaniye)</option>
               <option>500</option>
               <option>1000</option>
@@ -362,7 +362,7 @@
                 </button>
               </div>
               <div class="modal-body">
-                <table class="table table-hover table-bordered zero-configuration dataTable w-auto" id="DataTables_Table_Electricity_Meter_Report"
+                <table class="table table-hover table-bordered zero-configuration dataTable w-auto" id="definedDevicesTable"
                 role="grid" aria-describedby="DataTables_Table_0_info">
                   <thead>
                     <tr>
@@ -406,7 +406,7 @@
                 </button>
               </div>
               <div class="modal-body">
-                <table class="table table-hover table-bordered zero-configuration dataTable w-auto" id="deviceTable"
+                <table class="table table-hover table-bordered zero-configuration dataTable w-auto" id="scannedDevicesTable"
                 role="grid" aria-describedby="DataTables_Table_0_info">
                   <thead>
                     <tr>
@@ -595,11 +595,11 @@ document.addEventListener('DOMContentLoaded', function() {
   document.getElementById('addRowFormMbus').addEventListener('submit', function(e) {
     e.preventDefault();
 
-    const busName = document.getElementById('modal-mbus-name').value;
-    const serialPort = document.getElementById('modal-serial-port-mbus').value;
-    const baudRate = document.getElementById('modal-baud-rate-mbus').value;
-    const retry = document.getElementById('modal-retry-mbus').value;
-    const timeOut = document.getElementById('modal-time-out-mbus').value;
+    const busName = document.getElementById('modal-mbus-connection-name').value;
+    const serialPort = document.getElementById('modal-mbus-serial-port').value;
+    const baudRate = document.getElementById('modal-mbus-baud-rate').value;
+    const retry = document.getElementById('modal-mbus-retry-count').value;
+    const timeOut = document.getElementById('modal-mbus-timeout').value;
 
     const jsonData = {
       tableName: "MBusProtocolConnections",
@@ -638,7 +638,7 @@ document.addEventListener('DOMContentLoaded', function() {
         `;
         tableBodyMbus.appendChild(row);
 
-        $('#addRowModalMbus').modal('hide');
+        $('#addMbusConnectionModal').modal('hide');
         document.getElementById('addRowFormMbus').reset();
       } else {
         alert('Veri eklenirken bir hata oluştu: ' + data[0].message);
@@ -680,7 +680,7 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
   // Modal açıldığında TTYPortları yükle
-  $('#addRowModalMbus').on('shown.bs.modal', function() {
+  $('#addMbusConnectionModal').on('shown.bs.modal', function() {
     fetch(`${baseWebhookURL}/webhook/get-table-content`, {
       method: 'POST',
       headers: {
@@ -691,7 +691,7 @@ document.addEventListener('DOMContentLoaded', function() {
     .then(response => response.json())
     .then(data => {
       if (data[0].success && Array.isArray(data[0].data)) {
-        const serialPortDropdown = document.getElementById('modal-serial-port-mbus');
+        const serialPortDropdown = document.getElementById('modal-mbus-serial-port');
         serialPortDropdown.innerHTML = '<option>Seri Port Seçiniz</option>';
         data[0].data.forEach(port => {
           const option = document.createElement('option');
@@ -711,11 +711,11 @@ document.addEventListener('DOMContentLoaded', function() {
   document.getElementById('addRowFormIEC').addEventListener('submit', function(e) {
     e.preventDefault();
 
-    const busName = document.getElementById('modal-iec-name').value;
-    const serialPort = document.getElementById('modal-serial-port-iec').value;
-    const baudRate = document.getElementById('modal-baud-rate-iec').value;
-    const retry = document.getElementById('modal-retry-iec').value;
-    const timeOut = document.getElementById('modal-time-out-iec').value;
+    const busName = document.getElementById('modal-iec-connection-name').value;
+    const serialPort = document.getElementById('modal-iec-serial-port').value;
+    const baudRate = document.getElementById('modal-iec-baud-rate').value;
+    const retry = document.getElementById('modal-iec-retry-count').value;
+    const timeOut = document.getElementById('modal-iec-timeout').value;
 
     const iecConnectionID = 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'; // Bu değeri ihtiyaç duyduğunuz GUID ile değiştirebilirsiniz
 
@@ -748,7 +748,7 @@ document.addEventListener('DOMContentLoaded', function() {
         $.unblockUI();
         console.log("Received response from insert-table-content:", data); // Debug log
         if (data[0].success) {
-            $('#addRowModalIEC').modal('hide');
+            $('#addIecConnectionModal').modal('hide');
             // Yeni eklenen veriyi tabloya ekleyin
             const row = document.createElement('tr');
             row.innerHTML = `
@@ -808,7 +808,7 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
   // Modal açıldığında TTYPortları yükle
-  $('#addRowModalIEC').on('shown.bs.modal', function() {
+  $('#addIecConnectionModal').on('shown.bs.modal', function() {
     fetch(`${baseWebhookURL}/webhook/get-table-content`, {
       method: 'POST',
       headers: {
@@ -820,7 +820,7 @@ document.addEventListener('DOMContentLoaded', function() {
     .then(data => {
       console.log('Gelen veri:', data); // Debug amaçlı gelen veriyi ekrana bas
       if (data[0].success && Array.isArray(data[0].data)) {
-        const serialPortDropdown = document.getElementById('modal-serial-port-iec');
+        const serialPortDropdown = document.getElementById('modal-iec-serial-port');
         serialPortDropdown.innerHTML = '<option>Seri Port Seçiniz</option>';
         data[0].data.forEach(port => {
           const option = document.createElement('option');
@@ -865,7 +865,7 @@ document.addEventListener('DOMContentLoaded', function() {
       })
       .then(data => {
         const definedIPs = definedData.devices.map(device => device.address);
-        const tableBody = document.querySelector('#deviceTable tbody');
+        const tableBody = document.querySelector('#scannedDevicesTable tbody');
         tableBody.innerHTML = ''; // Mevcut satırları temizle
 
         const noDevicesMessage = document.getElementById('noDevicesMessage');
@@ -977,7 +977,7 @@ document.addEventListener('DOMContentLoaded', function() {
       return response.json();
       })
       .then(data => {
-        const tableBody = document.querySelector('#DataTables_Table_Electricity_Meter_Report tbody');
+        const tableBody = document.querySelector('#definedDevicesTable tbody');
         tableBody.innerHTML = ''; // Mevcut satırları temizle
 
         const noDefinedDevicesMessage = document.getElementById('noDefinedDevicesMessage');
@@ -1069,7 +1069,7 @@ document.addEventListener('DOMContentLoaded', function() {
         return response.json();
       })
       .then(data => {
-          const tableBody = document.querySelector('#DataTables_Table_Electricity_Meter_Report tbody');
+          const tableBody = document.querySelector('#definedDevicesTable tbody');
           tableBody.innerHTML = ''; // Mevcut satırları temizle
 
           const noDefinedDevicesMessage = document.getElementById('noDefinedDevicesMessage');
