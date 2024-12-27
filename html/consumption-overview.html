@@ -761,8 +761,8 @@ document.addEventListener('DOMContentLoaded', function() {
   })
   .then(response => response.json())
   .then(data => {
-    const tableBodyIEC = document.querySelector('#block-detail-table tbody');
-    tableBodyIEC.innerHTML = ''; // Mevcut satırları temizle
+    const blockDetailTableBody = document.querySelector('#block-detail-table tbody');
+    blockDetailTableBody.innerHTML = ''; // Mevcut satırları temizle
 
     if (data[0].success && Array.isArray(data[0].data)) {
       // Benzersiz `Block` değerlerini al, sıralama yap ve menüye ekle
@@ -856,13 +856,13 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function updateContent(block, data) {
-    const tableBodyIEC = document.querySelector('#block-detail-table tbody');
+    const blockDetailTableBody = document.querySelector('#block-detail-table tbody');
     let filteredData = data.filter(connection => connection.Block === block);
 
     // Sıralama ve sıra numarası ekleme
     filteredData = sortDataAndAddIndex(filteredData);
 
-    tableBodyIEC.innerHTML = ''; // Tabloyu sıfırla
+    blockDetailTableBody.innerHTML = ''; // Tabloyu sıfırla
 
     filteredData.forEach(connection => {
       const row = document.createElement('tr');
@@ -893,7 +893,7 @@ document.addEventListener('DOMContentLoaded', function() {
           </span>
         </td>
       `;
-      tableBodyIEC.appendChild(row);
+      blockDetailTableBody.appendChild(row);
 
       // Detay butonu için olay bağlama
       row.querySelector('#detail-button').addEventListener('click', function(event) {
@@ -971,9 +971,9 @@ $(document).on('show.bs.dropdown', '.dropdown', function (event) {
 });
 
 document.addEventListener('DOMContentLoaded', function() {
-  const tableBodyIEC = document.querySelector('#block-detail-table tbody');
+  const blockDetailTableBody = document.querySelector('#block-detail-table tbody');
 
-  tableBodyIEC.addEventListener('click', function(e) {
+  blockDetailTableBody.addEventListener('click', function(e) {
     if (e.target.classList.contains('icon-cross2')) {
       const row = e.target.closest('tr');
       row.parentNode.removeChild(row);
