@@ -119,7 +119,7 @@
                   <div class="heading-elements">
                     <ul class="list-inline mb-0">
                       <li>
-                        <button class="btn btn-sm btn-genie white" type="button" data-toggle="modal" data-target="#generateElectricityReportModal">Rapor Oluştur</button>
+                        <button class="btn btn-sm btn-genie white" type="button" data-toggle="modal" data-target="#generateReportModal">Rapor Oluştur</button>
                       </li>
                       <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
                       <li><a data-action="expand"><i class="icon-expand2"></i></a></li>
@@ -182,8 +182,8 @@
       </div>
     </div>
   </div>
-  <!-- Elektrik Sayaç Raporu Oluşturma Modal -->
-  <div class="modal fade text-left" id="generateElectricityReportModal" tabindex="-1" role="dialog" aria-labelledby="report-generation-modal-title" aria-hidden="true">
+  <!-- Rapor Oluşturma Modal -->
+  <div class="modal fade text-left" id="generateReportModal" tabindex="-1" role="dialog" aria-labelledby="report-generation-modal-title" aria-hidden="true">
     <div class="modal-dialog modal-sm" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -636,8 +636,8 @@
             console.warn("Geçerli bir rapor tipi seçilmedi.");
         }
 
-        $('#generateElectricityReportModal').modal('hide');
-        $('#generateElectricityReportModal').on('hidden.bs.modal', function () {
+        $('#generateReportModal').modal('hide');
+        $('#generateReportModal').on('hidden.bs.modal', function () {
             location.reload();
         });
     }
