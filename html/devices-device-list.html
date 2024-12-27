@@ -1178,7 +1178,7 @@ function fetchProtocolDetails(protocolType, meterType) {
   })
   .then(response => response.json())
   .then(data => {
-    const manufacturerSelect = document.querySelector(`#manufacturer${capitalize(meterType)}`);
+    const manufacturerSelect = document.querySelector(`#${meterType}Manufacturer`);
     manufacturerSelect.innerHTML = '<option value="none" selected disabled>Sayaç Markası Seçiniz.</option>';
 
     if (data[0].success && Array.isArray(data[0].data)) {
@@ -1203,7 +1203,7 @@ function fetchManufacturers(manufacturerTable, meterType) {
   })
   .then(response => response.json())
   .then(data => {
-    const manufacturerSelect = document.querySelector(`#manufacturer${capitalize(meterType)}`);
+    const manufacturerSelect = document.querySelector(`#${meterType}Manufacturer`);
     if (data[0].success && Array.isArray(data[0].data)) {
       data[0].data.forEach(manufacturer => {
         const option = document.createElement('option');
