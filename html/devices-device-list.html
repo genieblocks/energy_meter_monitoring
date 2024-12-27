@@ -1121,6 +1121,14 @@ function initializeDataTable(tableId) {
     });
   
     function loadProtocolTypes(meterType) {
+      // Yeni formatta ID ile güncelle
+      const protocolTypeSelect = document.querySelector(`#${meterType}ProtocolType`);
+
+      if (!protocolTypeSelect) {
+        console.error(`Protocol type dropdown not found for meterType: ${meterType}`);
+        return;
+      }
+
       fetch(`${baseWebhookURL}/webhook/get-table-content`, {
         method: 'POST',
         headers: {
@@ -1128,27 +1136,34 @@ function initializeDataTable(tableId) {
         },
         body: JSON.stringify({ tableName: 'Protocols' })
       })
-      .then(response => response.json())
-      .then(data => {
-        const protocolTypeSelect = document.querySelector(`#protocolType${capitalize(meterType)}`);
-        if (data[0].success && Array.isArray(data[0].data)) {
-          data[0].data.forEach(protocol => {
-            const option = document.createElement('option');
-            option.value = protocol.ProtocolType;
-            option.textContent = protocol.ProtocolType;
-            protocolTypeSelect.appendChild(option);
-          });
-        } else {
-          console.error('Protocols tablosu verileri yüklenemedi:', data[0].message);
-        }
-      })
-      .catch(error => console.error('Fetch error:', error));
+        .then(response => response.json())
+        .then(data => {
+          protocolTypeSelect.innerHTML = '<option value="none" selected disabled>Protokol Tipi Seçiniz.</option>';
+
+          if (data[0]?.success && Array.isArray(data[0].data)) {
+            data[0].data.forEach(protocol => {
+              const option = document.createElement('option');
+              option.value = protocol.ProtocolID; // Protokol ID'sine uygun değer atanıyor
+              option.textContent = protocol.ProtocolType;
+              protocolTypeSelect.appendChild(option);
+            });
+          } else {
+            console.error('Protocols tablosu verileri yüklenemedi:', data[0]?.message || 'No data');
+          }
+        })
+        .catch(error => console.error('Fetch error:', error));
     }
   
 function updateProtocolDetails(meterType) {
-  const protocolType = document.querySelector(`#protocolType${capitalize(meterType)}`).value;
+  const protocolTypeSelect = document.querySelector(`#${meterType}ProtocolType`);
 
-  // Manufacturer ve Connection Point dropdownlarını güncelle
+  if (!protocolTypeSelect) {
+    console.error(`Protocol type dropdown not found for meterType: ${meterType}`);
+    return;
+  }
+
+  // Protokol detaylarını güncelle
+  const protocolType = protocolTypeSelect.value;
   fetchProtocolDetails(protocolType, meterType);
   fetchConnectionPoints(protocolType, meterType);
 }
