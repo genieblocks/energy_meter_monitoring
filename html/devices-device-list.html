@@ -1176,21 +1176,28 @@ function fetchProtocolDetails(protocolType, meterType) {
     },
     body: JSON.stringify({ tableName: 'Protocols' })
   })
-  .then(response => response.json())
-  .then(data => {
-    const manufacturerSelect = document.querySelector(`#${meterType}Manufacturer`);
-    manufacturerSelect.innerHTML = '<option value="none" selected disabled>Sayaç Markası Seçiniz.</option>';
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`Failed to fetch Protocol details: ${response.statusText}`);
+      }
+      return response.json();
+    })
+    .then(data => {
+      const manufacturerSelect = document.querySelector(`#${meterType}Manufacturer`);
+      manufacturerSelect.innerHTML = '<option value="none" selected disabled>Sayaç Markası Seçiniz.</option>';
 
-    if (data[0].success && Array.isArray(data[0].data)) {
-      const protocol = data[0].data.find(item => item.ProtocolType === protocolType);
-      const manufacturerTable = protocol.ManufacturerTableName;
-
-      fetchManufacturers(manufacturerTable, meterType);
-    } else {
-      console.error('Protocols tablosu verileri yüklenemedi:', data[0].message);
-    }
-  })
-  .catch(error => console.error('Fetch error:', error));
+      if (data[0]?.success && Array.isArray(data[0].data)) {
+        const protocol = data[0].data.find(item => item.ProtocolID === protocolType);
+        if (protocol && protocol.ManufacturerTableName) {
+          fetchManufacturers(protocol.ManufacturerTableName, meterType);
+        } else {
+          console.error(`Protocol with ID "${protocolType}" not found or ManufacturerTableName is missing.`);
+        }
+      } else {
+        console.error('Protocols tablosu verileri yüklenemedi:', data[0]?.message || 'No data available');
+      }
+    })
+    .catch(error => console.error('Error fetching Protocol details:', error.message || error));
 }
   
 function fetchManufacturers(manufacturerTable, meterType) {
@@ -1227,21 +1234,28 @@ function fetchConnectionPoints(protocolType, meterType) {
     },
     body: JSON.stringify({ tableName: 'Protocols' })
   })
-  .then(response => response.json())
-  .then(data => {
-    const connectionPointSelect = document.querySelector(`#${meterType}ConnectionPoint`);
-    connectionPointSelect.innerHTML = '<option value="none" selected disabled>Bağlantı Noktası Seçiniz.</option>';
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`Failed to fetch Connection Points: ${response.statusText}`);
+      }
+      return response.json();
+    })
+    .then(data => {
+      const connectionPointSelect = document.querySelector(`#${meterType}ConnectionPoint`);
+      connectionPointSelect.innerHTML = '<option value="none" selected disabled>Bağlantı Noktası Seçiniz.</option>';
 
-    if (data[0].success && Array.isArray(data[0].data)) {
-      const protocol = data[0].data.find(item => item.ProtocolType === protocolType);
-      const connectionTable = protocol.ConnectionTableName;
-
-      fetchConnections(connectionTable, meterType);
-    } else {
-      console.error('Protocols tablosu verileri yüklenemedi:', data[0].message);
-    }
-  })
-  .catch(error => console.error('Fetch error:', error));
+      if (data[0]?.success && Array.isArray(data[0].data)) {
+        const protocol = data[0].data.find(item => item.ProtocolID === protocolType);
+        if (protocol && protocol.ConnectionTableName) {
+          fetchConnections(protocol.ConnectionTableName, meterType);
+        } else {
+          console.error(`Protocol with ID "${protocolType}" not found or ConnectionTableName is missing.`);
+        }
+      } else {
+        console.error('Protocols tablosu verileri yüklenemedi:', data[0]?.message || 'No data available');
+      }
+    })
+    .catch(error => console.error('Error fetching Connection Points:', error.message || error));
 }
   
 function fetchConnections(connectionTable, meterType) {
