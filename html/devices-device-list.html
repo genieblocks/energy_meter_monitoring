@@ -1142,10 +1142,16 @@ function initializeDataTable(tableId) {
 
           if (data[0]?.success && Array.isArray(data[0].data)) {
             data[0].data.forEach(protocol => {
-              const option = document.createElement('option');
-              option.value = protocol.ProtocolType; // Protokol ID'sine uygun değer atanıyor
-              option.textContent = protocol.ProtocolType;
-              protocolTypeSelect.appendChild(option);
+              // Protokol tipi kontrolü
+              if (
+                (meterType === 'electricity' && protocol.ProtocolType === 'IEC') ||
+                ((meterType === 'water' || meterType === 'heating' || meterType === 'cooling') && protocol.ProtocolType === 'M-Bus')
+              ) {
+                const option = document.createElement('option');
+                option.value = protocol.ProtocolType; // Protokol tipi değer olarak atanıyor
+                option.textContent = protocol.ProtocolType;
+                protocolTypeSelect.appendChild(option);
+              }
             });
           } else {
             console.error('Protocols tablosu verileri yüklenemedi:', data[0]?.message || 'No data');
