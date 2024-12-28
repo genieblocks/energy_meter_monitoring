@@ -1144,8 +1144,8 @@ function initializeDataTable(tableId) {
             data[0].data.forEach(protocol => {
               // Protokol tipi kontrolü
               if (
-                (meterType === 'electricity' && protocol.ProtocolType === 'IEC') ||
-                ((meterType === 'water' || meterType === 'heating' || meterType === 'cooling') && protocol.ProtocolType === 'M-Bus')
+                (meterType === 'electricity' && protocol.ProtocolType === 'IEC 62056-21') ||
+                ((meterType === 'water' || meterType === 'heating' || meterType === 'cooling') && protocol.ProtocolType === 'M-BUS')
               ) {
                 const option = document.createElement('option');
                 option.value = protocol.ProtocolType; // Protokol tipi değer olarak atanıyor
