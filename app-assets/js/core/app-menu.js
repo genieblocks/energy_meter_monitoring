@@ -714,12 +714,16 @@
           if(!$this.hasClass('has-sub') ){
             tempTitle = $this.find('span.menu-title').text();
             tempLink = $this.children('a').attr('href');
+            tempDataBlock = $this.children('a').data('block'); // "data-block" bilgisi alınıyor
             if(tempTitle !== ''){
               menuTitle = $("<a>");
               menuTitle.attr("href", tempLink);
               menuTitle.attr("title", tempTitle);
               menuTitle.text(tempTitle);
-              menuTitle.addClass("menu-title");
+              menuTitle.addClass("menu-title block-link"); // "block-link" sınıfı ekleniyor
+              if (tempDataBlock) {
+                  menuTitle.attr("data-block", tempDataBlock); // "data-block" aktarılıyor
+              }
             }
           }
           // menu_header_height = ($('.main-menu-header').length) ? $('.main-menu-header').height() : 0,
