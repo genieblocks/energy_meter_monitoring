@@ -421,20 +421,6 @@
   const baseURL = "http://192.168.2.250";
 </script>
 <script>
-document.addEventListener('DOMContentLoaded', function () {
-    // Menüyü kapalı hale getirmek için gerekli sınıfları ayarla
-    const body = document.body;
-    body.classList.remove('menu-expanded');
-    body.classList.add('menu-collapsed');
-
-    // Ek olarak, `menu-collapsed` sınıfını bozan tetikleyiciler varsa engelle
-    setTimeout(() => {
-        if (body.classList.contains('menu-expanded')) {
-            body.classList.remove('menu-expanded');
-            body.classList.add('menu-collapsed');
-        }
-    }, 500); // 500ms sonra tekrar kontrol
-});
 document.addEventListener('DOMContentLoaded', () => {
     const yearElement = document.getElementById('footer-dynamic-year');
     if (yearElement) {
