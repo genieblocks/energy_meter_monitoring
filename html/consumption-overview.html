@@ -749,7 +749,7 @@ document.addEventListener('DOMContentLoaded', function() {
     css: { border: 0, padding: 0, backgroundColor: 'transparent' }
   });
 
-  // IEC 62056-21 verilerini çek ve tabloya ve menüye ekle
+  // Blok verilerini çek ve tabloya ve menüye ekle
   fetch(`${baseWebhookURL}/webhook/get-table-content`, {
     method: 'POST',
     headers: {
@@ -771,7 +771,7 @@ document.addEventListener('DOMContentLoaded', function() {
       uniqueBlocks.forEach(block => {
         const menuItem = document.createElement('li');
         menuItem.className = 'menu-item';
-        menuItem.innerHTML = `<a href="#" data-block="${block}" class="block-link">Blok ${block}</a>`;
+        menuItem.innerHTML = `<a class="menu-item block-link" href="#" data-block="${block}">Blok ${block}</a>`;
         consumptionMenu.appendChild(menuItem);
       });
 
