@@ -398,19 +398,19 @@
 //     // originalReset.apply($.app.menu, arguments);
 //     // originalChange.apply($.app.menu, arguments);
 // });
-document.addEventListener('DOMContentLoaded', function () {
-        // Orijinal change fonksiyonunu sakla
-        const originalChange = $.app.menu.change;
+// document.addEventListener('DOMContentLoaded', function () {
+//         // Orijinal change fonksiyonunu sakla
+//         const originalChange = $.app.menu.change;
 
-        // Yeni bir change fonksiyonu tanımla
-        $.app.menu.change = function () {
-            console.log('change fonksiyonu çağrıldı.');
-            console.trace(); // Çağrının izini sür
+//         // Yeni bir change fonksiyonu tanımla
+//         $.app.menu.change = function () {
+//             console.log('change fonksiyonu çağrıldı.');
+//             console.trace(); // Çağrının izini sür
 
-            // Eğer orijinal işlevi çalıştırmak isterseniz, aşağıdaki satırı aktif edin
-            // originalChange.apply(this, arguments);
-        };
-    });
+//             // Eğer orijinal işlevi çalıştırmak isterseniz, aşağıdaki satırı aktif edin
+//             // originalChange.apply(this, arguments);
+//         };
+//     });
 // document.addEventListener('DOMContentLoaded', function () {
 //     const body = document.body;
 
