@@ -347,7 +347,23 @@
     </footer>
 
   <!-- BEGIN VENDOR JS-->
-  <script>
+  <script>    
+  document.addEventListener('DOMContentLoaded', function () {
+        // app-menu.js tarafından yapılan değişiklikleri engelle
+        const originalReset = $.app.menu.reset;
+        $.app.menu.reset = function () {
+            console.log('reset fonksiyonu engellendi.');
+        };
+
+        const originalChange = $.app.menu.change;
+        $.app.menu.change = function () {
+            console.log('change fonksiyonu engellendi.');
+        };
+
+        // Eğer ihtiyaç olursa, orijinal fonksiyonlar şu şekilde çağrılabilir:
+        // originalReset.apply($.app.menu, arguments);
+        // originalChange.apply($.app.menu, arguments);
+    });
     document.addEventListener('DOMContentLoaded', function () {
         const body = document.body;
 
