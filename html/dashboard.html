@@ -382,6 +382,10 @@
   const baseURL = "http://192.168.2.250";
 </script>
 <script>
+document.addEventListener('DOMContentLoaded', function () {
+    document.body.classList.remove('menu-expanded');
+    document.body.classList.add('menu-collapsed');
+  });
 document.addEventListener('DOMContentLoaded', () => {
     const yearElement = document.getElementById('footer-dynamic-year');
     if (yearElement) {
