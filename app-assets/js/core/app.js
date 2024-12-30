@@ -16,7 +16,7 @@
 
     $(window).on('load',function(){
         var rtl;
-        var compactMenu = false; // Set it to true, if you want default menu to be compact
+        var compactMenu = true; // Set it to true, if you want default menu to be compact
 
         if($('html').data('textdirection') == 'rtl'){
             rtl = true;
