@@ -350,22 +350,22 @@
   <script>
     document.addEventListener('DOMContentLoaded', function () {
         const body = document.body;
-  
-        // MutationObserver ile body class değişimlerini izle
+
         const observer = new MutationObserver((mutations) => {
             mutations.forEach((mutation) => {
                 if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
                     console.log('Body class değişti:', body.className);
+
+                    // Detaylı bilgi ekle
+                    console.trace('Sınıf değişikliğini tetikleyen kod:');
                 }
             });
         });
-  
-        // Observer'ı başlat
+
         observer.observe(body, {
-            attributes: true, // Sadece attribute değişimlerini izle
+            attributes: true,
         });
-  
-        // İlk durumu konsola yazdır
+
         console.log('İlk body class:', body.className);
     });
   </script>
