@@ -825,6 +825,17 @@
                 $listItem.trigger('active.app.menu');
               }
             }
+
+            // Yeni işlem: 'data-block' varsa activateBlock fonksiyonunu çalıştır
+            const selectedBlock = $listItem.find('a').attr('data-block');
+            if (selectedBlock) {
+              console.log(`Block selected: ${selectedBlock}`);
+              if (typeof activateBlock === 'function') {
+                activateBlock(selectedBlock, window.blockData); // blockData tanımlı olduğundan emin olun
+              } else {
+                console.error('activateBlock fonksiyonu tanımlı değil.');
+              }
+            }
           }
         }
 
