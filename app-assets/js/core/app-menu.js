@@ -892,7 +892,7 @@
       var menuHeaderHeight, menutop, topPos, winHeight,
       bottomOffset, subMenuHeight, popOutMenuHeight, borderWidth, scroll_theme,
       $submenu = $menuItem.children('ul:first'),
-      ul = $submenu.clone(true);
+      ul = $submenu.clone(true); // Sub menüyü kopyala
 
       menuHeaderHeight = $('.main-menu-header').height();
       
@@ -902,9 +902,10 @@
         menutop = $menuItem.position().top;
       
       winHeight        = $window.height() - $('.header-navbar').height();
-      borderWidth      = 0;
+      borderWidth      = 0; // Varsayılan değer
       subMenuHeight    = $submenu.height();
 
+      // Menü öğesinin kenarlık genişliği kontrolü
       if(parseInt($menuItem.css( "border-top" ),10) > 0){
         borderWidth = parseInt($menuItem.css( "border-top" ),10);
       }
@@ -937,6 +938,18 @@
           'max-height': popOutMenuHeight,
         });
 
+      // Alt menü öğelerindeki "data-block" ve "block-link" bilgilerini aktar
+      ul.find('a.menu-item').each(function () {
+        var subMenuLink = $(this);
+        if (subMenuLink.data('block')) {
+            subMenuLink.attr('data-block', subMenuLink.data('block')); // "data-block" aktarımı
+        }
+        if (subMenuLink.hasClass('block-link')) {
+            subMenuLink.addClass('block-link'); // "block-link" aktarımı
+        }
+      });
+
+        // Perfect Scrollbar'ı ekle
         $('.main-menu-content > ul.menu-content').perfectScrollbar({
           theme:scroll_theme,
         });
