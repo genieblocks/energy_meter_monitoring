@@ -703,9 +703,8 @@
         var $this = $(this);
         console.log(`Mouse entered menu item: ${$this.text().trim()}`); // Menü başlığı loglama
 
-        if ($listItem.is('.disabled')) {
-          e.preventDefault();
-          console.warn('Clicked menu item is disabled.');
+        if ($this.is('.disabled')) { // Hata burada düzeltildi, $this kullanılıyor.
+          console.warn('Mouse entered a disabled menu item.');
           return;
         }
         
