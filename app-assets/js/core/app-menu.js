@@ -805,22 +805,29 @@
         e.stopPropagation();
       }).on('click.app.menu', 'li', function(e) {
         var $listItem = $(this);
+        console.log('Menu item clicked:', $listItem.text().trim()); // Tıklanan menü elemanının başlığı
+
         if($listItem.is('.disabled')){
           e.preventDefault();
+          console.warn('Clicked menu item is disabled.');
         }
         else{
           if( $body.hasClass('menu-collapsed')  || ($body.data('menu') == 'vertical-compact-menu' && $listItem.is('.has-sub') && !$body.hasClass('vertical-overlay-menu'))){
             e.preventDefault();
+            console.log('Menu is collapsed or compact; click event prevented.');
           }
           else{
             if ($listItem.has('ul')) {
               if ($listItem.is('.open')) {
+                console.log('Closing submenu for:', $listItem.text().trim());
                 $listItem.trigger('close.app.menu');
               } else {
+                console.log('Opening submenu for:', $listItem.text().trim());
                 $listItem.trigger('open.app.menu');
               }
             } else {
               if (!$listItem.is('.active')) {
+                console.log('Activating menu item:', $listItem.text().trim());
                 $listItem.siblings('.active').trigger('deactive.app.menu');
                 $listItem.trigger('active.app.menu');
               }
@@ -831,10 +838,18 @@
             if (selectedBlock) {
               console.log(`Block selected: ${selectedBlock}`);
               if (typeof activateBlock === 'function') {
-                activateBlock(selectedBlock, window.blockData); // blockData tanımlı olduğundan emin olun
+                try {
+                    console.log('Executing activateBlock...');
+                    activateBlock(selectedBlock, window.blockData); // `blockData` tanımlı olduğundan emin olun
+                    console.log('activateBlock executed successfully.');
+                } catch (err) {
+                    console.error('Error executing activateBlock:', err);
+                }
               } else {
-                console.error('activateBlock fonksiyonu tanımlı değil.');
+                console.error('activateBlock function is not defined.');
               }
+            } else {
+              console.warn('No data-block attribute found for the clicked menu item.');
             }
           }
         }
