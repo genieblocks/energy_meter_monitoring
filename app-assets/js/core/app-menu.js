@@ -865,6 +865,29 @@
       });
       console.log('Event listeners attached to menu items.'); // Başarılı kurulum logu
 
+      $('ul.menu-content').on('click', 'a.menu-item', function (e) {
+          e.preventDefault();
+          const $menuItem = $(this);
+          console.log(`Menu item clicked: ${$menuItem.text().trim()}`);
+          const selectedBlock = $menuItem.attr('data-block');
+          if (selectedBlock) {
+              console.log(`Block selected: ${selectedBlock}`);
+              if (typeof activateBlock === 'function') {
+                  try {
+                      console.log('Executing activateBlock...');
+                      activateBlock(selectedBlock, window.blockData);
+                      console.log('activateBlock executed successfully.');
+                  } catch (err) {
+                      console.error('Error executing activateBlock:', err);
+                  }
+              } else {
+                  console.error('activateBlock function is not defined.');
+              }
+          } else {
+              console.warn('No data-block attribute found on the clicked menu item.');
+          }
+      });
+
       $('.main-menu-content').on('mouseleave', function(){
         if( $body.hasClass('menu-collapsed') || $body.data('menu') == 'vertical-compact-menu' ){
           $('.main-menu-content').children('span.menu-title').remove();
