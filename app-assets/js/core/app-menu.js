@@ -702,6 +702,12 @@
       $('.navigation-main').on('mouseenter.app.menu', 'li', function() {
         var $this = $(this);
         console.log(`Mouse entered menu item: ${$this.text().trim()}`); // Menü başlığı loglama
+
+        if ($listItem.is('.disabled')) {
+          e.preventDefault();
+          console.warn('Clicked menu item is disabled.');
+          return;
+        }
         
         // Eğer bu menünün alt menüsü varsa logla
         if ($this.hasClass('has-sub')) {
@@ -818,6 +824,7 @@
           }
           else{
             if ($listItem.has('ul')) {
+              console.log('Menu item has a submenu. Checking submenu state.');
               if ($listItem.is('.open')) {
                 console.log('Closing submenu for:', $listItem.text().trim());
                 $listItem.trigger('close.app.menu');
@@ -826,6 +833,7 @@
                 $listItem.trigger('open.app.menu');
               }
             } else {
+              console.log('This menu item does not have a submenu.');
               if (!$listItem.is('.active')) {
                 console.log('Activating menu item:', $listItem.text().trim());
                 $listItem.siblings('.active').trigger('deactive.app.menu');
@@ -856,7 +864,7 @@
 
         e.stopPropagation();
       });
-
+      console.log('Event listeners attached to menu items.'); // Başarılı kurulum logu
 
       $('.main-menu-content').on('mouseleave', function(){
         if( $body.hasClass('menu-collapsed') || $body.data('menu') == 'vertical-compact-menu' ){
