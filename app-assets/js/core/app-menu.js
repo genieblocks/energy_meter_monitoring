@@ -866,11 +866,12 @@
       console.log('Event listeners attached to menu items.'); // Başarılı kurulum logu
 
       $('ul.menu-content').on('click', 'a.menu-item', function (e) {
-          e.preventDefault();
           const $menuItem = $(this);
-          console.log(`Menu item clicked: ${$menuItem.text().trim()}`);
           const selectedBlock = $menuItem.attr('data-block');
+      
           if (selectedBlock) {
+              // Eğer data-block varsa activateBlock fonksiyonunu çağır
+              e.preventDefault(); // Tarayıcı varsayılan davranışını engelle
               console.log(`Block selected: ${selectedBlock}`);
               if (typeof activateBlock === 'function') {
                   try {
@@ -884,7 +885,8 @@
                   console.error('activateBlock function is not defined.');
               }
           } else {
-              console.warn('No data-block attribute found on the clicked menu item.');
+              // Eğer data-block yoksa doğrudan bağlantıya git
+              console.log(`No data-block found, navigating to link: ${$menuItem.attr('href')}`);
           }
       });
 
