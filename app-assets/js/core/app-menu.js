@@ -875,7 +875,7 @@
               if (typeof activateBlock === 'function') {
                   try {
                       console.log('Executing activateBlock...');
-                      activateBlock(selectedBlock, window.blockData);
+                      activateBlock(selectedBlock, blockData);
                       console.log('activateBlock executed successfully.');
                   } catch (err) {
                       console.error('Error executing activateBlock:', err);

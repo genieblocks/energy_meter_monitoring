@@ -731,16 +731,18 @@ function formatDate(dateString) {
   return `${day}.${month}.${year} ${hours}:${minutes}`;
 }
 
+// URL'deki "block" parametresini al
+const urlParams = new URLSearchParams(window.location.search);
+let blockData = []; // Global değişken olarak tanımlayın
+const blockParam = urlParams.get('block');
+let currentBlock = blockParam || ""; // Başlangıç bloğu URL parametresine göre belirlenir
+
 document.addEventListener('DOMContentLoaded', function() {
   const yearElement = document.getElementById('footer-dynamic-year');
   if (yearElement) {
       const currentYear = new Date().getFullYear();
       yearElement.textContent = currentYear;
   }
-  // URL'deki "block" parametresini al
-  const urlParams = new URLSearchParams(window.location.search);
-  const blockParam = urlParams.get('block');
-  let currentBlock = blockParam || ""; // Başlangıç bloğu URL parametresine göre belirlenir
 
   // UI'yi kilitle ve spinner göster
   $.blockUI({
@@ -763,6 +765,7 @@ document.addEventListener('DOMContentLoaded', function() {
     blockDetailTableBody.innerHTML = ''; // Mevcut satırları temizle
 
     if (data[0].success && Array.isArray(data[0].data)) {
+      blockData = data[0].data; // blockData'yı global olarak kaydet
       // Benzersiz `Block` değerlerini al, sıralama yap ve menüye ekle
       const uniqueBlocks = [...new Set(data[0].data.map(item => item.Block))].sort();
       const consumptionMenu = document.querySelector('.menu-content');
@@ -795,6 +798,7 @@ document.addEventListener('DOMContentLoaded', function() {
   .finally(() => {
     $.unblockUI(); // UI'yi aç ve spinnerı kaldır
   });
+});
 
   function activateBlock(block, data) {
     // Sol menüdeki uygun bloğu aktif yap
@@ -900,7 +904,7 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     });
   }
-});
+
 
 document.querySelectorAll('.block-link').forEach(link => {
   link.addEventListener('click', function(event) {
