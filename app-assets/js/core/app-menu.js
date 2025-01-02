@@ -701,7 +701,15 @@
 
       $('.navigation-main').on('mouseenter.app.menu', 'li', function() {
         var $this = $(this);
-        console.log('Mouse entered menu item:', $this.text()); // Menüye mouse geldiğinde hangi menü elemanına geldiğini kontrol edin.
+        console.log(`Mouse entered menu item: ${$this.text().trim()}`); // Menü başlığı loglama
+        
+        // Eğer bu menünün alt menüsü varsa logla
+        if ($this.hasClass('has-sub')) {
+            console.log(`Submenu found for: ${$this.text().trim()}`);
+        } else {
+            console.log(`No submenu for: ${$this.text().trim()}`);
+        }
+        
         $('.hover', '.navigation-main').removeClass('hover');
         if( $body.hasClass('menu-collapsed') || ($body.data('menu') == 'vertical-compact-menu' && !$body.hasClass('vertical-overlay-menu')) ){
           $('.main-menu-content').children('span.menu-title').remove();
@@ -752,6 +760,7 @@
           if($this.hasClass('has-sub') && $this.hasClass('nav-item')) {
             console.log('Menu item has submenu. Adjusting submenu.'); // Alt menü olup olmadığını kontrol et.
             var menuContent = $this.children('ul:first');
+            console.log('Submenu content:', menuContent.html()); // Alt menü içeriği loglama
             menuObj.adjustSubmenu($this);
           } else {
             console.log('No submenu found for this menu item.'); // Alt menü yoksa log yazdır.
