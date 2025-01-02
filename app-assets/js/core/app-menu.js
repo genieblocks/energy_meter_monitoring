@@ -701,6 +701,7 @@
 
       $('.navigation-main').on('mouseenter.app.menu', 'li', function() {
         var $this = $(this);
+        console.log('Mouse entered menu item:', $this.text()); // Menüye mouse geldiğinde hangi menü elemanına geldiğini kontrol edin.
         $('.hover', '.navigation-main').removeClass('hover');
         if( $body.hasClass('menu-collapsed') || ($body.data('menu') == 'vertical-compact-menu' && !$body.hasClass('vertical-overlay-menu')) ){
           $('.main-menu-content').children('span.menu-title').remove();
@@ -714,6 +715,7 @@
           if(!$this.hasClass('has-sub') ){
             tempTitle = $this.find('span.menu-title').text();
             tempLink = $this.children('a').attr('href');
+            console.log('Menu title:', tempTitle, 'Link:', tempLink); // Başlık ve link doğru mu?
             if(tempTitle !== ''){
               menuTitle = $("<a>");
               menuTitle.attr("href", tempLink);
@@ -748,12 +750,18 @@
 
           // Content
           if($this.hasClass('has-sub') && $this.hasClass('nav-item')) {
+            console.log('Menu item has submenu. Adjusting submenu.'); // Alt menü olup olmadığını kontrol et.
             var menuContent = $this.children('ul:first');
             menuObj.adjustSubmenu($this);
+          } else {
+            console.log('No submenu found for this menu item.'); // Alt menü yoksa log yazdır.
           }
+        } else {
+          console.log('Menu is not collapsed or compact.'); // Menü genişse herhangi bir işlem yapılmayabilir.
         }
         $this.addClass('hover');
       }).on('mouseleave.app.menu', 'li', function() {
+        console.log('Mouse left menu item:', $(this).text()); // Mouse menüden ayrıldığında hangi eleman olduğunu kontrol edin.
         // $(this).removeClass('hover');
       }).on('active.app.menu', 'li', function(e) {
         $(this).addClass('active');
