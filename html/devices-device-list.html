@@ -118,6 +118,13 @@
             </select>
           </fieldset>
           <fieldset class="form-group floating-label-form-group">
+            <label for="waterConnectionPoint">Bağlantı Noktası</label>
+            <select id="waterConnectionPoint" name="connectionPoint" class="form-control">
+              <option value="none" selected disabled>Bağlantı Noktası Seçiniz.</option>
+              <!-- Dinamik olarak doldurulacak -->
+            </select>
+          </fieldset>
+          <fieldset class="form-group floating-label-form-group">
             <label for="waterMbusDataBlock">Okunacak Veri Bloğu</label>
             <select id="waterMbusDataBlock" name="MbusDataBlock" class="form-control">
               <option value="none" selected disabled>Veri Bloğu Seçiniz.</option>
@@ -142,13 +149,6 @@
               <option value="18">18</option>
               <option value="19">19</option>
               <option value="20">20</option>
-            </select>
-          </fieldset>
-          <fieldset class="form-group floating-label-form-group">
-            <label for="waterConnectionPoint">Bağlantı Noktası</label>
-            <select id="waterConnectionPoint" name="connectionPoint" class="form-control">
-              <option value="none" selected disabled>Bağlantı Noktası Seçiniz.</option>
-              <!-- Dinamik olarak doldurulacak -->
             </select>
           </fieldset>
           <fieldset class="form-group floating-label-form-group">
@@ -192,6 +192,13 @@
             </select>
           </fieldset>
           <fieldset class="form-group floating-label-form-group">
+            <label for="heatingConnectionPoint">Bağlantı Noktası</label>
+            <select id="heatingConnectionPoint" name="connectionPoint" class="form-control">
+              <option value="none" selected disabled>Bağlantı Noktası Seçiniz.</option>
+              <!-- Dinamik olarak doldurulacak -->
+            </select>
+          </fieldset>
+          <fieldset class="form-group floating-label-form-group">
             <label for="heatingMbusDataBlock">Okunacak Veri Bloğu</label>
             <select id="heatingMbusDataBlock" name="MbusDataBlock" class="form-control">
               <option value="none" selected disabled>Veri Bloğu Seçiniz.</option>
@@ -216,13 +223,6 @@
               <option value="18">18</option>
               <option value="19">19</option>
               <option value="20">20</option>
-            </select>
-          </fieldset>
-          <fieldset class="form-group floating-label-form-group">
-            <label for="heatingConnectionPoint">Bağlantı Noktası</label>
-            <select id="heatingConnectionPoint" name="connectionPoint" class="form-control">
-              <option value="none" selected disabled>Bağlantı Noktası Seçiniz.</option>
-              <!-- Dinamik olarak doldurulacak -->
             </select>
           </fieldset>
           <fieldset class="form-group floating-label-form-group">
@@ -266,6 +266,13 @@
             </select>
           </fieldset>
           <fieldset class="form-group floating-label-form-group">
+            <label for="coolingConnectionPoint">Bağlantı Noktası</label>
+            <select id="coolingConnectionPoint" name="connectionPoint" class="form-control">
+              <option value="none" selected disabled>Bağlantı Noktası Seçiniz.</option>
+              <!-- Dinamik olarak doldurulacak -->
+            </select>
+          </fieldset>
+          <fieldset class="form-group floating-label-form-group">
             <label for="coolingMbusDataBlock">Okunacak Veri Bloğu</label>
             <select id="coolingMbusDataBlock" name="MbusDataBlock" class="form-control">
               <option value="none" selected disabled>Veri Bloğu Seçiniz.</option>
@@ -290,13 +297,6 @@
               <option value="18">18</option>
               <option value="19">19</option>
               <option value="20">20</option>
-            </select>
-          </fieldset>
-          <fieldset class="form-group floating-label-form-group">
-            <label for="coolingConnectionPoint">Bağlantı Noktası</label>
-            <select id="coolingConnectionPoint" name="connectionPoint" class="form-control">
-              <option value="none" selected disabled>Bağlantı Noktası Seçiniz.</option>
-              <!-- Dinamik olarak doldurulacak -->
             </select>
           </fieldset>
           <fieldset class="form-group floating-label-form-group">
@@ -1259,7 +1259,7 @@ function updateProtocolDetails(meterType) {
   if (meterType === 'electricity') {
     fetchProtocolDetails(protocolType, meterType);
   }
-  
+
   fetchConnectionPoints(protocolType, meterType);
 }
   
