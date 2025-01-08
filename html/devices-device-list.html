@@ -145,13 +145,6 @@
             </select>
           </fieldset>
           <fieldset class="form-group floating-label-form-group">
-            <label for="waterManufacturer">Sayaç Markası</label>
-            <select id="waterManufacturer" name="manufacturer" class="form-control">
-              <option value="none" selected disabled>Sayaç Markası Seçiniz.</option>
-              <!-- Dinamik olarak doldurulacak -->
-            </select>
-          </fieldset>
-          <fieldset class="form-group floating-label-form-group">
             <label for="waterConnectionPoint">Bağlantı Noktası</label>
             <select id="waterConnectionPoint" name="connectionPoint" class="form-control">
               <option value="none" selected disabled>Bağlantı Noktası Seçiniz.</option>
@@ -226,13 +219,6 @@
             </select>
           </fieldset>
           <fieldset class="form-group floating-label-form-group">
-            <label for="heatingManufacturer">Sayaç Markası</label>
-            <select id="heatingManufacturer" name="manufacturer" class="form-control">
-              <option value="none" selected disabled>Sayaç Markası Seçiniz.</option>
-              <!-- Dinamik olarak doldurulacak -->
-            </select>
-          </fieldset>
-          <fieldset class="form-group floating-label-form-group">
             <label for="heatingConnectionPoint">Bağlantı Noktası</label>
             <select id="heatingConnectionPoint" name="connectionPoint" class="form-control">
               <option value="none" selected disabled>Bağlantı Noktası Seçiniz.</option>
@@ -304,13 +290,6 @@
               <option value="18">18</option>
               <option value="19">19</option>
               <option value="20">20</option>
-            </select>
-          </fieldset>
-          <fieldset class="form-group floating-label-form-group">
-            <label for="coolingManufacturer">Sayaç Markası</label>
-            <select id="coolingManufacturer" name="manufacturer" class="form-control">
-              <option value="none" selected disabled>Sayaç Markası Seçiniz.</option>
-              <!-- Dinamik olarak doldurulacak -->
             </select>
           </fieldset>
           <fieldset class="form-group floating-label-form-group">
@@ -1275,7 +1254,12 @@ function updateProtocolDetails(meterType) {
 
   // Protokol detaylarını güncelle
   const protocolType = protocolTypeSelect.value;
-  fetchProtocolDetails(protocolType, meterType);
+
+  // fetchProtocolDetails yalnızca electricity için çağrılacak
+  if (meterType === 'electricity') {
+    fetchProtocolDetails(protocolType, meterType);
+  }
+  
   fetchConnectionPoints(protocolType, meterType);
 }
   
