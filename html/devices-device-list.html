@@ -1451,7 +1451,7 @@ function fetchConnections(connectionTable, meterType) {
     .then(data => {
       if (data[0].success) {
         alert('Sayaç başarıyla eklendi!');
-        showTableContent(tableName); // İlgili tabloyu yenile
+        location.reload(); // Sayfayı yeniden yükle.
       } else {
         console.error('Sayaç ekleme hatası:', data.message);
       }
@@ -1500,7 +1500,7 @@ function fetchConnections(connectionTable, meterType) {
     .then(data => {
       if (data[0].success) {
         alert('Sayaç başarıyla eklendi!');
-        showTableContent(tableName); // İlgili tabloyu yenile
+        location.reload(); // Sayfayı yeniden yükle.
       } else {
         console.error('Sayaç ekleme hatası:', data.message);
       }
@@ -1549,7 +1549,7 @@ function fetchConnections(connectionTable, meterType) {
     .then(data => {
       if (data[0].success) {
         alert('Sayaç başarıyla eklendi!');
-        showTableContent(tableName); // İlgili tabloyu yenile
+        location.reload(); // Sayfayı yeniden yükle.
       } else {
         console.error('Sayaç ekleme hatası:', data.message);
       }
@@ -1598,7 +1598,7 @@ function fetchConnections(connectionTable, meterType) {
     .then(data => {
       if (data[0].success) {
         alert('Sayaç başarıyla eklendi!');
-        showTableContent(tableName); // İlgili tabloyu yenile
+        location.reload(); // Sayfayı yeniden yükle.
       } else {
         console.error('Sayaç ekleme hatası:', data.message);
       }
@@ -1632,7 +1632,7 @@ function deleteTableRow(tableName, tableField, tableFieldValue) {
         $.unblockUI();
         if (data[0].success) {
             alert('Veri başarıyla silindi.');
-            showTableContent(tableName); // Refresh table content
+            location.reload(); // Sayfayı yeniden yükle.
         } else {
             alert('Veri silinirken bir hata oluştu.');
         }
@@ -1643,47 +1643,6 @@ function deleteTableRow(tableName, tableField, tableFieldValue) {
     });
 }
 
-function showTableContent(tableName) {
-    // Tabloyu hedef alarak ilgili içeriği yeniler
-    const tableIdMap = {
-        'ElectricMeters': '#electricityMeterTable',
-        'WaterMeters': '#waterMeterTable',
-        'HeatingMeters': '#heatingMeterTable',
-        'CoolingMeters': '#coolingMeterTable'
-    };
-
-    const tableId = tableIdMap[tableName];
-    if (!tableId) {
-        console.error(`Tablo ismi bulunamadı: ${tableName}`);
-        return;
-    }
-
-    fetch(`${baseWebhookURL}/webhook/get-table-content`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ tableName: tableName })
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data[0]?.success && Array.isArray(data[0].data)) {
-            const tableBody = document.querySelector(`${tableId} tbody`);
-            tableBody.innerHTML = ''; // Eski içeriği temizle
-
-            data[0].data.forEach(meter => {
-                appendRowToTable(meter, tableId); // Yeni satırları ekle
-                initializeDataTable(tableId);
-            });
-        } else {
-            console.error(`Tablo verileri yüklenemedi: ${data[0]?.message}`);
-        }
-    })
-    .catch(error => {
-        console.error('Tablo içerik yenileme hatası:', error);
-    });
-}
-  
   </script>
 </body>
 
