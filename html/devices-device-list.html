@@ -1187,6 +1187,10 @@ function appendRowToTable(meter, tableId) {
 
   tableBody.appendChild(row);
   console.log(`[DEBUG] Row added successfully to ${tableId}`);
+  
+  // Tabloyu yeniden çiz
+  console.log(`[DEBUG] Drawing DataTable after appending row for table: ${tableId}`);
+  $(tableId).DataTable().draw();
 }
 
 function initializeDataTable(tableId) {
@@ -1252,7 +1256,10 @@ function initializeDataTable(tableId) {
         }
     });
     console.log(`DataTable initialized for: ${tableId}`);
-    console.log(`[DEBUG] DataTable initialized successfully for table: ${tableId}`);
+    // Tablonun yeniden çizilmesi
+    console.log(`[DEBUG] Drawing DataTable for table: ${tableId}`);
+    dataTableInstance.draw(); // Tabloyu yeniden çiz
+    console.log(`[DEBUG] DataTable draw completed for table: ${tableId}`);
 }
 
   </script>
@@ -1702,6 +1709,10 @@ function showTableContent(tableName) {
 
             console.log(`[DEBUG] Initializing DataTable for ${tableId}`);
             initializeDataTable(tableId); // Tabloyu yeniden başlat
+
+            // DataTable yeniden çiz
+            console.log(`[DEBUG] Drawing DataTable for table: ${tableId}`);
+            $(tableId).DataTable().draw();
         } else {
             console.error(`[ERROR] ${tableName} için veri yüklenemedi.`, data);
         }
