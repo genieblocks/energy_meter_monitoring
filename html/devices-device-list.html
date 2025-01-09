@@ -1187,7 +1187,7 @@ function appendRowToTable(meter, tableId) {
 
   tableBody.appendChild(row);
   console.log(`[DEBUG] Row added successfully to ${tableId}`);
-  
+
   // Tabloyu yeniden çiz
   console.log(`[DEBUG] Drawing DataTable after appending row for table: ${tableId}`);
   $(tableId).DataTable().draw();
@@ -1256,10 +1256,8 @@ function initializeDataTable(tableId) {
         }
     });
     console.log(`DataTable initialized for: ${tableId}`);
-    // Tablonun yeniden çizilmesi
-    console.log(`[DEBUG] Drawing DataTable for table: ${tableId}`);
-    dataTableInstance.draw(); // Tabloyu yeniden çiz
-    console.log(`[DEBUG] DataTable draw completed for table: ${tableId}`);
+    
+    console.log(`[DEBUG] DataTable initialized for: ${tableId}`);
 }
 
   </script>
