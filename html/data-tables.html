@@ -889,8 +889,42 @@ function showUpdateDataForm(tableName, rowData) {
         css: { border: 0, padding: 0, backgroundColor: 'transparent' }
     });
 
-    $.unblockUI();
-    modal.modal('show');
+    fetch(`${baseWebhookURL}/webhook/get-table-column-names`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ tableName: tableName })
+    })
+    .then(response => response.json())
+    .then(data => {
+        $.unblockUI();
+        if (data && Array.isArray(data)) {
+            data.forEach(column => {
+                const formGroup = document.createElement('div');
+                formGroup.className = 'form-group';
+                if (column.DATA_TYPE.toUpperCase() === 'UNIQUEIDENTIFIER') {
+                    formGroup.innerHTML = `
+                        <label for="${column.COLUMN_NAME}">${column.COLUMN_NAME} - (${column.DATA_TYPE.toUpperCase()})</label>
+                        <input type="text" class="form-control" id="${column.COLUMN_NAME}" name="${column.COLUMN_NAME}" readonly="readonly" value="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx">
+                    `;
+                } else {
+                    formGroup.innerHTML = `
+                        <label for="${column.COLUMN_NAME}">${column.COLUMN_NAME} - (${column.DATA_TYPE.toUpperCase()})</label>
+                        <input type="text" class="form-control" id="${column.COLUMN_NAME}" name="${column.COLUMN_NAME}" required>
+                    `;
+                }
+                formBody.appendChild(formGroup);
+            });
+            modal.modal('show');
+        } else {
+            alert('Sütun bilgileri getirilirken bir hata oluştu.');
+        }
+    })
+    .catch(error => {
+        $.unblockUI();
+        alert('Sütun bilgileri getirilirken bir hata oluştu.');
+    });
 }
 
 function showNewDataForm(tableName) {
