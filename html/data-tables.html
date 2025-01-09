@@ -1024,6 +1024,64 @@ function submitTableContent() {
     });
 }
 
+function updateTableContent() {
+    const form = document.querySelector('#updateDataForm'); // Form elementini doğru seçin
+    if (!form || !(form instanceof HTMLFormElement)) {
+        console.error('Form element not found or incorrect type');
+        return;
+    }
+
+    const formData = new FormData(form);
+    const tableName = $('#updateDataModal').data('tableName'); // Modal data attribute'tan tablo ismi alınır
+    const targetRecord = {};
+    const fieldsToUpdate = {};
+
+    let isFirstField = true;
+
+    formData.forEach((value, key) => {
+        if (isFirstField) {
+            targetRecord[key] = value; // İlk alan TargetRecord içine alınır
+            isFirstField = false;
+        } else {
+            fieldsToUpdate[key] = value; // Diğer alanlar FieldsToUpdate içine alınır
+        }
+    });
+
+    const jsonData = {
+        tableName: tableName,
+        TargetRecord: targetRecord,
+        FieldsToUpdate: fieldsToUpdate
+    };
+
+    $.blockUI({
+        message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
+        overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
+        css: { border: 0, padding: 0, backgroundColor: 'transparent' }
+    });
+
+    fetch(`${baseWebhookURL}/webhook/update-table-content`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(jsonData)
+    })
+    .then(response => response.json())
+    .then(data => {
+        $.unblockUI();
+        if (data[0].success) {
+            $('#updateDataModal').modal('hide');
+            showTableContent($('#tableContentModal .modal-title').text());
+        } else {
+            alert('Veri güncellenirken bir hata oluştu: ' + data[0].message);
+        }
+    })
+    .catch(error => {
+        $.unblockUI();
+        alert('Veri güncellenirken bir hata oluştu.');
+    });
+}
+
 function updateTableName(oldTableName, tableRow) {
     const newTableName = prompt("Yeni tablo ismini girin:", oldTableName);
     if (newTableName === null || newTableName === "") {
