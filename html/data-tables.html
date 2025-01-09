@@ -876,7 +876,7 @@ function showUpdateDataForm(tableName, rowData) {
     const primaryKeyValue = rowData[0];
     const modal = $('#updateDataModal');
     modal.data('primaryKey', primaryKeyValue); // Set the tableName as a data attribute on the modal
-    modal.find('.modal-title').text(`${primaryKeyValue} - Veri Güncelle`);
+    modal.find('.modal-title').text(`${tableName} - Veri Güncelle`);
     const form = modal.find('form')[0];
     const formBody = modal.find('.modal-body > form')[0]; // Düzeltilmiş kısım
 
@@ -906,12 +906,12 @@ function showUpdateDataForm(tableName, rowData) {
                 if (column.DATA_TYPE.toUpperCase() === 'UNIQUEIDENTIFIER') {
                     formGroup.innerHTML = `
                         <label for="${column.COLUMN_NAME}">${column.COLUMN_NAME} - (${column.DATA_TYPE.toUpperCase()})</label>
-                        <input type="text" class="form-control" id="${column.COLUMN_NAME}" name="${column.COLUMN_NAME}" readonly="readonly" value="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx">
+                        <input type="text" class="form-control" id="${column.COLUMN_NAME}" name="${column.COLUMN_NAME}" readonly="readonly" value="${rowData[0]}">
                     `;
                 } else {
                     formGroup.innerHTML = `
                         <label for="${column.COLUMN_NAME}">${column.COLUMN_NAME} - (${column.DATA_TYPE.toUpperCase()})</label>
-                        <input type="text" class="form-control" id="${column.COLUMN_NAME}" name="${column.COLUMN_NAME}" required>
+                        <input type="text" class="form-control" id="${column.COLUMN_NAME}" name="${column.COLUMN_NAME}" value="" required>
                     `;
                 }
                 formBody.appendChild(formGroup);
