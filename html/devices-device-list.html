@@ -1416,8 +1416,9 @@ function fetchConnections(connectionTable, meterType) {
 
     const serialNumber = document.querySelector('#waterMeterSerialNumber').value;
     const protocolType = document.querySelector('#waterProtocolType').value;
-    const manufacturer = document.querySelector('#waterManufacturer').value;
+    const mbusDataBlock = document.querySelector('#waterMbusDataBlock').value;
     const connectionPoint = document.querySelector('#waterConnectionPoint').value;
+    const isVisibleInInvoiceReport = document.querySelector('#waterInvoiceReport').value;
     const tableName = 'WaterMeters'; // İlgili sayaç tablosu
 
     const WaterMeterID = 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'; 
@@ -1439,7 +1440,8 @@ function fetchConnections(connectionTable, meterType) {
         WaterMeterID: WaterMeterID,
         SerialNumber: serialNumber,
         CommunicationProtocol: protocolType,
-        Brand: manufacturer,
+        MbusDataBlock: mbusDataBlock,
+        IsVisibleInInvoiceReport: isVisibleInInvoiceReport,
         ConnectionPoint: connectionPoint
       })
     })
@@ -1463,8 +1465,9 @@ function fetchConnections(connectionTable, meterType) {
 
     const serialNumber = document.querySelector('#heatingMeterSerialNumber').value;
     const protocolType = document.querySelector('#heatingProtocolType').value;
-    const manufacturer = document.querySelector('#heatingManufacturer').value;
+    const mbusDataBlock = document.querySelector('#heatingMbusDataBlock').value;
     const connectionPoint = document.querySelector('#heatingConnectionPoint').value;
+    const isVisibleInInvoiceReport = document.querySelector('#heatingInvoiceReport').value;
     const tableName = 'HeatingMeters'; // İlgili sayaç tablosu
 
     const HeatingMeterID = 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'; 
@@ -1486,7 +1489,8 @@ function fetchConnections(connectionTable, meterType) {
         HeatingMeterID: HeatingMeterID,
         SerialNumber: serialNumber,
         CommunicationProtocol: protocolType,
-        Brand: manufacturer,
+        MbusDataBlock: mbusDataBlock,
+        IsVisibleInInvoiceReport: isVisibleInInvoiceReport,
         ConnectionPoint: connectionPoint
       })
     })
@@ -1510,8 +1514,9 @@ function fetchConnections(connectionTable, meterType) {
 
     const serialNumber = document.querySelector('#coolingMeterSerialNumber').value;
     const protocolType = document.querySelector('#coolingProtocolType').value;
-    const manufacturer = document.querySelector('#coolingManufacturer').value;
+    const mbusDataBlock = document.querySelector('#coolingMbusDataBlock').value;
     const connectionPoint = document.querySelector('#coolingConnectionPoint').value;
+    const isVisibleInInvoiceReport = document.querySelector('#coolingInvoiceReport').value;
     const tableName = 'CoolingMeters'; // İlgili sayaç tablosu
 
     const CoolingMeterID = 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'; 
@@ -1533,7 +1538,8 @@ function fetchConnections(connectionTable, meterType) {
         CoolingMeterID: CoolingMeterID,
         SerialNumber: serialNumber,
         CommunicationProtocol: protocolType,
-        Brand: manufacturer,
+        MbusDataBlock: mbusDataBlock,
+        IsVisibleInInvoiceReport: isVisibleInInvoiceReport,
         ConnectionPoint: connectionPoint
       })
     })
