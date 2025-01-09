@@ -672,7 +672,7 @@ document.addEventListener('DOMContentLoaded', function () {
   tableConfig.forEach(config => {
     document.querySelectorAll(config.selector).forEach(function (tableBody) {
       tableBody.addEventListener('click', function (event) {
-        if (event.target && event.target.nodeName === 'BUTTON' && event.target.id === 'table-show-button') {
+        if (event.target && event.target.nodeName === 'BUTTON' && event.target.id === 'row-show-button') {
           const row = event.target.closest('tr');
           const serialNumber = getCellValueByHeader(row, 'Sayaç Seri Numarası');
           const connectionPoint = getCellValueByHeader(row, 'Bağlantı Noktası');
@@ -791,7 +791,7 @@ function getCellValueByHeader(row, headerText) {
 document.addEventListener('DOMContentLoaded', function() {
   document.querySelectorAll('#electricityMeterTable tbody').forEach(function(tableBody) {
     tableBody.addEventListener('click', function(event) {
-      if (event.target && event.target.nodeName === 'BUTTON' && event.target.id === 'table-show-button') {
+      if (event.target && event.target.nodeName === 'BUTTON' && event.target.id === 'row-show-button') {
         const row = event.target.closest('tr');
         const serialNumber = getCellValueByHeader(row, 'Sayaç Seri Numarası');
         const connectionPoint = getCellValueByHeader(row, 'Bağlantı Noktası');
@@ -1108,17 +1108,17 @@ function appendRowToTable(meter, tableId) {
       <td>${meter.ConnectionPoint || ''}</td>
       <td>${meter.IsVisibleInInvoiceReport === true ? 'Evet' : meter.IsVisibleInInvoiceReport === false ? 'Hayır' : ''}</td>
       <td>
-        <button type="button" class="btn btn-sm btn-outline-info" id="table-show-button">
+        <button type="button" class="btn btn-sm btn-outline-info" id="row-show-button">
             <i class="fa fa-eye"></i>
         </button>
       </td>
       <td>
-        <button type="button" class="btn btn-sm btn-outline-success" id="table-edit-button">
+        <button type="button" class="btn btn-sm btn-outline-success" id="row-edit-button">
           <i class="fa fa-edit"></i>
         </button>
       </td>
       <td>
-        <button type="button" class="btn btn-sm btn-outline-danger" id="table-delete-button">
+        <button type="button" class="btn btn-sm btn-outline-danger" id="row-delete-button">
           <i class="fa fa-trash-o"></i>
         </button>
       </td>
@@ -1132,17 +1132,17 @@ function appendRowToTable(meter, tableId) {
       <td>${meter.ConnectionPoint || ''}</td>
       <td>${meter.IsVisibleInInvoiceReport === true ? 'Evet' : meter.IsVisibleInInvoiceReport === false ? 'Hayır' : ''}</td>
       <td>
-        <button type="button" class="btn btn-sm btn-outline-info" id="table-show-button">
+        <button type="button" class="btn btn-sm btn-outline-info" id="row-show-button">
             <i class="fa fa-eye"></i>
         </button>
       </td>
       <td>
-        <button type="button" class="btn btn-sm btn-outline-success" id="table-edit-button">
+        <button type="button" class="btn btn-sm btn-outline-success" id="row-edit-button">
           <i class="fa fa-edit"></i>
         </button>
       </td>
       <td>
-        <button type="button" class="btn btn-sm btn-outline-danger" id="table-delete-button">
+        <button type="button" class="btn btn-sm btn-outline-danger" id="row-delete-button">
           <i class="fa fa-trash-o"></i>
         </button>
       </td>
