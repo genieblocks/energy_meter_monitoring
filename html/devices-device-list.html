@@ -509,6 +509,7 @@
                 <th>Sayaç Markası</th>
                 <th>İletişim Protokolü</th>
                 <th>Bağlantı Noktası</th>
+                <th>Faturalandırma</th>
                 <th>Oku</th>
                 <th>Düzenle</th>
                 <th>Sil</th>
@@ -536,9 +537,10 @@
             <thead>
               <tr>
                 <th>Sayaç Seri Numarası</th>
-                <th>Sayaç Markası</th>
                 <th>İletişim Protokolü</th>
+                <th>M-BUS Veri Bloğu</th>
                 <th>Bağlantı Noktası</th>
+                <th>Faturalandırma</th>
                 <th>Oku</th>
                 <th>Düzenle</th>
                 <th>Sil</th>
@@ -565,9 +567,10 @@
             <thead>
               <tr>
                 <th>Sayaç Seri Numarası</th>
-                <th>Sayaç Markası</th>
                 <th>İletişim Protokolü</th>
+                <th>M-BUS Veri Bloğu</th>
                 <th>Bağlantı Noktası</th>
+                <th>Faturalandırma</th>
                 <th>Oku</th>
                 <th>Düzenle</th>
                 <th>Sil</th>
@@ -594,9 +597,10 @@
             <thead>
               <tr>
                 <th>Sayaç Seri Numarası</th>
-                <th>Sayaç Markası</th>
                 <th>İletişim Protokolü</th>
+                <th>M-BUS Veri Bloğu</th>
                 <th>Bağlantı Noktası</th>
+                <th>Faturalandırma</th>
                 <th>Oku</th>
                 <th>Düzenle</th>
                 <th>Sil</th>
@@ -1102,6 +1106,7 @@ function appendRowToTable(meter, tableId) {
       <td>${meter.Brand || ''}</td>
       <td>${meter.CommunicationProtocol || ''}</td>
       <td>${meter.ConnectionPoint || ''}</td>
+      <td>${meter.IsVisibleInInvoiceReport === true ? 'Evet' : meter.IsVisibleInInvoiceReport === false ? 'Hayır' : ''}</td>
       <td>
         <button type="button" class="btn btn-sm btn-outline-info" id="table-show-button">
             <i class="fa fa-eye"></i>
@@ -1122,9 +1127,10 @@ function appendRowToTable(meter, tableId) {
     // For other tables
     row.innerHTML = `
       <td>${meter.SerialNumber || ''}</td>
-      <td>${meter.Brand || ''}</td>
       <td>${meter.CommunicationProtocol || ''}</td>
+      <td>${meter.MbusDataBlock || ''}</td>
       <td>${meter.ConnectionPoint || ''}</td>
+      <td>${meter.IsVisibleInInvoiceReport === true ? 'Evet' : meter.IsVisibleInInvoiceReport === false ? 'Hayır' : ''}</td>
       <td>
         <button type="button" class="btn btn-sm btn-outline-info" id="table-show-button">
             <i class="fa fa-eye"></i>
