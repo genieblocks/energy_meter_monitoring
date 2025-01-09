@@ -1642,6 +1642,46 @@ function deleteTableRow(tableName, tableField, tableFieldValue) {
         alert('Veri silinirken bir hata oluştu.');
     });
 }
+
+function showTableContent(tableName) {
+    // Tabloyu hedef alarak ilgili içeriği yeniler
+    const tableIdMap = {
+        'ElectricMeters': '#electricityMeterTable',
+        'WaterMeters': '#waterMeterTable',
+        'HeatingMeters': '#heatingMeterTable',
+        'CoolingMeters': '#coolingMeterTable'
+    };
+
+    const tableId = tableIdMap[tableName];
+    if (!tableId) {
+        console.error(`Tablo ismi bulunamadı: ${tableName}`);
+        return;
+    }
+
+    fetch(`${baseWebhookURL}/webhook/get-table-content`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ tableName: tableName })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data[0]?.success && Array.isArray(data[0].data)) {
+            const tableBody = document.querySelector(`${tableId} tbody`);
+            tableBody.innerHTML = ''; // Eski içeriği temizle
+
+            data[0].data.forEach(meter => {
+                appendRowToTable(meter, tableId); // Yeni satırları ekle
+            });
+        } else {
+            console.error(`Tablo verileri yüklenemedi: ${data[0]?.message}`);
+        }
+    })
+    .catch(error => {
+        console.error('Tablo içerik yenileme hatası:', error);
+    });
+}
   
   </script>
 </body>
