@@ -524,10 +524,10 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         // Edit button clicks
-        if (target.id === 'table-edit-button') {
+        if (target.id === 'table-update-button') {
             const tableRow = target.closest('tr');
             const tableName = tableRow.querySelector('td:first-child').textContent;
-            editTableName(tableName, tableRow);
+            updateTableName(tableName, tableRow);
         }
 
         // New data button clicks
@@ -602,7 +602,7 @@ function updateTable(data) {
                     <td>${table.rows}</td>
                     <td>${table.size}</td>
                     <td><button type="button" class="btn btn-sm btn-outline-info" id="table-show-button"><i class="fa fa-eye"></i></button></td>
-                    <td><button type="button" class="btn btn-sm btn-outline-success" id="table-edit-button"><i class="fa fa-edit"></i></button></td>
+                    <td><button type="button" class="btn btn-sm btn-outline-success" id="table-update-button"><i class="fa fa-edit"></i></button></td>
                     <td><button type="button" class="btn btn-sm btn-outline-danger" id="table-delete-button"><i class="fa fa-trash-o"></i></button></td>
                 </tr>`;
             tableBody.insertAdjacentHTML('beforeend', row);
@@ -709,7 +709,7 @@ function updateModalWithData(data, tableName) {
             rows.forEach(row => {
                 const rowHtml = `<tr>${Object.values(row).map(value => `<td>${value}</td>`).join('')}
                     <td>
-                        <button type="button" class="btn btn-sm btn-outline-success" id="row-edit-button">
+                        <button type="button" class="btn btn-sm btn-outline-success" id="row-update-button">
                             <i class="fa fa-edit"></i>
                         </button>
                     </td>
@@ -936,7 +936,7 @@ function submitTableContent() {
     });
 }
 
-function editTableName(oldTableName, tableRow) {
+function updateTableName(oldTableName, tableRow) {
     const newTableName = prompt("Yeni tablo ismini girin:", oldTableName);
     if (newTableName === null || newTableName === "") {
         alert("Tablo ismi boş olamaz.");
@@ -949,7 +949,7 @@ function editTableName(oldTableName, tableRow) {
         css: { border: 0, padding: 0, backgroundColor: 'transparent' }
     });
 
-    fetch(`${baseWebhookURL}/webhook/edit-table-name`, {
+    fetch(`${baseWebhookURL}/webhook/update-table-name`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
