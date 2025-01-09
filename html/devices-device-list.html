@@ -1452,6 +1452,7 @@ function fetchConnections(connectionTable, meterType) {
       if (data[0].success) {
         alert('Sayaç başarıyla eklendi!');
         location.reload(); // Sayfayı yeniden yükle.
+        $('#electricityMeterModal').modal('hide'); // Modalı kapat
       } else {
         console.error('Sayaç ekleme hatası:', data.message);
       }
@@ -1500,6 +1501,7 @@ function fetchConnections(connectionTable, meterType) {
     .then(data => {
       if (data[0].success) {
         alert('Sayaç başarıyla eklendi!');
+        $('#waterMeterModal').modal('hide'); // Modalı kapat
         location.reload(); // Sayfayı yeniden yükle.
       } else {
         console.error('Sayaç ekleme hatası:', data.message);
@@ -1549,6 +1551,7 @@ function fetchConnections(connectionTable, meterType) {
     .then(data => {
       if (data[0].success) {
         alert('Sayaç başarıyla eklendi!');
+        $('#heatingMeterModal').modal('hide'); // Modalı kapat
         location.reload(); // Sayfayı yeniden yükle.
       } else {
         console.error('Sayaç ekleme hatası:', data.message);
@@ -1598,6 +1601,7 @@ function fetchConnections(connectionTable, meterType) {
     .then(data => {
       if (data[0].success) {
         alert('Sayaç başarıyla eklendi!');
+        $('#coolingMeterModal').modal('hide'); // Modalı kapat
         location.reload(); // Sayfayı yeniden yükle.
       } else {
         console.error('Sayaç ekleme hatası:', data.message);
