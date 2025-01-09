@@ -1411,7 +1411,7 @@ function fetchConnections(connectionTable, meterType) {
   .catch(error => console.error('Fetch error:', error));
 }
 
-    document.querySelector('#electricityMeterForm').addEventListener('submit', function(event) {
+  document.querySelector('#electricityMeterForm').addEventListener('submit', function(event) {
     event.preventDefault(); // Formun submit olmasını engelle
 
     const serialNumber = document.querySelector('#electricityMeterSerialNumber').value;
@@ -1451,7 +1451,7 @@ function fetchConnections(connectionTable, meterType) {
     .then(data => {
       if (data[0].success) {
         alert('Sayaç başarıyla eklendi!');
-        location.reload(); // Sayfayı yeniden yükle
+        showTableContent(tableName); // İlgili tabloyu yenile
       } else {
         console.error('Sayaç ekleme hatası:', data.message);
       }
@@ -1500,7 +1500,7 @@ function fetchConnections(connectionTable, meterType) {
     .then(data => {
       if (data[0].success) {
         alert('Sayaç başarıyla eklendi!');
-        location.reload(); // Sayfayı yeniden yükle
+        showTableContent(tableName); // İlgili tabloyu yenile
       } else {
         console.error('Sayaç ekleme hatası:', data.message);
       }
@@ -1549,7 +1549,7 @@ function fetchConnections(connectionTable, meterType) {
     .then(data => {
       if (data[0].success) {
         alert('Sayaç başarıyla eklendi!');
-        location.reload(); // Sayfayı yeniden yükle
+        showTableContent(tableName); // İlgili tabloyu yenile
       } else {
         console.error('Sayaç ekleme hatası:', data.message);
       }
@@ -1598,7 +1598,7 @@ function fetchConnections(connectionTable, meterType) {
     .then(data => {
       if (data[0].success) {
         alert('Sayaç başarıyla eklendi!');
-        location.reload(); // Sayfayı yeniden yükle
+        showTableContent(tableName); // İlgili tabloyu yenile
       } else {
         console.error('Sayaç ekleme hatası:', data.message);
       }
