@@ -1182,63 +1182,64 @@ function appendRowToTable(meter, tableId) {
 }
 
 function initializeDataTable(tableId) {
-  // Tablo ID'ye göre dosya isimleri
-  const fileNameMap = {
-    "#electricityMeterTable": "Elektrik Sayaç Listesi",
-    "#waterMeterTable": "Su Sayaç Listesi",
-    "#heatingMeterTable": "Kalorimetre Isıtma Sayaç Listesi",
-    "#coolingMeterTable": "Kalorimetre Soğutma Sayaç Listesi"
-  };
+    // Tablo ID'ye göre dosya isimleri
+    const fileNameMap = {
+        "#electricityMeterTable": "Elektrik Sayaç Listesi",
+        "#waterMeterTable": "Su Sayaç Listesi",
+        "#heatingMeterTable": "Kalorimetre Isıtma Sayaç Listesi",
+        "#coolingMeterTable": "Kalorimetre Soğutma Sayaç Listesi"
+    };
 
-  const fileNameBase = fileNameMap[tableId] || "Veri Listesi";
+    const fileNameBase = fileNameMap[tableId] || "Veri Listesi";
 
-  // Tarih ve saat formatı
-  const now = new Date();
-  const formattedDate = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
-  const formattedTime = `${String(now.getHours()).padStart(2, '0')}-${String(now.getMinutes()).padStart(2, '0')}-${String(now.getSeconds()).padStart(2, '0')}`;
-  const fileName = `${fileNameBase}_${formattedDate}_${formattedTime}`;
+    // Tarih ve saat formatı
+    const now = new Date();
+    const formattedDate = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+    const formattedTime = `${String(now.getHours()).padStart(2, '0')}-${String(now.getMinutes()).padStart(2, '0')}-${String(now.getSeconds()).padStart(2, '0')}`;
+    const fileName = `${fileNameBase}_${formattedDate}_${formattedTime}`;
 
-  // DataTable'i başlat
-  if (!$.fn.DataTable.isDataTable(tableId)) {
+    // Eğer DataTable zaten başlatılmışsa, imha et
+    if ($.fn.DataTable.isDataTable(tableId)) {
+        $(tableId).DataTable().clear().destroy();
+    }
+
+    // DataTable'i yeniden başlat
     $(tableId).DataTable({
-      dom: '<"top"fl>rt<"bottom"Bp>',
-      buttons: [
-        {
-          extend: 'copyHtml5',
-          text: 'Kopyala',
-          title: fileName
-        },
-        {
-          extend: 'csvHtml5',
-          text: 'CSV Olarak İndir',
-          title: fileName
-        },
-        {
-          extend: 'excelHtml5',
-          text: 'Excel Olarak İndir',
-          title: fileName
+        dom: '<"top"fl>rt<"bottom"Bp>',
+        buttons: [
+            {
+                extend: 'copyHtml5',
+                text: 'Kopyala',
+                title: fileName
+            },
+            {
+                extend: 'csvHtml5',
+                text: 'CSV Olarak İndir',
+                title: fileName
+            },
+            {
+                extend: 'excelHtml5',
+                text: 'Excel Olarak İndir',
+                title: fileName
+            }
+        ],
+        order: [[0, 'asc']],
+        language: {
+            search: "Ara:",
+            lengthMenu: "Göster _MENU_ kayıtlar",
+            info: "Gösteriliyor _START_ ile _END_ arasında _TOTAL_ kayıt",
+            infoEmpty: "Gösterilecek kayıt yok",
+            infoFiltered: "(toplam _MAX_ kayıt içinde filtrelendi)",
+            paginate: {
+                first: "İlk",
+                last: "Son",
+                next: "Sonraki",
+                previous: "Önceki"
+            },
+            zeroRecords: "Eşleşen kayıt bulunamadı"
         }
-      ],
-      order: [[0, 'asc']],
-      language: {
-        search: "Ara:",
-        lengthMenu: "Göster _MENU_ kayıtlar",
-        info: "Gösteriliyor _START_ ile _END_ arasında _TOTAL_ kayıt",
-        infoEmpty: "Gösterilecek kayıt yok",
-        infoFiltered: "(toplam _MAX_ kayıt içinde filtrelendi)",
-        paginate: {
-          first: "İlk",
-          last: "Son",
-          next: "Sonraki",
-          previous: "Önceki"
-        },
-        zeroRecords: "Eşleşen kayıt bulunamadı"
-      }
     });
     console.log(`DataTable initialized for: ${tableId}`);
-  } else {
-    console.log(`DataTable already initialized for: ${tableId}`);
-  }
 }
 
   </script>
@@ -1676,6 +1677,7 @@ function showTableContent(tableName) {
             const tableBody = document.querySelector(`${tableId} tbody`);
             tableBody.innerHTML = ''; // Mevcut tabloyu temizle
             data[0].data.forEach(meter => appendRowToTable(meter, tableId));
+            initializeDataTable(tableId); // Tabloyu yeniden başlat
         } else {
             console.error(`${tableName} için veri yüklenemedi.`, data);
         }
