@@ -85,6 +85,14 @@
               <!-- Dinamik olarak doldurulacak -->
             </select>
           </fieldset>
+          <fieldset class="form-group floating-label-form-group">
+            <label for="electricityInvoiceReport">Faturalandırılma</label>
+            <select id="electricityInvoiceReport" name="isVisibleInInvoiceReport" class="form-control">
+              <option value="none" selected disabled>Seçiniz</option>
+              <option value="true">Evet</option>
+              <option value="false">Hayır</option>
+            </select>
+          </fieldset>
         </div>
         <div class="modal-footer">
           <input type="reset" class="btn btn-light btn-lg" data-dismiss="modal" value="kapat">
@@ -1370,6 +1378,7 @@ function fetchConnections(connectionTable, meterType) {
     const serialNumber = document.querySelector('#electricityMeterSerialNumber').value;
     const protocolType = document.querySelector('#electricityProtocolType').value;
     const manufacturer = document.querySelector('#electricityManufacturer').value;
+    const isVisibleInInvoiceReport = document.querySelector('#electricityInvoiceReport').value;
     const connectionPoint = document.querySelector('#electricityConnectionPoint').value;
     const tableName = 'ElectricMeters'; // İlgili sayaç tablosu
 
@@ -1393,6 +1402,7 @@ function fetchConnections(connectionTable, meterType) {
         SerialNumber: serialNumber,
         CommunicationProtocol: protocolType,
         Brand: manufacturer,
+        IsVisibleInInvoiceReport: isVisibleInInvoiceReport,
         ConnectionPoint: connectionPoint
       })
     })
