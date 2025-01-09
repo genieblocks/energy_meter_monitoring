@@ -660,7 +660,7 @@
     const baseWebhookURL = "http://192.168.2.250:5678"; // Değiştirmek istediğiniz temel URL
     // const baseWebhookURL = "http://192.168.1.146:5678"; // Değiştirmek istediğiniz temel URL
 
-    document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', function () {
   // Tablo ve MeterType tanımları
   const meterTypeTableConfig = [
     { selector: '#waterMeterTable tbody', meterType: 'water' },
@@ -723,6 +723,24 @@ document.addEventListener('DOMContentLoaded', function () {
       });
     });
   });
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+    // Sekme değişikliklerini dinle ve localStorage'a kaydet
+    document.querySelectorAll('.nav-tabs .nav-link').forEach(tab => {
+        tab.addEventListener('click', function () {
+            localStorage.setItem('activeTab', this.id); // Aktif sekme ID'sini sakla
+        });
+    });
+
+    // Sayfa yüklendiğinde localStorage'dan sekme bilgisini al
+    const activeTab = localStorage.getItem('activeTab');
+    if (activeTab) {
+        const tabToActivate = document.getElementById(activeTab);
+        if (tabToActivate) {
+            tabToActivate.click(); // Saklanan sekmeyi aktif yap
+        }
+    }
 });
 
 function queryMeterData(serialNumber, connectionPoint, meterType) {
