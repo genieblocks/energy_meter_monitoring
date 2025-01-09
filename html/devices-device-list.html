@@ -1125,6 +1125,13 @@ function fetchCoolingMetersData() {
 
 function appendRowToTable(meter, tableId) {
   const tableBody = document.querySelector(`${tableId} tbody`);
+  if (!tableBody) {
+      console.error(`[ERROR] Table body not found for tableId: ${tableId}`);
+      return;
+  }
+
+  console.log(`[DEBUG] Adding row to ${tableId}:`, meter);
+
   const row = document.createElement('tr');
 
   // Check if the table is for Electricity Meters
@@ -1179,9 +1186,12 @@ function appendRowToTable(meter, tableId) {
   }
 
   tableBody.appendChild(row);
+  console.log(`[DEBUG] Row added successfully to ${tableId}`);
 }
 
 function initializeDataTable(tableId) {
+    console.log(`[DEBUG] Initializing DataTable for table: ${tableId}`);
+
     // Tablo ID'ye göre dosya isimleri
     const fileNameMap = {
         "#electricityMeterTable": "Elektrik Sayaç Listesi",
@@ -1200,9 +1210,11 @@ function initializeDataTable(tableId) {
 
     // Eğer DataTable zaten başlatılmışsa, imha et
     if ($.fn.DataTable.isDataTable(tableId)) {
+        console.log(`[DEBUG] Destroying existing DataTable for table: ${tableId}`);
         $(tableId).DataTable().clear().destroy();
     }
 
+    console.log(`[DEBUG] Reinitializing DataTable with new content for table: ${tableId}`);
     // DataTable'i yeniden başlat
     $(tableId).DataTable({
         dom: '<"top"fl>rt<"bottom"Bp>',
@@ -1240,6 +1252,7 @@ function initializeDataTable(tableId) {
         }
     });
     console.log(`DataTable initialized for: ${tableId}`);
+    console.log(`[DEBUG] DataTable initialized successfully for table: ${tableId}`);
 }
 
   </script>
@@ -1664,6 +1677,8 @@ function showTableContent(tableName) {
         return;
     }
 
+    console.log(`[DEBUG] showTableContent - TableName: ${tableName}, TableId: ${tableId}`);
+
     fetch(`${baseWebhookURL}/webhook/get-table-content`, {
         method: 'POST',
         headers: {
@@ -1673,17 +1688,26 @@ function showTableContent(tableName) {
     })
     .then(response => response.json())
     .then(data => {
+        console.log(`[DEBUG] API Response for ${tableName}:`, data);
+
         if (data.length > 0 && data[0].success && Array.isArray(data[0].data)) {
             const tableBody = document.querySelector(`${tableId} tbody`);
+            console.log(`[DEBUG] Clearing existing rows for table ${tableId}`);
             tableBody.innerHTML = ''; // Mevcut tabloyu temizle
-            data[0].data.forEach(meter => appendRowToTable(meter, tableId));
+
+            data[0].data.forEach((meter, index) => {
+                console.log(`[DEBUG] Appending row ${index + 1}:`, meter);
+                appendRowToTable(meter, tableId);
+            });
+
+            console.log(`[DEBUG] Initializing DataTable for ${tableId}`);
             initializeDataTable(tableId); // Tabloyu yeniden başlat
         } else {
-            console.error(`${tableName} için veri yüklenemedi.`, data);
+            console.error(`[ERROR] ${tableName} için veri yüklenemedi.`, data);
         }
     })
     .catch(error => {
-        console.error(`Fetch error while refreshing table "${tableName}":`, error);
+        console.error(`[ERROR] Fetch error while refreshing table "${tableName}":`, error);
     });
 }
 
