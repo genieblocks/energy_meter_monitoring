@@ -810,7 +810,7 @@ function handleFetchError(response) {
     return response;
 }
 
-function deleteTableRow(tableName, primaryKey, primaryKeyValue) {
+function deleteTableRow(tableName, tableField, tableFieldValue) {
     $.blockUI({
         message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
         overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
@@ -822,7 +822,7 @@ function deleteTableRow(tableName, primaryKey, primaryKeyValue) {
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ tableName: tableName, primaryKey: primaryKey, primaryKeyValue: primaryKeyValue })
+        body: JSON.stringify({ tableName: tableName, tableField: tableField, tableFieldValue: tableFieldValue })
     })
     .then(response => response.json())
     .then(data => {
