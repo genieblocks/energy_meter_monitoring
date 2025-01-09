@@ -1451,8 +1451,8 @@ function fetchConnections(connectionTable, meterType) {
     .then(data => {
       if (data[0].success) {
         alert('Sayaç başarıyla eklendi!');
-        location.reload(); // Sayfayı yeniden yükle.
         $('#electricityMeterModal').modal('hide'); // Modalı kapat
+        showTableContent(tableName); // Tabloyu yenile
       } else {
         console.error('Sayaç ekleme hatası:', data.message);
       }
@@ -1502,7 +1502,7 @@ function fetchConnections(connectionTable, meterType) {
       if (data[0].success) {
         alert('Sayaç başarıyla eklendi!');
         $('#waterMeterModal').modal('hide'); // Modalı kapat
-        location.reload(); // Sayfayı yeniden yükle.
+        showTableContent(tableName); // Tabloyu yenile
       } else {
         console.error('Sayaç ekleme hatası:', data.message);
       }
@@ -1552,7 +1552,7 @@ function fetchConnections(connectionTable, meterType) {
       if (data[0].success) {
         alert('Sayaç başarıyla eklendi!');
         $('#heatingMeterModal').modal('hide'); // Modalı kapat
-        location.reload(); // Sayfayı yeniden yükle.
+        showTableContent(tableName); // Tabloyu yenile
       } else {
         console.error('Sayaç ekleme hatası:', data.message);
       }
@@ -1602,7 +1602,7 @@ function fetchConnections(connectionTable, meterType) {
       if (data[0].success) {
         alert('Sayaç başarıyla eklendi!');
         $('#coolingMeterModal').modal('hide'); // Modalı kapat
-        location.reload(); // Sayfayı yeniden yükle.
+        showTableContent(tableName); // Tabloyu yenile
       } else {
         console.error('Sayaç ekleme hatası:', data.message);
       }
@@ -1636,7 +1636,7 @@ function deleteTableRow(tableName, tableField, tableFieldValue) {
         $.unblockUI();
         if (data[0].success) {
             alert('Veri başarıyla silindi.');
-            location.reload(); // Sayfayı yeniden yükle.
+            showTableContent(tableName); // Tabloyu yenile
         } else {
             alert('Veri silinirken bir hata oluştu.');
         }
@@ -1644,6 +1644,44 @@ function deleteTableRow(tableName, tableField, tableFieldValue) {
     .catch(error => {
         $.unblockUI();
         alert('Veri silinirken bir hata oluştu.');
+    });
+}
+
+// Tüm sayaç formları için benzer güncelleme
+function showTableContent(tableName) {
+    const tableIdMap = {
+        'ElectricMeters': '#electricityMeterTable',
+        'WaterMeters': '#waterMeterTable',
+        'HeatingMeters': '#heatingMeterTable',
+        'CoolingMeters': '#coolingMeterTable'
+    };
+
+    const tableId = tableIdMap[tableName];
+
+    if (!tableId) {
+        console.error(`Tablo ismi "${tableName}" için bir eşleşme bulunamadı.`);
+        return;
+    }
+
+    fetch(`${baseWebhookURL}/webhook/get-table-content`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ tableName })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.length > 0 && data[0].success && Array.isArray(data[0].data)) {
+            const tableBody = document.querySelector(`${tableId} tbody`);
+            tableBody.innerHTML = ''; // Mevcut tabloyu temizle
+            data[0].data.forEach(meter => appendRowToTable(meter, tableId));
+        } else {
+            console.error(`${tableName} için veri yüklenemedi.`, data);
+        }
+    })
+    .catch(error => {
+        console.error(`Fetch error while refreshing table "${tableName}":`, error);
     });
 }
 
