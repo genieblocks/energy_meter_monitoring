@@ -874,7 +874,7 @@ function deleteTableRow(tableName, tableField, tableFieldValue) {
 
 function showUpdateDataForm(tableName, rowData) {
     const modal = $('#updateDataModal');
-    modal.data('rowData', rowData); // Set rowData as a data attribute on the modal
+    modal.data('tableName', tableName); // Set the tableName as a data attribute on the modal
     modal.find('.modal-title').text(`${tableName} - Veri Güncelle`);
     const form = modal.find('form')[0];
     const formBody = modal.find('.modal-body > form')[0];
