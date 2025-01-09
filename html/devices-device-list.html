@@ -1256,7 +1256,7 @@ function initializeDataTable(tableId) {
         }
     });
     console.log(`DataTable initialized for: ${tableId}`);
-    
+
     console.log(`[DEBUG] DataTable initialized for: ${tableId}`);
 }
 
@@ -1470,8 +1470,8 @@ function fetchConnections(connectionTable, meterType) {
     .then(data => {
       if (data[0].success) {
         alert('Sayaç başarıyla eklendi!');
+        location.reload(); // Sayfayı yeniden yükle.
         $('#electricityMeterModal').modal('hide'); // Modalı kapat
-        showTableContent(tableName); // Tabloyu yenile
       } else {
         console.error('Sayaç ekleme hatası:', data.message);
       }
@@ -1521,7 +1521,7 @@ function fetchConnections(connectionTable, meterType) {
       if (data[0].success) {
         alert('Sayaç başarıyla eklendi!');
         $('#waterMeterModal').modal('hide'); // Modalı kapat
-        showTableContent(tableName); // Tabloyu yenile
+        location.reload(); // Sayfayı yeniden yükle.
       } else {
         console.error('Sayaç ekleme hatası:', data.message);
       }
@@ -1571,7 +1571,7 @@ function fetchConnections(connectionTable, meterType) {
       if (data[0].success) {
         alert('Sayaç başarıyla eklendi!');
         $('#heatingMeterModal').modal('hide'); // Modalı kapat
-        showTableContent(tableName); // Tabloyu yenile
+        location.reload(); // Sayfayı yeniden yükle.
       } else {
         console.error('Sayaç ekleme hatası:', data.message);
       }
@@ -1621,7 +1621,7 @@ function fetchConnections(connectionTable, meterType) {
       if (data[0].success) {
         alert('Sayaç başarıyla eklendi!');
         $('#coolingMeterModal').modal('hide'); // Modalı kapat
-        showTableContent(tableName); // Tabloyu yenile
+        location.reload(); // Sayfayı yeniden yükle.
       } else {
         console.error('Sayaç ekleme hatası:', data.message);
       }
@@ -1655,7 +1655,7 @@ function deleteTableRow(tableName, tableField, tableFieldValue) {
         $.unblockUI();
         if (data[0].success) {
             alert('Veri başarıyla silindi.');
-            showTableContent(tableName); // Tabloyu yenile
+            location.reload(); // Sayfayı yeniden yükle.
         } else {
             alert('Veri silinirken bir hata oluştu.');
         }
@@ -1663,60 +1663,6 @@ function deleteTableRow(tableName, tableField, tableFieldValue) {
     .catch(error => {
         $.unblockUI();
         alert('Veri silinirken bir hata oluştu.');
-    });
-}
-
-// Tüm sayaç formları için benzer güncelleme
-function showTableContent(tableName) {
-    const tableIdMap = {
-        'ElectricMeters': '#electricityMeterTable',
-        'WaterMeters': '#waterMeterTable',
-        'HeatingMeters': '#heatingMeterTable',
-        'CoolingMeters': '#coolingMeterTable'
-    };
-
-    const tableId = tableIdMap[tableName];
-
-    if (!tableId) {
-        console.error(`Tablo ismi "${tableName}" için bir eşleşme bulunamadı.`);
-        return;
-    }
-
-    console.log(`[DEBUG] showTableContent - TableName: ${tableName}, TableId: ${tableId}`);
-
-    fetch(`${baseWebhookURL}/webhook/get-table-content`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ tableName })
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log(`[DEBUG] API Response for ${tableName}:`, data);
-
-        if (data.length > 0 && data[0].success && Array.isArray(data[0].data)) {
-            const tableBody = document.querySelector(`${tableId} tbody`);
-            console.log(`[DEBUG] Clearing existing rows for table ${tableId}`);
-            tableBody.innerHTML = ''; // Mevcut tabloyu temizle
-
-            data[0].data.forEach((meter, index) => {
-                console.log(`[DEBUG] Appending row ${index + 1}:`, meter);
-                appendRowToTable(meter, tableId);
-            });
-
-            console.log(`[DEBUG] Initializing DataTable for ${tableId}`);
-            initializeDataTable(tableId); // Tabloyu yeniden başlat
-
-            // DataTable yeniden çiz
-            console.log(`[DEBUG] Drawing DataTable for table: ${tableId}`);
-            $(tableId).DataTable().draw();
-        } else {
-            console.error(`[ERROR] ${tableName} için veri yüklenemedi.`, data);
-        }
-    })
-    .catch(error => {
-        console.error(`[ERROR] Fetch error while refreshing table "${tableName}":`, error);
     });
 }
 
