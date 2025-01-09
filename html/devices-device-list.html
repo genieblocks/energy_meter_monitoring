@@ -79,6 +79,10 @@
             </select>
           </fieldset>
           <fieldset class="form-group floating-label-form-group">
+            <label for="electricityMeterMultiplier">Sayaç Çarpanı</label>
+            <input type="number" class="form-control" id="electricityMeterMultiplier" name="meterMultiplier" min="1" placeholder="Sayaç Çarpanı">
+          </fieldset>
+          <fieldset class="form-group floating-label-form-group">
             <label for="electricityConnectionPoint">Bağlantı Noktası</label>
             <select id="electricityConnectionPoint" name="connectionPoint" class="form-control">
               <option value="none" selected disabled>Bağlantı Noktası Seçiniz.</option>
@@ -1378,6 +1382,7 @@ function fetchConnections(connectionTable, meterType) {
     const serialNumber = document.querySelector('#electricityMeterSerialNumber').value;
     const protocolType = document.querySelector('#electricityProtocolType').value;
     const manufacturer = document.querySelector('#electricityManufacturer').value;
+    const meterMultiplier = document.querySelector('#electricityMeterMultiplier').value;
     const isVisibleInInvoiceReport = document.querySelector('#electricityInvoiceReport').value;
     const connectionPoint = document.querySelector('#electricityConnectionPoint').value;
     const tableName = 'ElectricMeters'; // İlgili sayaç tablosu
@@ -1402,6 +1407,7 @@ function fetchConnections(connectionTable, meterType) {
         SerialNumber: serialNumber,
         CommunicationProtocol: protocolType,
         Brand: manufacturer,
+        MeterMultiplier: meterMultiplier,
         IsVisibleInInvoiceReport: isVisibleInInvoiceReport,
         ConnectionPoint: connectionPoint
       })
