@@ -662,14 +662,14 @@
 
 document.addEventListener('DOMContentLoaded', function () {
   // Tablo ve MeterType tanımları
-  const tableConfig = [
+  const meterTypeTableConfig = [
     { selector: '#waterMeterTable tbody', meterType: 'water' },
     { selector: '#heatingMeterTable tbody', meterType: 'heating' },
     { selector: '#coolingMeterTable tbody', meterType: 'cooling' }
   ];
 
   // Her tablo için event listener ekle
-  tableConfig.forEach(config => {
+  meterTypeTableConfig.forEach(config => {
     document.querySelectorAll(config.selector).forEach(function (tableBody) {
       tableBody.addEventListener('click', function (event) {
         if (event.target && event.target.nodeName === 'BUTTON' && event.target.id === 'row-show-button') {
@@ -694,6 +694,35 @@ document.addEventListener('DOMContentLoaded', function () {
     const currentYear = new Date().getFullYear();
     yearElement.textContent = currentYear;
   }
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+  const deleteTableConfig = [
+    { selector: '#waterMeterTable tbody', tableName: 'WaterMeters' },
+    { selector: '#heatingMeterTable tbody', tableName: 'HeatingMeters' },
+    { selector: '#coolingMeterTable tbody', tableName: 'CoolingMeters' },
+    { selector: '#electricityMeterTable tbody', tableName: 'ElectricMeters' }
+  ];
+
+  deleteTableConfig.forEach(config => {
+    document.querySelectorAll(config.selector).forEach(function (tableBody) {
+      tableBody.addEventListener('click', function (event) {
+        if (event.target && event.target.nodeName === 'BUTTON' && event.target.id === 'row-delete-button') {
+          const row = event.target.closest('tr');
+          const serialNumber = getCellValueByHeader(row, 'Sayaç Seri Numarası');
+
+          if (serialNumber) {
+            const confirmMessage = `${serialNumber} numaralı sayaçı silmek istediğinizden emin misiniz?`;
+            if (confirm(confirmMessage)) {
+              deleteTableRow(config.tableName, 'SerialNumber', serialNumber);
+            }
+          } else {
+            console.error("Serial Number bulunamadı.");
+          }
+        }
+      });
+    });
+  });
 });
 
 function queryMeterData(serialNumber, connectionPoint, meterType) {
