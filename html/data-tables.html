@@ -190,25 +190,48 @@
 
 <!-- New Data Modal -->
 <div class="modal fade text-left" id="newDataModal" tabindex="-1" role="dialog" aria-labelledby="newDataModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-      <div class="modal-content">
-          <div class="modal-header">
-              <h4 class="modal-title text-bold-600" id="newDataModalLabel">Yeni Veri Ekle</h4>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-              </button>
-          </div>
-          <div class="modal-body">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title text-bold-600" id="newDataModalLabel">Yeni Veri Ekle</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
             <form id="newDataForm">
                 <!-- Dinamik form alanları buraya eklenecek -->
             </form>
-          </div>
-          <div class="modal-footer">
-              <input type="reset" class="btn btn-light" data-dismiss="modal" value="Kapat">
-              <input type="button" class="btn btn-genie white" value="Veri Ekle" onclick="submitTableContent()">
-          </div>
-      </div>
-  </div>
+            </div>
+            <div class="modal-footer">
+                <input type="reset" class="btn btn-light" data-dismiss="modal" value="Kapat">
+                <input type="button" class="btn btn-genie white" value="Veri Ekle" onclick="submitTableContent()">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Update Data Modal -->
+<div class="modal fade text-left" id="updateDataModal" tabindex="-1" role="dialog" aria-labelledby="updateDataModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title text-bold-600" id="updateDataModalLabel">Veri Güncelle</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+              <form id="updateDataForm">
+                  <!-- Dinamik form alanları buraya eklenecek -->
+              </form>
+            </div>
+            <div class="modal-footer">
+                <input type="reset" class="btn btn-light" data-dismiss="modal" value="Kapat">
+                <input type="button" class="btn btn-genie white" value="Güncelle" onclick="updateTableContent()">
+            </div>
+        </div>
+    </div>
 </div>
 
 
@@ -750,6 +773,15 @@ function updateModalWithData(data, tableName) {
         });
     });
 
+    // Add event listener for update buttons
+    document.querySelectorAll('#row-update-button').forEach(button => {
+        button.addEventListener('click', function() {
+            const tableRow = this.closest('tr');
+            const rowData = Array.from(tableRow.children).slice(0, -1).map(td => td.textContent);
+            showUpdateDataForm(tableName, rowData); // Satır içeriği
+        });
+    });
+
     // Dosya ismi: tableName_Veri_Tablosu_YYYY-MM-DD_HH-MM-SS
     const now = new Date();
     const formattedDate = now.toISOString().split('T')[0]; // YYYY-MM-DD
@@ -837,6 +869,24 @@ function deleteTableRow(tableName, tableField, tableFieldValue) {
     .catch(error => {
         $.unblockUI();
         alert('Veri silinirken bir hata oluştu.');
+    });
+}
+
+function showUpdateDataForm(tableName, rowData) {
+    const primaryKeyValue = rowData[0];
+    const modal = $('#updateDataModal');
+    modal.data('primaryKey', primaryKeyValue); // Set the tableName as a data attribute on the modal
+    modal.find('.modal-title').text(`${primaryKeyValue} - Veri Güncelle`);
+    const form = modal.find('form')[0];
+    const formBody = modal.find('.modal-body > form')[0]; // Düzeltilmiş kısım
+
+    // Clear previous form fields
+    formBody.innerHTML = '';
+
+    $.blockUI({
+        message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
+        overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
+        css: { border: 0, padding: 0, backgroundColor: 'transparent' }
     });
 }
 
