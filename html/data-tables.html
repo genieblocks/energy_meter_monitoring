@@ -873,12 +873,11 @@ function deleteTableRow(tableName, tableField, tableFieldValue) {
 }
 
 function showUpdateDataForm(tableName, rowData) {
-    const primaryKeyValue = rowData[0];
     const modal = $('#updateDataModal');
-    modal.data('primaryKey', primaryKeyValue); // Set the tableName as a data attribute on the modal
+    modal.data('rowData', rowData); // Set rowData as a data attribute on the modal
     modal.find('.modal-title').text(`${tableName} - Veri Güncelle`);
     const form = modal.find('form')[0];
-    const formBody = modal.find('.modal-body > form')[0]; // Düzeltilmiş kısım
+    const formBody = modal.find('.modal-body > form')[0];
 
     // Clear previous form fields
     formBody.innerHTML = '';
@@ -900,18 +899,20 @@ function showUpdateDataForm(tableName, rowData) {
     .then(data => {
         $.unblockUI();
         if (data && Array.isArray(data)) {
-            data.forEach(column => {
+            data.forEach((column, index) => {
+                const value = rowData[index] || ''; // Get the value from rowData based on index or use an empty string
                 const formGroup = document.createElement('div');
                 formGroup.className = 'form-group';
+
                 if (column.DATA_TYPE.toUpperCase() === 'UNIQUEIDENTIFIER') {
                     formGroup.innerHTML = `
                         <label for="${column.COLUMN_NAME}">${column.COLUMN_NAME} - (${column.DATA_TYPE.toUpperCase()})</label>
-                        <input type="text" class="form-control" id="${column.COLUMN_NAME}" name="${column.COLUMN_NAME}" readonly="readonly" value="${rowData[0]}">
+                        <input type="text" class="form-control" id="${column.COLUMN_NAME}" name="${column.COLUMN_NAME}" readonly="readonly" value="${value}">
                     `;
                 } else {
                     formGroup.innerHTML = `
                         <label for="${column.COLUMN_NAME}">${column.COLUMN_NAME} - (${column.DATA_TYPE.toUpperCase()})</label>
-                        <input type="text" class="form-control" id="${column.COLUMN_NAME}" name="${column.COLUMN_NAME}" value="" required>
+                        <input type="text" class="form-control" id="${column.COLUMN_NAME}" name="${column.COLUMN_NAME}" value="${value}" required>
                     `;
                 }
                 formBody.appendChild(formGroup);
