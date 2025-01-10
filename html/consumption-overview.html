@@ -318,7 +318,7 @@
           <div class="modal-body">
             <form id="defineMeterDataForm">
                 <!-- Dinamik form alanları buraya eklenecek -->
-                <select class="single-input-with-labels selectivity-input" data-placeholder="Sayaç Ara">
+                <select class="undefined-meters-select-input selectivity-input">
                   <optgroup label="Elektrik">
                       <option value="70013309">70013309</option>
                       <option value="70042309">70042309</option>
@@ -394,13 +394,20 @@
   <script src="../app-assets/js/scripts/extensions/block-ui.js"></script>
   <script src="../app-assets/js/scripts/modal/components-modal.js"></script>
   <script src="../app-assets/js/scripts/obisDescriptions.js"></script>
-  <script src="../app-assets/js/scripts/forms/select/form-selectivity.js"></script>
+  <!-- <script src="../app-assets/js/scripts/forms/select/form-selectivity.js"></script> -->
   <!-- END PAGE LEVEL JS-->
   <script>
   // const baseWebhookURL = "http://127.0.0.1:5678"; // Değiştirmek istediğiniz temel URL
   const baseWebhookURL = "http://192.168.2.250:5678"; // Değiştirmek istediğiniz temel URL
   // const baseWebhookURL = "http://192.168.1.146:5678"; // Değiştirmek istediğiniz temel URL
 
+$(document).ready(function() {
+    $('.undefined-meters-select-input').selectivity({
+      allowClear: true,
+      placeholder: 'Sayaç Seçiniz.',
+      searchInputPlaceholder: 'Sayaç ara.'
+    });
+});
 
 // singleQueryModal
 function queryMeterData(serialNumber, connectionPoint, meterCategory) {
