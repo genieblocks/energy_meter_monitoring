@@ -761,75 +761,78 @@ let blockData = []; // Global değişken olarak tanımlayın
 const blockParam = urlParams.get('block');
 let currentBlock = blockParam || ""; // Başlangıç bloğu URL parametresine göre belirlenir
 
-document.addEventListener('DOMContentLoaded', function() {
-  const yearElement = document.getElementById('footer-dynamic-year');
-  if (yearElement) {
-      const currentYear = new Date().getFullYear();
-      yearElement.textContent = currentYear;
-  }
-
-  // UI'yi kilitle ve spinner göster
-  $.blockUI({
-    message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
-    overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
-    css: { border: 0, padding: 0, backgroundColor: 'transparent' }
-  });
-
-  // Blok verilerini çek ve tabloya ve menüye ekle
-  fetch(`${baseWebhookURL}/webhook/get-table-content`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({ tableName: 'Facility' })
-  })
-  .then(response => response.json())
-  .then(data => {
-    const blockDetailTableBody = document.querySelector('#block-detail-table tbody');
-    blockDetailTableBody.innerHTML = ''; // Mevcut satırları temizle
-
-    if (data[0].success && Array.isArray(data[0].data)) {
-      blockData = data[0].data; // blockData'yı global olarak kaydet
-      // Benzersiz `Block` değerlerini al, sıralama yap ve menüye ekle
-      const uniqueBlocks = [...new Set(data[0].data.map(item => item.Block))].sort();
-      const consumptionMenu = document.querySelector('.menu-content');
-      consumptionMenu.innerHTML = ''; // Mevcut menü öğelerini temizle
-
-      uniqueBlocks.forEach(block => {
-        const menuItem = document.createElement('li');
-        menuItem.className = 'menu-item';
-        menuItem.innerHTML = `<a class="menu-item block-link" href="#" data-block="${block}">Blok ${block}</a>`;
-        consumptionMenu.appendChild(menuItem);
-      });
-
-      // Eğer URL'de "block" parametresi varsa, o blok seçilir, yoksa ilk blok seçilir
-      currentBlock = currentBlock || uniqueBlocks[0];
-      activateBlock(currentBlock, data[0].data);
-
-      // Tıklanan bloğa göre tabloyu filtrele ve başlığı güncelle
-      document.querySelectorAll('.block-link').forEach(link => {
-        link.addEventListener('click', function(event) {
-          event.preventDefault();
-          const selectedBlock = event.target.getAttribute('data-block');
-          activateBlock(selectedBlock, data[0].data);
-        });
-      });
-    } else {
-      console.error('Facility tablosu verileri yüklenemedi:', data[0].message);
+document.addEventListener('DOMContentLoaded', function () {
+    const yearElement = document.getElementById('footer-dynamic-year');
+    if (yearElement) {
+        const currentYear = new Date().getFullYear();
+        yearElement.textContent = currentYear;
     }
-  })
-  .catch(error => console.error('Error:', error))
-  .finally(() => {
-    $.unblockUI(); // UI'yi aç ve spinnerı kaldır
-  });
+
+    // UI'yi kilitle ve spinner göster
+    $.blockUI({
+        message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
+        overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
+        css: { border: 0, padding: 0, backgroundColor: 'transparent' }
+    });
+
+    // Blok verilerini çek ve tabloya ve menüye ekle
+    fetch(`${baseWebhookURL}/webhook/get-table-content`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ tableName: 'Facility' }),
+    })
+        .then((response) => response.json())
+        .then((data) => {
+            const blockDetailTableBody = document.querySelector('#block-detail-table tbody');
+            blockDetailTableBody.innerHTML = ''; // Mevcut satırları temizle
+
+            if (data[0].success && Array.isArray(data[0].data)) {
+                blockData = data[0].data; // blockData'yı global olarak kaydet
+                // Benzersiz `Block` değerlerini al, sıralama yap ve menüye ekle
+                const uniqueBlocks = [...new Set(data[0].data.map((item) => item.Block))].sort();
+                const consumptionMenu = document.querySelector('.menu-content');
+                consumptionMenu.innerHTML = ''; // Mevcut menü öğelerini temizle
+
+                uniqueBlocks.forEach((block) => {
+                    const menuItem = document.createElement('li');
+                    menuItem.className = 'menu-item';
+                    menuItem.innerHTML = `<a class="menu-item block-link" href="#" data-block="${block}">Blok ${block}</a>`;
+                    consumptionMenu.appendChild(menuItem);
+                });
+
+                // En son aktif blok kontrolü
+                const lastActiveBlock = localStorage.getItem('lastActiveBlock');
+                currentBlock = lastActiveBlock || uniqueBlocks[0]; // Kaydedilmiş blok varsa onu kullan
+
+                activateBlock(currentBlock, data[0].data);
+
+                // Tıklanan bloğa göre tabloyu filtrele ve başlığı güncelle
+                document.querySelectorAll('.block-link').forEach((link) => {
+                    link.addEventListener('click', function (event) {
+                        event.preventDefault();
+                        const selectedBlock = event.target.getAttribute('data-block');
+                        localStorage.setItem('lastActiveBlock', selectedBlock); // Aktif bloğu kaydet
+                        activateBlock(selectedBlock, data[0].data);
+                    });
+                });
+            } else {
+                console.error('Facility tablosu verileri yüklenemedi:', data[0].message);
+            }
+        })
+        .catch((error) => console.error('Error:', error))
+        .finally(() => {
+            $.unblockUI(); // UI'yi aç ve spinnerı kaldır
+        });
 });
 
-  function activateBlock(block, data) {
+function activateBlock(block, data) {
     // Sol menüdeki uygun bloğu aktif yap
-    document.querySelectorAll('.menu-content .menu-item').forEach(item => item.classList.remove('active'));
+    document.querySelectorAll('.menu-content .menu-item').forEach((item) => item.classList.remove('active'));
     const blockLink = document.querySelector(`.menu-content .block-link[data-block="${block}"]`);
     if (blockLink) {
-      blockLink.parentElement.classList.add('active');
+        blockLink.parentElement.classList.add('active');
     }
 
     // Blok başlığını güncelle
@@ -837,7 +840,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Blok içeriğini güncelle
     updateContent(block, data);
-  }
+}
 
   // Bina No ve Daire'ye göre sıralama ve sıra numarası ekleme
   function sortDataAndAddIndex(data) {
