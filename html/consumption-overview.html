@@ -772,7 +772,7 @@ document.addEventListener('DOMContentLoaded', function () {
     $.blockUI({
         message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
         overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
-        css: { border: 0, padding: 0, backgroundColor: 'transparent' }
+        css: { border: 0, padding: 0, backgroundColor: 'transparent' },
     });
 
     // Blok verilerini çek ve tabloya ve menüye ekle
@@ -785,13 +785,17 @@ document.addEventListener('DOMContentLoaded', function () {
     })
         .then((response) => response.json())
         .then((data) => {
+            console.log('Fetched block data:', data); // Debug: Gelen veri
             const blockDetailTableBody = document.querySelector('#block-detail-table tbody');
             blockDetailTableBody.innerHTML = ''; // Mevcut satırları temizle
 
             if (data[0].success && Array.isArray(data[0].data)) {
                 blockData = data[0].data; // blockData'yı global olarak kaydet
+
                 // Benzersiz `Block` değerlerini al, sıralama yap ve menüye ekle
                 const uniqueBlocks = [...new Set(data[0].data.map((item) => item.Block))].sort();
+                console.log('Unique blocks:', uniqueBlocks); // Debug: Benzersiz blok listesi
+
                 const consumptionMenu = document.querySelector('.menu-content');
                 consumptionMenu.innerHTML = ''; // Mevcut menü öğelerini temizle
 
@@ -804,7 +808,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 // En son aktif blok kontrolü
                 const lastActiveBlock = localStorage.getItem('lastActiveBlock');
+                console.log('Last active block from localStorage:', lastActiveBlock); // Debug: localStorage'daki son aktif blok
+
                 currentBlock = lastActiveBlock || uniqueBlocks[0]; // Kaydedilmiş blok varsa onu kullan
+                console.log('Current block to activate:', currentBlock); // Debug: Aktif edilecek blok
 
                 activateBlock(currentBlock, data[0].data);
 
@@ -813,6 +820,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     link.addEventListener('click', function (event) {
                         event.preventDefault();
                         const selectedBlock = event.target.getAttribute('data-block');
+                        console.log('Block clicked:', selectedBlock); // Debug: Tıklanan blok
                         localStorage.setItem('lastActiveBlock', selectedBlock); // Aktif bloğu kaydet
                         activateBlock(selectedBlock, data[0].data);
                     });
@@ -828,15 +836,25 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 function activateBlock(block, data) {
+    console.log('Activating block:', block); // Debug: Aktif edilen blok
     // Sol menüdeki uygun bloğu aktif yap
     document.querySelectorAll('.menu-content .menu-item').forEach((item) => item.classList.remove('active'));
     const blockLink = document.querySelector(`.menu-content .block-link[data-block="${block}"]`);
     if (blockLink) {
         blockLink.parentElement.classList.add('active');
+        console.log('Block link activated:', block); // Debug: Aktivasyon başarılı
+    } else {
+        console.warn('Block link not found for:', block); // Debug: Aktivasyon başarısız
     }
 
     // Blok başlığını güncelle
-    document.getElementById('block-title').innerText = `Blok ${block}`;
+    const blockTitle = document.getElementById('block-title');
+    if (blockTitle) {
+        blockTitle.innerText = `Blok ${block}`;
+        console.log('Block title updated:', blockTitle.innerText); // Debug: Başlık güncelleme
+    } else {
+        console.error('Block title element not found'); // Debug: Başlık bulunamadı
+    }
 
     // Blok içeriğini güncelle
     updateContent(block, data);
