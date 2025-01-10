@@ -943,16 +943,26 @@ document.addEventListener('click', function(event) {
     if (target) {
         event.preventDefault();
 
-        const tableRow = target.closest('tr');
+        const tableRow = this.closest('tr');
         if (!tableRow) {
             console.error('Satır bulunamadı.');
             return;
         }
 
-        // Subscriber verisini al
-        const subscriberData = tableRow.querySelector('td:nth-child(4)')?.textContent.trim();
+        // Tablo başlıklarından "Subscriber" sütununun indeksini bul
+        const table = document.querySelector('#block-detail-table');
+        const headers = Array.from(table.querySelectorAll('thead th'));
+        const subscriberIndex = headers.findIndex(header => header.textContent.trim() === 'Abone');
+
+        if (subscriberIndex === -1) {
+            console.error('"Subscriber" sütunu bulunamadı.');
+            return;
+        }
+
+        // Satırdan "Subscriber" verisini al
+        const subscriberData = tableRow.children[subscriberIndex]?.textContent.trim();
         if (!subscriberData) {
-            console.warn('Subscriber verisi bulunamadı.');
+            console.warn('"Subscriber" verisi bulunamadı.');
             return;
         }
 
@@ -1093,7 +1103,7 @@ function showUpdateSubscriberDataForm(tableName, subscriberData) {
     $('#updateDataModal').modal('show');
     document.querySelector('#updateDataForm').innerHTML = `
         <div class="form-group">
-            <label for="subscriberName">Subscriber Name</label>
+            <label for="subscriberName">Abone İsmi</label>
             <input type="text" id="subscriberName" name="subscriberName" class="form-control" value="${subscriberData}">
         </div>`;
 }
