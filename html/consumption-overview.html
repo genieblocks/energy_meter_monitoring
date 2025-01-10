@@ -1626,9 +1626,37 @@ function removeDefinedMeter(tableName, meterIDFieldNameData, meterIDData) {
     });
 }
 
-function defineMeter(){
+function defineMeter() {
+    // Sayaç tanımlama modalındaki select öğesini seç
+    const modal = document.getElementById('defineMeterModal');
+    const selectElement = modal.querySelector('.undefined-meters-select-input');
 
+    if (!selectElement) {
+        console.error('Select öğesi bulunamadı.');
+        return;
+    }
+
+    // Seçilen sayaç seri numarasını ve grubu al
+    const selectedOption = selectElement.options[selectElement.selectedIndex];
+    const selectedGroupLabel = selectedOption.parentElement.label; // Optgroup etiketini al
+    const selectedSerialNumber = selectedOption.value;
+
+    // FlatID'yi `defined-meters-table` attribute'undan al
+    const definedMetersTable = document.getElementById('defined-meters-table');
+    const flatID = definedMetersTable?.getAttribute('data-flat-id') || null;
+
+    if (!flatID) {
+        console.warn('FlatID değeri bulunamadı.');
+    }
+
+    // Konsola logla
+    console.log('Seçilen Grup:', selectedGroupLabel);
+    console.log('Seçilen Seri Numarası:', selectedSerialNumber);
+    console.log('FlatID:', flatID);
+
+    // İleride kullanılmak üzere bu değerleri backend'e göndermek veya başka işlemler için işleyebilirsiniz
 }
+
   </script>
 </body>
 
