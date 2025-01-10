@@ -880,16 +880,19 @@ document.addEventListener('DOMContentLoaded', function() {
         <td class="d-none">${connection.HeatingUsage ?? '-'}</td>
         <td class="d-none">${connection.CoolingUsage ?? '-'}</td>
         <td>
-          <button type="button" class="btn btn-sm btn-outline-info" id="detail-button">
+          <button type="button" class="btn btn-sm btn-outline-info detail-button" id="block-detail-view-button">
             <i class="fa fa-eye"></i>
           </button>
         </td>
         <td>
           <span class="dropdown">
             <button id="dropdown-settings-button" type="button" data-toggle="dropdown" aria-haspopup="true"
-            aria-expanded="true" class="btn btn-genie dropdown-toggle dropdown-menu-right"><i class="ft-settings"></i></button>
+            aria-expanded="true" class="btn btn-genie dropdown-toggle dropdown-menu-right">
+              <i class="ft-settings"></i>
+            </button>
             <span aria-labelledby="dropdown-settings-button" class="dropdown-menu mt-1 dropdown-menu-right">
-              <a href="#" class="dropdown-item edit-button"><i class="fa fa-pencil"></i> Güncelle</a
+              <a href="#" class="dropdown-item edit-button" id="update-block-button"><i class="fa fa-pencil"></i> Güncelle</a>
+              <a href="#" class="dropdown-item remove-button" id="remove-block-button"><i class="fa fa-trash"></i> Kaldır</a>
             </span>
           </span>
         </td>
@@ -897,7 +900,7 @@ document.addEventListener('DOMContentLoaded', function() {
       blockDetailTableBody.appendChild(row);
 
       // Detay butonu için olay bağlama
-      row.querySelector('#detail-button').addEventListener('click', function(event) {
+      row.querySelector('#block-detail-view-button').addEventListener('click', function(event) {
         event.preventDefault();
         showDetailModal(connection);
       });
@@ -942,7 +945,7 @@ document.querySelectorAll('.dropdown-toggle').forEach(button => {
 document.addEventListener('click', function(event) {
   const target = event.target;
   
-  if (target.closest('.detail-button')) {
+  if (target.closest('.block-detail-view-button')) {
     event.preventDefault();
     // Detay işlevi burada yer alır
     console.log('Detay butonuna basıldı');
