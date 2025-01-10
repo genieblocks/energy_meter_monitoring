@@ -943,12 +943,12 @@ document.addEventListener('click', function(event) {
     if (target) {
         event.preventDefault();
 
-        const tableRow = this.closest('tr');
+        const tableRow = target.closest('tr');
         if (!tableRow) {
             console.error('Satır bulunamadı.');
             return;
         }
-
+        
         // Tablo başlıklarından "Subscriber" sütununun indeksini bul
         const table = document.querySelector('#block-detail-table');
         const headers = Array.from(table.querySelectorAll('thead th'));
@@ -959,7 +959,7 @@ document.addEventListener('click', function(event) {
             return;
         }
 
-        // Satırdan "Subscriber" verisini al
+        // Subscriber verisini al
         const subscriberData = tableRow.children[subscriberIndex]?.textContent.trim();
         if (!subscriberData) {
             console.warn('"Subscriber" verisi bulunamadı.');
