@@ -273,6 +273,29 @@
   </div>
 </div>
 
+<!-- Update Data Modal -->
+<div class="modal fade text-left" id="updateDataModal" tabindex="-1" role="dialog" aria-labelledby="updateDataModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h4 class="modal-title text-bold-600" id="updateDataModalLabel">Güncelleme</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+          <div class="modal-body">
+            <form id="updateDataForm">
+                <!-- Dinamik form alanları buraya eklenecek -->
+            </form>
+          </div>
+          <div class="modal-footer">
+              <input type="reset" class="btn btn-light" data-dismiss="modal" value="Kapat">
+              <input type="button" class="btn btn-genie white" value="Güncelle" onclick="updateTableContent()">
+          </div>
+      </div>
+  </div>
+</div>
+
   <!-- ////////////////////////////////////////////////////////////////////////////  -->
 
   <footer class="footer footer-static footer-light navbar-border">
@@ -744,6 +767,30 @@ document.addEventListener('DOMContentLoaded', function() {
       yearElement.textContent = currentYear;
   }
 
+  // Add event listener for update buttons
+  document.querySelectorAll('#update-block-button').forEach(button => {
+    button.addEventListener('click', function(event) {
+        event.preventDefault();
+
+        const tableRow = this.closest('tr');
+        if (!tableRow) {
+            console.error('Satır bulunamadı.');
+            return;
+        }
+
+        // Subscriber verisini al
+        const subscriberData = tableRow.querySelector('td:nth-child(4)')?.textContent.trim();
+        if (!subscriberData) {
+            console.warn('Subscriber verisi bulunamadı.');
+            return;
+        }
+
+        // Fonksiyonu çağır
+        console.log('Subscriber Data:', subscriberData);
+        showUpdateSubscriberDataForm('Facility', subscriberData); // Tablo adı olarak örnek "Facility" kullanıldı
+    });
+});
+
   // UI'yi kilitle ve spinner göster
   $.blockUI({
     message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
@@ -1007,6 +1054,75 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
 });
+
+function updateTableContent() {
+    const form = document.querySelector('#updateDataForm'); // Form elementini doğru seçin
+    if (!form || !(form instanceof HTMLFormElement)) {
+        console.error('Form element not found or incorrect type');
+        return;
+    }
+
+    const formData = new FormData(form);
+    const tableName = $('#updateDataModal').data('tableName'); // Modal data attribute'tan tablo ismi alınır
+    const targetRecord = {};
+    const fieldsToUpdate = {};
+
+    let isFirstField = true;
+
+    formData.forEach((value, key) => {
+        if (isFirstField) {
+            targetRecord[key] = value; // İlk alan TargetRecord içine alınır
+            isFirstField = false;
+        } else {
+            fieldsToUpdate[key] = value; // Diğer alanlar FieldsToUpdate içine alınır
+        }
+    });
+
+    const jsonData = {
+        tableName: tableName,
+        TargetRecord: targetRecord,
+        FieldsToUpdate: fieldsToUpdate
+    };
+
+    $.blockUI({
+        message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
+        overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
+        css: { border: 0, padding: 0, backgroundColor: 'transparent' }
+    });
+
+    fetch(`${baseWebhookURL}/webhook/update-table-content`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(jsonData)
+    })
+    .then(response => response.json())
+    .then(data => {
+        $.unblockUI();
+        if (data[0].success) {
+            $('#updateDataModal').modal('hide');
+            showTableContent($('#tableContentModal .modal-title').text());
+        } else {
+            alert('Veri güncellenirken bir hata oluştu: ' + data[0].message);
+        }
+    })
+    .catch(error => {
+        $.unblockUI();
+        alert('Veri güncellenirken bir hata oluştu.');
+    });
+}
+
+function showUpdateSubscriberDataForm(tableName, subscriberData) {
+    console.log(`Güncelleme başlatıldı: Tablo - ${tableName}, Abone - ${subscriberData}`);
+    // Modal gösterme işlemleri ve diğer işlevler buraya eklenebilir
+    $('#updateDataModal').modal('show');
+    document.querySelector('#updateDataForm').innerHTML = `
+        <div class="form-group">
+            <label for="subscriberName">Subscriber Name</label>
+            <input type="text" id="subscriberName" name="subscriberName" class="form-control" value="${subscriberData}">
+        </div>`;
+}
   </script>
 </body>
 
