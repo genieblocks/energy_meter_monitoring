@@ -1298,7 +1298,7 @@ function showUpdateDefinedMeterDataForm(tableName, customNameData, noteData, isV
     // Diğer alanlar FieldsToUpdate --> IsVisibleInInvoiceReport
     formGroup = document.createElement('div');
     formGroup.className = 'form-group';
-    if (isVisibleInInvoiceReportData === true){
+    if (isVisibleInInvoiceReportData === true || isVisibleInInvoiceReportData === 'true'){
       formGroup.innerHTML = `
           <label for="IsVisibleInInvoiceReport">Faturalandırma</label>
           <select id="IsVisibleInInvoiceReport" name="IsVisibleInInvoiceReport" class="form-control">
