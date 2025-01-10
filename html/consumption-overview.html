@@ -1511,10 +1511,11 @@ function showUndefinedMetersForm() {
 
     const modal = $('#defineMeterModal');
     const selectInput = modal.find('.undefined-meters-select-input');
-    
+
     // İçeriği temizle ve yükleniyor bilgisi göster
-    selectInput.html('<option value="" disabled selected>Yükleniyor...</option>');
-    
+    selectInput.empty(); // Tüm mevcut içerik temizlenir
+    selectInput.append('<option value="" disabled selected>Yükleniyor...</option>');
+
     const undefinedMeters = {}; // Sayaçları grup başlıklarına göre saklayacak obje
 
     // Tabloları sırayla sorgula
@@ -1536,7 +1537,7 @@ function showUndefinedMetersForm() {
         )
     ).then(() => {
         // Tüm sorgular tamamlandıktan sonra select öğesini doldur
-        selectInput.html(''); // Mevcut seçenekleri temizle
+        selectInput.empty(); // Tüm mevcut içerik temizlenir
 
         Object.keys(undefinedMeters).forEach(group => {
             const optgroup = document.createElement('optgroup');
@@ -1554,11 +1555,11 @@ function showUndefinedMetersForm() {
 
         // Eğer tanımsız sayaç yoksa
         if (Object.keys(undefinedMeters).every(group => undefinedMeters[group].length === 0)) {
-            selectInput.html('<option value="" disabled>Tanımsız sayaç bulunamadı</option>');
+            selectInput.append('<option value="" disabled>Tanımsız sayaç bulunamadı</option>');
         }
     }).catch(error => {
         console.error('Sayaç verileri yüklenirken hata oluştu', error);
-        selectInput.html('<option value="" disabled>Veriler yüklenemedi</option>');
+        selectInput.empty().append('<option value="" disabled>Veriler yüklenemedi</option>');
     });
 
     // Modal başlığı ve gösterimi
