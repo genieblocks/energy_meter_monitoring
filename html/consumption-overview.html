@@ -1301,8 +1301,8 @@ function showUpdateDefinedMeterDataForm(tableName, customNameData, noteData, isV
     formGroup.innerHTML = `
         <label for="IsVisibleInInvoiceReport">Faturalandırma</label>
         <select id="IsVisibleInInvoiceReport" name="IsVisibleInInvoiceReport" class="form-control">
-            <option value="true" ${isVisibleInInvoiceReportData ? 'selected' : ''}>Evet</option>
-            <option value="false" ${!isVisibleInInvoiceReportData ? 'selected' : ''}>Hayır</option>
+            <option value="true" ${isVisibleInInvoiceReportData === true ? 'selected' : ''}>Evet</option>
+            <option value="false" ${isVisibleInInvoiceReportData === false || isVisibleInInvoiceReportData == null ? 'selected' : ''}>Hayır</option>
         </select>
     `;
     formBody.appendChild(formGroup);
