@@ -691,7 +691,7 @@ function showDetailModal(connection) {
                 <td>${meter.CustomName && meter.CustomName !== 'null' ? meter.CustomName : '-'}</td>
                 <td>${meter.SerialNumber ?? '-'}</td>
                 <td>${meterMultiplier}</td>
-                <td>${latestValues.MeterValue ?? '-'}</td>
+                <td>${meter.MeterValue && meter.MeterValue !== 'null' ? meter.MeterValue : '-'}</td>
                 <td>${formattedDate}</td>
                 <td>
                   <button type="button" class="btn btn-sm btn-outline-info" id="table-show-button">
