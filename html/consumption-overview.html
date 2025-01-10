@@ -1509,12 +1509,18 @@ function showUndefinedMetersForm() {
         { name: "WaterMeters", label: "Su" }
     ];
 
-    const modal = $('#defineMeterModal');
-    const selectInput = modal.find('.undefined-meters-select-input');
+    const modal = document.getElementById('defineMeterModal');
+    const selectContainer = modal.querySelector('.undefined-meters-select-input');
 
-    // İçeriği temizle ve yükleniyor bilgisi göster
-    selectInput.empty(); // Tüm mevcut içerik temizlenir
-    selectInput.append('<option value="" disabled selected>Yükleniyor...</option>');
+    // Yeni bir <select> öğesi oluştur ve eskiyi değiştir
+    const newSelect = document.createElement('select');
+    newSelect.className = 'undefined-meters-select-input selectivity-input';
+    newSelect.innerHTML = '<option value="" disabled selected>Yükleniyor...</option>';
+
+    // Eski <select> öğesini değiştir
+    if (selectContainer) {
+        selectContainer.replaceWith(newSelect);
+    }
 
     const undefinedMeters = {}; // Sayaçları grup başlıklarına göre saklayacak obje
 
@@ -1536,35 +1542,37 @@ function showUndefinedMetersForm() {
                 .catch(error => console.error(`Hata: ${table.name} sorgulanamadı`, error))
         )
     ).then(() => {
-        // Tüm sorgular tamamlandıktan sonra select öğesini doldur
-        selectInput.empty(); // Tüm mevcut içerik temizlenir
+        // Tüm sorgular tamamlandıktan sonra <select> öğesini doldur
+        newSelect.innerHTML = ''; // Önce tüm mevcut içeriği temizle
 
         Object.keys(undefinedMeters).forEach(group => {
-            const optgroup = document.createElement('optgroup');
-            optgroup.label = group;
+            if (undefinedMeters[group].length > 0) {
+                const optgroup = document.createElement('optgroup');
+                optgroup.label = group;
 
-            undefinedMeters[group].forEach(meter => {
-                const option = document.createElement('option');
-                option.value = meter.SerialNumber;
-                option.textContent = meter.SerialNumber;
-                optgroup.appendChild(option);
-            });
+                undefinedMeters[group].forEach(meter => {
+                    const option = document.createElement('option');
+                    option.value = meter.SerialNumber;
+                    option.textContent = meter.SerialNumber;
+                    optgroup.appendChild(option);
+                });
 
-            selectInput.append(optgroup);
+                newSelect.appendChild(optgroup);
+            }
         });
 
         // Eğer tanımsız sayaç yoksa
         if (Object.keys(undefinedMeters).every(group => undefinedMeters[group].length === 0)) {
-            selectInput.append('<option value="" disabled>Tanımsız sayaç bulunamadı</option>');
+            newSelect.innerHTML = '<option value="" disabled>Tanımsız sayaç bulunamadı</option>';
         }
     }).catch(error => {
         console.error('Sayaç verileri yüklenirken hata oluştu', error);
-        selectInput.empty().append('<option value="" disabled>Veriler yüklenemedi</option>');
+        newSelect.innerHTML = '<option value="" disabled>Veriler yüklenemedi</option>';
     });
 
     // Modal başlığı ve gösterimi
-    modal.find('.modal-title').text(`Aboneye Sayaç Tanımlama`);
-    modal.modal('show');
+    modal.querySelector('.modal-title').textContent = `Aboneye Sayaç Tanımlama`;
+    $('#defineMeterModal').modal('show');
 }
 
 function removeDefinedMeter(tableName, meterIDFieldNameData, meterIDData) {
