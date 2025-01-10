@@ -971,13 +971,13 @@ document.addEventListener('click', function(event) {
         // Tablo başlıklarından "FlatID" sütununun indeksini bul
         const flatIDIndex = headers.findIndex(header => header.textContent.trim() === 'FlatID');
 
-        if (subscriberIndex === -1) {
+        if (flatIDIndex === -1) {
             console.error('"FlatID" sütunu bulunamadı.');
             return;
         }
 
         // FlatID verisini al
-        const flatID = tableRow.children[subscriberIndex]?.textContent.trim();
+        const flatID = tableRow.children[flatIDIndex]?.textContent.trim();
         if (!flatID) {
             console.warn('"FlatID" verisi bulunamadı.');
             return;
@@ -1124,7 +1124,7 @@ function showUpdateSubscriberDataForm(tableName, subscriberData, flatID) {
             <label for="flatID">FlatID</label>
             <input type="text" id="flatID" name="flatID" class="form-control" readonly="readonly" value="${flatID}">
             <label for="subscriberName">Abone İsmi</label>
-            <input type="text" id="subscriberName" name="subscriberName" class="form-control" value="${subscriberData}">
+            <input type="text" id="subscriberName" name="subscriberName" class="form-control" value="${subscriberData}" required>
         </div>`;
 }
   </script>
