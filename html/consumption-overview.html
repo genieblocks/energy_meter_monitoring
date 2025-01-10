@@ -767,30 +767,6 @@ document.addEventListener('DOMContentLoaded', function() {
       yearElement.textContent = currentYear;
   }
 
-  // Add event listener for update buttons
-  document.querySelectorAll('#update-block-button').forEach(button => {
-      button.addEventListener('click', function(event) {
-          event.preventDefault();
-
-          const tableRow = this.closest('tr');
-          if (!tableRow) {
-              console.error('Satır bulunamadı.');
-              return;
-          }
-
-          // Subscriber verisini al
-          const subscriberData = tableRow.querySelector('td:nth-child(4)')?.textContent.trim();
-          if (!subscriberData) {
-              console.warn('Subscriber verisi bulunamadı.');
-              return;
-          }
-
-          // Fonksiyonu çağır
-          console.log('Subscriber Data:', subscriberData);
-          showUpdateSubscriberDataForm('Facility', subscriberData); // Tablo adı olarak örnek "Facility" kullanıldı
-      });
-  });
-
   // UI'yi kilitle ve spinner göster
   $.blockUI({
     message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
@@ -962,7 +938,29 @@ document.querySelectorAll('.block-link').forEach(link => {
   });
 });
 
+document.addEventListener('click', function(event) {
+    const target = event.target.closest('#update-block-button');
+    if (target) {
+        event.preventDefault();
 
+        const tableRow = target.closest('tr');
+        if (!tableRow) {
+            console.error('Satır bulunamadı.');
+            return;
+        }
+
+        // Subscriber verisini al
+        const subscriberData = tableRow.querySelector('td:nth-child(4)')?.textContent.trim();
+        if (!subscriberData) {
+            console.warn('Subscriber verisi bulunamadı.');
+            return;
+        }
+
+        // Fonksiyonu çağır
+        console.log('Subscriber Data:', subscriberData);
+        showUpdateSubscriberDataForm('Facility', subscriberData);
+    }
+});
 
 // Close the dropdown when clicking outside
 document.addEventListener('click', function(event) {
