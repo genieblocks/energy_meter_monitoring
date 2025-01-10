@@ -1055,7 +1055,7 @@ document.addEventListener('click', function(event) {
           return;
       }
 
-      if (confirm('${serialNumber} seri numaralı sayacı kaldırmak istediğinizden emin misiniz?')) {
+      if (confirm(`${serialNumber} numaralı sayacı kaldırmak istediğinizden emin misiniz?`)) {
           console.log(`removeDefinedMeter: ${tableName} --> ${relatedID} --> ${meterIDFieldNameData} --> ${meterIDData}`);
           removeDefinedMeter(tableName, meterIDFieldNameData, meterIDData);
       }
