@@ -1469,8 +1469,8 @@ function fetchConnections(connectionTable, meterType) {
     .then(data => {
       if (data[0].success) {
         alert('Sayaç başarıyla eklendi!');
-        location.reload(); // Sayfayı yeniden yükle.
         $('#electricityMeterModal').modal('hide'); // Modalı kapat
+        location.reload(); // Sayfayı yeniden yükle.
       } else {
         console.error('Sayaç ekleme hatası:', data.message);
       }
