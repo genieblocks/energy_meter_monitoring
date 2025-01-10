@@ -974,6 +974,23 @@ document.addEventListener('click', function(event) {
       const table = document.querySelector('#defined-meters-table');
       const headers = Array.from(table.querySelectorAll('thead th'));
 
+
+      // *************************** SerialNumber *************************** 
+      // Tablo başlıklarından "SerialNumber" sütununun indeksini bul
+      const serialNumberIndex = headers.findIndex(header => header.textContent.trim() === 'Seri Numarası');
+
+      if (serialNumberIndex === -1) {
+          console.error('"SerialNumber" sütunu bulunamadı.');
+          return;
+      }
+
+      // SerialNumber verisini al
+      const serialNumber = tableRow.children[serialNumberIndex]?.textContent.trim();
+      if (!serialNumber) {
+          console.warn('"SerialNumber" verisi bulunamadı.');
+          return;
+      }
+
       // *************************** RelatedID *************************** 
       // Tablo başlıklarından "RelatedID" sütununun indeksini bul
       const relatedIDIndex = headers.findIndex(header => header.textContent.trim() === 'RelatedID');
@@ -1038,7 +1055,7 @@ document.addEventListener('click', function(event) {
           return;
       }
 
-      if (confirm('Bu sayacı silkaldırmak istediğinizden emin misiniz?')) {
+      if (confirm('${serialNumber} seri numaralı sayacı kaldırmak istediğinizden emin misiniz?')) {
           console.log(`removeDefinedMeter: ${tableName} --> ${relatedID} --> ${meterIDFieldNameData} --> ${meterIDData}`);
           removeDefinedMeter(tableName, meterIDFieldNameData, meterIDData);
       }
