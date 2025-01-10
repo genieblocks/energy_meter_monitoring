@@ -821,7 +821,11 @@ document.addEventListener('DOMContentLoaded', function () {
                         event.preventDefault();
                         const selectedBlock = event.target.getAttribute('data-block');
                         console.log('Block clicked:', selectedBlock); // Debug: Tıklanan blok
+
+                        // Aktif bloğu kaydet ve kontrol et
                         localStorage.setItem('lastActiveBlock', selectedBlock); // Aktif bloğu kaydet
+                        console.log('localStorage after setItem:', localStorage.getItem('lastActiveBlock')); // Debug: Kayıt sonrası içerik
+
                         activateBlock(selectedBlock, data[0].data);
                     });
                 });
