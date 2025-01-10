@@ -1641,6 +1641,18 @@ function defineMeter() {
     const selectedGroupLabel = selectedOption.parentElement.label; // Optgroup etiketini al
     const selectedSerialNumber = selectedOption.value;
 
+    // Tabloların bilgileri
+    const tables = [
+        { name: "ElectricMeters", label: "Elektrik" },
+        { name: "HeatingMeters", label: "Kalorimetre (Isıtma)" },
+        { name: "CoolingMeters", label: "Kalorimetre (Soğutma)" },
+        { name: "WaterMeters", label: "Su" }
+    ];
+
+    // Seçilen gruba karşılık gelen tabloyu bul
+    const matchedTable = tables.find(table => table.label === selectedGroupLabel);
+    const tableName = matchedTable ? matchedTable.name : 'Tablo bulunamadı';
+
     // FlatID'yi `defined-meters-table` attribute'undan al
     const definedMetersTable = document.getElementById('defined-meters-table');
     const flatID = definedMetersTable?.getAttribute('data-flat-id') || null;
@@ -1653,6 +1665,7 @@ function defineMeter() {
     console.log('Seçilen Grup:', selectedGroupLabel);
     console.log('Seçilen Seri Numarası:', selectedSerialNumber);
     console.log('FlatID:', flatID);
+    console.log('Gruba Karşılık Gelen Tablo:', tableName);
 
     // İleride kullanılmak üzere bu değerleri backend'e göndermek veya başka işlemler için işleyebilirsiniz
 }
