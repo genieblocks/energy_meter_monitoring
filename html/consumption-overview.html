@@ -1104,7 +1104,6 @@ function updateTableContent() {
         $.unblockUI();
         if (data[0].success) {
             $('#updateDataModal').modal('hide');
-            showTableContent($('#tableContentModal .modal-title').text());
         } else {
             alert('Veri güncellenirken bir hata oluştu: ' + data[0].message);
         }
