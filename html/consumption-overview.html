@@ -1221,6 +1221,38 @@ document.addEventListener('click', function(event) {
         showUpdateDefinedMeterDataForm(tableName, serialNumber, customNameData, noteData, isVisibleInInvoiceReportData, meterIDFieldNameData, meterIDData);
     }
 
+    // Update Subscriber Button Clicks
+    if (target.id === 'updateSubscriberButton') {
+        event.preventDefault();
+
+        // FlatID'yi `defined-meters-table` attribute'undan al
+        const definedMetersTable = document.getElementById('defined-meters-table');
+        const flatID = definedMetersTable?.getAttribute('data-flat-id') || null;
+
+        if (!flatID) {
+            console.warn('FlatID değeri bulunamadı.');
+        }
+
+        // Subscriber verisini modal başlığından al
+        const modalTitleElement = document.getElementById('meter-detail-modalLabel');
+        const modalTitleText = modalTitleElement?.textContent || '';
+
+        // Subscriber verisini başlık formatına göre ayıkla (örnek: "Bina No: 12 Daire: 3 Abone: John Doe")
+        const subscriberMatch = modalTitleText.match(/Abone: (.+)/);
+        const subscriberData = subscriberMatch ? subscriberMatch[1].trim() : null;
+
+        if (!subscriberData) {
+            console.warn('Subscriber verisi bulunamadı.');
+        }
+
+        // Loglama
+        console.log('FlatID:', flatID);
+        console.log('Subscriber:', subscriberData);
+
+        // Abone Güncelleme Formunu Göster
+        showUpdateSubscriberDataForm('Facility', subscriberData, flatID);
+    }
+
     // Update Block Button Clicks
     if (target.id === 'update-block-button') {
         event.preventDefault();
@@ -1653,12 +1685,6 @@ function defineMeter() {
     if (!flatID) {
         console.warn('FlatID değeri bulunamadı.');
     }
-
-    // Konsola logla
-    console.log('Seçilen Grup:', selectedGroupLabel);
-    console.log('Seçilen Seri Numarası:', selectedSerialNumber);
-    console.log('FlatID:', flatID);
-    console.log('Gruba Karşılık Gelen Tablo:', tableName);
 
     const targetRecord = {};
     const fieldsToUpdate = {};
