@@ -1295,6 +1295,7 @@ function showUpdateDefinedMeterDataForm(tableName, customNameData, noteData, isV
     `;
     formBody.appendChild(formGroup);
 
+    console.log('isVisibleInInvoiceReportData:', isVisibleInInvoiceReportData);
     // Diğer alanlar FieldsToUpdate --> IsVisibleInInvoiceReport
     formGroup = document.createElement('div');
     formGroup.className = 'form-group';
@@ -1302,7 +1303,7 @@ function showUpdateDefinedMeterDataForm(tableName, customNameData, noteData, isV
         <label for="IsVisibleInInvoiceReport">Faturalandırma</label>
         <select id="IsVisibleInInvoiceReport" name="IsVisibleInInvoiceReport" class="form-control">
             <option value="true" ${isVisibleInInvoiceReportData === true ? 'selected' : ''}>Evet</option>
-            <option value="false" ${isVisibleInInvoiceReportData === false || isVisibleInInvoiceReportData == null ? 'selected' : ''}>Hayır</option>
+            <option value="false" ${isVisibleInInvoiceReportData === false ? 'selected' : ''}>Hayır</option>
         </select>
     `;
     formBody.appendChild(formGroup);
