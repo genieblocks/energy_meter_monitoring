@@ -1145,6 +1145,7 @@ function showUpdateSubscriberDataForm(tableName, subscriberData, flatID) {
             <label for="flatID">FlatID</label>
             <input type="text" id="flatID" name="flatID" class="form-control" readonly="readonly" value="${flatID}">
         `;
+        formBody.appendChild(formGroup);
 
         // Diğer alanlar FieldsToUpdate için
         formGroup = document.createElement('div');
@@ -1153,6 +1154,7 @@ function showUpdateSubscriberDataForm(tableName, subscriberData, flatID) {
             <label for="subscriberName">Abone İsmi</label>
             <input type="text" id="subscriberName" name="subscriberName" class="form-control" value="${subscriberData}" required>
         `;
+        formBody.appendChild(formGroup);
 
     modal.modal('show');
 }
