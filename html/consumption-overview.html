@@ -991,22 +991,6 @@ document.addEventListener('click', function(event) {
           return;
       }
 
-      // *************************** RelatedID *************************** 
-      // Tablo başlıklarından "RelatedID" sütununun indeksini bul
-      const relatedIDIndex = headers.findIndex(header => header.textContent.trim() === 'RelatedID');
-
-      if (relatedIDIndex === -1) {
-          console.error('"RelatedID" sütunu bulunamadı.');
-          return;
-      }
-
-      // RelatedID verisini al
-      const relatedID = tableRow.children[relatedIDIndex]?.textContent.trim();
-      if (!relatedID) {
-          console.warn('"RelatedID" verisi bulunamadı.');
-          return;
-      }
-
       // *************************** MeterIDFieldName *************************** 
       // Tablo başlıklarından "MeterIDFieldName" sütununun indeksini bul
       const meterIDFieldNameIndex = headers.findIndex(header => header.textContent.trim() === 'MeterIDFieldName');
@@ -1056,7 +1040,6 @@ document.addEventListener('click', function(event) {
       }
 
       if (confirm(`${serialNumber} numaralı sayacı kaldırmak istediğinizden emin misiniz?`)) {
-          console.log(`removeDefinedMeter: ${tableName} --> ${relatedID} --> ${meterIDFieldNameData} --> ${meterIDData}`);
           removeDefinedMeter(tableName, meterIDFieldNameData, meterIDData);
       }
     }
