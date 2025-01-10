@@ -991,7 +991,7 @@ document.addEventListener('click', function(event) {
 
         // *************************** Note *************************** 
         // Tablo başlıklarından "Note" sütununun indeksini bul
-        const noteIndex = headers.findIndex(header => header.textContent.trim() === 'Faturalandırma');
+        const noteIndex = headers.findIndex(header => header.textContent.trim() === 'Not');
 
         if (noteIndex === -1) {
             console.error('"Note" sütunu bulunamadı.');
@@ -1007,7 +1007,7 @@ document.addEventListener('click', function(event) {
 
         // *************************** IsVisibleInInvoiceReport *************************** 
         // Tablo başlıklarından "IsVisibleInInvoiceReport" sütununun indeksini bul
-        const isVisibleInInvoiceReportIndex = headers.findIndex(header => header.textContent.trim() === 'Not');
+        const isVisibleInInvoiceReportIndex = headers.findIndex(header => header.textContent.trim() === 'Faturalandırma');
 
         if (isVisibleInInvoiceReportIndex === -1) {
             console.error('"IsVisibleInInvoiceReport" sütunu bulunamadı.');
