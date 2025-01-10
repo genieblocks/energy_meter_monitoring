@@ -1617,7 +1617,7 @@ function removeDefinedMeter(tableName, meterIDFieldNameData, meterIDData) {
             $('#meter-detail-modal').modal('hide');
             location.reload(); // Sayfayı yeniden yükle.
         } else {
-            alert('Veri güncellenirken bir hata oluştu: ' + data[0].message);
+            alert('Veri kaldırılırken bir hata oluştu: ' + data[0].message);
         }
     })
     .catch(error => {
@@ -1627,6 +1627,12 @@ function removeDefinedMeter(tableName, meterIDFieldNameData, meterIDData) {
 }
 
 function defineMeter() {
+    $.blockUI({
+        message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
+        overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
+        css: { border: 0, padding: 0, backgroundColor: 'transparent' }
+    });
+
     // Sayaç tanımlama modalındaki select öğesini seç
     const modal = document.getElementById('defineMeterModal');
     const selectElement = modal.querySelector('.undefined-meters-select-input');
@@ -1667,7 +1673,39 @@ function defineMeter() {
     console.log('FlatID:', flatID);
     console.log('Gruba Karşılık Gelen Tablo:', tableName);
 
-    // İleride kullanılmak üzere bu değerleri backend'e göndermek veya başka işlemler için işleyebilirsiniz
+    const targetRecord = {};
+    const fieldsToUpdate = {};
+
+    targetRecord[SerialNumber] = selectedSerialNumber;
+    fieldsToUpdate["RelatedID"] = flatID; 
+
+    const jsonData = {
+        tableName: tableName,
+        TargetRecord: targetRecord,
+        FieldsToUpdate: fieldsToUpdate
+    };
+
+    fetch(`${baseWebhookURL}/webhook/update-table-content`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(jsonData)
+    })
+    .then(response => response.json())
+    .then(data => {
+        $.unblockUI();
+        if (data[0].success) {
+            $('#meter-detail-modal').modal('hide');
+            location.reload(); // Sayfayı yeniden yükle.
+        } else {
+            alert('Sayaç tanımlanırken bir hata oluştu: ' + data[0].message);
+        }
+    })
+    .catch(error => {
+        $.unblockUI();
+        alert('Sayaç tanımlanırken bir hata oluştu.');
+    });
 }
 
   </script>
