@@ -677,6 +677,15 @@ function updateSingleIecQueryModal(data) {
 // Detay modalını açan ve içeriği dinamik olarak dolduran fonksiyon
 function showDetailModal(connection) {
   const detailTableBody = document.getElementById('detailTableBody');
+  const definedMetersTable = document.getElementById('defined-meters-table'); // Tablonun elementini seçiyoruz
+
+  // `FlatID` özelliğini `defined-meters-table` tablosuna attribute olarak ekle
+  if (definedMetersTable) {
+      definedMetersTable.setAttribute('data-flat-id', connection.FlatID ?? '-');
+  } else {
+      console.error('defined-meters-table bulunamadı.');
+  }
+
   detailTableBody.innerHTML = ''; // Mevcut içeriği temizle
 
   const flatID = connection.FlatID;
@@ -1011,7 +1020,26 @@ document.addEventListener('click', function(event) {
     if (target.id === 'defineMeterButton') {
       event.preventDefault();
 
-      showUndefinedMetersForm();
+      const table = document.querySelector('#defined-meters-table');
+      const headers = Array.from(table.querySelectorAll('thead th'));
+
+      // *************************** RelatedID *************************** 
+      // Tablo başlıklarından "RelatedID" sütununun indeksini bul
+      const relatedIDIndex = headers.findIndex(header => header.textContent.trim() === 'RelatedID');
+
+      if (relatedIDIndex === -1) {
+          console.error('"RelatedID" sütunu bulunamadı.');
+          return;
+      }
+
+      // RelatedID verisini al
+      const relatedID = tableRow.children[relatedIDIndex]?.textContent.trim();
+      if (!relatedID) {
+          console.warn('"RelatedID" verisi bulunamadı.');
+          return;
+      }
+
+      showUndefinedMetersForm(relatedID);
     }
 
     // Remove Defined Meter Button Clicks
@@ -1615,6 +1643,10 @@ function removeDefinedMeter(tableName, meterIDFieldNameData, meterIDData) {
         $.unblockUI();
         alert('Veri kaldırılırken bir hata oluştu.');
     });
+}
+
+function defineMeter(){
+
 }
   </script>
 </body>
