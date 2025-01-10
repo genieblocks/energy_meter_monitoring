@@ -518,14 +518,10 @@ document.addEventListener('click', function (event) {
       return;
     }
 
-    console.log(`Sayaç Tipi: ${meterCategory}, Seri Numarası: ${serialNumber}, Bağlantı Noktası: ${connectionPoint}`);
-
     // Sayaç Tipine göre sorgu fonksiyonunu çağır
     if (meterCategory === 'Elektrik') {
-      console.log('Elektrik sayacı sorgulanıyor...');
       queryIecMeterData(serialNumber, connectionPoint);
     } else {
-      console.log('Elektrik dışı sayaç sorgulanıyor...');
       queryMeterData(serialNumber, connectionPoint, meterCategory);
     }
   }
@@ -785,7 +781,6 @@ document.addEventListener('DOMContentLoaded', function () {
     })
         .then((response) => response.json())
         .then((data) => {
-            console.log('Fetched block data:', data); // Debug: Gelen veri
             const blockDetailTableBody = document.querySelector('#block-detail-table tbody');
             blockDetailTableBody.innerHTML = ''; // Mevcut satırları temizle
 
@@ -794,7 +789,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 // Benzersiz `Block` değerlerini al, sıralama yap ve menüye ekle
                 const uniqueBlocks = [...new Set(data[0].data.map((item) => item.Block))].sort();
-                console.log('Unique blocks:', uniqueBlocks); // Debug: Benzersiz blok listesi
 
                 const consumptionMenu = document.querySelector('.menu-content');
                 consumptionMenu.innerHTML = ''; // Mevcut menü öğelerini temizle
@@ -808,11 +802,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 // En son aktif blok kontrolü
                 const lastActiveBlock = localStorage.getItem('lastActiveBlock');
-                console.log('Last active block from localStorage:', lastActiveBlock); // Debug: localStorage'daki son aktif blok
-
                 currentBlock = lastActiveBlock || uniqueBlocks[0]; // Kaydedilmiş blok varsa onu kullan
-                console.log('Current block to activate:', currentBlock); // Debug: Aktif edilecek blok
-
                 activateBlock(currentBlock, data[0].data);
 
                 // Tıklanan bloğa göre tabloyu filtrele ve başlığı güncelle
@@ -820,12 +810,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     link.addEventListener('click', function (event) {
                         event.preventDefault();
                         const selectedBlock = event.target.getAttribute('data-block');
-                        console.log('Block clicked:', selectedBlock); // Debug: Tıklanan blok
-
-                        // Aktif bloğu kaydet ve kontrol et
                         localStorage.setItem('lastActiveBlock', selectedBlock); // Aktif bloğu kaydet
-                        console.log('localStorage after setItem:', localStorage.getItem('lastActiveBlock')); // Debug: Kayıt sonrası içerik
-
                         activateBlock(selectedBlock, data[0].data);
                     });
                 });
@@ -840,13 +825,11 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 function activateBlock(block, data) {
-    console.log('Activating block:', block); // Debug: Aktif edilen blok
     // Sol menüdeki uygun bloğu aktif yap
     document.querySelectorAll('.menu-content .menu-item').forEach((item) => item.classList.remove('active'));
     const blockLink = document.querySelector(`.menu-content .block-link[data-block="${block}"]`);
     if (blockLink) {
         blockLink.parentElement.classList.add('active');
-        console.log('Block link activated:', block); // Debug: Aktivasyon başarılı
     } else {
         console.warn('Block link not found for:', block); // Debug: Aktivasyon başarısız
     }
@@ -855,7 +838,6 @@ function activateBlock(block, data) {
     const blockTitle = document.getElementById('block-title');
     if (blockTitle) {
         blockTitle.innerText = `Blok ${block}`;
-        console.log('Block title updated:', blockTitle.innerText); // Debug: Başlık güncelleme
     } else {
         console.error('Block title element not found'); // Debug: Başlık bulunamadı
     }
@@ -866,12 +848,10 @@ function activateBlock(block, data) {
 
   // Bina No ve Daire'ye göre sıralama ve sıra numarası ekleme
   function sortDataAndAddIndex(data) {
-    console.log("Orijinal veri:", data); // Debug amaçlı
     data.sort(customSort); // Veriyi sırala
     data.forEach((item, index) => {
       item.Index = index + 1; // Sıra numarası ekle
     });
-    console.log("Sıralanmış veri:", data); // Debug amaçlı
     return data;
   }
 
