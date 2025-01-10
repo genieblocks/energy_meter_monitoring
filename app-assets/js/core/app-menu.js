@@ -846,6 +846,10 @@
               console.log(`Block selected: ${selectedBlock}`);
               if (typeof activateBlock === 'function') {
                 try {
+                    // Aktif bloğu kaydet ve kontrol et
+                    localStorage.setItem('lastActiveBlock', selectedBlock); // Aktif bloğu kaydet
+                    console.log('localStorage after setItem:', localStorage.getItem('lastActiveBlock')); // Debug: Kayıt sonrası içerik
+                    
                     console.log('Executing activateBlock...');
                     activateBlock(selectedBlock, window.blockData); // `blockData` tanımlı olduğundan emin olun
                     console.log('activateBlock executed successfully.');
@@ -875,6 +879,10 @@
               console.log(`Block selected: ${selectedBlock}`);
               if (typeof activateBlock === 'function') {
                   try {
+                      // Aktif bloğu kaydet ve kontrol et
+                      localStorage.setItem('lastActiveBlock', selectedBlock); // Aktif bloğu kaydet
+                      console.log('localStorage after setItem:', localStorage.getItem('lastActiveBlock')); // Debug: Kayıt sonrası içerik
+                      
                       console.log('Executing activateBlock...');
                       activateBlock(selectedBlock, blockData);
                       console.log('activateBlock executed successfully.');
