@@ -1512,7 +1512,7 @@ function showUndefinedMetersForm() {
     const modal = $('#defineMeterModal');
     const selectInput = modal.find('.undefined-meters-select-input');
     
-    // Temizlemeden önce spinner göster
+    // İçeriği temizle ve yükleniyor bilgisi göster
     selectInput.html('<option value="" disabled selected>Yükleniyor...</option>');
     
     const undefinedMeters = {}; // Sayaçları grup başlıklarına göre saklayacak obje
