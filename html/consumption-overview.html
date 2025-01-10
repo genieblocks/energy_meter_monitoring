@@ -1300,7 +1300,7 @@ function showUpdateDefinedMeterDataForm(tableName, customNameData, noteData, isV
     formGroup.className = 'form-group';
     formGroup.innerHTML = `
         <label for="IsVisibleInInvoiceReport">Faturalandırma</label>
-        <input type="checkbox" id="IsVisibleInInvoiceReport" name="IsVisibleInInvoiceReport" class="form-control" ${isVisibleInInvoiceReportData ? 'checked' : ''}>
+        <input type="checkbox" id="IsVisibleInInvoiceReport" name="IsVisibleInInvoiceReport" class="form-control" value="${isVisibleInInvoiceReportData ? 'true' : 'false'}" ${isVisibleInInvoiceReportData ? 'checked' : ''}>
     `;
     formBody.appendChild(formGroup);
 
