@@ -1119,7 +1119,10 @@ function showUpdateSubscriberDataForm(tableName, subscriberData, flatID) {
     console.log(`Güncelleme başlatıldı: Tablo - ${tableName}, FlatID ${flatID}, Abone - ${subscriberData}`);
     // Modal gösterme işlemleri ve diğer işlevler buraya eklenebilir
     const modal = $('#updateDataModal');
-    modal.data('tableName', tableName); // Set the tableName as a data attribute on the modal
+    
+    // Set the tableName as a data attribute on the modal
+    modal.data('tableName', tableName);
+
     modal.find('.modal-title').text(`Abone Güncelleme`);
     const form = modal.find('form')[0];
     const formBody = modal.find('.modal-body > form')[0];
@@ -1134,6 +1137,21 @@ function showUpdateSubscriberDataForm(tableName, subscriberData, flatID) {
             <label for="subscriberName">Abone İsmi</label>
             <input type="text" id="subscriberName" name="subscriberName" class="form-control" value="${subscriberData}" required>
         </div>`;
+
+        const formGroup = document.createElement('div');
+        formGroup.className = 'form-group';
+
+        // İlk alan TargetRecord için
+        formGroup.innerHTML = `
+            <label for="flatID">FlatID</label>
+            <input type="text" id="flatID" name="flatID" class="form-control" readonly="readonly" value="${flatID}">
+        `;
+
+        // Diğer alanlar FieldsToUpdate için
+        formGroup.innerHTML = `
+            <label for="subscriberName">Abone İsmi</label>
+            <input type="text" id="subscriberName" name="subscriberName" class="form-control" value="${subscriberData}" required>
+        `;
 
     modal.modal('show');
 }
