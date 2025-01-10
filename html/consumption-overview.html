@@ -318,7 +318,7 @@
           <div class="modal-body">
             <form id="defineMeterDataForm">
                 <!-- Dinamik form alanları buraya eklenecek -->
-                <select class="undefined-meters-select-input selectivity-input">
+                <select class="undefined-meters-select-input">
                   <optgroup label="Elektrik">
                       <option value="70013309">70013309</option>
                       <option value="70042309">70042309</option>
@@ -404,8 +404,8 @@
 $(document).ready(function() {
     $('.undefined-meters-select-input').selectivity({
       allowClear: true,
-      placeholder: 'Sayaç Seçiniz.',
-      searchInputPlaceholder: 'Sayaç ara.'
+      placeholder: 'Sayaç Seçiniz',
+      searchInputPlaceholder: 'Sayaç ara'
     });
 });
 
