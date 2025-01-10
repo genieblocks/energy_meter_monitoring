@@ -704,7 +704,7 @@ function showDetailModal(connection) {
                 <td class="d-none">${meter[table.meterIDFieldName]}</td>
                 <td class="d-none">${meter.RelatedID && meter.RelatedID !== 'null' ? meter.RelatedID : '-'}</td>
                 <td class="d-none">${meter.Note && meter.Note !== 'null' ? meter.Note : '-'}</td>
-                <td class="d-none">${meter.IsVisibleInInvoiceReport && meter.IsVisibleInInvoiceReport !== 'null' ? meter.IsVisibleInInvoiceReport : '-'}</td>
+                <td class="d-none">${meter.IsVisibleInInvoiceReport}</td>
                 <td>
                   <button type="button" class="btn btn-sm btn-outline-info" id="table-show-button">
                     <i class="fa fa-eye"></i>
