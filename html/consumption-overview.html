@@ -1135,7 +1135,7 @@ function showUpdateSubscriberDataForm(tableName, subscriberData, flatID) {
     formGroup.className = 'form-group';
     formGroup.innerHTML = `
         <label for="flatID">FlatID</label>
-        <input type="text" id="flatID" name="flatID" class="form-control" readonly="readonly" value="${flatID}">
+        <input type="text" style="width: 400px;" id="flatID" name="flatID" class="form-control" readonly="readonly" value="${flatID}">
     `;
     formBody.appendChild(formGroup);
 
@@ -1144,7 +1144,7 @@ function showUpdateSubscriberDataForm(tableName, subscriberData, flatID) {
     formGroup.className = 'form-group';
     formGroup.innerHTML = `
         <label for="subscriberName">Abone İsmi</label>
-        <input type="text" id="subscriberName" name="subscriberName" class="form-control" value="${subscriberData}" required>
+        <input type="text" style="width: 400px;" id="subscriberName" name="subscriberName" class="form-control" value="${subscriberData}" required>
     `;
     formBody.appendChild(formGroup);
 
