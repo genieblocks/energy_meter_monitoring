@@ -1020,26 +1020,7 @@ document.addEventListener('click', function(event) {
     if (target.id === 'defineMeterButton') {
       event.preventDefault();
 
-      const table = document.querySelector('#defined-meters-table');
-      const headers = Array.from(table.querySelectorAll('thead th'));
-
-      // *************************** RelatedID *************************** 
-      // Tablo başlıklarından "RelatedID" sütununun indeksini bul
-      const relatedIDIndex = headers.findIndex(header => header.textContent.trim() === 'RelatedID');
-
-      if (relatedIDIndex === -1) {
-          console.error('"RelatedID" sütunu bulunamadı.');
-          return;
-      }
-
-      // RelatedID verisini al
-      const relatedID = tableRow.children[relatedIDIndex]?.textContent.trim();
-      if (!relatedID) {
-          console.warn('"RelatedID" verisi bulunamadı.');
-          return;
-      }
-
-      showUndefinedMetersForm(relatedID);
+      showUndefinedMetersForm();
     }
 
     // Remove Defined Meter Button Clicks
