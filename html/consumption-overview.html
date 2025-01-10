@@ -769,27 +769,27 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Add event listener for update buttons
   document.querySelectorAll('#update-block-button').forEach(button => {
-    button.addEventListener('click', function(event) {
-        event.preventDefault();
+      button.addEventListener('click', function(event) {
+          event.preventDefault();
 
-        const tableRow = this.closest('tr');
-        if (!tableRow) {
-            console.error('Satır bulunamadı.');
-            return;
-        }
+          const tableRow = this.closest('tr');
+          if (!tableRow) {
+              console.error('Satır bulunamadı.');
+              return;
+          }
 
-        // Subscriber verisini al
-        const subscriberData = tableRow.querySelector('td:nth-child(4)')?.textContent.trim();
-        if (!subscriberData) {
-            console.warn('Subscriber verisi bulunamadı.');
-            return;
-        }
+          // Subscriber verisini al
+          const subscriberData = tableRow.querySelector('td:nth-child(4)')?.textContent.trim();
+          if (!subscriberData) {
+              console.warn('Subscriber verisi bulunamadı.');
+              return;
+          }
 
-        // Fonksiyonu çağır
-        console.log('Subscriber Data:', subscriberData);
-        showUpdateSubscriberDataForm('Facility', subscriberData); // Tablo adı olarak örnek "Facility" kullanıldı
-    });
-});
+          // Fonksiyonu çağır
+          console.log('Subscriber Data:', subscriberData);
+          showUpdateSubscriberDataForm('Facility', subscriberData); // Tablo adı olarak örnek "Facility" kullanıldı
+      });
+  });
 
   // UI'yi kilitle ve spinner göster
   $.blockUI({
@@ -938,8 +938,8 @@ document.addEventListener('DOMContentLoaded', function() {
               <i class="ft-settings"></i>
             </button>
             <span aria-labelledby="dropdown-settings-button" class="dropdown-menu mt-1 dropdown-menu-right">
-              <a href="#" class="dropdown-item edit-button" id="update-block-button"><i class="fa fa-pencil"></i> Güncelle</a>
-              <a href="#" class="dropdown-item remove-button" id="remove-block-button"><i class="fa fa-trash"></i> Kaldır</a>
+              <button type="button" class="dropdown-item edit-button" id="update-block-button"><i class="fa fa-pencil"></i> Güncelle</button>
+              <button type="button" class="dropdown-item remove-button" id="remove-block-button"><i class="fa fa-trash"></i> Kaldır</button>
             </span>
           </span>
         </td>
