@@ -1138,6 +1138,7 @@ function showUpdateSubscriberDataForm(tableName, subscriberData, flatID) {
     // İlk alan TargetRecord için
     let formGroup = document.createElement('div');
     formGroup.className = 'form-group';
+    formGroup.style.display = 'none'; // Form grubunu gizlemek için
     formGroup.innerHTML = `
         <label for="FlatID">FlatID</label>
         <input type="text" style="width: 400px;" id="FlatID" name="FlatID" class="form-control" readonly="readonly" value="${flatID}">
