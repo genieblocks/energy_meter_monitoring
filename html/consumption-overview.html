@@ -1130,9 +1130,9 @@ function showUpdateSubscriberDataForm(tableName, subscriberData, flatID) {
     document.querySelector('#updateDataForm').innerHTML = `
         <div class="form-group">
             <label for="flatID">FlatID</label>
-            <input type="text" id="flatID" name="flatID" class="form-control" readonly="readonly" value="${flatID}"> // İlk alan TargetRecord
+            <input type="text" id="flatID" name="flatID" class="form-control" readonly="readonly" value="${flatID}">
             <label for="subscriberName">Abone İsmi</label>
-            <input type="text" id="subscriberName" name="subscriberName" class="form-control" value="${subscriberData}" required> // Diğer alanlar FieldsToUpdate
+            <input type="text" id="subscriberName" name="subscriberName" class="form-control" value="${subscriberData}" required>
         </div>`;
 
     modal.modal('show');
