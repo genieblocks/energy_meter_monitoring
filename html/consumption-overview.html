@@ -960,6 +960,89 @@ document.querySelectorAll('.block-link').forEach(link => {
 // Tek bir genel delegasyon mekanizması
 document.addEventListener('click', function(event) {
     const target = event.target;
+    
+    // Remove Defined Meter Button Clicks
+    if (target.id === 'remove-defined-meter-button') {
+      event.preventDefault();
+
+      const tableRow = target.closest('tr');
+      if (!tableRow) {
+          console.error('Satır bulunamadı.');
+          return;
+      }
+
+      const table = document.querySelector('#defined-meters-table');
+      const headers = Array.from(table.querySelectorAll('thead th'));
+
+      // *************************** RelatedID *************************** 
+      // Tablo başlıklarından "RelatedID" sütununun indeksini bul
+      const relatedIDIndex = headers.findIndex(header => header.textContent.trim() === 'RelatedID');
+
+      if (relatedIDIndex === -1) {
+          console.error('"RelatedID" sütunu bulunamadı.');
+          return;
+      }
+
+      // RelatedID verisini al
+      const relatedID = tableRow.children[relatedIDIndex]?.textContent.trim();
+      if (!relatedID) {
+          console.warn('"RelatedID" verisi bulunamadı.');
+          return;
+      }
+
+      // *************************** MeterIDFieldName *************************** 
+      // Tablo başlıklarından "MeterIDFieldName" sütununun indeksini bul
+      const meterIDFieldNameIndex = headers.findIndex(header => header.textContent.trim() === 'MeterIDFieldName');
+
+      if (meterIDFieldNameIndex === -1) {
+          console.error('"MeterIDFieldName" sütunu bulunamadı.');
+          return;
+      }
+
+      // MeterIDFieldName verisini al
+      const meterIDFieldNameData = tableRow.children[meterIDFieldNameIndex]?.textContent.trim();
+      if (!meterIDFieldNameData) {
+          console.warn('"MeterIDFieldName" verisi bulunamadı.');
+          return;
+      }
+
+      // *************************** TableName *************************** 
+      // Tablo başlıklarından "TableName" sütununun indeksini bul
+      const tableNameIndex = headers.findIndex(header => header.textContent.trim() === 'TableName');
+
+      if (tableNameIndex === -1) {
+          console.error('"TableName" sütunu bulunamadı.');
+          return;
+      }
+
+      // TableName verisini al
+      const tableName = tableRow.children[tableNameIndex]?.textContent.trim();
+      if (!tableName) {
+          console.warn('"TableName" verisi bulunamadı.');
+          return;
+      }
+
+      // *************************** MeterID *************************** 
+      // Tablo başlıklarından "MeterID" sütununun indeksini bul
+      const meterIDIndex = headers.findIndex(header => header.textContent.trim() === 'MeterID');
+
+      if (meterIDIndex === -1) {
+          console.error('"MeterID" sütunu bulunamadı.');
+          return;
+      }
+
+      // MeterID verisini al
+      const meterIDData = tableRow.children[meterIDIndex]?.textContent.trim();
+      if (!meterIDData) {
+          console.warn('"MeterID" verisi bulunamadı.');
+          return;
+      }
+
+      if (confirm('Bu sayacı silkaldırmak istediğinizden emin misiniz?')) {
+          console.log(`removeDefinedMeter: ${tableName} --> ${relatedID} --> ${meterIDFieldNameData} --> ${meterIDData}`);
+          // removeDefinedMeter(tableName, relatedID, meterIDFieldNameData, meterIDData);
+      }
+    }
 
     // Update Defined Meters Button Clicks
     if (target.id === 'update-defined-meter-button') {
