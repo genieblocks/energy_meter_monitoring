@@ -152,7 +152,6 @@
                           <th class="d-none">Kalori. Sıcak Tük. (kWh)</th>
                           <th class="d-none">Kalori. Soğuk Tük. (kWh)</th>
                           <th>Detay</th>
-                          <th>Düzenle</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -968,17 +967,6 @@ function activateBlock(block, data) {
             <i class="fa fa-eye"></i>
           </button>
         </td>
-        <td>
-          <span class="dropdown">
-            <button id="dropdown-settings-button" type="button" data-toggle="dropdown" aria-haspopup="true"
-            aria-expanded="true" class="btn btn-genie dropdown-toggle dropdown-menu-right">
-              <i class="ft-settings"></i>
-            </button>
-            <span aria-labelledby="dropdown-settings-button" class="dropdown-menu mt-1 dropdown-menu-right">
-              <button type="button" class="dropdown-item edit-button" id="update-block-button"><i class="fa fa-pencil"></i> Güncelle</button>
-            </span>
-          </span>
-        </td>
       `;
       blockDetailTableBody.appendChild(row);
 
@@ -1253,50 +1241,6 @@ document.addEventListener('click', function(event) {
         showUpdateSubscriberDataForm('Facility', subscriberData, flatID);
     }
 
-    // Update Block Button Clicks
-    if (target.id === 'update-block-button') {
-        event.preventDefault();
-
-        const tableRow = target.closest('tr');
-        if (!tableRow) {
-            console.error('Satır bulunamadı.');
-            return;
-        }
-
-        // Tablo başlıklarından "Subscriber" sütununun indeksini bul
-        const table = document.querySelector('#block-detail-table');
-        const headers = Array.from(table.querySelectorAll('thead th'));
-        const subscriberIndex = headers.findIndex(header => header.textContent.trim() === 'Abone');
-
-        if (subscriberIndex === -1) {
-            console.error('"Subscriber" sütunu bulunamadı.');
-            return;
-        }
-
-        // Subscriber verisini al
-        const subscriberData = tableRow.children[subscriberIndex]?.textContent.trim();
-        if (!subscriberData) {
-            console.warn('"Subscriber" verisi bulunamadı.');
-            return;
-        }
-
-        // Tablo başlıklarından "FlatID" sütununun indeksini bul
-        const flatIDIndex = headers.findIndex(header => header.textContent.trim() === 'FlatID');
-
-        if (flatIDIndex === -1) {
-            console.error('"FlatID" sütunu bulunamadı.');
-            return;
-        }
-
-        // FlatID verisini al
-        const flatID = tableRow.children[flatIDIndex]?.textContent.trim();
-        if (!flatID) {
-            console.warn('"FlatID" verisi bulunamadı.');
-            return;
-        }
-
-        showUpdateSubscriberDataForm('Facility', subscriberData, flatID);
-    }
 });
 
 // Close the dropdown when clicking outside
