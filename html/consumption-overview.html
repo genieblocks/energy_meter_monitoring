@@ -179,7 +179,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <table class="table table-hover table-bordered">
+        <table class="table table-hover table-bordered" id="defined-meters-table">
           <thead>
             <tr>
               <th>Sayaç Tipi</th>
@@ -716,7 +716,7 @@ function showDetailModal(connection) {
                       <i class="ft-settings"></i>
                     </button>
                     <span class="dropdown-menu mt-1 dropdown-menu-right">
-                      <a href="#" class="dropdown-item update-meter-button"><i class="fa fa-pencil"></i> Güncelle</a>
+                      <a href="#" class="dropdown-item update-defined-meter-button"><i class="fa fa-pencil"></i> Güncelle</a>
                       <a href="#" class="dropdown-item remove-meter-button"><i class="fa fa-trash"></i> Kaldır</a>
                     </span>
                   </span>
@@ -960,7 +960,126 @@ document.querySelectorAll('.block-link').forEach(link => {
 // Tek bir genel delegasyon mekanizması
 document.addEventListener('click', function(event) {
     const target = event.target;
-    // const target = event.target.closest('#update-block-button');
+
+    // Update Defined Meters Button Clicks
+    if (target.id === 'update-defined-meter-button') {
+        event.preventDefault();
+
+        const tableRow = target.closest('tr');
+        if (!tableRow) {
+            console.error('Satır bulunamadı.');
+            return;
+        }
+
+        // *************************** CustomName *************************** 
+        // Tablo başlıklarından "CustomName" sütununun indeksini bul
+        const table = document.querySelector('#defined-meters-table');
+        const headers = Array.from(table.querySelectorAll('thead th'));
+        const customNameIndex = headers.findIndex(header => header.textContent.trim() === 'Sayaç İsmi');
+
+        if (customNameIndex === -1) {
+            console.error('"CustomName" sütunu bulunamadı.');
+            return;
+        }
+
+        // CustomName verisini al
+        const customNameData = tableRow.children[customNameIndex]?.textContent.trim();
+        if (!customNameData) {
+            console.warn('"CustomName" verisi bulunamadı.');
+            return;
+        }
+
+        // *************************** Note *************************** 
+        // Tablo başlıklarından "Note" sütununun indeksini bul
+        const noteIndex = headers.findIndex(header => header.textContent.trim() === 'Faturalandırma');
+
+        if (noteIndex === -1) {
+            console.error('"Note" sütunu bulunamadı.');
+            return;
+        }
+
+        // Note verisini al
+        const noteData = tableRow.children[noteIndex]?.textContent.trim();
+        if (!noteData) {
+            console.warn('"Note" verisi bulunamadı.');
+            return;
+        }
+
+        // *************************** IsVisibleInInvoiceReport *************************** 
+        // Tablo başlıklarından "IsVisibleInInvoiceReport" sütununun indeksini bul
+        const isVisibleInInvoiceReportIndex = headers.findIndex(header => header.textContent.trim() === 'Not');
+
+        if (isVisibleInInvoiceReportIndex === -1) {
+            console.error('"IsVisibleInInvoiceReport" sütunu bulunamadı.');
+            return;
+        }
+
+        // IsVisibleInInvoiceReport verisini al
+        const isVisibleInInvoiceReportData = tableRow.children[isVisibleInInvoiceReportIndex]?.textContent.trim();
+        if (!isVisibleInInvoiceReportData) {
+            console.warn('"IsVisibleInInvoiceReport" verisi bulunamadı.');
+            return;
+        }
+
+        // *************************** MeterIDFieldName *************************** 
+        // Tablo başlıklarından "MeterIDFieldName" sütununun indeksini bul
+        const meterIDFieldNameIndex = headers.findIndex(header => header.textContent.trim() === 'MeterIDFieldName');
+
+        if (meterIDFieldNameIndex === -1) {
+            console.error('"MeterIDFieldName" sütunu bulunamadı.');
+            return;
+        }
+
+        // MeterIDFieldName verisini al
+        const meterIDFieldNameData = tableRow.children[meterIDFieldNameIndex]?.textContent.trim();
+        if (!meterIDFieldNameData) {
+            console.warn('"MeterIDFieldName" verisi bulunamadı.');
+            return;
+        }
+
+        // *************************** TableName *************************** 
+        // Tablo başlıklarından "TableName" sütununun indeksini bul
+        const tableNameIndex = headers.findIndex(header => header.textContent.trim() === 'TableName');
+
+        if (tableNameIndex === -1) {
+            console.error('"TableName" sütunu bulunamadı.');
+            return;
+        }
+
+        // TableName verisini al
+        const tableName = tableRow.children[tableNameIndex]?.textContent.trim();
+        if (!tableName) {
+            console.warn('"TableName" verisi bulunamadı.');
+            return;
+        }
+
+        // *************************** MeterID *************************** 
+        // Tablo başlıklarından "MeterID" sütununun indeksini bul
+        const meterIDIndex = headers.findIndex(header => header.textContent.trim() === 'MeterID');
+
+        if (meterIDIndex === -1) {
+            console.error('"MeterID" sütunu bulunamadı.');
+            return;
+        }
+
+        // MeterID verisini al
+        const meterIDData = tableRow.children[meterIDIndex]?.textContent.trim();
+        if (!meterIDData) {
+            console.warn('"MeterID" verisi bulunamadı.');
+            return;
+        }
+
+        // Fonksiyonu çağır
+        console.log('TableName Data:', tableName);
+        console.log('CustomName Data:', customNameData);
+        console.log('Note Data:', noteData);
+        console.log('IsVisibleInInvoiceReport Data:', isVisibleInInvoiceReportData);
+        console.log('MeterIDFieldName Data:', meterIDFieldNameData);
+        console.log('MeterID Data:', meterIDData);
+        // showUpdateDefinedMeterDataForm(tableName, customNameData, noteData, isVisibleInInvoiceReportData, meterIDFieldNameData, meterIDData);
+    }
+
+    // Update Block Button Clicks
     if (target.id === 'update-block-button') {
         event.preventDefault();
 
@@ -1132,6 +1251,43 @@ function updateTableContent() {
         $.unblockUI();
         alert('Veri güncellenirken bir hata oluştu.');
     });
+}
+
+function showUpdateDefinedMeterDataForm(tableName, subscriberData, flatID) {
+    console.log(`Güncelleme başlatıldı: Tablo - ${tableName}, FlatID ${flatID}, Abone - ${subscriberData}`);
+    // Modal gösterme işlemleri ve diğer işlevler buraya eklenebilir
+    const modal = $('#updateDataModal');
+
+    // Set the tableName as a data attribute on the modal
+    modal.data('tableName', tableName);
+
+    modal.find('.modal-title').text(`Abone Güncelleme`);
+    const form = modal.find('form')[0];
+    const formBody = modal.find('.modal-body > form')[0];
+
+    // Clear previous form fields
+    formBody.innerHTML = '';
+        
+    // İlk alan TargetRecord için
+    let formGroup = document.createElement('div');
+    formGroup.className = 'form-group';
+    formGroup.style.display = 'none'; // Form grubunu gizlemek için
+    formGroup.innerHTML = `
+        <label for="FlatID">FlatID</label>
+        <input type="text" style="width: 400px;" id="FlatID" name="FlatID" class="form-control" readonly="readonly" value="${flatID}">
+    `;
+    formBody.appendChild(formGroup);
+
+    // Diğer alanlar FieldsToUpdate için
+    formGroup = document.createElement('div');
+    formGroup.className = 'form-group';
+    formGroup.innerHTML = `
+        <label for="Subscriber">Abone İsmi</label>
+        <input type="text" style="width: 400px;" id="Subscriber" name="Subscriber" class="form-control" value="${subscriberData}" required>
+    `;
+    formBody.appendChild(formGroup);
+
+    modal.modal('show');
 }
 
 function showUpdateSubscriberDataForm(tableName, subscriberData, flatID) {
