@@ -957,9 +957,11 @@ document.querySelectorAll('.block-link').forEach(link => {
   });
 });
 
+// Tek bir genel delegasyon mekanizması
 document.addEventListener('click', function(event) {
-    const target = event.target.closest('#update-block-button');
-    if (target) {
+    const target = event.target;
+    // const target = event.target.closest('#update-block-button');
+    if (target.id === 'update-block-button') {
         event.preventDefault();
 
         const tableRow = target.closest('tr');
