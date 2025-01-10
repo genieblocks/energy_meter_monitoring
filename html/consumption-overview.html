@@ -1129,32 +1129,24 @@ function showUpdateSubscriberDataForm(tableName, subscriberData, flatID) {
 
     // Clear previous form fields
     formBody.innerHTML = '';
-
-    document.querySelector('#updateDataForm').innerHTML = `
-        <div class="form-group">
-            <label for="flatID">FlatID</label>
-            <input type="text" id="flatID" name="flatID" class="form-control" readonly="readonly" value="${flatID}">
-            <label for="subscriberName">Abone İsmi</label>
-            <input type="text" id="subscriberName" name="subscriberName" class="form-control" value="${subscriberData}" required>
-        </div>`;
         
-        // İlk alan TargetRecord için
-        let formGroup = document.createElement('div');
-        formGroup.className = 'form-group';
-        formGroup.innerHTML = `
-            <label for="flatID">FlatID</label>
-            <input type="text" id="flatID" name="flatID" class="form-control" readonly="readonly" value="${flatID}">
-        `;
-        formBody.appendChild(formGroup);
+    // İlk alan TargetRecord için
+    let formGroup = document.createElement('div');
+    formGroup.className = 'form-group';
+    formGroup.innerHTML = `
+        <label for="flatID">FlatID</label>
+        <input type="text" id="flatID" name="flatID" class="form-control" readonly="readonly" value="${flatID}">
+    `;
+    formBody.appendChild(formGroup);
 
-        // Diğer alanlar FieldsToUpdate için
-        formGroup = document.createElement('div');
-        formGroup.className = 'form-group';
-        formGroup.innerHTML = `
-            <label for="subscriberName">Abone İsmi</label>
-            <input type="text" id="subscriberName" name="subscriberName" class="form-control" value="${subscriberData}" required>
-        `;
-        formBody.appendChild(formGroup);
+    // Diğer alanlar FieldsToUpdate için
+    formGroup = document.createElement('div');
+    formGroup.className = 'form-group';
+    formGroup.innerHTML = `
+        <label for="subscriberName">Abone İsmi</label>
+        <input type="text" id="subscriberName" name="subscriberName" class="form-control" value="${subscriberData}" required>
+    `;
+    formBody.appendChild(formGroup);
 
     modal.modal('show');
 }
