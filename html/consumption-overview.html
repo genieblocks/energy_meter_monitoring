@@ -688,7 +688,7 @@ function showDetailModal(connection) {
 
               row.innerHTML = `
                 <td>${table.meterCategory}</td>
-                <td>${meter.CustomName !== null && meter.CustomName !== undefined ? meter.CustomName : '-'}</td>
+                <td>${meter.CustomName && meter.CustomName.trim() !== '' && meter.CustomName !== 'null' ? meter.CustomName : '-'}</td>
                 <td>${meter.SerialNumber ?? '-'}</td>
                 <td>${meterMultiplier}</td>
                 <td>${latestValues.MeterValue ?? '-'}</td>
