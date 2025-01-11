@@ -853,9 +853,11 @@ document.addEventListener('DOMContentLoaded', function () {
                     consumptionMenu.appendChild(menuItem);
                 });
 
-                // En son aktif blok kontrolü
+                // En son aktif blok veya URL parametresine göre blok seçimi
+                const blockParam = new URLSearchParams(window.location.search).get('block');
                 const lastActiveBlock = localStorage.getItem('lastActiveBlock');
-                currentBlock = lastActiveBlock || uniqueBlocks[0]; // Kaydedilmiş blok varsa onu kullan
+                currentBlock = blockParam || lastActiveBlock || uniqueBlocks[0]; // URL parametresi > LocalStorage > İlk blok
+                localStorage.setItem('lastActiveBlock', currentBlock); // Aktif blok güncelle
                 activateBlock(currentBlock, data[0].data);
 
                 // Tıklanan bloğa göre tabloyu filtrele ve başlığı güncelle
