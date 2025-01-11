@@ -879,10 +879,12 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 });
 
-// Sayfa değişikliğinde veya başka bir URL'ye yönlendirmede LocalStorage'ı temizle
+// Sayfa yönlendirmesi durumunda LocalStorage temizle
 window.addEventListener('beforeunload', function (event) {
-    if (!event.persisted) { // Sayfa cache'lenmemişse
-        localStorage.removeItem('lastActiveBlock'); // LocalStorage temizle
+    const currentURL = window.location.href;
+    if (document.referrer && !document.referrer.startsWith(currentURL)) {
+        // Başka bir sayfaya yönlendiriliyorsa LocalStorage temizle
+        localStorage.removeItem('lastActiveBlock');
     }
 });
 
