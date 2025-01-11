@@ -395,28 +395,6 @@ $(document).ready(function() {
     });
 });
 
-// Sayfa yönlendirmesi durumunda LocalStorage temizle
-window.addEventListener('beforeunload', function (event) {
-    const navigationType = performance.navigation.type;
-    const currentURL = window.location.href;
-
-    // Navigation Type Log
-    console.log('Navigation Type:', navigationType); // 0 = Navigate, 1 = Reload, 2 = Back/Forward
-
-    if (navigationType === performance.navigation.TYPE_NAVIGATE) {
-        // Eğer bir başka sayfaya yönlendiriliyorsa localStorage temizle
-        console.log('Detected navigation to a different page. Clearing localStorage...');
-        localStorage.removeItem('lastActiveBlock');
-    } else if (navigationType === performance.navigation.TYPE_RELOAD) {
-        // Sayfa yenilemesi tespit edildi, localStorage korunmalı
-        console.log('Page reload detected. Retaining localStorage...');
-    } else if (navigationType === performance.navigation.TYPE_BACK_FORWARD) {
-        console.log('Back/Forward navigation detected. No action taken.');
-    } else {
-        console.log('Unknown navigation type. Retaining localStorage...');
-    }
-});
-
 // singleQueryModal
 function queryMeterData(serialNumber, connectionPoint, meterCategory) {
   const modalId = 'singleQueryModal';
@@ -839,14 +817,30 @@ document.addEventListener('DOMContentLoaded', function () {
         yearElement.textContent = currentYear;
     }
 
-    // UI'yi kilitle ve spinner göster
-    $.blockUI({
-        message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
-        overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
-        css: { border: 0, padding: 0, backgroundColor: 'transparent' },
-    });
+    // Blok verilerini al
+    const blockParam = new URLSearchParams(window.location.search).get('block');
+    const lastActiveBlock = localStorage.getItem('lastActiveBlock');
+    const isNavigatedFromAnotherPage = document.referrer && !document.referrer.includes(window.location.hostname);
 
-    // Blok verilerini çek ve tabloya ve menüye ekle
+    // Sayfa başka bir yerden açıldıysa block parametresine öncelik ver
+    let currentBlock;
+    if (isNavigatedFromAnotherPage && blockParam) {
+        console.log('Navigated from another page. Using block parameter:', blockParam);
+        currentBlock = blockParam;
+        localStorage.setItem('lastActiveBlock', currentBlock); // Parametreyi LocalStorage'a kaydet
+    } else if (blockParam) {
+        console.log('Block parameter exists:', blockParam);
+        currentBlock = blockParam;
+        localStorage.setItem('lastActiveBlock', currentBlock); // Parametreyi LocalStorage'a kaydet
+    } else if (lastActiveBlock) {
+        console.log('Using last active block from LocalStorage:', lastActiveBlock);
+        currentBlock = lastActiveBlock;
+    } else {
+        console.log('No block parameter or LocalStorage value. Defaulting to first block.');
+        currentBlock = null; // Varsayılan bir değer belirlenebilir
+    }
+
+    // Blok verilerini yükle ve tabloyu güncelle
     fetch(`${baseWebhookURL}/webhook/get-table-content`, {
         method: 'POST',
         headers: {
@@ -854,40 +848,38 @@ document.addEventListener('DOMContentLoaded', function () {
         },
         body: JSON.stringify({ tableName: 'Facility' }),
     })
-        .then((response) => response.json())
-        .then((data) => {
-            const blockDetailTableBody = document.querySelector('#block-detail-table tbody');
-            blockDetailTableBody.innerHTML = ''; // Mevcut satırları temizle
-
+        .then(response => response.json())
+        .then(data => {
             if (data[0].success && Array.isArray(data[0].data)) {
-                blockData = data[0].data; // blockData'yı global olarak kaydet
+                const uniqueBlocks = [...new Set(data[0].data.map(item => item.Block))].sort();
+                const blockDetailTableBody = document.querySelector('#block-detail-table tbody');
 
-                // Benzersiz `Block` değerlerini al, sıralama yap ve menüye ekle
-                const uniqueBlocks = [...new Set(data[0].data.map((item) => item.Block))].sort();
-
+                // Blok menüsünü doldur
                 const consumptionMenu = document.querySelector('.menu-content');
-                consumptionMenu.innerHTML = ''; // Mevcut menü öğelerini temizle
+                consumptionMenu.innerHTML = ''; // Menü öğelerini temizle
 
-                uniqueBlocks.forEach((block) => {
+                uniqueBlocks.forEach(block => {
                     const menuItem = document.createElement('li');
                     menuItem.className = 'menu-item';
                     menuItem.innerHTML = `<a class="menu-item block-link" href="#" data-block="${block}">Blok ${block}</a>`;
                     consumptionMenu.appendChild(menuItem);
                 });
 
-                // En son aktif blok veya URL parametresine göre blok seçimi
-                const blockParam = new URLSearchParams(window.location.search).get('block');
-                const lastActiveBlock = localStorage.getItem('lastActiveBlock');
-                currentBlock = lastActiveBlock || blockParam || uniqueBlocks[0]; // LocalStorage > URL parametresi > İlk blok
-                localStorage.setItem('lastActiveBlock', currentBlock); // Aktif blok güncelle
-                activateBlock(currentBlock, data[0].data);
+                if (!currentBlock && uniqueBlocks.length > 0) {
+                    currentBlock = uniqueBlocks[0]; // Varsayılan olarak ilk blok
+                    localStorage.setItem('lastActiveBlock', currentBlock); // LocalStorage'a kaydet
+                }
 
-                // Tıklanan bloğa göre tabloyu filtrele ve başlığı güncelle
-                document.querySelectorAll('.block-link').forEach((link) => {
+                if (currentBlock) {
+                    activateBlock(currentBlock, data[0].data);
+                }
+
+                // Menüde tıklama olaylarını bağla
+                document.querySelectorAll('.block-link').forEach(link => {
                     link.addEventListener('click', function (event) {
                         event.preventDefault();
                         const selectedBlock = event.target.getAttribute('data-block');
-                        localStorage.setItem('lastActiveBlock', selectedBlock); // Aktif bloğu kaydet
+                        localStorage.setItem('lastActiveBlock', selectedBlock); // LocalStorage güncelle
                         activateBlock(selectedBlock, data[0].data);
                     });
                 });
@@ -895,10 +887,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 console.error('Facility tablosu verileri yüklenemedi:', data[0].message);
             }
         })
-        .catch((error) => console.error('Error:', error))
-        .finally(() => {
-            $.unblockUI(); // UI'yi aç ve spinnerı kaldır
-        });
+        .catch(error => console.error('Error:', error));
 });
 
 function activateBlock(block, data) {
