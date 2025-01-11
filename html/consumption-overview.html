@@ -880,12 +880,14 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 // Sayfa yönlendirmesi durumunda LocalStorage temizle
-window.addEventListener('beforeunload', function (event) {
-    const navigationType = performance.navigation.type;
-    const currentURL = window.location.href;
+window.addEventListener('load', function () {
+    sessionStorage.setItem('pageLoaded', 'true');
+});
 
-    if (navigationType === performance.navigation.TYPE_RELOAD) {
+window.addEventListener('beforeunload', function () {
+    if (sessionStorage.getItem('pageLoaded') === 'true') {
         console.log('Page reload detected. Retaining localStorage...');
+        sessionStorage.removeItem('pageLoaded');
     } else {
         console.log('Navigating to a different page. Clearing localStorage...');
         localStorage.removeItem('lastActiveBlock');
