@@ -822,19 +822,18 @@ document.addEventListener('DOMContentLoaded', function () {
     const lastActiveBlock = localStorage.getItem('lastActiveBlock');
     const isNavigatedFromAnotherPage = document.referrer && !document.referrer.includes(window.location.hostname);
 
-    // Sayfa başka bir yerden açıldıysa block parametresine öncelik ver
     let currentBlock;
     if (isNavigatedFromAnotherPage && blockParam) {
         console.log('Navigated from another page. Using block parameter:', blockParam);
         currentBlock = blockParam;
         localStorage.setItem('lastActiveBlock', currentBlock); // Parametreyi LocalStorage'a kaydet
+    } else if (!isNavigatedFromAnotherPage && lastActiveBlock) {
+        console.log('Page reload detected. Using last active block from LocalStorage:', lastActiveBlock);
+        currentBlock = lastActiveBlock;
     } else if (blockParam) {
         console.log('Block parameter exists:', blockParam);
         currentBlock = blockParam;
         localStorage.setItem('lastActiveBlock', currentBlock); // Parametreyi LocalStorage'a kaydet
-    } else if (lastActiveBlock) {
-        console.log('Using last active block from LocalStorage:', lastActiveBlock);
-        currentBlock = lastActiveBlock;
     } else {
         console.log('No block parameter or LocalStorage value. Defaulting to first block.');
         currentBlock = null; // Varsayılan bir değer belirlenebilir
