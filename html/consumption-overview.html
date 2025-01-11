@@ -879,6 +879,13 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 });
 
+// Sayfa değişikliğinde veya başka bir URL'ye yönlendirmede LocalStorage'ı temizle
+window.addEventListener('beforeunload', function (event) {
+    if (!event.persisted) { // Sayfa cache'lenmemişse
+        localStorage.removeItem('lastActiveBlock'); // LocalStorage temizle
+    }
+});
+
 function activateBlock(block, data) {
     // Sol menüdeki uygun bloğu aktif yap
     document.querySelectorAll('.menu-content .menu-item').forEach((item) => item.classList.remove('active'));
