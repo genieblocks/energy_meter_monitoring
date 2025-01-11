@@ -880,17 +880,24 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 // Sayfa yönlendirmesi durumunda LocalStorage temizle
-window.addEventListener('load', function () {
-    sessionStorage.setItem('pageLoaded', 'true');
-});
+window.addEventListener('beforeunload', function (event) {
+    const navigationType = performance.navigation.type;
+    const currentURL = window.location.href;
 
-window.addEventListener('beforeunload', function () {
-    if (sessionStorage.getItem('pageLoaded') === 'true') {
-        console.log('Page reload detected. Retaining localStorage...');
-        sessionStorage.removeItem('pageLoaded');
-    } else {
-        console.log('Navigating to a different page. Clearing localStorage...');
+    // Navigation Type Log
+    console.log('Navigation Type:', navigationType); // 0 = Navigate, 1 = Reload, 2 = Back/Forward
+
+    if (navigationType === performance.navigation.TYPE_NAVIGATE) {
+        // Eğer bir başka sayfaya yönlendiriliyorsa localStorage temizle
+        console.log('Detected navigation to a different page. Clearing localStorage...');
         localStorage.removeItem('lastActiveBlock');
+    } else if (navigationType === performance.navigation.TYPE_RELOAD) {
+        // Sayfa yenilemesi tespit edildi, localStorage korunmalı
+        console.log('Page reload detected. Retaining localStorage...');
+    } else if (navigationType === performance.navigation.TYPE_BACK_FORWARD) {
+        console.log('Back/Forward navigation detected. No action taken.');
+    } else {
+        console.log('Unknown navigation type. Retaining localStorage...');
     }
 });
 
