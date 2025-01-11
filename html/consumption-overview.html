@@ -881,18 +881,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
 // Sayfa yönlendirmesi durumunda LocalStorage temizle
 window.addEventListener('beforeunload', function (event) {
+    const navigationType = performance.navigation.type;
     const currentURL = window.location.href;
-    const referrerURL = document.referrer;
 
-    console.log('Current URL:', currentURL); // Mevcut sayfa URL'sini logla
-    console.log('Referrer URL:', referrerURL); // Referer URL'sini logla
-
-    if (referrerURL && !referrerURL.startsWith(currentURL)) {
-        // Başka bir sayfaya yönlendiriliyorsa LocalStorage temizle
+    if (navigationType === performance.navigation.TYPE_RELOAD) {
+        console.log('Page reload detected. Retaining localStorage...');
+    } else {
         console.log('Navigating to a different page. Clearing localStorage...');
         localStorage.removeItem('lastActiveBlock');
-    } else {
-        console.log('Page reload detected. Retaining localStorage...');
     }
 });
 
