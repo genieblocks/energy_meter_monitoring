@@ -822,6 +822,10 @@ document.addEventListener('DOMContentLoaded', function () {
     const lastActiveBlock = localStorage.getItem('lastActiveBlock');
     const isNavigatedFromAnotherPage = document.referrer && !document.referrer.includes(window.location.hostname);
 
+    console.log('Block parameter:', blockParam);
+    console.log('Navigated from another page:', isNavigatedFromAnotherPage);
+    console.log('LocalStorage:', lastActiveBlock);
+
     let currentBlock;
     if (isNavigatedFromAnotherPage && blockParam) {
         console.log('Navigated from another page. Using block parameter:', blockParam);
