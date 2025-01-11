@@ -822,8 +822,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const lastActiveBlock = localStorage.getItem('lastActiveBlock');
 
     // Başka sayfadan yönlendirme kontrolü
-    const navigationType = performance.getEntriesByType('navigation')[0]?.type || 'unknown';
-    const isNavigatedFromAnotherPage = navigationType === 'navigate' || navigationType === 'reload';
+    const navigationEntry = performance.getEntriesByType('navigation')[0];
+    const navigationType = navigationEntry ? navigationEntry.type : 'unknown';
+    const isNavigatedFromAnotherPage = navigationType === 'navigate';
     
     console.log('Block parameter:', blockParam);
     console.log('Navigated from another page:', isNavigatedFromAnotherPage);
