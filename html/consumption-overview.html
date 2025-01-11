@@ -820,8 +820,11 @@ document.addEventListener('DOMContentLoaded', function () {
     // Blok verilerini al
     const blockParam = new URLSearchParams(window.location.search).get('block');
     const lastActiveBlock = localStorage.getItem('lastActiveBlock');
-    const isNavigatedFromAnotherPage = document.referrer && !document.referrer.includes(window.location.hostname);
 
+    // Başka sayfadan yönlendirme kontrolü
+    const navigationType = performance.getEntriesByType('navigation')[0]?.type || 'unknown';
+    const isNavigatedFromAnotherPage = navigationType === 'navigate' || navigationType === 'reload';
+    
     console.log('Block parameter:', blockParam);
     console.log('Navigated from another page:', isNavigatedFromAnotherPage);
     console.log('LocalStorage:', lastActiveBlock);
