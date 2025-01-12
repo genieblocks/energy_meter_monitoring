@@ -137,9 +137,9 @@
             </select>
           </fieldset>
           <fieldset class="form-group floating-label-form-group">
-            <label for="waterMbusDataBlock">Okunacak M-Bus Veri Bloğu</label>
+            <label for="waterMbusDataBlock">Okunacak M-Bus Veri ID'si</label>
             <select id="waterMbusDataBlock" name="MbusDataBlock" class="form-control">
-              <option value="none" selected disabled>Veri Bloğu Seçiniz.</option>
+              <option value="none" selected disabled>Veri ID'si Seçiniz.</option>
               <option value="0">0</option>
               <option value="1">1</option>
               <option value="2">2</option>
@@ -211,9 +211,9 @@
             </select>
           </fieldset>
           <fieldset class="form-group floating-label-form-group">
-            <label for="heatingMbusDataBlock">Okunacak M-Bus Veri Bloğu</label>
+            <label for="heatingMbusDataBlock">Okunacak M-Bus Veri ID'si</label>
             <select id="heatingMbusDataBlock" name="MbusDataBlock" class="form-control">
-              <option value="none" selected disabled>Veri Bloğu Seçiniz.</option>
+              <option value="none" selected disabled>Veri ID'si Seçiniz.</option>
               <option value="0">0</option>
               <option value="1">1</option>
               <option value="2">2</option>
@@ -285,9 +285,9 @@
             </select>
           </fieldset>
           <fieldset class="form-group floating-label-form-group">
-            <label for="coolingMbusDataBlock">Okunacak M-Bus Veri Bloğu</label>
+            <label for="coolingMbusDataBlock">Okunacak M-Bus Veri ID'si</label>
             <select id="coolingMbusDataBlock" name="MbusDataBlock" class="form-control">
-              <option value="none" selected disabled>Veri Bloğu Seçiniz.</option>
+              <option value="none" selected disabled>Veri ID'si Seçiniz.</option>
               <option value="0">0</option>
               <option value="1">1</option>
               <option value="2">2</option>
@@ -533,7 +533,7 @@
               <tr>
                 <th>Sayaç Seri Numarası</th>
                 <th>İletişim Protokolü</th>
-                <th>M-BUS Veri Bloğu</th>
+                <th>M-BUS Veri ID'si</th>
                 <th>Bağlantı Noktası</th>
                 <th>Faturalandırma</th>
                 <th>Oku</th>
@@ -563,7 +563,7 @@
               <tr>
                 <th>Sayaç Seri Numarası</th>
                 <th>İletişim Protokolü</th>
-                <th>M-BUS Veri Bloğu</th>
+                <th>M-BUS Veri ID'si</th>
                 <th>Bağlantı Noktası</th>
                 <th>Faturalandırma</th>
                 <th>Oku</th>
@@ -593,7 +593,7 @@
               <tr>
                 <th>Sayaç Seri Numarası</th>
                 <th>İletişim Protokolü</th>
-                <th>M-BUS Veri Bloğu</th>
+                <th>M-BUS Veri ID'si</th>
                 <th>Bağlantı Noktası</th>
                 <th>Faturalandırma</th>
                 <th>Oku</th>
@@ -851,7 +851,7 @@ function updateSingleQueryModal(data, modalId, tableId, noContentMessageQueryId)
       <p><strong>Üretici Kodu:</strong> ${meterData.manId}</p>
       <p><strong>Cihaz Türü:</strong> ${meterData.deviceType}</p>
     `;
-    
+
     // Tablo başlığını ekle
     tableHead.innerHTML = `
       <tr>
