@@ -532,11 +532,9 @@ function updateSingleQueryModal(data, modalId, tableId, noContentMessageQueryId)
     // Sayaç bilgilerini ekle
     const meterData = data[0].decodedMbusData;
     meterInfoDiv.innerHTML = `
-      <h5>Sayaç Bilgileri</h5>
-      <p><strong>ID:</strong> ${meterData.id}</p>
+      <p><strong>Seri Numarası:</strong> ${meterData.id}</p>
       <p><strong>Üretici Kodu:</strong> ${meterData.manId}</p>
       <p><strong>Cihaz Türü:</strong> ${meterData.deviceType}</p>
-      <p><strong>Durum:</strong> ${meterData.status}</p>
     `;
 
     // Tablo başlığını ekle
