@@ -336,28 +336,23 @@
         <div class="modal-header">
           <h4 class="modal-title text-bold-600" id="singleQueryModalLabel"></h4>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
+              <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
           <table class="table table-hover table-bordered zero-configuration dataTable w-auto" id="singleQueryDataTable" role="grid">
-            <thead>
-              <tr>
-                <th>Seri Numarası</th>
-                <th>Bağlantı Noktası</th>
-                <th>Seri Port</th>
-                <th>Üretici Kodu</th>
-                <th>Değeri</th>
-              </tr>
-            </thead>
-            <tbody>
-              <!-- Dinamik içerik buraya eklenecek -->
-            </tbody>
+              <thead>
+                  <!-- Dinamik içerik buraya eklenecek -->
+              </thead>
+              <tbody>
+                  <!-- Dinamik içerik buraya eklenecek -->
+              </tbody>
           </table>
-          <div id="queryNoContentMessage" class="alert alert-warning" style="display: none;">Cihaza Erişilemedi.</div>
+          <div id="no-content-message-query" class="alert alert-warning" style="display: none;">Cihaza Erişilemedi.
+          </div>
         </div>
         <div class="modal-footer">
-          <input type="reset" class="btn btn-light" data-dismiss="modal" value="Kapat">
+            <input type="reset" class="btn btn-light" data-dismiss="modal" value="Kapat">
         </div>
       </div>
     </div>
@@ -743,17 +738,49 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 
-function queryMeterData(serialNumber, connectionPoint, meterType) {
+// singleQueryModal
+function queryMeterData(serialNumber, connectionPoint) {
   const modalId = 'singleQueryModal';
   const tableId = '#singleQueryDataTable';
-  const queryNoContentMessageId = 'queryNoContentMessage';
+  const noContentMessageQueryId = 'no-content-message-query';
 
-  resetModal(modalId, tableId, queryNoContentMessageId);
+  // Modal içeriğini tamamen sıfırla
+  const modalElement = document.getElementById(modalId);
+  if (modalElement) {
+    const modalBody = modalElement.querySelector('.modal-body');
+    if (modalBody) {
+      modalBody.innerHTML = `
+        <table class="table table-hover table-bordered zero-configuration dataTable w-auto" id="singleQueryDataTable" role="grid">
+            <thead>
+                <!-- Dinamik içerik buraya eklenecek -->
+            </thead>
+            <tbody>
+                <!-- Dinamik içerik buraya eklenecek -->
+            </tbody>
+        </table>
+        <div id="no-content-message-query" class="alert alert-warning" style="display: none;">Cihaza Erişilemedi.</div>
+      `;
+    }
+    const modalTitle = modalElement.querySelector('.modal-title');
+    if (modalTitle) {
+      modalTitle.textContent = ''; // Modal başlığı sıfırlanır
+    }
+  }
+
+  // Modal başlığı güncelle
+  const modalTitleElement = document.getElementById(`${modalId}Label`);
+  if (modalTitleElement) {
+    modalTitleElement.innerText = `${serialNumber} Seri Numaralı Sayaç Bilgileri`;
+  }
 
   // Modalı göster ve içerik yüklenirken blokla
   $(`#${modalId}`).modal('show');
   $(`#${modalId} .modal-content`).block({
-    message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
+    message: `
+    <div style="text-align: center;">
+      <div class="icon-spinner9 icon-spin icon-lg" style="margin-bottom: 10px;"></div>
+      <h4>Veriler alınıyor, lütfen bekleyin...</h4>
+    </div>`,
     overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
     css: { border: 0, padding: 0, backgroundColor: 'transparent' }
   });
@@ -761,7 +788,10 @@ function queryMeterData(serialNumber, connectionPoint, meterType) {
   fetch(`${baseWebhookURL}/webhook/query-meter-data`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ serialNumber: serialNumber, connectionPoint: connectionPoint, meterType: meterType })
+    body: JSON.stringify({
+      serialNumber: serialNumber,
+      connectionPoint: connectionPoint
+    })
   })
     .then(response => {
       if (!response.ok) {
@@ -773,48 +803,91 @@ function queryMeterData(serialNumber, connectionPoint, meterType) {
     })
     .then(data => {
       if (Array.isArray(data) && data.length > 0) {
-        updateSingleQueryModal(data, modalId, tableId, queryNoContentMessageId);
+        updateSingleQueryModal(data, modalId, tableId, noContentMessageQueryId);
       } else {
         throw new Error('Cihaza erişilemedi veya veri bulunamadı.');
       }
     })
     .catch(error => {
-      displayErrorInModal(modalId, tableId, queryNoContentMessageId, error.message || error);
+      displayErrorInModal(modalId, tableId, noContentMessageQueryId, error.message || error);
     })
     .finally(() => {
       $(`#${modalId} .modal-content`).unblock();
     });
 }
 
-function updateSingleQueryModal(data, modalId, tableId, queryNoContentMessageId) {
+function updateSingleQueryModal(data, modalId, tableId, noContentMessageQueryId) {
   const modal = document.getElementById(modalId);
   if (!modal) {
     console.error(`Modal with ID "${modalId}" not found.`);
     return;
   }
 
-  resetModal(modalId, tableId, queryNoContentMessageId);
+  resetModal(modalId, tableId, noContentMessageQueryId);
 
   const tableBody = modal.querySelector(`${tableId} tbody`);
-  const queryNoContentMessage = modal.querySelector(`#${queryNoContentMessageId}`);
+  const tableHead = modal.querySelector(`${tableId} thead`);
+  const noContentMessageQuery = modal.querySelector(`#${noContentMessageQueryId}`);
+  const modalBody = modal.querySelector('.modal-body');
+
+  // Sayaç bilgilerini gösterme alanını temizle veya oluştur
+  let meterInfoDiv = modalBody.querySelector('.meter-info');
+  if (!meterInfoDiv) {
+    meterInfoDiv = document.createElement('div');
+    meterInfoDiv.className = 'meter-info';
+    meterInfoDiv.style.marginBottom = '15px';
+    modalBody.insertBefore(meterInfoDiv, modalBody.firstChild);
+  } else {
+    meterInfoDiv.innerHTML = '';
+  }
 
   if (data && Array.isArray(data) && data.length > 0) {
-    queryNoContentMessage.style.display = 'none';
+    noContentMessageQuery.style.display = 'none';
 
-    data.forEach(item => {
+    // Sayaç bilgilerini ekle
+    const meterData = data[0].decodedMbusData;
+    meterInfoDiv.innerHTML = `
+      <p><strong>Seri Numarası:</strong> ${meterData.id}</p>
+      <p><strong>Üretici Kodu:</strong> ${meterData.manId}</p>
+      <p><strong>Cihaz Türü:</strong> ${meterData.deviceType}</p>
+    `;
+
+    // Tablo başlığını ekle
+    tableHead.innerHTML = `
+      <tr>
+        <th>ID</th>
+        <th>Tür</th>
+        <th>Değer</th>
+        <th>Birim</th>
+      </tr>
+    `;
+
+    // Gelen veriyi tabloya ekle
+    meterData.data.forEach(entry => {
+      let value = entry.value;
+      let unit = entry.unit || '-';
+
+      // Time Point (date) için özel işlem
+      if (entry.type === "Time Point (date)" && typeof value === "object") {
+        const day = String(value.d).padStart(2, '0');
+        const month = String(value.m).padStart(2, '0');
+        const year = String(value.y);
+        value = `${day}.${month}.${year}`;
+        unit = "d.m.y";
+      }
+
       const row = document.createElement('tr');
       row.innerHTML = `
-        <td>${item.device_addr}</td>
-        <td>${item.connectionPoint}</td>
-        <td>${item.serial_port}</td>
-        <td>${item.ManID}</td>
-        <td>${item.meterValue}</td>
+        <td>${entry.id}</td>
+        <td>${entry.type}</td>
+        <td>${value}</td>
+        <td>${unit}</td>
       `;
       tableBody.appendChild(row);
     });
   } else {
-    queryNoContentMessage.style.display = 'block';
-    queryNoContentMessage.textContent = 'Cihaza erişilemedi veya veri bulunamadı.';
+    noContentMessageQuery.style.display = 'block';
+    noContentMessageQuery.textContent = 'Cihaza erişilemedi veya veri bulunamadı.';
   }
 
   $(`#${modalId} .modal-content`).unblock();
