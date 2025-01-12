@@ -395,13 +395,34 @@ function queryMeterData(serialNumber, connectionPoint, meterCategory) {
   const tableId = '#singleQueryDataTable';
   const noContentMessageQueryId = 'no-content-message-query';
 
+  // Modal içeriğini tamamen sıfırla
+  const modalElement = document.getElementById(modalId);
+  if (modalElement) {
+    const modalBody = modalElement.querySelector('.modal-body');
+    if (modalBody) {
+      modalBody.innerHTML = `
+        <table class="table table-hover table-bordered zero-configuration dataTable w-auto" id="singleQueryDataTable" role="grid">
+            <thead>
+                <!-- Dinamik içerik buraya eklenecek -->
+            </thead>
+            <tbody>
+                <!-- Dinamik içerik buraya eklenecek -->
+            </tbody>
+        </table>
+        <div id="no-content-message-query" class="alert alert-warning" style="display: none;">Cihaza Erişilemedi.</div>
+      `;
+    }
+    const modalTitle = modalElement.querySelector('.modal-title');
+    if (modalTitle) {
+      modalTitle.textContent = ''; // Modal başlığı sıfırlanır
+    }
+  }
+
   // meterCategory'ye göre meterType belirle
   let meterType = '';
   if (meterCategory === "Kalorimetre (Isıtma)") meterType = "heating";
   else if (meterCategory === "Kalorimetre (Soğutma)") meterType = "cooling";
   else if (meterCategory === "Su") meterType = "water";
-
-  resetModal(modalId, tableId, noContentMessageQueryId);
 
   // Modal başlığı güncelle
   const modalTitleElement = document.getElementById(`${modalId}Label`);
