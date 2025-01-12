@@ -390,7 +390,7 @@ $(document).ready(function() {
 });
 
 // singleQueryModal
-function queryMeterData(serialNumber, connectionPoint, meterCategory) {
+function queryMeterData(serialNumber, connectionPoint) {
   const modalId = 'singleQueryModal';
   const tableId = '#singleQueryDataTable';
   const noContentMessageQueryId = 'no-content-message-query';
@@ -418,12 +418,6 @@ function queryMeterData(serialNumber, connectionPoint, meterCategory) {
     }
   }
 
-  // meterCategory'ye göre meterType belirle
-  let meterType = '';
-  if (meterCategory === "Kalorimetre (Isıtma)") meterType = "heating";
-  else if (meterCategory === "Kalorimetre (Soğutma)") meterType = "cooling";
-  else if (meterCategory === "Su") meterType = "water";
-
   // Modal başlığı güncelle
   const modalTitleElement = document.getElementById(`${modalId}Label`);
   if (modalTitleElement) {
@@ -447,8 +441,7 @@ function queryMeterData(serialNumber, connectionPoint, meterCategory) {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       serialNumber: serialNumber,
-      connectionPoint: connectionPoint,
-      meterType: meterType // meterType gönderiliyor
+      connectionPoint: connectionPoint
     })
   })
     .then(response => {
