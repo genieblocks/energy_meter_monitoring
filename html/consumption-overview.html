@@ -403,6 +403,12 @@ function queryMeterData(serialNumber, connectionPoint, meterCategory) {
 
   resetModal(modalId, tableId, noContentMessageQueryId);
 
+  // Modal başlığı güncelle
+  const modalTitleElement = document.getElementById(`${modalId}Label`);
+  if (modalTitleElement) {
+    modalTitleElement.innerText = `${serialNumber} Seri Numaralı Sayaç Bilgileri`;
+  }
+
   // Modalı göster ve içerik yüklenirken blokla
   $(`#${modalId}`).modal('show');
   $(`#${modalId} .modal-content`).block({
@@ -421,7 +427,7 @@ function queryMeterData(serialNumber, connectionPoint, meterCategory) {
     body: JSON.stringify({
       serialNumber: serialNumber,
       connectionPoint: connectionPoint,
-      meterType: meterType  // meterType gönderiliyor
+      meterType: meterType // meterType gönderiliyor
     })
   })
     .then(response => {
