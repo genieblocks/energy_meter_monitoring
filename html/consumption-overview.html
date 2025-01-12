@@ -229,12 +229,7 @@
       <div class="modal-body">
         <table class="table table-hover table-bordered zero-configuration dataTable w-auto" id="singleQueryDataTable" role="grid">
             <thead>
-                <tr>
-                  <th>Blok</th>
-                  <th>Tip</th>
-                  <th>Değer</th>
-                  <th>Birim</th>
-                </tr>
+                <!-- Dinamik içerik buraya eklenecek -->
             </thead>
             <tbody>
                 <!-- Dinamik içerik buraya eklenecek -->
@@ -512,10 +507,21 @@ function updateSingleQueryModal(data, modalId, tableId, noContentMessageQueryId)
   resetModal(modalId, tableId, noContentMessageQueryId);
 
   const tableBody = modal.querySelector(`${tableId} tbody`);
+  const tableHead = modal.querySelector(`${tableId} thead`);
   const noContentMessageQuery = modal.querySelector(`#${noContentMessageQueryId}`);
 
   if (data && Array.isArray(data) && data.length > 0) {
     noContentMessageQuery.style.display = 'none';
+
+      // Tablo başlığını ekle
+      tableHead.innerHTML = `
+      <tr>
+        <th>ID</th>
+        <th>Tür</th>
+        <th>Değer</th>
+        <th>Birim</th>
+      </tr>
+    `;
 
     data[0].decodedMbusData.data.forEach(entry => {
         let value = entry.value;
