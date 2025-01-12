@@ -406,7 +406,11 @@ function queryMeterData(serialNumber, connectionPoint, meterCategory) {
   // Modalı göster ve içerik yüklenirken blokla
   $(`#${modalId}`).modal('show');
   $(`#${modalId} .modal-content`).block({
-    message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
+    message: `
+    <div style="text-align: center;">
+      <div class="icon-spinner9 icon-spin icon-lg" style="margin-bottom: 10px;"></div>
+      <h4>Veriler alınıyor, lütfen bekleyin...</h4>
+    </div>`,
     overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
     css: { border: 0, padding: 0, backgroundColor: 'transparent' }
   });
@@ -522,7 +526,7 @@ function updateSingleQueryModal(data, modalId, tableId, noContentMessageQueryId)
         <th>Birim</th>
       </tr>
     `;
-    
+
     data[0].decodedMbusData.data.forEach(entry => {
         let value = entry.value;
         let unit = entry.unit || '-';
