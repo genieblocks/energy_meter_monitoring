@@ -828,10 +828,30 @@ function updateSingleQueryModal(data, modalId, tableId, noContentMessageQueryId)
   const tableBody = modal.querySelector(`${tableId} tbody`);
   const tableHead = modal.querySelector(`${tableId} thead`);
   const noContentMessageQuery = modal.querySelector(`#${noContentMessageQueryId}`);
+  const modalBody = modal.querySelector('.modal-body');
+
+  // Sayaç bilgilerini gösterme alanını temizle veya oluştur
+  let meterInfoDiv = modalBody.querySelector('.meter-info');
+  if (!meterInfoDiv) {
+    meterInfoDiv = document.createElement('div');
+    meterInfoDiv.className = 'meter-info';
+    meterInfoDiv.style.marginBottom = '15px';
+    modalBody.insertBefore(meterInfoDiv, modalBody.firstChild);
+  } else {
+    meterInfoDiv.innerHTML = '';
+  }
 
   if (data && Array.isArray(data) && data.length > 0) {
     noContentMessageQuery.style.display = 'none';
 
+    // Sayaç bilgilerini ekle
+    const meterData = data[0].decodedMbusData;
+    meterInfoDiv.innerHTML = `
+      <p><strong>Seri Numarası:</strong> ${meterData.id}</p>
+      <p><strong>Üretici Kodu:</strong> ${meterData.manId}</p>
+      <p><strong>Cihaz Türü:</strong> ${meterData.deviceType}</p>
+    `;
+    
     // Tablo başlığını ekle
     tableHead.innerHTML = `
       <tr>
