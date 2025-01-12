@@ -513,9 +513,31 @@ function updateSingleQueryModal(data, modalId, tableId, noContentMessageQueryId)
   const tableBody = modal.querySelector(`${tableId} tbody`);
   const tableHead = modal.querySelector(`${tableId} thead`);
   const noContentMessageQuery = modal.querySelector(`#${noContentMessageQueryId}`);
+  const modalBody = modal.querySelector('.modal-body');
+
+  // Sayaç bilgilerini gösterme alanını temizle veya oluştur
+  let meterInfoDiv = modalBody.querySelector('.meter-info');
+  if (!meterInfoDiv) {
+    meterInfoDiv = document.createElement('div');
+    meterInfoDiv.className = 'meter-info';
+    meterInfoDiv.style.marginBottom = '15px';
+    modalBody.insertBefore(meterInfoDiv, modalBody.firstChild);
+  } else {
+    meterInfoDiv.innerHTML = '';
+  }
 
   if (data && Array.isArray(data) && data.length > 0) {
     noContentMessageQuery.style.display = 'none';
+
+    // Sayaç bilgilerini ekle
+    const meterData = data[0].decodedMbusData;
+    meterInfoDiv.innerHTML = `
+      <h5>Sayaç Bilgileri</h5>
+      <p><strong>ID:</strong> ${meterData.id}</p>
+      <p><strong>Üretici Kodu:</strong> ${meterData.manId}</p>
+      <p><strong>Cihaz Türü:</strong> ${meterData.deviceType}</p>
+      <p><strong>Durum:</strong> ${meterData.status}</p>
+    `;
 
     // Tablo başlığını ekle
     tableHead.innerHTML = `
@@ -527,28 +549,29 @@ function updateSingleQueryModal(data, modalId, tableId, noContentMessageQueryId)
       </tr>
     `;
 
-    data[0].decodedMbusData.data.forEach(entry => {
-        let value = entry.value;
-        let unit = entry.unit || '-';
+    // Gelen veriyi tabloya ekle
+    meterData.data.forEach(entry => {
+      let value = entry.value;
+      let unit = entry.unit || '-';
 
-        // Time Point (date) için özel işlem
-        if (entry.type === "Time Point (date)" && typeof value === "object") {
-          const day = String(value.d).padStart(2, '0');
-          const month = String(value.m).padStart(2, '0');
-          const year = String(value.y);
-          value = `${day}.${month}.${year}`;
-          unit = "d.m.y";
-        }
+      // Time Point (date) için özel işlem
+      if (entry.type === "Time Point (date)" && typeof value === "object") {
+        const day = String(value.d).padStart(2, '0');
+        const month = String(value.m).padStart(2, '0');
+        const year = String(value.y);
+        value = `${day}.${month}.${year}`;
+        unit = "d.m.y";
+      }
 
-        const row = document.createElement('tr');
-        row.innerHTML = `
-          <td>${entry.id}</td>
-          <td>${entry.type}</td>
-          <td>${value}</td>
-          <td>${unit}</td>
-        `;
-        tableBody.appendChild(row);
-      });
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td>${entry.id}</td>
+        <td>${entry.type}</td>
+        <td>${value}</td>
+        <td>${unit}</td>
+      `;
+      tableBody.appendChild(row);
+    });
   } else {
     noContentMessageQuery.style.display = 'block';
     noContentMessageQuery.textContent = 'Cihaza erişilemedi veya veri bulunamadı.';
