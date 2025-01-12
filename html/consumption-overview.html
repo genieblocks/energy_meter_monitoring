@@ -522,7 +522,7 @@ function updateSingleQueryModal(data, modalId, tableId, noContentMessageQueryId)
         let unit = entry.unit || '-';
 
         // Time Point (date) için özel işlem
-        if (entry.type === "Time Point (date)") {
+        if (entry.type === "Time Point (date)" && typeof value === "object") {
           const day = String(value.d).padStart(2, '0');
           const month = String(value.m).padStart(2, '0');
           const year = String(value.y);
@@ -534,8 +534,8 @@ function updateSingleQueryModal(data, modalId, tableId, noContentMessageQueryId)
         row.innerHTML = `
           <td>${entry.id}</td>
           <td>${entry.type}</td>
-          <td>${entry.value}</td>
-          <td>${entry.unit}</td>
+          <td>${value}</td>
+          <td>${unit}</td>
         `;
         tableBody.appendChild(row);
       });
