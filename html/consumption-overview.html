@@ -518,12 +518,24 @@ function updateSingleQueryModal(data, modalId, tableId, noContentMessageQueryId)
     noContentMessageQuery.style.display = 'none';
 
     data[0].decodedMbusData.data.forEach(entry => {
+        let value = entry.value;
+        let unit = entry.unit || '-';
+
+        // Time Point (date) için özel işlem
+        if (entry.type === "Time Point (date)" && typeof value === "object") {
+          const day = String(value.d).padStart(2, '0');
+          const month = String(value.m).padStart(2, '0');
+          const year = String(value.y);
+          value = `${day}.${month}.${year}`;
+          unit = "d.m.y";
+        }
+
         const row = document.createElement('tr');
         row.innerHTML = `
           <td>${entry.id}</td>
           <td>${entry.type}</td>
           <td>${entry.value}</td>
-          <td>${entry.unit || '-'}</td>
+          <td>${entry.unit}</td>
         `;
         tableBody.appendChild(row);
       });
