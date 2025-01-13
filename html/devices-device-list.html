@@ -66,14 +66,14 @@
           </fieldset>
           <fieldset class="form-group floating-label-form-group">
             <label for="electricityProtocolType">Protokol Tipi</label>
-            <select id="electricityProtocolType" name="protocolType" class="form-control custom-select" onchange="updateProtocolDetails('electricity')" required>
+            <select id="electricityProtocolType" name="protocolType" class="form-control" onchange="updateProtocolDetails('electricity')" required>
               <option value="" selected disabled>Protokol Tipi Seçiniz.</option>
               <!-- Dinamik olarak doldurulacak -->
             </select>
           </fieldset>
           <fieldset class="form-group floating-label-form-group">
             <label for="electricityManufacturer">Sayaç Markası</label>
-            <select id="electricityManufacturer" name="manufacturer" class="form-control custom-select" required>
+            <select id="electricityManufacturer" name="manufacturer" class="form-control" required>
               <option value="" selected disabled>Sayaç Markası Seçiniz.</option>
               <!-- Dinamik olarak doldurulacak -->
             </select>
@@ -84,14 +84,14 @@
           </fieldset>
           <fieldset class="form-group floating-label-form-group">
             <label for="electricityConnectionPoint">Bağlantı Noktası</label>
-            <select id="electricityConnectionPoint" name="connectionPoint" class="form-control custom-select" required>
+            <select id="electricityConnectionPoint" name="connectionPoint" class="form-control" required>
               <option value="" selected disabled>Bağlantı Noktası Seçiniz.</option>
               <!-- Dinamik olarak doldurulacak -->
             </select>
           </fieldset>
           <fieldset class="form-group floating-label-form-group">
             <label for="electricityInvoiceReport">Faturalandırılma</label>
-            <select id="electricityInvoiceReport" name="isVisibleInInvoiceReport" class="form-control custom-select" required>
+            <select id="electricityInvoiceReport" name="isVisibleInInvoiceReport" class="form-control" required>
               <option value="" selected disabled>Seçiniz</option>
               <option value="true">Evet</option>
               <option value="false">Hayır</option>
@@ -654,6 +654,27 @@
     // const baseWebhookURL = "http://127.0.0.1:5678"; // Değiştirmek istediğiniz temel URL
     const baseWebhookURL = "http://192.168.2.250:5678"; // Değiştirmek istediğiniz temel URL
     // const baseWebhookURL = "http://192.168.1.146:5678"; // Değiştirmek istediğiniz temel URL
+
+document.querySelector('#electricityMeterForm').addEventListener('submit', function(event) {
+  // Tüm required `select` öğelerini kontrol et
+  const selects = this.querySelectorAll('select[required]');
+  let isValid = true;
+
+  selects.forEach(select => {
+    if (select.value === "" || select.value === "none") {
+      isValid = false;
+      select.classList.add('is-invalid'); // Hata durumunda görsel olarak işaretleme
+      select.focus();
+    } else {
+      select.classList.remove('is-invalid'); // Hata kaldırıldığında temizleme
+    }
+  });
+
+  if (!isValid) {
+    event.preventDefault(); // Formun gönderilmesini engelle
+    alert('Lütfen tüm gerekli alanları doldurunuz!');
+  }
+});
 
 document.addEventListener('DOMContentLoaded', function () {
   // Tablo ve MeterType tanımları
