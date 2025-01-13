@@ -1258,7 +1258,7 @@ function appendRowToTable(meter, tableId) {
     row.innerHTML = `
       <td>${meter.SerialNumber || ''}</td>
       <td>${meter.CommunicationProtocol || ''}</td>
-      <td>${meter.MbusDataBlock || ''}</td>
+      <td>${meter.MbusDataBlock}</td>
       <td>${meter.ConnectionPoint || ''}</td>
       <td>${meter.IsVisibleInInvoiceReport === true ? 'Evet' : meter.IsVisibleInInvoiceReport === false ? 'Hayır' : ''}</td>
       <td>
