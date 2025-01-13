@@ -1535,6 +1535,24 @@ function fetchConnections(connectionTable, meterType) {
 
   document.querySelector('#electricityMeterForm').addEventListener('submit', function(event) {
     event.preventDefault(); // Formun submit olmasını engelle
+    let isValid = true;
+
+    // Tüm input ve select öğelerini kontrol et
+    const requiredFields = this.querySelectorAll('[required]');
+    requiredFields.forEach(field => {
+      if (!field.value || field.value === "none") {
+        isValid = false;
+        field.classList.add('is-invalid'); // Hata durumunda işaretle
+        field.focus(); // İlk hatalı alana odaklan
+      } else {
+        field.classList.remove('is-invalid'); // Hata kaldırıldığında temizle
+      }
+    });
+
+    if (!isValid) {
+      alert('Lütfen tüm gerekli alanları doldurunuz!');
+      return; // Form gönderimini iptal et
+    }
 
     const serialNumber = document.querySelector('#electricityMeterSerialNumber').value;
     const protocolType = document.querySelector('#electricityProtocolType').value;
