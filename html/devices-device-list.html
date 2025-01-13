@@ -62,36 +62,36 @@
         <div class="modal-body">
           <fieldset class="form-group floating-label-form-group">
             <label for="devicename">Sayaç Seri Numarası</label>
-            <input type="text" class="form-control" id="electricityMeterSerialNumber" placeholder="Seri Numarası">
+            <input type="text" class="form-control" id="electricityMeterSerialNumber" placeholder="Seri Numarası" required>
           </fieldset>
           <fieldset class="form-group floating-label-form-group">
             <label for="electricityProtocolType">Protokol Tipi</label>
-            <select id="electricityProtocolType" name="protocolType" class="form-control" onchange="updateProtocolDetails('electricity')">
+            <select id="electricityProtocolType" name="protocolType" class="form-control" onchange="updateProtocolDetails('electricity')" required>
               <option value="none" selected disabled>Protokol Tipi Seçiniz.</option>
               <!-- Dinamik olarak doldurulacak -->
             </select>
           </fieldset>
           <fieldset class="form-group floating-label-form-group">
             <label for="electricityManufacturer">Sayaç Markası</label>
-            <select id="electricityManufacturer" name="manufacturer" class="form-control">
+            <select id="electricityManufacturer" name="manufacturer" class="form-control" required>
               <option value="none" selected disabled>Sayaç Markası Seçiniz.</option>
               <!-- Dinamik olarak doldurulacak -->
             </select>
           </fieldset>
           <fieldset class="form-group floating-label-form-group">
             <label for="electricityMeterMultiplier">Sayaç Çarpanı</label>
-            <input type="number" class="form-control" id="electricityMeterMultiplier" name="meterMultiplier" min="1" placeholder="Sayaç Çarpanı">
+            <input type="number" class="form-control" id="electricityMeterMultiplier" name="meterMultiplier" min="1" placeholder="Sayaç Çarpanı" required>
           </fieldset>
           <fieldset class="form-group floating-label-form-group">
             <label for="electricityConnectionPoint">Bağlantı Noktası</label>
-            <select id="electricityConnectionPoint" name="connectionPoint" class="form-control">
+            <select id="electricityConnectionPoint" name="connectionPoint" class="form-control" required>
               <option value="none" selected disabled>Bağlantı Noktası Seçiniz.</option>
               <!-- Dinamik olarak doldurulacak -->
             </select>
           </fieldset>
           <fieldset class="form-group floating-label-form-group">
             <label for="electricityInvoiceReport">Faturalandırılma</label>
-            <select id="electricityInvoiceReport" name="isVisibleInInvoiceReport" class="form-control">
+            <select id="electricityInvoiceReport" name="isVisibleInInvoiceReport" class="form-control" required>
               <option value="none" selected disabled>Seçiniz</option>
               <option value="true">Evet</option>
               <option value="false">Hayır</option>
@@ -120,25 +120,25 @@
         <div class="modal-body">
           <fieldset class="form-group floating-label-form-group">
             <label for="devicename">Sayaç Seri Numarası</label>
-            <input type="text" class="form-control" id="waterMeterSerialNumber" placeholder="Seri Numarası">
+            <input type="text" class="form-control" id="waterMeterSerialNumber" placeholder="Seri Numarası" required>
           </fieldset>
           <fieldset class="form-group floating-label-form-group">
             <label for="waterProtocolType">Protokol Tipi</label>
-            <select id="waterProtocolType" name="protocolType" class="form-control" onchange="updateProtocolDetails('water')">
+            <select id="waterProtocolType" name="protocolType" class="form-control" onchange="updateProtocolDetails('water')" required>
               <option value="none" selected disabled>Protokol Tipi Seçiniz.</option>
               <!-- Dinamik olarak doldurulacak -->
             </select>
           </fieldset>
           <fieldset class="form-group floating-label-form-group">
             <label for="waterConnectionPoint">Bağlantı Noktası</label>
-            <select id="waterConnectionPoint" name="connectionPoint" class="form-control">
+            <select id="waterConnectionPoint" name="connectionPoint" class="form-control" required>
               <option value="none" selected disabled>Bağlantı Noktası Seçiniz.</option>
               <!-- Dinamik olarak doldurulacak -->
             </select>
           </fieldset>
           <fieldset class="form-group floating-label-form-group">
             <label for="waterMbusDataBlock">Okunacak M-Bus Veri ID'si</label>
-            <select id="waterMbusDataBlock" name="MbusDataBlock" class="form-control">
+            <select id="waterMbusDataBlock" name="MbusDataBlock" class="form-control" required>
               <option value="none" selected disabled>Veri ID'si Seçiniz.</option>
               <option value="0">0</option>
               <option value="1">1</option>
@@ -165,7 +165,7 @@
           </fieldset>
           <fieldset class="form-group floating-label-form-group">
             <label for="waterInvoiceReport">Faturalandırılma</label>
-            <select id="waterInvoiceReport" name="isVisibleInInvoiceReport" class="form-control">
+            <select id="waterInvoiceReport" name="isVisibleInInvoiceReport" class="form-control" required>
               <option value="none" selected disabled>Seçiniz.</option>
               <option value="true">Evet</option>
               <option value="false">Hayır</option>
@@ -194,25 +194,25 @@
         <div class="modal-body">
           <fieldset class="form-group floating-label-form-group">
             <label for="devicename">Sayaç Seri Numarası</label>
-            <input type="text" class="form-control" id="heatingMeterSerialNumber" placeholder="Seri Numarası">
+            <input type="text" class="form-control" id="heatingMeterSerialNumber" placeholder="Seri Numarası" required>
           </fieldset>
           <fieldset class="form-group floating-label-form-group">
             <label for="heatingProtocolType">Protokol Tipi</label>
-            <select id="heatingProtocolType" name="protocolType" class="form-control" onchange="updateProtocolDetails('heating')">
+            <select id="heatingProtocolType" name="protocolType" class="form-control" onchange="updateProtocolDetails('heating')" required>
               <option value="none" selected disabled>Protokol Tipi Seçiniz.</option>
               <!-- Dinamik olarak doldurulacak -->
             </select>
           </fieldset>
           <fieldset class="form-group floating-label-form-group">
             <label for="heatingConnectionPoint">Bağlantı Noktası</label>
-            <select id="heatingConnectionPoint" name="connectionPoint" class="form-control">
+            <select id="heatingConnectionPoint" name="connectionPoint" class="form-control" required>
               <option value="none" selected disabled>Bağlantı Noktası Seçiniz.</option>
               <!-- Dinamik olarak doldurulacak -->
             </select>
           </fieldset>
           <fieldset class="form-group floating-label-form-group">
             <label for="heatingMbusDataBlock">Okunacak M-Bus Veri ID'si</label>
-            <select id="heatingMbusDataBlock" name="MbusDataBlock" class="form-control">
+            <select id="heatingMbusDataBlock" name="MbusDataBlock" class="form-control" required>
               <option value="none" selected disabled>Veri ID'si Seçiniz.</option>
               <option value="0">0</option>
               <option value="1">1</option>
@@ -239,7 +239,7 @@
           </fieldset>
           <fieldset class="form-group floating-label-form-group">
             <label for="heatingInvoiceReport">Faturalandırılma</label>
-            <select id="heatingInvoiceReport" name="isVisibleInInvoiceReport" class="form-control">
+            <select id="heatingInvoiceReport" name="isVisibleInInvoiceReport" class="form-control" required>
               <option value="none" selected disabled>Seçiniz.</option>
               <option value="true">Evet</option>
               <option value="false">Hayır</option>
@@ -268,25 +268,25 @@
         <div class="modal-body">
           <fieldset class="form-group floating-label-form-group">
             <label for="coolingMeterSerialNumber">Sayaç Seri Numarası</label>
-            <input type="text" class="form-control" id="coolingMeterSerialNumber" placeholder="Seri Numarası">
+            <input type="text" class="form-control" id="coolingMeterSerialNumber" placeholder="Seri Numarası" required>
           </fieldset>
           <fieldset class="form-group floating-label-form-group">
             <label for="coolingProtocolType">Protokol Tipi</label>
-            <select id="coolingProtocolType" name="protocolType" class="form-control" onchange="updateProtocolDetails('cooling')">
+            <select id="coolingProtocolType" name="protocolType" class="form-control" onchange="updateProtocolDetails('cooling')" required>
               <option value="none" selected disabled>Protokol Tipi Seçiniz.</option>
               <!-- Dinamik olarak doldurulacak -->
             </select>
           </fieldset>
           <fieldset class="form-group floating-label-form-group">
             <label for="coolingConnectionPoint">Bağlantı Noktası</label>
-            <select id="coolingConnectionPoint" name="connectionPoint" class="form-control">
+            <select id="coolingConnectionPoint" name="connectionPoint" class="form-control" required>
               <option value="none" selected disabled>Bağlantı Noktası Seçiniz.</option>
               <!-- Dinamik olarak doldurulacak -->
             </select>
           </fieldset>
           <fieldset class="form-group floating-label-form-group">
             <label for="coolingMbusDataBlock">Okunacak M-Bus Veri ID'si</label>
-            <select id="coolingMbusDataBlock" name="MbusDataBlock" class="form-control">
+            <select id="coolingMbusDataBlock" name="MbusDataBlock" class="form-control" required>
               <option value="none" selected disabled>Veri ID'si Seçiniz.</option>
               <option value="0">0</option>
               <option value="1">1</option>
@@ -313,7 +313,7 @@
           </fieldset>
           <fieldset class="form-group floating-label-form-group">
             <label for="coolingInvoiceReport">Faturalandırılma</label>
-            <select id="coolingInvoiceReport" name="isVisibleInInvoiceReport" class="form-control">
+            <select id="coolingInvoiceReport" name="isVisibleInInvoiceReport" class="form-control" required>
               <option value="none" selected disabled>Seçiniz.</option>
               <option value="true">Evet</option>
               <option value="false">Hayır</option>
