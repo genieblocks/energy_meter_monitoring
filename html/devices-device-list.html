@@ -403,24 +403,28 @@
       <form id="updateDataForm">
         <div class="modal-body">
           <fieldset class="form-group">
-            <label for="editProtocolType">Protokol Tipi</label>
-            <select class="form-control" id="editProtocolType" name="protocolType" required>
+            <label for="SerialNumber">Seri Numarası</label>
+            <input type="text" class="form-control" id="SerialNumber" name="SerialNumber" readonly>
+          </fieldset>
+          <fieldset class="form-group">
+            <label for="CommunicationProtocol">Protokol Tipi</label>
+            <select class="form-control" id="CommunicationProtocol" name="CommunicationProtocol" required>
               <option value="none" disabled selected>Protokol Tipi Seçiniz</option>
             </select>
           </fieldset>
           <fieldset class="form-group" id="editMeterMultiplierFieldset">
-              <label for="editMeterMultiplier">Sayaç Çarpanı</label>
-              <input type="number" class="form-control" id="editMeterMultiplier" name="meterMultiplier">
+              <label for="MeterMultiplier">Sayaç Çarpanı</label>
+              <input type="number" class="form-control" id="MeterMultiplier" name="MeterMultiplier">
           </fieldset>
           <fieldset class="form-group">
-            <label for="editConnectionPoint">Bağlantı Noktası</label>
-            <select class="form-control" id="editConnectionPoint" name="connectionPoint" required>
+            <label for="ConnectionPoint">Bağlantı Noktası</label>
+            <select class="form-control" id="ConnectionPoint" name="ConnectionPoint" required>
               <option value="none" disabled selected>Bağlantı Noktası Seçiniz</option>
             </select>
           </fieldset>
           <fieldset class="form-group">
-            <label for="editInvoiceReport">Faturalandırma</label>
-            <select class="form-control" id="editInvoiceReport" name="invoiceReport" required>
+            <label for="IsVisibleInInvoiceReport">Faturalandırma</label>
+            <select class="form-control" id="IsVisibleInInvoiceReport" name="IsVisibleInInvoiceReport" required>
               <option value="none" disabled selected>Seçiniz</option>
               <option value="true">Evet</option>
               <option value="false">Hayır</option>
@@ -776,28 +780,22 @@ document.addEventListener('DOMContentLoaded', function () {
     const protocolTypeSelect = document.getElementById('editProtocolType');
     const connectionPointSelect = document.getElementById('editConnectionPoint');
     const invoiceReportSelect = document.getElementById('editInvoiceReport');
+    const serialNumberInput = document.getElementById('editSerialNumberInput');
+
+    // Seri numarası alanını kontrol et
+    if (!serialNumberInput) {
+        console.error('Seri numarası alanı bulunamadı. Lütfen statik HTML kısmına "editSerialNumberInput" ID\'siyle bir input ekleyin.');
+        return;
+    }
 
     // Modal içeriğini sıfırla
     protocolTypeSelect.innerHTML = '<option value="none" disabled selected>Protokol Tipi Seçiniz</option>';
     connectionPointSelect.innerHTML = '<option value="none" disabled selected>Bağlantı Noktası Seçiniz</option>';
     invoiceReportSelect.value = 'none';
 
-    // Seri Numarası alanını kontrol et veya oluştur
-    let serialNumberField = document.getElementById('editSerialNumber');
-    if (!serialNumberField) {
-        serialNumberField = document.createElement('div');
-        serialNumberField.classList.add('form-group');
-        serialNumberField.innerHTML = `
-            <label for="editSerialNumberInput">Seri Numarası</label>
-            <input type="text" class="form-control" id="editSerialNumberInput" name="serialNumber" readonly>
-        `;
-        const modalBody = document.querySelector('#editMeterModal .modal-body');
-        modalBody.insertAdjacentElement('afterbegin', serialNumberField);
-    }
-
     // Seri Numarasını doldur
     const serialNumber = row.cells[0]?.textContent || ''; // Seri numarası tablonun ilk sütununda varsayılıyor
-    document.getElementById('editSerialNumberInput').value = serialNumber;
+    serialNumberInput.value = serialNumber;
 
     // Sayaç çarpanı alanını kontrol et veya yeniden oluştur
     let multiplierFieldset = document.getElementById('editMeterMultiplierFieldset');
