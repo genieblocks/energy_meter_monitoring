@@ -786,7 +786,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let serialNumberField = document.getElementById('editSerialNumber');
     if (!serialNumberField) {
         serialNumberField = document.createElement('div');
-        serialNumberField.classList.add('form-group', 'mb-3');
+        serialNumberField.classList.add('form-group');
         serialNumberField.innerHTML = `
             <label for="editSerialNumberInput">Seri Numarası</label>
             <input type="text" class="form-control" id="editSerialNumberInput" name="serialNumber" readonly>
