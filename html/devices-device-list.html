@@ -777,14 +777,14 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
   async function openEditModal(row, meterType) {
-    const protocolTypeSelect = document.getElementById('editProtocolType');
-    const connectionPointSelect = document.getElementById('editConnectionPoint');
-    const invoiceReportSelect = document.getElementById('editInvoiceReport');
-    const serialNumberInput = document.getElementById('editSerialNumberInput');
+    const protocolTypeSelect = document.getElementById('CommunicationProtocol');
+    const connectionPointSelect = document.getElementById('ConnectionPoint');
+    const invoiceReportSelect = document.getElementById('IsVisibleInInvoiceReport');
+    const serialNumberInput = document.getElementById('SerialNumber');
 
     // Seri numarası alanını kontrol et
     if (!serialNumberInput) {
-        console.error('Seri numarası alanı bulunamadı. Lütfen statik HTML kısmına "editSerialNumberInput" ID\'siyle bir input ekleyin.');
+        console.error('Seri numarası alanı bulunamadı. Lütfen statik HTML kısmına "SerialNumber" ID\'siyle bir input ekleyin.');
         return;
     }
 
@@ -806,14 +806,14 @@ document.addEventListener('DOMContentLoaded', function () {
             multiplierFieldset.id = 'editMeterMultiplierFieldset';
             multiplierFieldset.classList.add('form-group', 'mb-3');
             multiplierFieldset.innerHTML = `
-                <label for="editMeterMultiplier">Sayaç Çarpanı</label>
-                <input type="number" class="form-control" id="editMeterMultiplier" name="meterMultiplier" required>
+                <label for="MeterMultiplier">Sayaç Çarpanı</label>
+                <input type="number" class="form-control" id="MeterMultiplier" name="MeterMultiplier" required>
             `;
             protocolTypeSelect.closest('.form-group').after(multiplierFieldset); // Protokol Tipi seçeneğinden sonra ekle
         }
         multiplierFieldset.style.display = 'block'; // Görünür yap
         const multiplier = row.cells[1]?.textContent || ''; // Elektrik tablosunda çarpan 2. sütunda
-        document.getElementById('editMeterMultiplier').value = multiplier;
+        document.getElementById('MeterMultiplier').value = multiplier;
     } else if (multiplierFieldset) {
         // Elektrik harici sayaçlar için Fieldset'i tamamen kaldır
         multiplierFieldset.remove();
