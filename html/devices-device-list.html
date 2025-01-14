@@ -408,9 +408,9 @@
               <option value="none" disabled selected>Protokol Tipi Seçiniz</option>
             </select>
           </fieldset>
-          <fieldset class="form-group">
-            <label for="editMeterMultiplier">Sayaç Çarpanı</label>
-            <input type="number" class="form-control" id="editMeterMultiplier" name="meterMultiplier" required>
+          <fieldset class="form-group" id="editMeterMultiplierFieldset">
+              <label for="editMeterMultiplier">Sayaç Çarpanı</label>
+              <input type="number" class="form-control" id="editMeterMultiplier" name="meterMultiplier">
           </fieldset>
           <fieldset class="form-group">
             <label for="editConnectionPoint">Bağlantı Noktası</label>
@@ -775,20 +775,25 @@ document.addEventListener('DOMContentLoaded', function () {
   async function openEditModal(row, meterType) {
     const protocolTypeSelect = document.getElementById('editProtocolType');
     const connectionPointSelect = document.getElementById('editConnectionPoint');
-    const multiplierInput = document.getElementById('editMeterMultiplier');
+    const multiplierInput = document.getElementById('editMeterMultiplier'); // Sayaç Çarpanı
     const invoiceReportSelect = document.getElementById('editInvoiceReport');
 
     // Modal içeriğini sıfırla
     protocolTypeSelect.innerHTML = '<option value="none" disabled selected>Protokol Tipi Seçiniz</option>';
     connectionPointSelect.innerHTML = '<option value="none" disabled selected>Bağlantı Noktası Seçiniz</option>';
-    multiplierInput.value = '';
+    multiplierInput.value = ''; // Sayaç çarpanını sıfırla
     invoiceReportSelect.value = 'none';
 
-    // Satırdan verileri al
-    const multiplier = row.cells[1]?.textContent || '';
-    const invoiceReport = row.cells[5]?.textContent === 'Evet' ? 'true' : 'false';
+    // Sayaç çarpanı alanını sadece elektrik sayaçları için göster
+    if (meterType === 'electricity') {
+        document.getElementById('editMeterMultiplierFieldset').style.display = 'block';
+        const multiplier = row.cells[1]?.textContent || ''; // Elektrik tablosunda çarpan 2. sütunda
+        multiplierInput.value = multiplier;
+    } else {
+        document.getElementById('editMeterMultiplierFieldset').style.display = 'none'; // Diğer sayaçlar için gizle
+    }
 
-    multiplierInput.value = multiplier;
+    const invoiceReport = row.cells[meterType === 'electricity' ? 5 : 4]?.textContent === 'Evet' ? 'true' : 'false';
     invoiceReportSelect.value = invoiceReport;
 
     try {
