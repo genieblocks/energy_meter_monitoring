@@ -403,28 +403,28 @@
       <form id="updateDataForm">
         <div class="modal-body">
           <fieldset class="form-group">
-            <label for="SerialNumber">Seri Numarası</label>
-            <input type="text" class="form-control" id="SerialNumber" name="SerialNumber" readonly>
+            <label for="editSerialNumber">Seri Numarası</label>
+            <input type="text" class="form-control" id="editSerialNumber" name="SerialNumber" readonly>
           </fieldset>
           <fieldset class="form-group">
-            <label for="CommunicationProtocol">Protokol Tipi</label>
-            <select class="form-control" id="CommunicationProtocol" name="CommunicationProtocol" required>
+            <label for="editProtocolType">Protokol Tipi</label>
+            <select class="form-control" id="editProtocolType" name="CommunicationProtocol" required>
               <option value="none" disabled selected>Protokol Tipi Seçiniz</option>
             </select>
           </fieldset>
           <fieldset class="form-group" id="editMeterMultiplierFieldset">
-              <label for="MeterMultiplier">Sayaç Çarpanı</label>
-              <input type="number" class="form-control" id="MeterMultiplier" name="MeterMultiplier">
+              <label for="editMeterMultiplier">Sayaç Çarpanı</label>
+              <input type="number" class="form-control" id="editMeterMultiplier" name="MeterMultiplier">
           </fieldset>
           <fieldset class="form-group">
-            <label for="ConnectionPoint">Bağlantı Noktası</label>
-            <select class="form-control" id="ConnectionPoint" name="ConnectionPoint" required>
+            <label for="editConnectionPoint">Bağlantı Noktası</label>
+            <select class="form-control" id="editConnectionPoint" name="ConnectionPoint" required>
               <option value="none" disabled selected>Bağlantı Noktası Seçiniz</option>
             </select>
           </fieldset>
           <fieldset class="form-group">
-            <label for="IsVisibleInInvoiceReport">Faturalandırma</label>
-            <select class="form-control" id="IsVisibleInInvoiceReport" name="IsVisibleInInvoiceReport" required>
+            <label for="editInvoiceReport">Faturalandırma</label>
+            <select class="form-control" id="editInvoiceReport" name="IsVisibleInInvoiceReport" required>
               <option value="none" disabled selected>Seçiniz</option>
               <option value="true">Evet</option>
               <option value="false">Hayır</option>
@@ -432,8 +432,8 @@
           </fieldset>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-light btn-lg" data-dismiss="modal">kapat</button>
-          <button type="button" class="btn btn-genie white btn-lg" onclick="updateTableContent()">Güncelle</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">İptal</button>
+          <button type="button" class="btn btn-primary" onclick="updateTableContent()">Güncelle</button>
         </div>
       </form>
     </div>
@@ -777,14 +777,14 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
   async function openEditModal(row, meterType) {
-    const protocolTypeSelect = document.getElementById('CommunicationProtocol');
-    const connectionPointSelect = document.getElementById('ConnectionPoint');
-    const invoiceReportSelect = document.getElementById('IsVisibleInInvoiceReport');
-    const serialNumberInput = document.getElementById('SerialNumber');
+    const protocolTypeSelect = document.getElementById('editProtocolType');
+    const connectionPointSelect = document.getElementById('editConnectionPoint');
+    const invoiceReportSelect = document.getElementById('editInvoiceReport');
+    const serialNumberInput = document.getElementById('editSerialNumberInput');
 
     // Seri numarası alanını kontrol et
     if (!serialNumberInput) {
-        console.error('Seri numarası alanı bulunamadı. Lütfen statik HTML kısmına "SerialNumber" ID\'siyle bir input ekleyin.');
+        console.error('Seri numarası alanı bulunamadı. Lütfen statik HTML kısmına "editSerialNumberInput" ID\'siyle bir input ekleyin.');
         return;
     }
 
@@ -804,16 +804,16 @@ document.addEventListener('DOMContentLoaded', function () {
             // Sayaç çarpanı fieldset'i oluştur
             multiplierFieldset = document.createElement('fieldset');
             multiplierFieldset.id = 'editMeterMultiplierFieldset';
-            multiplierFieldset.classList.add('form-group');
+            multiplierFieldset.classList.add('form-group', 'mb-3');
             multiplierFieldset.innerHTML = `
-                <label for="MeterMultiplier">Sayaç Çarpanı</label>
-                <input type="number" class="form-control" id="MeterMultiplier" name="MeterMultiplier" required>
+                <label for="editMeterMultiplier">Sayaç Çarpanı</label>
+                <input type="number" class="form-control" id="editMeterMultiplier" name="meterMultiplier" required>
             `;
             protocolTypeSelect.closest('.form-group').after(multiplierFieldset); // Protokol Tipi seçeneğinden sonra ekle
         }
         multiplierFieldset.style.display = 'block'; // Görünür yap
         const multiplier = row.cells[1]?.textContent || ''; // Elektrik tablosunda çarpan 2. sütunda
-        document.getElementById('MeterMultiplier').value = multiplier;
+        document.getElementById('editMeterMultiplier').value = multiplier;
     } else if (multiplierFieldset) {
         // Elektrik harici sayaçlar için Fieldset'i tamamen kaldır
         multiplierFieldset.remove();
@@ -876,16 +876,11 @@ async function fetchConnectionPointsForProtocol(protocolType, connectionPointSel
 
         const data = await response.json();
 
-        if (!connectionPointSelect) {
-            console.error("ConnectionPoint dropdown bulunamadı.");
-            return;
-        }
-
         if (data[0]?.success && Array.isArray(data[0].data)) {
-            const protocol = data[0].data.find(item => item.CommunicationProtocol === protocolType);
+            const protocol = data[0].data.find(item => item.ProtocolType === protocolType);
 
             if (!protocol) {
-                console.warn(`Protocol not found for type: ${protocolType}`);
+                console.error(`Protocol not found for type: ${protocolType}`);
                 alert(`Protokol "${protocolType}" için bağlantı noktaları bulunamadı.`);
                 return;
             }
@@ -897,6 +892,7 @@ async function fetchConnectionPointsForProtocol(protocolType, connectionPointSel
                 return;
             }
 
+            // Bağlantı noktalarını yükle
             await fetchConnectionPointsFromTable(connectionTableName, connectionPointSelect);
         } else {
             console.error('Protocols tablosu verileri yüklenemedi:', data[0]?.message || 'No data');
@@ -924,8 +920,8 @@ async function fetchConnectionPointsFromTable(connectionTableName, connectionPoi
             connectionPointSelect.innerHTML = '<option value="none" disabled selected>Bağlantı Noktası Seçiniz</option>';
             data[0].data.forEach(point => {
                 const option = document.createElement('option');
-                option.value = point.ConnectionPoint;
-                option.textContent = point.ConnectionPoint;
+                option.value = point.ConnectionName;
+                option.textContent = point.ConnectionName;
                 connectionPointSelect.appendChild(option);
             });
         } else {
