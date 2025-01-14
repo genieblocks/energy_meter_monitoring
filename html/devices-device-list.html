@@ -774,31 +774,36 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
-function openEditModal(row, meterType) {
+  function openEditModal(row, meterType) {
     const protocolTypeSelect = document.getElementById('editProtocolType');
     const connectionPointSelect = document.getElementById('editConnectionPoint');
     const multiplierInput = document.getElementById('editMeterMultiplier');
     const invoiceReportSelect = document.getElementById('editInvoiceReport');
 
-    const cells = row.cells;
-    const serialNumber = cells[0]?.textContent || '';
-    const multiplier = cells[1]?.textContent || '';
-    const connectionPoint = cells[4]?.textContent || '';
-    const invoiceReport = cells[5]?.textContent === 'Evet' ? 'true' : 'false';
+    // Modal içindeki alanları doldurma
+    const multiplier = row.cells[1]?.textContent || '';
+    const invoiceReport = row.cells[5]?.textContent === 'Evet' ? 'true' : 'false';
 
     multiplierInput.value = multiplier;
     invoiceReportSelect.value = invoiceReport;
 
+    // Varsayılan protokol tipi
     const defaultProtocolType = meterType === 'electricity' ? 'IEC 62056-21' : 'M-BUS';
 
+    // Protocol Types yükleniyor
     loadProtocolTypes('edit');
+
+    // Protokol ve bağlantı noktasını 300 ms sonra ayarla
     setTimeout(() => {
-        protocolTypeSelect.value = defaultProtocolType;
-        updateProtocolDetails('edit');
+        if (protocolTypeSelect.querySelector(`option[value="${defaultProtocolType}"]`)) {
+            protocolTypeSelect.value = defaultProtocolType;
+            updateProtocolDetails('edit');
+        } else {
+            console.error(`Protocol not found for type: ${defaultProtocolType}`);
+        }
     }, 300);
 
-    connectionPointSelect.innerHTML = `<option value="${connectionPoint}" selected>${connectionPoint}</option>`;
-
+    // Modal gösterimi
     $('#editMeterModal').modal('show');
 }
 
