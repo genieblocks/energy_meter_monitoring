@@ -1512,9 +1512,9 @@ function initializeDataTable(tableId) {
 function updateProtocolDetails(meterType) {
   const protocolTypeSelect = document.querySelector(`#${meterType}ProtocolType`);
 
-  if (!protocolTypeSelect) {
-    console.error(`Protocol type dropdown not found for meterType: ${meterType}`);
-    return;
+  if (!protocolTypeSelect || !protocolTypeSelect.value || protocolTypeSelect.value === 'none') {
+      console.error(`Protocol type not selected or invalid for meterType: ${meterType}`);
+      return;
   }
 
   // Protokol detaylarını güncelle
