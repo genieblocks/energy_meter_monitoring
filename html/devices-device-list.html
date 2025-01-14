@@ -789,14 +789,23 @@ document.addEventListener('DOMContentLoaded', function () {
   invoiceReportSelect.value = invoiceReport;
 
   try {
-    // Protokol tiplerini yükle ve seçimi ayarla
+    // Protokol tiplerini yükle
     await loadProtocolTypes(meterType);
+
+    // Default protokol tipini seç
     const protocolOption = protocolTypeSelect.querySelector(`option[value="${defaultProtocolType}"]`);
     if (protocolOption) {
       protocolTypeSelect.value = defaultProtocolType;
-      await updateProtocolDetails(meterType); // Protokol detaylarını güncelle
+      // Protokol detaylarını güncelle
+      await updateProtocolDetails(meterType);
     } else {
-      console.error(`Protocol not found for type: ${defaultProtocolType}`);
+      console.warn(`Protocol not found for type: ${defaultProtocolType}`);
+      // Eğer protokol bulunamazsa kullanıcıya bilgi ver
+      protocolTypeSelect.insertAdjacentHTML(
+        'beforeend',
+        `<option value="${defaultProtocolType}" selected>${defaultProtocolType}</option>`
+      );
+      console.warn(`Default protocol "${defaultProtocolType}" temporarily added to dropdown.`);
     }
 
     // Bağlantı noktası ayarları
