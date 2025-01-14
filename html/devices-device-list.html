@@ -782,6 +782,23 @@ document.addEventListener('DOMContentLoaded', function () {
     connectionPointSelect.innerHTML = '<option value="none" disabled selected>Bağlantı Noktası Seçiniz</option>';
     invoiceReportSelect.value = 'none';
 
+    // Seri Numarası alanını kontrol et veya oluştur
+    let serialNumberField = document.getElementById('editSerialNumber');
+    if (!serialNumberField) {
+        serialNumberField = document.createElement('div');
+        serialNumberField.classList.add('form-group', 'mb-3');
+        serialNumberField.innerHTML = `
+            <label for="editSerialNumberInput">Seri Numarası</label>
+            <input type="text" class="form-control" id="editSerialNumberInput" name="serialNumber" readonly>
+        `;
+        const modalBody = document.querySelector('#editMeterModal .modal-body');
+        modalBody.insertAdjacentElement('afterbegin', serialNumberField);
+    }
+
+    // Seri Numarasını doldur
+    const serialNumber = row.cells[0]?.textContent || ''; // Seri numarası tablonun ilk sütununda varsayılıyor
+    document.getElementById('editSerialNumberInput').value = serialNumber;
+
     // Sayaç çarpanı alanını kontrol et veya yeniden oluştur
     let multiplierFieldset = document.getElementById('editMeterMultiplierFieldset');
     if (meterType === 'electricity') {
@@ -789,13 +806,12 @@ document.addEventListener('DOMContentLoaded', function () {
             // Sayaç çarpanı fieldset'i oluştur
             multiplierFieldset = document.createElement('fieldset');
             multiplierFieldset.id = 'editMeterMultiplierFieldset';
-            multiplierFieldset.classList.add('form-group');
+            multiplierFieldset.classList.add('form-group', 'mb-3');
             multiplierFieldset.innerHTML = `
                 <label for="editMeterMultiplier">Sayaç Çarpanı</label>
                 <input type="number" class="form-control" id="editMeterMultiplier" name="meterMultiplier" required>
             `;
-            // Protokol Tipi seçeneğinden sonra ekle
-            protocolTypeSelect.closest('.form-group').after(multiplierFieldset);
+            protocolTypeSelect.closest('.form-group').after(multiplierFieldset); // Protokol Tipi seçeneğinden sonra ekle
         }
         multiplierFieldset.style.display = 'block'; // Görünür yap
         const multiplier = row.cells[1]?.textContent || ''; // Elektrik tablosunda çarpan 2. sütunda
@@ -809,7 +825,6 @@ document.addEventListener('DOMContentLoaded', function () {
     invoiceReportSelect.value = invoiceReport;
 
     try {
-        // Protokol tipini statik olarak belirle
         let protocolType = '';
         if (meterType === 'electricity') {
             protocolType = 'IEC 62056-21';
@@ -819,18 +834,13 @@ document.addEventListener('DOMContentLoaded', function () {
             protocolTypeSelect.innerHTML += `<option value="M-BUS" selected>M-BUS</option>`;
         }
 
-        // Tablodan gelen bağlantı noktası
         const connectionPointFromTable = row.cells[meterType === 'electricity' ? 4 : 3]?.textContent || '';
-
-        // Bağlantı noktalarını sorgula ve yükle
         await fetchConnectionPointsForProtocol(protocolType, connectionPointSelect);
 
-        // Default bağlantı noktasını seç
         const defaultOption = connectionPointSelect.querySelector(`option[value="${connectionPointFromTable}"]`);
         if (defaultOption) {
             defaultOption.selected = true;
         } else if (connectionPointFromTable) {
-            // Bağlantı noktası listede yoksa kullanıcıya bilgi ver ve listeye ekle
             connectionPointSelect.insertAdjacentHTML(
                 'beforeend',
                 `<option value="${connectionPointFromTable}" selected>${connectionPointFromTable}</option>`
@@ -842,7 +852,6 @@ document.addEventListener('DOMContentLoaded', function () {
         alert('Veriler yüklenirken bir hata oluştu. Lütfen tekrar deneyin.');
     }
 
-    // **Tablo adını data attribute'a ekle**
     const tableNameMap = {
         electricity: 'ElectricMeters',
         water: 'WaterMeters',
@@ -852,10 +861,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const tableName = tableNameMap[meterType];
     $('#editMeterModal').data('tableName', tableName);
 
-    // Güncelle butonunun ismini değiştir
     document.querySelector('#editMeterModal .btn-primary').textContent = 'Güncelle';
 
-    // Modalı göster
     $('#editMeterModal').modal('show');
 }
 
