@@ -773,56 +773,46 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
   async function openEditModal(row, meterType) {
-  const protocolTypeSelect = document.getElementById('editProtocolType');
-  const connectionPointSelect = document.getElementById('editConnectionPoint');
-  const multiplierInput = document.getElementById('editMeterMultiplier');
-  const invoiceReportSelect = document.getElementById('editInvoiceReport');
+    const protocolTypeSelect = document.getElementById('editProtocolType');
+    const connectionPointSelect = document.getElementById('editConnectionPoint');
+    const multiplierInput = document.getElementById('editMeterMultiplier');
+    const invoiceReportSelect = document.getElementById('editInvoiceReport');
 
-  // Modal içeriğini sıfırla
-  protocolTypeSelect.innerHTML = '<option value="none" disabled selected>Protokol Tipi Seçiniz</option>';
-  connectionPointSelect.innerHTML = '<option value="none" disabled selected>Bağlantı Noktası Seçiniz</option>';
-  multiplierInput.value = '';
-  invoiceReportSelect.value = 'none';
+    // Modal içeriğini sıfırla
+    protocolTypeSelect.innerHTML = '<option value="none" disabled selected>Protokol Tipi Seçiniz</option>';
+    connectionPointSelect.innerHTML = '<option value="none" disabled selected>Bağlantı Noktası Seçiniz</option>';
+    multiplierInput.value = '';
+    invoiceReportSelect.value = 'none';
 
-  // Seçilen satırdan verileri al
-  const multiplier = row.cells[1]?.textContent || '';
-  const invoiceReport = row.cells[5]?.textContent === 'Evet' ? 'true' : 'false';
-  const defaultProtocolType = row.cells[3]?.textContent || '';
-  const connectionPoint = row.cells[4]?.textContent || '';
+    // Seçilen satırdan verileri al
+    const multiplier = row.cells[1]?.textContent || '';
+    const invoiceReport = row.cells[5]?.textContent === 'Evet' ? 'true' : 'false';
+    const connectionPoint = row.cells[4]?.textContent || '';
 
-  multiplierInput.value = multiplier;
-  invoiceReportSelect.value = invoiceReport;
+    multiplierInput.value = multiplier;
+    invoiceReportSelect.value = invoiceReport;
 
-  try {
-    // Protokol tiplerini yükle
-    await loadProtocolTypes(meterType);
+    try {
+        // Protokol tiplerini statik olarak belirle
+        if (meterType === 'electricity') {
+            protocolTypeSelect.innerHTML += `<option value="IEC 62056-21" selected>IEC 62056-21</option>`;
+        } else {
+            protocolTypeSelect.innerHTML += `<option value="M-BUS" selected>M-BUS</option>`;
+        }
 
-    // Default protokolü seç
-    const protocolOption = protocolTypeSelect.querySelector(`option[value="${defaultProtocolType}"]`);
-    if (protocolOption) {
-      protocolTypeSelect.value = defaultProtocolType;
-      await updateProtocolDetails(meterType); // Protokol detaylarını güncelle
-    } else {
-      console.warn(`Protocol not found for type: ${defaultProtocolType}`);
-      protocolTypeSelect.insertAdjacentHTML(
-        'beforeend',
-        `<option value="${defaultProtocolType}" selected>${defaultProtocolType}</option>`
-      );
+        // Bağlantı noktası yükle
+        const connectionPointOption = document.createElement('option');
+        connectionPointOption.value = connectionPoint;
+        connectionPointOption.textContent = connectionPoint;
+        connectionPointOption.selected = true;
+        connectionPointSelect.appendChild(connectionPointOption);
+    } catch (error) {
+        console.error('Error loading modal data:', error);
+        alert('Veriler yüklenirken bir hata oluştu. Lütfen tekrar deneyin.');
     }
 
-    // Bağlantı noktalarını yükle
-    const connectionPointOption = document.createElement('option');
-    connectionPointOption.value = connectionPoint;
-    connectionPointOption.textContent = connectionPoint;
-    connectionPointOption.selected = true;
-    connectionPointSelect.appendChild(connectionPointOption);
-  } catch (error) {
-    console.error('Error loading modal data:', error);
-    alert('Veriler yüklenirken bir hata oluştu. Lütfen tekrar deneyin.');
-  }
-
-  // Modalı göster
-  $('#editMeterModal').modal('show');
+    // Modalı göster
+    $('#editMeterModal').modal('show');
 }
 
 document.addEventListener('DOMContentLoaded', function () {
