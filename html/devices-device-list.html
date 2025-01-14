@@ -784,28 +784,26 @@ document.addEventListener('DOMContentLoaded', function () {
     multiplierInput.value = '';
     invoiceReportSelect.value = 'none';
 
-    // Seçilen satırdan verileri al
+    // Satırdan verileri al
     const multiplier = row.cells[1]?.textContent || '';
     const invoiceReport = row.cells[5]?.textContent === 'Evet' ? 'true' : 'false';
-    const connectionPoint = row.cells[4]?.textContent || '';
 
     multiplierInput.value = multiplier;
     invoiceReportSelect.value = invoiceReport;
 
     try {
-        // Protokol tiplerini statik olarak belirle
+        // Protokol tipini statik olarak belirle
+        let protocolType = '';
         if (meterType === 'electricity') {
+            protocolType = 'IEC 62056-21';
             protocolTypeSelect.innerHTML += `<option value="IEC 62056-21" selected>IEC 62056-21</option>`;
         } else {
+            protocolType = 'M-BUS';
             protocolTypeSelect.innerHTML += `<option value="M-BUS" selected>M-BUS</option>`;
         }
 
-        // Bağlantı noktası yükle
-        const connectionPointOption = document.createElement('option');
-        connectionPointOption.value = connectionPoint;
-        connectionPointOption.textContent = connectionPoint;
-        connectionPointOption.selected = true;
-        connectionPointSelect.appendChild(connectionPointOption);
+        // Bağlantı noktalarını sorgula ve yükle
+        await fetchConnectionPointsForProtocol(protocolType, connectionPointSelect);
     } catch (error) {
         console.error('Error loading modal data:', error);
         alert('Veriler yüklenirken bir hata oluştu. Lütfen tekrar deneyin.');
