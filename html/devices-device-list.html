@@ -783,25 +783,30 @@ function openEditModal(row, meterType) {
   // Modal içindeki alanları doldurma
   const multiplier = row.cells[1]?.textContent || '';
   const invoiceReport = row.cells[5]?.textContent === 'Evet' ? 'true' : 'false';
+  const defaultProtocolType = meterType === 'electricity' ? 'IEC 62056-21' : 'M-BUS';
 
   multiplierInput.value = multiplier;
   invoiceReportSelect.value = invoiceReport;
 
-  // Varsayılan protokol tipi
-  const defaultProtocolType = meterType === 'electricity' ? 'IEC 62056-21' : 'M-BUS';
-
   // Protocol Types yükleniyor
   loadProtocolTypes('edit')
     .then(() => {
-      // Protokol tipi atanıyor
-      if (protocolTypeSelect.querySelector(`option[value="${defaultProtocolType}"]`)) {
+      // Yükleme tamamlandığında protokol tipi atanıyor
+      const protocolOption = protocolTypeSelect.querySelector(`option[value="${defaultProtocolType}"]`);
+      if (protocolOption) {
         protocolTypeSelect.value = defaultProtocolType;
         updateProtocolDetails('edit');
       } else {
         console.error(`Protocol not found for type: ${defaultProtocolType}`);
       }
+
+      // Bağlantı Noktalarını ayarla (örnek olarak connectionPoint atanıyor)
+      const connectionPoint = row.cells[4]?.textContent || '';
+      connectionPointSelect.innerHTML = `<option value="${connectionPoint}" selected>${connectionPoint}</option>`;
     })
-    .catch(error => console.error('Error loading protocol types:', error));
+    .catch(error => {
+      console.error('Error loading protocol types:', error);
+    });
 
   // Modal gösterimi
   $('#editMeterModal').modal('show');
