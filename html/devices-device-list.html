@@ -774,7 +774,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
-  function openEditModal(row, meterType) {
+function openEditModal(row, meterType) {
     const protocolTypeSelect = document.getElementById('editProtocolType');
     const connectionPointSelect = document.getElementById('editConnectionPoint');
     const multiplierInput = document.getElementById('editMeterMultiplier');
@@ -791,17 +791,17 @@ document.addEventListener('DOMContentLoaded', function () {
     const defaultProtocolType = meterType === 'electricity' ? 'IEC 62056-21' : 'M-BUS';
 
     // Protocol Types yükleniyor
-    loadProtocolTypes('edit');
-
-    // Protokol ve bağlantı noktasını 300 ms sonra ayarla
-    setTimeout(() => {
-        if (protocolTypeSelect.querySelector(`option[value="${defaultProtocolType}"]`)) {
-            protocolTypeSelect.value = defaultProtocolType;
-            updateProtocolDetails('edit');
-        } else {
-            console.error(`Protocol not found for type: ${defaultProtocolType}`);
-        }
-    }, 300);
+    loadProtocolTypes('edit')
+        .then(() => {
+            // Protokol tipi atanıyor
+            if (protocolTypeSelect.querySelector(`option[value="${defaultProtocolType}"]`)) {
+                protocolTypeSelect.value = defaultProtocolType;
+                updateProtocolDetails('edit');
+            } else {
+                console.error(`Protocol not found for type: ${defaultProtocolType}`);
+            }
+        })
+        .catch(error => console.error('Error loading protocol types:', error));
 
     // Modal gösterimi
     $('#editMeterModal').modal('show');
