@@ -800,12 +800,12 @@ document.addEventListener('DOMContentLoaded', function () {
       await updateProtocolDetails(meterType);
     } else {
       console.warn(`Protocol not found for type: ${defaultProtocolType}`);
-      // Eğer protokol bulunamazsa kullanıcıya bilgi ver
+      // Eğer protokol bulunamazsa kullanıcıya bilgi ver ve dropdown'a ekle
       protocolTypeSelect.insertAdjacentHTML(
         'beforeend',
         `<option value="${defaultProtocolType}" selected>${defaultProtocolType}</option>`
       );
-      console.warn(`Default protocol "${defaultProtocolType}" temporarily added to dropdown.`);
+      alert(`Protokol "${defaultProtocolType}" listede bulunamadı ve geçici olarak eklendi.`);
     }
 
     // Bağlantı noktası ayarları
@@ -813,6 +813,7 @@ document.addEventListener('DOMContentLoaded', function () {
     connectionPointSelect.innerHTML = `<option value="${connectionPoint}" selected>${connectionPoint}</option>`;
   } catch (error) {
     console.error('Error loading modal data:', error);
+    alert('Veriler yüklenirken bir hata oluştu. Lütfen tekrar deneyin.');
   }
 
   // Modal gösterimi
