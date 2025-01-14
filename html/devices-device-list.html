@@ -877,7 +877,7 @@ async function fetchConnectionPointsForProtocol(protocolType, connectionPointSel
         const data = await response.json();
 
         if (data[0]?.success && Array.isArray(data[0].data)) {
-            const protocol = data[0].data.find(item => item.ProtocolType === protocolType);
+            const protocol = data[0].data.find(item => item.CommunicationProtocol === protocolType);
 
             if (!protocol) {
                 console.error(`Protocol not found for type: ${protocolType}`);
@@ -920,8 +920,8 @@ async function fetchConnectionPointsFromTable(connectionTableName, connectionPoi
             connectionPointSelect.innerHTML = '<option value="none" disabled selected>Bağlantı Noktası Seçiniz</option>';
             data[0].data.forEach(point => {
                 const option = document.createElement('option');
-                option.value = point.ConnectionName;
-                option.textContent = point.ConnectionName;
+                option.value = point.ConnectionPoint;
+                option.textContent = point.ConnectionPoint;
                 connectionPointSelect.appendChild(option);
             });
         } else {
