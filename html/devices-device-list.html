@@ -813,6 +813,37 @@ document.addEventListener('DOMContentLoaded', function () {
     $('#editMeterModal').modal('show');
 }
 
+// Bağlantı noktalarını sorgulama fonksiyonu
+async function fetchConnectionPointsForProtocol(protocolType, connectionPointSelect) {
+    try {
+        const response = await fetch(`${baseWebhookURL}/webhook/get-connection-points`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ protocolType })
+        });
+
+        const data = await response.json();
+
+        if (data[0]?.success && Array.isArray(data[0].data)) {
+            connectionPointSelect.innerHTML = '<option value="none" disabled selected>Bağlantı Noktası Seçiniz</option>';
+            data[0].data.forEach(point => {
+                const option = document.createElement('option');
+                option.value = point.ConnectionName;
+                option.textContent = point.ConnectionName;
+                connectionPointSelect.appendChild(option);
+            });
+        } else {
+            console.error('Bağlantı noktaları yüklenemedi:', data[0]?.message || 'No data');
+            alert('Bağlantı noktaları yüklenemedi.');
+        }
+    } catch (error) {
+        console.error('Error fetching connection points:', error);
+        alert('Bağlantı noktaları yüklenirken bir hata oluştu.');
+    }
+}
+
 document.addEventListener('DOMContentLoaded', function () {
   const deleteTableConfig = [
     { selector: '#waterMeterTable tbody', tableName: 'WaterMeters' },
