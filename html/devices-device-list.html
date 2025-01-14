@@ -876,11 +876,16 @@ async function fetchConnectionPointsForProtocol(protocolType, connectionPointSel
 
         const data = await response.json();
 
+        if (!connectionPointSelect) {
+            console.error("ConnectionPoint dropdown bulunamadı.");
+            return;
+        }
+
         if (data[0]?.success && Array.isArray(data[0].data)) {
-            const protocol = data[0].data.find(item => item.ProtocolType === protocolType);
+            const protocol = data[0].data.find(item => item.CommunicationProtocol === protocolType);
 
             if (!protocol) {
-                console.error(`Protocol not found for type: ${protocolType}`);
+                console.warn(`Protocol not found for type: ${protocolType}`);
                 alert(`Protokol "${protocolType}" için bağlantı noktaları bulunamadı.`);
                 return;
             }
@@ -892,7 +897,6 @@ async function fetchConnectionPointsForProtocol(protocolType, connectionPointSel
                 return;
             }
 
-            // Bağlantı noktalarını yükle
             await fetchConnectionPointsFromTable(connectionTableName, connectionPointSelect);
         } else {
             console.error('Protocols tablosu verileri yüklenemedi:', data[0]?.message || 'No data');
