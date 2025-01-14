@@ -1575,28 +1575,39 @@ function fetchManufacturers(manufacturerTable, meterType) {
 }
   
 function fetchConnectionPoints(protocolType, meterType) {
-  fetch(`${baseWebhookURL}/webhook/get-table-content`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({ tableName: 'Protocols' })
-  })
-  .then(response => response.json())
-  .then(data => {
-    const connectionPointSelect = document.querySelector(`#${meterType}ConnectionPoint`);
-    connectionPointSelect.innerHTML = '<option value="none" selected disabled>Bağlantı Noktası Seçiniz.</option>';
+    fetch(`${baseWebhookURL}/webhook/get-table-content`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ tableName: 'Protocols' })
+    })
+    .then(response => response.json())
+    .then(data => {
+        const connectionPointSelect = document.querySelector(`#${meterType}ConnectionPoint`);
+        connectionPointSelect.innerHTML = '<option value="none" selected disabled>Bağlantı Noktası Seçiniz.</option>';
 
-    if (data[0].success && Array.isArray(data[0].data)) {
-      const protocol = data[0].data.find(item => item.ProtocolType === protocolType);
-      const connectionTable = protocol.ConnectionTableName;
+        if (data[0].success && Array.isArray(data[0].data)) {
+            const protocol = data[0].data.find(item => item.ProtocolType === protocolType);
 
-      fetchConnections(connectionTable, meterType);
-    } else {
-      console.error('Protocols tablosu verileri yüklenemedi:', data[0].message);
-    }
-  })
-  .catch(error => console.error('Fetch error:', error));
+            if (!protocol) {
+                console.error(`Protocol not found for type: ${protocolType}`);
+                return; // Eğer protocol bulunamazsa işlemi durdur
+            }
+
+            const connectionTable = protocol.ConnectionTableName;
+
+            if (!connectionTable) {
+                console.error(`ConnectionTableName is undefined for protocol: ${protocolType}`);
+                return; // Eğer connectionTable bulunamazsa işlemi durdur
+            }
+
+            fetchConnections(connectionTable, meterType);
+        } else {
+            console.error('Protocols tablosu verileri yüklenemedi:', data[0].message || 'No data');
+        }
+    })
+    .catch(error => console.error('Fetch error:', error));
 }
   
 function fetchConnections(connectionTable, meterType) {
