@@ -400,7 +400,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form id="editMeterForm">
+      <form id="updateDataForm">
         <div class="modal-body">
           <fieldset class="form-group">
             <label for="editProtocolType">Protokol Tipi</label>
@@ -775,22 +775,28 @@ document.addEventListener('DOMContentLoaded', function () {
   async function openEditModal(row, meterType) {
     const protocolTypeSelect = document.getElementById('editProtocolType');
     const connectionPointSelect = document.getElementById('editConnectionPoint');
-    const multiplierInput = document.getElementById('editMeterMultiplier'); // Sayaç Çarpanı
+    const multiplierFieldset = document.getElementById('editMeterMultiplierFieldset'); // Sayaç Çarpanı Fieldset
     const invoiceReportSelect = document.getElementById('editInvoiceReport');
 
     // Modal içeriğini sıfırla
     protocolTypeSelect.innerHTML = '<option value="none" disabled selected>Protokol Tipi Seçiniz</option>';
     connectionPointSelect.innerHTML = '<option value="none" disabled selected>Bağlantı Noktası Seçiniz</option>';
-    multiplierInput.value = ''; // Sayaç çarpanını sıfırla
     invoiceReportSelect.value = 'none';
 
-    // Sayaç çarpanı alanını sadece elektrik sayaçları için göster
+    // Sayaç çarpanı alanını sadece elektrik sayaçları için göster veya tamamen kaldır
     if (meterType === 'electricity') {
-        document.getElementById('editMeterMultiplierFieldset').style.display = 'block';
         const multiplier = row.cells[1]?.textContent || ''; // Elektrik tablosunda çarpan 2. sütunda
-        multiplierInput.value = multiplier;
-    } else {
-        document.getElementById('editMeterMultiplierFieldset').style.display = 'none'; // Diğer sayaçlar için gizle
+        multiplierFieldset.style.display = 'block'; // Görünür yap
+        if (!document.getElementById('editMeterMultiplier')) {
+            multiplierFieldset.innerHTML = `
+                <label for="editMeterMultiplier">Sayaç Çarpanı</label>
+                <input type="number" class="form-control" id="editMeterMultiplier" name="meterMultiplier" required>
+            `;
+        }
+        document.getElementById('editMeterMultiplier').value = multiplier;
+    } else if (multiplierFieldset) {
+        // Elektrik harici sayaçlar için Fieldset'i DOM'dan kaldır
+        multiplierFieldset.remove();
     }
 
     const invoiceReport = row.cells[meterType === 'electricity' ? 5 : 4]?.textContent === 'Evet' ? 'true' : 'false';
