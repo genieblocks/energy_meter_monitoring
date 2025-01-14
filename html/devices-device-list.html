@@ -807,8 +807,24 @@ document.addEventListener('DOMContentLoaded', function () {
             protocolTypeSelect.innerHTML += `<option value="M-BUS" selected>M-BUS</option>`;
         }
 
+        // Tablodan gelen bağlantı noktası
+        const connectionPointFromTable = row.cells[meterType === 'electricity' ? 4 : 3]?.textContent || '';
+
         // Bağlantı noktalarını sorgula ve yükle
         await fetchConnectionPointsForProtocol(protocolType, connectionPointSelect);
+
+        // Default bağlantı noktasını seç
+        const defaultOption = connectionPointSelect.querySelector(`option[value="${connectionPointFromTable}"]`);
+        if (defaultOption) {
+            defaultOption.selected = true;
+        } else if (connectionPointFromTable) {
+            // Bağlantı noktası listede yoksa kullanıcıya bilgi ver ve listeye ekle
+            connectionPointSelect.insertAdjacentHTML(
+                'beforeend',
+                `<option value="${connectionPointFromTable}" selected>${connectionPointFromTable}</option>`
+            );
+            console.warn(`Bağlantı noktası "${connectionPointFromTable}" listede bulunamadı ve geçici olarak eklendi.`);
+        }
     } catch (error) {
         console.error('Error loading modal data:', error);
         alert('Veriler yüklenirken bir hata oluştu. Lütfen tekrar deneyin.');
