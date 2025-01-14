@@ -429,7 +429,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">İptal</button>
-          <button type="submit" class="btn btn-primary">Kaydet</button>
+          <button type="button" class="btn btn-primary" onclick="updateTableContent()">Güncelle</button>
         </div>
       </form>
     </div>
@@ -830,6 +830,19 @@ document.addEventListener('DOMContentLoaded', function () {
         alert('Veriler yüklenirken bir hata oluştu. Lütfen tekrar deneyin.');
     }
 
+    // **Tablo adını data attribute'a ekle**
+    const tableNameMap = {
+        electricity: 'ElectricMeters',
+        water: 'WaterMeters',
+        heating: 'HeatingMeters',
+        cooling: 'CoolingMeters'
+    };
+    const tableName = tableNameMap[meterType];
+    $('#editMeterModal').data('tableName', tableName);
+
+    // Güncelle butonunun ismini değiştir
+    document.querySelector('#editMeterModal .btn-primary').textContent = 'Güncelle';
+
     // Modalı göster
     $('#editMeterModal').modal('show');
 }
@@ -902,6 +915,64 @@ async function fetchConnectionPointsFromTable(connectionTableName, connectionPoi
         console.error('Error fetching connection points from table:', error);
         alert('Bağlantı noktaları yüklenirken bir hata oluştu.');
     }
+}
+
+function updateTableContent() {
+    const form = document.querySelector('#updateDataForm'); // Form elementini doğru seçin
+    if (!form || !(form instanceof HTMLFormElement)) {
+        console.error('Form element not found or incorrect type');
+        return;
+    }
+
+    const formData = new FormData(form);
+    const tableName = $('#updateDataModal').data('tableName'); // Modal data attribute'tan tablo ismi alınır
+    const targetRecord = {};
+    const fieldsToUpdate = {};
+
+    let isFirstField = true;
+
+    formData.forEach((value, key) => {
+        if (isFirstField) {
+            targetRecord[key] = value; // İlk alan TargetRecord içine alınır
+            isFirstField = false;
+        } else {
+            fieldsToUpdate[key] = value; // Diğer alanlar FieldsToUpdate içine alınır
+        }
+    });
+
+    const jsonData = {
+        tableName: tableName,
+        TargetRecord: targetRecord,
+        FieldsToUpdate: fieldsToUpdate
+    };
+
+    $.blockUI({
+        message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
+        overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
+        css: { border: 0, padding: 0, backgroundColor: 'transparent' }
+    });
+
+    fetch(`${baseWebhookURL}/webhook/update-table-content`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(jsonData)
+    })
+    .then(response => response.json())
+    .then(data => {
+        $.unblockUI();
+        if (data[0].success) {
+            $('#updateDataModal').modal('hide');
+            location.reload(); // Sayfayı yeniden yükle.
+        } else {
+            alert('Veri güncellenirken bir hata oluştu: ' + data[0].message);
+        }
+    })
+    .catch(error => {
+        $.unblockUI();
+        alert('Veri güncellenirken bir hata oluştu.');
+    });
 }
 
 document.addEventListener('DOMContentLoaded', function () {
