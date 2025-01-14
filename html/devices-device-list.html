@@ -794,7 +794,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 <label for="editMeterMultiplier">Sayaç Çarpanı</label>
                 <input type="number" class="form-control" id="editMeterMultiplier" name="meterMultiplier" required>
             `;
-            document.querySelector('#editMeterModal .modal-body').prepend(multiplierFieldset); // Modalın içine ekle
+            // Protokol Tipi seçeneğinden sonra ekle
+            protocolTypeSelect.closest('.form-group').after(multiplierFieldset);
         }
         multiplierFieldset.style.display = 'block'; // Görünür yap
         const multiplier = row.cells[1]?.textContent || ''; // Elektrik tablosunda çarpan 2. sütunda
