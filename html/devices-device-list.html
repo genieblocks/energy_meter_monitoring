@@ -877,7 +877,7 @@ async function fetchConnectionPointsForProtocol(protocolType, connectionPointSel
         const data = await response.json();
 
         if (data[0]?.success && Array.isArray(data[0].data)) {
-            const protocol = data[0].data.find(item => item.CommunicationProtocol === protocolType);
+            const protocol = data[0].data.find(item => item.ProtocolType === protocolType);
 
             if (!protocol) {
                 console.error(`Protocol not found for type: ${protocolType}`);
