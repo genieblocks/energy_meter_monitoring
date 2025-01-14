@@ -774,7 +774,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
-function openEditModal(row, meterType) {
+  function showEditModal(row, meterType) {
   const protocolTypeSelect = document.getElementById('editProtocolType');
   const connectionPointSelect = document.getElementById('editConnectionPoint');
   const multiplierInput = document.getElementById('editMeterMultiplier');
@@ -788,19 +788,19 @@ function openEditModal(row, meterType) {
   multiplierInput.value = multiplier;
   invoiceReportSelect.value = invoiceReport;
 
-  // Protocol Types yükleniyor
-  loadProtocolTypes('edit')
+  // Protokol tiplerini yükleme ve bağlantı noktasını ayarlama
+  loadProtocolTypes(meterType)
     .then(() => {
-      // Yükleme tamamlandığında protokol tipi atanıyor
+      // Protokol tipi atanıyor
       const protocolOption = protocolTypeSelect.querySelector(`option[value="${defaultProtocolType}"]`);
       if (protocolOption) {
         protocolTypeSelect.value = defaultProtocolType;
-        updateProtocolDetails('edit');
+        updateProtocolDetails(meterType);
       } else {
         console.error(`Protocol not found for type: ${defaultProtocolType}`);
       }
 
-      // Bağlantı Noktalarını ayarla (örnek olarak connectionPoint atanıyor)
+      // Bağlantı noktası ayarları
       const connectionPoint = row.cells[4]?.textContent || '';
       connectionPointSelect.innerHTML = `<option value="${connectionPoint}" selected>${connectionPoint}</option>`;
     })
