@@ -390,7 +390,7 @@
     </div>
   </div>
 
-  <!-- ========================= Edit Meter Modal ========================= -->
+<!-- ========================= Edit Meter Modal ========================= -->
 <div class="modal fade" id="editMeterModal" tabindex="-1" role="dialog" aria-labelledby="editMeterModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-sm" role="document">
     <div class="modal-content">
@@ -403,20 +403,27 @@
       <form id="editMeterForm">
         <div class="modal-body">
           <fieldset class="form-group">
+            <label for="editProtocolType">Protokol Tipi</label>
+            <select class="form-control" id="editProtocolType" name="protocolType" required>
+              <option value="none" disabled selected>Protokol Tipi Seçiniz</option>
+              <!-- Dinamik olarak doldurulacak -->
+            </select>
+          </fieldset>
+          <fieldset class="form-group">
             <label for="editMeterMultiplier">Sayaç Çarpanı</label>
             <input type="number" class="form-control" id="editMeterMultiplier" name="meterMultiplier" required>
           </fieldset>
           <fieldset class="form-group">
             <label for="editConnectionPoint">Bağlantı Noktası</label>
             <select class="form-control" id="editConnectionPoint" name="connectionPoint" required>
-              <option value="" disabled selected>Bağlantı Noktası Seçiniz</option>
+              <option value="none" disabled selected>Bağlantı Noktası Seçiniz</option>
               <!-- Dinamik olarak doldurulacak -->
             </select>
           </fieldset>
           <fieldset class="form-group">
             <label for="editInvoiceReport">Faturalandırma</label>
             <select class="form-control" id="editInvoiceReport" name="invoiceReport" required>
-              <option value="" disabled selected>Seçiniz</option>
+              <option value="none" disabled selected>Seçiniz</option>
               <option value="true">Evet</option>
               <option value="false">Hayır</option>
             </select>
@@ -733,73 +740,46 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 document.addEventListener('DOMContentLoaded', function () {
-  const tableBodies = document.querySelectorAll('#electricityMeterTable tbody, #waterMeterTable tbody, #heatingMeterTable tbody, #coolingMeterTable tbody');
+    document.querySelectorAll('#electricityMeterTable .btn-outline-success').forEach(button => {
+      button.addEventListener('click', function () {
+        const row = button.closest('tr');
+        openEditModal(row, 'electricity');
+      });
+    });
 
-  tableBodies.forEach(tableBody => {
-    tableBody.addEventListener('click', function (event) {
-      if (event.target && event.target.closest('button') && event.target.closest('button').id === 'row-edit-button') {
-        const row = event.target.closest('tr');
-
-        // Verileri al
-        const meterMultiplier = getCellValueByHeader(row, 'Sayaç Çarpanı');
-        const connectionPoint = getCellValueByHeader(row, 'Bağlantı Noktası');
-        const invoiceReport = getCellValueByHeader(row, 'Faturalandırma');
-
-        // Modal içindeki inputları doldur
-        document.getElementById('editMeterMultiplier').value = meterMultiplier || '';
-        document.getElementById('editConnectionPoint').value = connectionPoint || '';
-        document.getElementById('editInvoiceReport').value = invoiceReport === 'Evet' ? 'true' : 'false';
-
-        // Modalı aç
-        $('#editMeterModal').modal('show');
-
-        // Güncelleme işlemi
-        const editForm = document.getElementById('editMeterForm');
-        editForm.onsubmit = function (e) {
-          e.preventDefault();
-
-          // Yeni değerler
-          const updatedMeterMultiplier = document.getElementById('editMeterMultiplier').value;
-          const updatedConnectionPoint = document.getElementById('editConnectionPoint').value;
-          const updatedInvoiceReport = document.getElementById('editInvoiceReport').value;
-
-          // Fetch ile güncelleme isteği gönder
-          $.blockUI({ message: '<div class="icon-spinner9 icon-spin icon-lg"></div>' });
-
-          fetch(`${baseWebhookURL}/webhook/update-table-content`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              tableName: 'ElectricMeters', // Tablo adı
-              updateFields: {
-                MeterMultiplier: updatedMeterMultiplier,
-                ConnectionPoint: updatedConnectionPoint,
-                IsVisibleInInvoiceReport: updatedInvoiceReport === 'true'
-              },
-              where: { SerialNumber: getCellValueByHeader(row, 'Sayaç Seri Numarası') }
-            })
-          })
-            .then(response => response.json())
-            .then(data => {
-              if (data[0]?.success) {
-                alert('Sayaç başarıyla güncellendi!');
-                location.reload();
-              } else {
-                alert('Güncelleme başarısız oldu.');
-                console.error(data);
-              }
-            })
-            .catch(error => {
-              console.error('Güncelleme hatası:', error);
-            })
-            .finally(() => {
-              $.unblockUI();
-            });
-        };
-      }
+    ['water', 'heating', 'cooling'].forEach(meterType => {
+      document.querySelectorAll(`#${meterType}MeterTable .btn-outline-success`).forEach(button => {
+        button.addEventListener('click', function () {
+          const row = button.closest('tr');
+          openEditModal(row, meterType);
+        });
+      });
     });
   });
-});
+
+function openEditModal(row, meterType) {
+    const protocolTypeSelect = document.getElementById('editProtocolType');
+    const connectionPointSelect = document.getElementById('editConnectionPoint');
+    const multiplierInput = document.getElementById('editMeterMultiplier');
+    const invoiceReportSelect = document.getElementById('editInvoiceReport');
+
+    // Modal içindeki alanları doldurma
+    multiplierInput.value = row.querySelector('[data-header="Sayaç Çarpanı"]').innerText;
+    invoiceReportSelect.value = row.querySelector('[data-header="Faturalandırma"]').innerText === 'Evet' ? 'true' : 'false';
+
+    // Protokol Tipini belirleme ve yükleme
+    const defaultProtocolType = meterType === 'electricity' ? 'IEC 62056-21' : 'M-BUS';
+    loadProtocolTypes('edit');
+
+    setTimeout(() => {
+      protocolTypeSelect.value = defaultProtocolType;
+      updateProtocolDetails('edit'); // Protokole göre bağlantı noktasını yükle
+    }, 300);
+
+    // Modal açılmadan önce tabloyu resetleme
+    connectionPointSelect.innerHTML = '<option value="none" disabled selected>Bağlantı Noktası Seçiniz</option>';
+    $("#editMeterModal").modal("show");
+  }
 
 document.addEventListener('DOMContentLoaded', function () {
   const deleteTableConfig = [
