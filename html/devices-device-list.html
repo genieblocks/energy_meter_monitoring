@@ -871,7 +871,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         manufacturerFieldset.style.display = 'block'; // Görünür yap
         const brand = row.cells[2]?.textContent || ''; // Elektrik tablosunda çarpan 3. sütunda
-        document.getElementById('editElectricityManufacturer').value = multiplier;
+        document.getElementById('editElectricityManufacturer').value = brand;
     } else if (manufacturerFieldset) {
         // Elektrik harici sayaçlar için Fieldset'i tamamen kaldır
         manufacturerFieldset.remove();
