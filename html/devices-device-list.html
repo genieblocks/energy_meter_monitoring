@@ -913,6 +913,23 @@ async function openUpdateDataModal(row, meterType) {
             document.getElementById('editConnectionPoint').closest('.form-group').after(mbusDataBlockFieldset);
         }
         mbusDataBlockFieldset.style.display = 'block';
+
+        // Tablodaki değerle eşleşme
+        const mbusDataBlockFromTable = row.cells[2]?.textContent || '';
+        const mbusDataBlockSelect = document.getElementById('editMbusDataBlock');
+        if (mbusDataBlockSelect) {
+            const matchingOption = mbusDataBlockSelect.querySelector(`option[value="${mbusDataBlockFromTable}"]`);
+            if (matchingOption) {
+                matchingOption.selected = true;
+            } else if (mbusDataBlockFromTable) {
+                // Eğer eşleşen bir değer bulunamazsa, geçici olarak ekle ve seç
+                mbusDataBlockSelect.insertAdjacentHTML(
+                    'beforeend',
+                    `<option value="${mbusDataBlockFromTable}" selected>${mbusDataBlockFromTable}</option>`
+                );
+                console.warn(`M-Bus Veri ID'si "${mbusDataBlockFromTable}" listede bulunamadı ve geçici olarak eklendi.`);
+            }
+        }
     } else if (mbusDataBlockFieldset) {
         mbusDataBlockFieldset.remove();
     }
