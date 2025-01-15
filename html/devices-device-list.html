@@ -815,6 +815,8 @@ async function openUpdateDataModal(row, meterType) {
     const invoiceReportSelect = document.getElementById('editInvoiceReport');
     const serialNumberInput = document.getElementById('editSerialNumberInput');
 
+    $('#updateDataModal').modal('show');
+
     // Seri numarası alanını kontrol et
     if (!serialNumberInput) {
         console.error('Seri numarası alanı bulunamadı.');
@@ -966,8 +968,6 @@ async function openUpdateDataModal(row, meterType) {
     $('#updateDataModal').data('tableName', tableName);
 
     document.querySelector('#updateDataModal .btn-genie').textContent = 'Güncelle';
-
-    $('#updateDataModal').modal('show');
 }
 
 async function fetchBrandFromTable(protocolType, manufacturerSelect) {
