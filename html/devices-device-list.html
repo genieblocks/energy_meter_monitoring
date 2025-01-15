@@ -473,6 +473,53 @@
   </div>
 </div>
 
+<!-- ========================= Quick Read Modal ========================= -->
+<div class="modal fade" id="quickReadModal" tabindex="-1" role="dialog" aria-labelledby="quickReadModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="quickReadModalLabel">Hızlı Sayaç Sorgusu</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+          <div class="modal-body">
+              <fieldset class="form-group">
+                  <label for="quickSerialNumber">Seri Numarası</label>
+                  <input type="text" class="form-control" id="quickSerialNumber" placeholder="Seri Numarası Giriniz" required>
+              </fieldset>
+              <fieldset class="form-group">
+                  <label for="quickProtocolType">Protokol Tipi</label>
+                  <select id="quickProtocolType" class="form-control" required>
+                  <!-- <select id="quickProtocolType" class="form-control" onchange="updateQuickProtocolDetails()" required> -->
+                      <option value="none" disabled selected>Protokol Tipi Seçiniz</option>
+                      <option value="IEC 62056-21">IEC 62056-21</option>
+                      <option value="M-BUS">M-BUS</option>
+                  </select>
+              </fieldset>
+              <fieldset class="form-group" id="quickConnectionPointFieldset" style="display: none;">
+                  <label for="quickConnectionPoint">Bağlantı Noktası</label>
+                  <select id="quickConnectionPoint" class="form-control" required>
+                      <option value="none" disabled selected>Bağlantı Noktası Seçiniz</option>
+                  </select>
+              </fieldset>
+              <fieldset class="form-group" id="quickManufacturerFieldset" style="display: none;">
+                  <label for="quickManufacturer">Marka</label>
+                  <select id="quickManufacturer" class="form-control">
+                      <option value="none" disabled selected>Marka Seçiniz</option>
+                  </select>
+              </fieldset>
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-light btn-lg" data-dismiss="modal">Kapat</button>
+              <button type="button" class="btn btn-genie btn-lg">Sorgu Başlat</button>
+              <!-- <button type="button" class="btn btn-genie btn-lg" onclick="startQuickQuery()">Sorgu Başlat</button> -->
+          </div>
+      </div>
+  </div>
+</div>
+
+
   <!-- ////////////////////////////////////////////////////////////////////////////-->
 
 
@@ -537,6 +584,10 @@
                     aria-expanded="false">Sayaçlar</a></li>
               </ul>
               <ul class="nav navbar-nav float-right">
+                <!-- Hızlı Sorgu Başlat Butonu -->
+                <li class="nav-item">
+                    <button class="btn btn-genie btn-sm" data-toggle="modal" data-target="#quickReadModal">Hızlı Sorgu</button>
+                </li>
               </ul>
             </div>
           </div>
