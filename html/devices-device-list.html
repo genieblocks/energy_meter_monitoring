@@ -830,6 +830,28 @@ document.addEventListener('DOMContentLoaded', function () {
     const serialNumber = row.cells[0]?.textContent || ''; // Seri numarası tablonun ilk sütununda varsayılıyor
     serialNumberInput.value = serialNumber;
 
+    // Sayaç çarpanı alanını kontrol et veya yeniden oluştur
+    let multiplierFieldset = document.getElementById('editMeterMultiplierFieldset');
+    if (meterType === 'electricity') {
+        if (!multiplierFieldset) {
+            // Sayaç çarpanı fieldset'i oluştur
+            multiplierFieldset = document.createElement('fieldset');
+            multiplierFieldset.id = 'editMeterMultiplierFieldset';
+            multiplierFieldset.classList.add('form-group');
+            multiplierFieldset.innerHTML = `
+                <label for="editMeterMultiplier">Sayaç Çarpanı</label>
+                <input type="number" class="form-control" id="editMeterMultiplier" name="meterMultiplier" required>
+            `;
+            protocolTypeSelect.closest('.form-group').after(multiplierFieldset); // Protokol Tipi seçeneğinden sonra ekle
+        }
+        multiplierFieldset.style.display = 'block'; // Görünür yap
+        const multiplier = row.cells[1]?.textContent || ''; // Elektrik tablosunda çarpan 2. sütunda
+        document.getElementById('editMeterMultiplier').value = multiplier;
+    } else if (multiplierFieldset) {
+        // Elektrik harici sayaçlar için Fieldset'i tamamen kaldır
+        multiplierFieldset.remove();
+    }
+
     // Sayaç markası alanını kontrol et veya yeniden oluştur
     let manufacturerFieldset = document.getElementById('editElectricityManufacturerFieldset');
     if (meterType === 'electricity') {
@@ -851,28 +873,6 @@ document.addEventListener('DOMContentLoaded', function () {
     } else if (manufacturerFieldset) {
         // Elektrik harici sayaçlar için Fieldset'i tamamen kaldır
         manufacturerFieldset.remove();
-    }
-
-    // Sayaç çarpanı alanını kontrol et veya yeniden oluştur
-    let multiplierFieldset = document.getElementById('editMeterMultiplierFieldset');
-    if (meterType === 'electricity') {
-        if (!multiplierFieldset) {
-            // Sayaç çarpanı fieldset'i oluştur
-            multiplierFieldset = document.createElement('fieldset');
-            multiplierFieldset.id = 'editMeterMultiplierFieldset';
-            multiplierFieldset.classList.add('form-group');
-            multiplierFieldset.innerHTML = `
-                <label for="editMeterMultiplier">Sayaç Çarpanı</label>
-                <input type="number" class="form-control" id="editMeterMultiplier" name="meterMultiplier" required>
-            `;
-            protocolTypeSelect.closest('.form-group').after(multiplierFieldset); // Protokol Tipi seçeneğinden sonra ekle
-        }
-        multiplierFieldset.style.display = 'block'; // Görünür yap
-        const multiplier = row.cells[1]?.textContent || ''; // Elektrik tablosunda çarpan 2. sütunda
-        document.getElementById('editMeterMultiplier').value = multiplier;
-    } else if (multiplierFieldset) {
-        // Elektrik harici sayaçlar için Fieldset'i tamamen kaldır
-        multiplierFieldset.remove();
     }
 
     // M-Bus Veri ID'si fieldset kontrolü
