@@ -390,12 +390,12 @@
     </div>
   </div>
 
-<!-- ========================= Edit Meter Modal ========================= -->
-<div class="modal fade" id="editMeterModal" tabindex="-1" role="dialog" aria-labelledby="editMeterModalLabel" aria-hidden="true">
+<!-- ========================= Update Data Modal ========================= -->
+<div class="modal fade" id="updateDataModal" tabindex="-1" role="dialog" aria-labelledby="updateDataModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-sm" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="editMeterModalLabel">Sayaç Düzenle</h5>
+        <h5 class="modal-title" id="updateDataModalLabel">Sayaç Düzenle</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -857,11 +857,11 @@ document.addEventListener('DOMContentLoaded', function () {
         cooling: 'CoolingMeters'
     };
     const tableName = tableNameMap[meterType];
-    $('#editMeterModal').data('tableName', tableName);
+    $('#updateDataModal').data('tableName', tableName);
 
-    document.querySelector('#editMeterModal .btn-genie').textContent = 'Güncelle';
+    document.querySelector('#updateDataModal .btn-genie').textContent = 'Güncelle';
 
-    $('#editMeterModal').modal('show');
+    $('#updateDataModal').modal('show');
 }
 
 async function fetchConnectionPointsForProtocol(protocolType, connectionPointSelect) {
