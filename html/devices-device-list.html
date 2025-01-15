@@ -809,7 +809,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
-  async function openUpdateDataModal(row, meterType) {
+async function openUpdateDataModal(row, meterType) {
     const protocolTypeSelect = document.getElementById('editProtocolType');
     const connectionPointSelect = document.getElementById('editConnectionPoint');
     const invoiceReportSelect = document.getElementById('editInvoiceReport');
@@ -817,7 +817,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Seri numarası alanını kontrol et
     if (!serialNumberInput) {
-        console.error('Seri numarası alanı bulunamadı. Lütfen statik HTML kısmına "editSerialNumberInput" ID\'siyle bir input ekleyin.');
+        console.error('Seri numarası alanı bulunamadı.');
         return;
     }
 
@@ -827,28 +827,26 @@ document.addEventListener('DOMContentLoaded', function () {
     invoiceReportSelect.value = 'none';
 
     // Seri Numarasını doldur
-    const serialNumber = row.cells[0]?.textContent || ''; // Seri numarası tablonun ilk sütununda varsayılıyor
+    const serialNumber = row.cells[0]?.textContent || '';
     serialNumberInput.value = serialNumber;
 
     // Sayaç çarpanı alanını kontrol et veya yeniden oluştur
     let multiplierFieldset = document.getElementById('editMeterMultiplierFieldset');
     if (meterType === 'electricity') {
         if (!multiplierFieldset) {
-            // Sayaç çarpanı fieldset'i oluştur
             multiplierFieldset = document.createElement('fieldset');
             multiplierFieldset.id = 'editMeterMultiplierFieldset';
             multiplierFieldset.classList.add('form-group');
             multiplierFieldset.innerHTML = `
                 <label for="editMeterMultiplier">Sayaç Çarpanı</label>
-                <input type="number" class="form-control" id="editMeterMultiplier" name="meterMultiplier" required>
+                <input type="number" class="form-control" id="editMeterMultiplier" name="MeterMultiplier" required>
             `;
-            protocolTypeSelect.closest('.form-group').after(multiplierFieldset); // Protokol Tipi seçeneğinden sonra ekle
+            protocolTypeSelect.closest('.form-group').after(multiplierFieldset);
         }
-        multiplierFieldset.style.display = 'block'; // Görünür yap
-        const multiplier = row.cells[1]?.textContent || ''; // Elektrik tablosunda çarpan 2. sütunda
+        multiplierFieldset.style.display = 'block';
+        const multiplier = row.cells[1]?.textContent || '';
         document.getElementById('editMeterMultiplier').value = multiplier;
     } else if (multiplierFieldset) {
-        // Elektrik harici sayaçlar için Fieldset'i tamamen kaldır
         multiplierFieldset.remove();
     }
 
@@ -856,7 +854,6 @@ document.addEventListener('DOMContentLoaded', function () {
     let manufacturerFieldset = document.getElementById('editElectricityManufacturerFieldset');
     if (meterType === 'electricity') {
         if (!manufacturerFieldset) {
-            // Sayaç markası fieldset'i oluştur
             manufacturerFieldset = document.createElement('fieldset');
             manufacturerFieldset.id = 'editElectricityManufacturerFieldset';
             manufacturerFieldset.classList.add('form-group', 'floating-label-form-group');
@@ -867,13 +864,12 @@ document.addEventListener('DOMContentLoaded', function () {
                 </select>
             `;
             const protocolFieldset = protocolTypeSelect.closest('.form-group');
-            protocolFieldset.after(manufacturerFieldset); // Protokol tipi alanından sonra ekle
+            protocolFieldset.after(manufacturerFieldset);
         }
-        manufacturerFieldset.style.display = 'block'; // Görünür yap
-        const brand = row.cells[2]?.textContent || ''; // Elektrik tablosunda çarpan 3. sütunda
-        document.getElementById('editElectricityManufacturer').value = brand;
+        manufacturerFieldset.style.display = 'block';
+        const brand = row.cells[2]?.textContent || '';
+        await fetchBrandFromTable('Protocols', protocolTypeSelect.value, brand, 'editElectricityManufacturer');
     } else if (manufacturerFieldset) {
-        // Elektrik harici sayaçlar için Fieldset'i tamamen kaldır
         manufacturerFieldset.remove();
     }
 
@@ -881,7 +877,6 @@ document.addEventListener('DOMContentLoaded', function () {
     let mbusDataBlockFieldset = document.getElementById('editMbusDataBlockFieldset');
     if (meterType !== 'electricity') {
         if (!mbusDataBlockFieldset) {
-            // M-Bus Veri ID'si fieldset'i oluştur
             mbusDataBlockFieldset = document.createElement('fieldset');
             mbusDataBlockFieldset.id = 'editMbusDataBlockFieldset';
             mbusDataBlockFieldset.classList.add('form-group');
@@ -942,6 +937,55 @@ document.addEventListener('DOMContentLoaded', function () {
 
     $('#updateDataModal').modal('show');
 }
+
+async function fetchBrandFromTable(tableName, protocolType, defaultBrand, brandSelectId) {
+    try {
+        const response = await fetch(`${baseWebhookURL}/webhook/get-table-content`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ tableName })
+        });
+
+        const data = await response.json();
+
+        if (data[0]?.success && Array.isArray(data[0].data)) {
+            const protocol = data[0].data.find(item => item.ProtocolType === protocolType);
+
+            if (!protocol) {
+                console.error(`Protocol not found for type: ${protocolType}`);
+                return;
+            }
+
+            const brandSelect = document.getElementById(brandSelectId);
+            brandSelect.innerHTML = '<option value="none" disabled selected>Sayaç Markası Seçiniz</option>';
+
+            protocol.ManufacturerTable.forEach(brand => {
+                const option = document.createElement('option');
+                option.value = brand;
+                option.textContent = brand;
+                brandSelect.appendChild(option);
+            });
+
+            const defaultOption = brandSelect.querySelector(`option[value="${defaultBrand}"]`);
+            if (defaultOption) {
+                defaultOption.selected = true;
+            } else if (defaultBrand) {
+                brandSelect.insertAdjacentHTML(
+                    'beforeend',
+                    `<option value="${defaultBrand}" selected>${defaultBrand}</option>`
+                );
+                console.warn(`Marka "${defaultBrand}" listede bulunamadı ve geçici olarak eklendi.`);
+            }
+        } else {
+            console.error('Brand data could not be loaded:', data[0]?.message || 'No data');
+        }
+    } catch (error) {
+        console.error('Error fetching brand data:', error);
+    }
+}
+
 
 async function fetchConnectionPointsForProtocol(protocolType, connectionPointSelect) {
     try {
