@@ -786,7 +786,7 @@ $(document).ready(function () {
     tableConfigs.forEach(config => {
         $(config.tableSelector).on('click', '.btn-outline-success', function () {
             const row = $(this).closest('tr')[0];
-            openEditModal(row, config.meterType);
+            openUpdateDataModal(row, config.meterType);
         });
     });
 });
@@ -795,7 +795,7 @@ document.addEventListener('DOMContentLoaded', function () {
     document.querySelectorAll('#electricityMeterTable .btn-outline-success').forEach(button => {
       button.addEventListener('click', function () {
         const row = button.closest('tr');
-        openEditModal(row, 'electricity');
+        openUpdateDataModal(row, 'electricity');
       });
     });
 
@@ -803,13 +803,13 @@ document.addEventListener('DOMContentLoaded', function () {
       document.querySelectorAll(`#${meterType}MeterTable .btn-outline-success`).forEach(button => {
         button.addEventListener('click', function () {
           const row = button.closest('tr');
-          openEditModal(row, meterType);
+          openUpdateDataModal(row, meterType);
         });
       });
     });
   });
 
-  async function openEditModal(row, meterType) {
+  async function openUpdateDataModal(row, meterType) {
     const protocolTypeSelect = document.getElementById('editProtocolType');
     const connectionPointSelect = document.getElementById('editConnectionPoint');
     const invoiceReportSelect = document.getElementById('editInvoiceReport');
@@ -829,6 +829,29 @@ document.addEventListener('DOMContentLoaded', function () {
     // Seri Numarasını doldur
     const serialNumber = row.cells[0]?.textContent || ''; // Seri numarası tablonun ilk sütununda varsayılıyor
     serialNumberInput.value = serialNumber;
+
+    // Sayaç markası alanını kontrol et veya yeniden oluştur
+    let manufacturerFieldset = document.getElementById('editElectricityManufacturerFieldset');
+    if (meterType === 'electricity') {
+        if (!manufacturerFieldset) {
+            // Sayaç markası fieldset'i oluştur
+            manufacturerFieldset = document.createElement('fieldset');
+            manufacturerFieldset.id = 'editElectricityManufacturerFieldset';
+            manufacturerFieldset.classList.add('form-group', 'floating-label-form-group');
+            manufacturerFieldset.innerHTML = `
+                <label for="editElectricityManufacturer">Sayaç Markası</label>
+                <select class="form-control" id="editElectricityManufacturer" name="Brand" required>
+                  <option value="none" selected disabled>Sayaç Markası Seçiniz.</option>
+                </select>
+            `;
+            const protocolFieldset = protocolTypeSelect.closest('.form-group');
+            protocolFieldset.after(manufacturerFieldset); // Protokol tipi alanından sonra ekle
+        }
+        manufacturerFieldset.style.display = 'block'; // Görünür yap
+    } else if (manufacturerFieldset) {
+        // Elektrik harici sayaçlar için Fieldset'i tamamen kaldır
+        manufacturerFieldset.remove();
+    }
 
     // Sayaç çarpanı alanını kontrol et veya yeniden oluştur
     let multiplierFieldset = document.getElementById('editMeterMultiplierFieldset');
