@@ -877,8 +877,22 @@ async function openUpdateDataModal(row, meterType) {
             protocolFieldset.after(manufacturerFieldset);
         }
         manufacturerFieldset.style.display = 'block';
-        const brand = row.cells[2]?.textContent || '';
-        await fetchBrandFromTable('Protocols', protocolTypeSelect.value, brand, 'editElectricityManufacturer');
+        
+        const manufacturerSelect = document.getElementById('editElectricityManufacturer');
+        await fetchBrandFromTable(protocolType, manufacturerSelect);
+
+        // Varsayılan marka değeri atanır
+        const defaultBrand = row.cells[2]?.textContent || '';
+        if (manufacturerSelect.querySelector(`option[value="${defaultBrand}"]`)) {
+            manufacturerSelect.value = defaultBrand;
+        } else if (defaultBrand) {
+            const option = document.createElement('option');
+            option.value = defaultBrand;
+            option.textContent = defaultBrand;
+            option.selected = true;
+            manufacturerSelect.appendChild(option);
+            console.warn(`Marka "${defaultBrand}" listede bulunamadı ve geçici olarak eklendi.`);
+        }
     } else if (manufacturerFieldset) {
         manufacturerFieldset.remove();
     }
@@ -939,51 +953,63 @@ async function openUpdateDataModal(row, meterType) {
     $('#updateDataModal').modal('show');
 }
 
-async function fetchBrandFromTable(tableName, protocolType, defaultBrand, brandSelectId) {
+async function fetchBrandFromTable(protocolType, manufacturerSelect) {
     try {
-        const response = await fetch(`${baseWebhookURL}/webhook/get-table-content`, {
+        // Protocols tablosundan ManufacturerTableName alınır
+        const protocolResponse = await fetch(`${baseWebhookURL}/webhook/get-table-content`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ tableName })
+            body: JSON.stringify({ tableName: 'Protocols' })
         });
 
-        const data = await response.json();
+        const protocolData = await protocolResponse.json();
 
-        if (data[0]?.success && Array.isArray(data[0].data)) {
-            const protocol = data[0].data.find(item => item.ProtocolType === protocolType);
-
-            if (!protocol) {
-                console.error(`Protocol not found for type: ${protocolType}`);
-                return;
-            }
-
-            const brandSelect = document.getElementById(brandSelectId);
-            brandSelect.innerHTML = '<option value="none" disabled selected>Sayaç Markası Seçiniz</option>';
-
-            protocol.ManufacturerTable.forEach(brand => {
-                const option = document.createElement('option');
-                option.value = brand;
-                option.textContent = brand;
-                brandSelect.appendChild(option);
-            });
-
-            const defaultOption = brandSelect.querySelector(`option[value="${defaultBrand}"]`);
-            if (defaultOption) {
-                defaultOption.selected = true;
-            } else if (defaultBrand) {
-                brandSelect.insertAdjacentHTML(
-                    'beforeend',
-                    `<option value="${defaultBrand}" selected>${defaultBrand}</option>`
-                );
-                console.warn(`Marka "${defaultBrand}" listede bulunamadı ve geçici olarak eklendi.`);
-            }
-        } else {
-            console.error('Brand data could not be loaded:', data[0]?.message || 'No data');
+        if (!protocolData[0]?.success || !Array.isArray(protocolData[0].data)) {
+            console.error('Protocols tablosu verileri yüklenemedi:', protocolData[0]?.message || 'No data');
+            alert('Protokoller yüklenemedi. Lütfen tekrar deneyin.');
+            return;
         }
+
+        // Protocols tablosunda protocolType eşleşmesini bul
+        const protocolEntry = protocolData[0].data.find(item => item.ProtocolType === protocolType);
+        if (!protocolEntry || !protocolEntry.ManufacturerTableName) {
+            console.error(`ManufacturerTableName bulunamadı: ${protocolType}`);
+            alert(`Protokol için bir ManufacturerTableName tanımlı değil: ${protocolType}`);
+            return;
+        }
+
+        const manufacturerTableName = protocolEntry.ManufacturerTableName;
+
+        // ManufacturerTableName tablosundan markalar çekilir
+        const manufacturerResponse = await fetch(`${baseWebhookURL}/webhook/get-table-content`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ tableName: manufacturerTableName })
+        });
+
+        const manufacturerData = await manufacturerResponse.json();
+
+        if (!manufacturerData[0]?.success || !Array.isArray(manufacturerData[0].data)) {
+            console.error('Manufacturer tablosu verileri yüklenemedi:', manufacturerData[0]?.message || 'No data');
+            alert('Markalar yüklenemedi. Lütfen tekrar deneyin.');
+            return;
+        }
+
+        // Manufacturer select içeriği doldurulur
+        manufacturerSelect.innerHTML = '<option value="none" selected disabled>Sayaç Markası Seçiniz.</option>';
+        manufacturerData[0].data.forEach(manufacturer => {
+            const option = document.createElement('option');
+            option.value = manufacturer.Brand;
+            option.textContent = manufacturer.Brand;
+            manufacturerSelect.appendChild(option);
+        });
     } catch (error) {
         console.error('Error fetching brand data:', error);
+        alert('Markalar yüklenirken bir hata oluştu.');
     }
 }
 
