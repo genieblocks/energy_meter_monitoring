@@ -830,6 +830,16 @@ async function openUpdateDataModal(row, meterType) {
     const serialNumber = row.cells[0]?.textContent || '';
     serialNumberInput.value = serialNumber;
 
+    // Protokol tipi önceden belirleniyor
+    let protocolType = '';
+    if (meterType === 'electricity') {
+        protocolType = 'IEC 62056-21';
+        protocolTypeSelect.innerHTML += `<option value="IEC 62056-21" selected>IEC 62056-21</option>`;
+    } else {
+        protocolType = 'M-BUS';
+        protocolTypeSelect.innerHTML += `<option value="M-BUS" selected>M-BUS</option>`;
+    }
+
     // Sayaç çarpanı alanını kontrol et veya yeniden oluştur
     let multiplierFieldset = document.getElementById('editMeterMultiplierFieldset');
     if (meterType === 'electricity') {
@@ -897,15 +907,6 @@ async function openUpdateDataModal(row, meterType) {
     invoiceReportSelect.value = invoiceReport;
 
     try {
-        let protocolType = '';
-        if (meterType === 'electricity') {
-            protocolType = 'IEC 62056-21';
-            protocolTypeSelect.innerHTML += `<option value="IEC 62056-21" selected>IEC 62056-21</option>`;
-        } else {
-            protocolType = 'M-BUS';
-            protocolTypeSelect.innerHTML += `<option value="M-BUS" selected>M-BUS</option>`;
-        }
-
         const connectionPointFromTable = row.cells[meterType === 'electricity' ? 4 : 3]?.textContent || '';
         await fetchConnectionPointsForProtocol(protocolType, connectionPointSelect);
 
