@@ -870,6 +870,8 @@ document.addEventListener('DOMContentLoaded', function () {
             protocolFieldset.after(manufacturerFieldset); // Protokol tipi alanından sonra ekle
         }
         manufacturerFieldset.style.display = 'block'; // Görünür yap
+        const brand = row.cells[2]?.textContent || ''; // Elektrik tablosunda çarpan 3. sütunda
+        document.getElementById('editElectricityManufacturer').value = multiplier;
     } else if (manufacturerFieldset) {
         // Elektrik harici sayaçlar için Fieldset'i tamamen kaldır
         manufacturerFieldset.remove();
