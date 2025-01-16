@@ -1628,7 +1628,7 @@ function showUndefinedMetersForm() {
 
         // Eğer tanımsız sayaç yoksa
         if (Object.keys(undefinedMeters).every(group => undefinedMeters[group].length === 0)) {
-            newSelect.innerHTML = '<option value="" disabled>Bütün sayaçlar tanımlı.</option>';
+            newSelect.innerHTML = '<option value="none" selected disabled>Bütün sayaçlar tanımlı.</option>';
         }
     }).catch(error => {
         console.error('Sayaç verileri yüklenirken hata oluştu', error);
