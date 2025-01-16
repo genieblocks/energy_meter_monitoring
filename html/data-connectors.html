@@ -23,7 +23,6 @@
   <link rel="stylesheet" type="text/css" href="../app-assets/vendors/css/extensions/pace.css">
   <link rel="stylesheet" type="text/css" href="../app-assets/fonts/feather/style.min.css">
   <link rel="stylesheet" type="text/css" href="../app-assets/fonts/font-awesome/css/font-awesome.min.css">
-
   <!-- END VENDOR CSS-->
   <!-- BEGIN TEMPLATE CSS-->
   <link rel="stylesheet" type="text/css" href="../app-assets/css/bootstrap-extended.css">
@@ -39,23 +38,12 @@
   <link rel="stylesheet" type="text/css" href="../assets/css/fonts/google/font-google.css">
   <link rel="stylesheet" type="text/css" href="../assets/css/style.css">
   <!-- END Custom CSS-->
-  <!-- <style>
-    body .modal-dialog { /* Width */
-        max-width: 100%;
-        width: auto !important;
-        display: inline-block;
-    }
-
-  </style> -->
-
 </head>
 
 <body class="vertical-layout vertical-menu 2-columns menu-collapsed" data-open="click" data-menu="vertical-menu"
   data-col="2-columns">
 
   <!-- ////////////////////////////////////////////////////////////////////////////-->
-
-
   <div class="main-menu menu-fixed menu-dark menu-accordion menu-shadow" data-scroll-to-active="true">
     <div class="main-menu-content">
       <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
@@ -351,94 +339,93 @@
   </div>
 </div>
 
-        <!-- Device Setup Modal -->
-        <div class="modal fade" id="deviceSetupModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
-          <div class="modal-dialog modal-xl" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h4 class="modal-title text-bold-600" id="myModalLabel1"><i class="fa fa-road2"></i> Tanımlı Cihaz Listesi</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                <table class="table table-hover table-bordered zero-configuration dataTable" id="definedDevicesTable"
-                role="grid" aria-describedby="DataTables_Table_0_info">
-                  <thead>
-                    <tr>
-                      <th>No</th>
-                      <th>Minor</th>
-                      <th>Adresi</th>
-                      <th>data</th>
-                      <th>cmd</th>
-                      <th>ttyName</th>
-                      <th>coutName</th>
-                      <th>Cihaz ismi</th>
-                      <th>Cihaz modeli</th>
-                      <th>MAC Adresi</th>
-                      <th>seri No</th>
-                      <th></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <!-- Dinamik içerik buraya eklenecek -->
-                  </tbody>
-                </table>
-                <div id="noDefinedDevicesMessage" class="alert alert-warning" style="display: none;">Kayıtlı cihaz yok.</div>
-              </div>
-              <div class="modal-footer">
-                <input type="reset" class="btn btn-light" data-dismiss="modal" value="Kapat">
-                <input type="button" class="btn btn-genie white" data-toggle="modal" data-dismiss="modal" data-target="#addDeviceModal" value="Yeni Cihaz Tanımla">
-              </div>
-            </div>
-          </div>
-        </div>
+<!-- Device Setup Modal -->
+<div class="modal fade" id="deviceSetupModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title text-bold-600" id="myModalLabel1"><i class="fa fa-road2"></i> Tanımlı Cihaz Listesi</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <table class="table table-hover table-bordered zero-configuration dataTable" id="definedDevicesTable"
+        role="grid" aria-describedby="DataTables_Table_0_info">
+          <thead>
+            <tr>
+              <th>No</th>
+              <th>Minor</th>
+              <th>Adresi</th>
+              <th>data</th>
+              <th>cmd</th>
+              <th>ttyName</th>
+              <th>coutName</th>
+              <th>Cihaz ismi</th>
+              <th>Cihaz modeli</th>
+              <th>MAC Adresi</th>
+              <th>seri No</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Dinamik içerik buraya eklenecek -->
+          </tbody>
+        </table>
+        <div id="noDefinedDevicesMessage" class="alert alert-warning" style="display: none;">Kayıtlı cihaz yok.</div>
+      </div>
+      <div class="modal-footer">
+        <input type="reset" class="btn btn-light" data-dismiss="modal" value="Kapat">
+        <input type="button" class="btn btn-genie white" data-toggle="modal" data-dismiss="modal" data-target="#addDeviceModal" value="Yeni Cihaz Tanımla">
+      </div>
+    </div>
+  </div>
+</div>
 
-        <!-- Add Device Modal -->
-        <div class="modal fade text-left" id="addDeviceModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2"
-        aria-hidden="true">
-          <!-- <div class="modal-dialog modal-xl" role="document" style="max-width: 90%; width: auto !important; display: inline-block;"> -->
-          <div class="modal-dialog modal-xl" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h4 class="modal-title text-bold-600" id="myModalLabel1"><i class="fa fa-road2"></i> Bulunan Cihazlar</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                <table class="table table-hover table-bordered zero-configuration dataTable" id="scannedDevicesTable"
-                role="grid" aria-describedby="DataTables_Table_0_info">
-                  <thead>
-                    <tr>
-                      <th></th>
-                      <th>No</th>
-                      <th>Adresi</th>
-                      <th>Cihaz ismi</th>
-                      <th>Cihaz modeli</th>
-                      <th>MAC Adresi</th>
-                      <th>seri No</th>
-                      <th>Durumu</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <!-- Dinamik içerik buraya eklenecek -->
-                  </tbody>
-                </table>
-                <div id="noDevicesMessage" class="alert alert-warning" style="display: none;">Cihaz bulunamadı.</div>
-              </div>
-              <div class="modal-footer d-flex justify-content-between">
-                <div>
-                  <button class="btn btn-round btn-outline-info" id="scanDevicesButton"><i class="icon-search7 ml-1"> </i>Cihazları Bul</button>
-                </div>
-                <div>
-                  <input type="reset" class="btn btn-light" data-dismiss="modal" value="Kapat">
-                  <input type="button" class="btn btn-genie white" id="addSelectedDevicesButton" value="Seçilenleri Ekle">
-                </div>
-              </div>
-            </div>
-          </div>
+<!-- Add Device Modal -->
+<div class="modal fade text-left" id="addDeviceModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2"
+aria-hidden="true">
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title text-bold-600" id="myModalLabel1"><i class="fa fa-road2"></i> Bulunan Cihazlar</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <table class="table table-hover table-bordered zero-configuration dataTable" id="scannedDevicesTable"
+        role="grid" aria-describedby="DataTables_Table_0_info">
+          <thead>
+            <tr>
+              <th></th>
+              <th>No</th>
+              <th>Adresi</th>
+              <th>Cihaz ismi</th>
+              <th>Cihaz modeli</th>
+              <th>MAC Adresi</th>
+              <th>seri No</th>
+              <th>Durumu</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Dinamik içerik buraya eklenecek -->
+          </tbody>
+        </table>
+        <div id="noDevicesMessage" class="alert alert-warning" style="display: none;">Cihaz bulunamadı.</div>
+      </div>
+      <div class="modal-footer d-flex justify-content-between">
+        <div>
+          <button class="btn btn-round btn-outline-info" id="scanDevicesButton"><i class="icon-search7 ml-1"> </i>Cihazları Bul</button>
         </div>
+        <div>
+          <input type="reset" class="btn btn-light" data-dismiss="modal" value="Kapat">
+          <input type="button" class="btn btn-genie white" id="addSelectedDevicesButton" value="Seçilenleri Ekle">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
   <!-- ////////////////////////////////////////////////////////////////////////////  -->
 
   <footer class="footer footer-static footer-light navbar-border">
@@ -1134,17 +1121,17 @@ document.addEventListener('DOMContentLoaded', function() {
     //   }
 
       // Sayfa yüklendiğinde modalları ortala
-      $(document).ready(function() {
-        centerModals();
+      // $(document).ready(function() {
+      //   centerModals();
         
-        // Modal gösterildiğinde veya gizlendiğinde yeniden ortala
-        $('.modal').on('show.bs.modal', function() {
-          centerModal($(this));
-        });
-        $(window).on('resize', function() {
-          centerModals();
-        });
-      });
+      //   // Modal gösterildiğinde veya gizlendiğinde yeniden ortala
+      //   $('.modal').on('show.bs.modal', function() {
+      //     centerModal($(this));
+      //   });
+      //   $(window).on('resize', function() {
+      //     centerModals();
+      //   });
+      // });
   </script>
 </body>
 
