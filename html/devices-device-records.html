@@ -590,7 +590,25 @@ function initializeDataTable(tableId) {
   if (!$.fn.DataTable.isDataTable(tableId)) {
     return $(tableId).DataTable({
       dom: '<"top"fl>rt<"bottom"Bp>',
-      buttons: ['copyHtml5', 'csvHtml5'],
+      buttons: [
+          {
+              extend: 'copyHtml5',
+              text: 'Kopyala',
+              title: reportTitle
+          },
+          {
+              extend: 'csvHtml5',
+              text: 'CSV Olarak İndir',
+              title: reportTitle,  // Dosya ismini reportTitle olarak kullan
+              filename: reportTitle  // Dosya ismi
+          },
+          {
+              extend: 'excelHtml5',
+              text: 'Excel Olarak İndir',
+              title: reportTitle,  // Dosya ismini reportTitle olarak kullan
+              filename: reportTitle  // Dosya ismi
+          }
+      ],
       order: [[4, 'desc']],
       pageLength: 15, // Default gösterilecek kayıt sayısı
       lengthMenu: [15, 25, 50, 100], // Seçenekler
