@@ -44,14 +44,14 @@
   <link rel="stylesheet" type="text/css" href="../assets/css/fonts/google/font-google.css">
   <link rel="stylesheet" type="text/css" href="../assets/css/style.css">
   <!-- END Custom CSS-->
-  <style>
+  <!-- <style>
     body .modal-dialog { /* Width */
         max-width: 100%;
         width: auto !important;
         display: inline-block;
     }
 
-  </style>
+  </style> -->
 </head>
 
 <body onload="initializePage()" class="vertical-layout vertical-menu 2-columns menu-collapsed" data-open="click" data-menu="vertical-menu"
@@ -338,66 +338,66 @@
   </div>
 </div>
 
-  <!-- Single Query Modal -->
-  <div class="modal fade text-left" id="singleQueryModal" tabindex="-1" role="dialog" aria-labelledby="singleQueryModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h4 class="modal-title text-bold-600" id="singleQueryModalLabel"></h4>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <table class="table table-hover table-bordered zero-configuration dataTable w-auto" id="singleQueryDataTable" role="grid">
-              <thead>
-                  <!-- Dinamik içerik buraya eklenecek -->
-              </thead>
-              <tbody>
-                  <!-- Dinamik içerik buraya eklenecek -->
-              </tbody>
-          </table>
-          <div id="no-content-message-query" class="alert alert-warning" style="display: none;">Cihaza Erişilemedi.
-          </div>
-        </div>
-        <div class="modal-footer">
-            <input type="reset" class="btn btn-light" data-dismiss="modal" value="Kapat">
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Single IEC Query Modal -->
-  <div class="modal fade text-left" id="singleIecQueryModal" tabindex="-1" role="dialog" aria-labelledby="singleIecQueryModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h4 class="modal-title text-bold-600" id="singleIecQueryModalLabel"></h4>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+<!-- Single Query Modal -->
+<div class="modal fade text-left" id="singleQueryModal" tabindex="-1" role="dialog" aria-labelledby="singleQueryModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title text-bold-600" id="singleQueryModalLabel"></h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <table class="table table-hover table-bordered zero-configuration dataTable w-auto" id="singleIecQueryDataTable" role="grid">
+        </button>
+      </div>
+      <div class="modal-body">
+        <table class="table table-hover table-bordered zero-configuration dataTable w-auto" id="singleQueryDataTable" role="grid">
             <thead>
-              <tr>
-                <th>OBIS Kodu</th>
-                <th>Açıklama</th>
-                <th>Değer</th>
-              </tr>
+                <!-- Dinamik içerik buraya eklenecek -->
             </thead>
             <tbody>
-              <!-- Dinamik içerik buraya eklenecek -->
+                <!-- Dinamik içerik buraya eklenecek -->
             </tbody>
-          </table>
-          <div id="queryNoContentMessage" class="alert alert-warning" style="display: none;">Cihaza Erişilemedi.</div>
+        </table>
+        <div id="no-content-message-query" class="alert alert-warning" style="display: none;">Cihaza Erişilemedi.
         </div>
-        <div class="modal-footer">
+      </div>
+      <div class="modal-footer">
           <input type="reset" class="btn btn-light" data-dismiss="modal" value="Kapat">
-        </div>
       </div>
     </div>
   </div>
+</div>
+
+<!-- Single IEC Query Modal -->
+<div class="modal fade text-left" id="singleIecQueryModal" tabindex="-1" role="dialog" aria-labelledby="singleIecQueryModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title text-bold-600" id="singleIecQueryModalLabel"></h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <table class="table table-hover table-bordered zero-configuration dataTable w-auto" id="singleIecQueryDataTable" role="grid">
+          <thead>
+            <tr>
+              <th>OBIS Kodu</th>
+              <th>Açıklama</th>
+              <th>Değer</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Dinamik içerik buraya eklenecek -->
+          </tbody>
+        </table>
+        <div id="queryNoContentMessage" class="alert alert-warning" style="display: none;">Cihaza Erişilemedi.</div>
+      </div>
+      <div class="modal-footer">
+        <input type="reset" class="btn btn-light" data-dismiss="modal" value="Kapat">
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- ========================= Update Data Modal ========================= -->
 <div class="modal fade" id="updateDataModal" tabindex="-1" role="dialog" aria-labelledby="updateDataModalLabel" aria-hidden="true">
