@@ -281,7 +281,7 @@
 
 <!-- Update Data Modal -->
 <div class="modal fade text-left" id="updateDataModal" tabindex="-1" role="dialog" aria-labelledby="updateDataModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg" role="document">
+  <div class="modal-dialog" role="document">
       <div class="modal-content">
           <div class="modal-header">
               <h4 class="modal-title text-bold-600" id="updateDataModalLabel">Güncelleme</h4>
@@ -1494,7 +1494,7 @@ function showUpdateDefinedMeterDataForm(tableName, serialNumber, customNameData,
     formGroup.style.display = 'none'; // Form grubunu gizlemek için
     formGroup.innerHTML = `
         <label for="${meterIDFieldNameData}">${meterIDFieldNameData}</label>
-        <input type="text" style="width: 400px;" id="${meterIDFieldNameData}" name="${meterIDFieldNameData}" class="form-control" readonly="readonly" value="${meterIDData}">
+        <input type="text" id="${meterIDFieldNameData}" name="${meterIDFieldNameData}" class="form-control" readonly="readonly" value="${meterIDData}">
     `;
     formBody.appendChild(formGroup);
 
@@ -1503,7 +1503,7 @@ function showUpdateDefinedMeterDataForm(tableName, serialNumber, customNameData,
     formGroup.className = 'form-group';
     formGroup.innerHTML = `
         <label for="CustomName">Sayaç İsmi</label>
-        <input type="text" style="width: 400px;" id="CustomName" name="CustomName" class="form-control" value="${customNameData}" required>
+        <input type="text" id="CustomName" name="CustomName" class="form-control" value="${customNameData}" required>
     `;
     formBody.appendChild(formGroup);
 
@@ -1512,7 +1512,7 @@ function showUpdateDefinedMeterDataForm(tableName, serialNumber, customNameData,
     formGroup.className = 'form-group';
     formGroup.innerHTML = `
         <label for="Note">Not</label>
-        <input type="text" style="width: 400px;" id="Note" name="Note" class="form-control" value="${noteData}" required>
+        <input type="text" id="Note" name="Note" class="form-control" value="${noteData}" required>
     `;
     formBody.appendChild(formGroup);
 
@@ -1562,7 +1562,7 @@ function showUpdateSubscriberDataForm(tableName, subscriberData, flatID) {
     formGroup.style.display = 'none'; // Form grubunu gizlemek için
     formGroup.innerHTML = `
         <label for="FlatID">FlatID</label>
-        <input type="text" style="width: 400px;" id="FlatID" name="FlatID" class="form-control" readonly="readonly" value="${flatID}">
+        <input type="text" id="FlatID" name="FlatID" class="form-control" readonly="readonly" value="${flatID}">
     `;
     formBody.appendChild(formGroup);
 
@@ -1571,7 +1571,7 @@ function showUpdateSubscriberDataForm(tableName, subscriberData, flatID) {
     formGroup.className = 'form-group';
     formGroup.innerHTML = `
         <label for="Subscriber">Abone İsmi</label>
-        <input type="text" style="width: 400px;" id="Subscriber" name="Subscriber" class="form-control" value="${subscriberData}" required>
+        <input type="text" id="Subscriber" name="Subscriber" class="form-control" value="${subscriberData}" required>
     `;
     formBody.appendChild(formGroup);
 
