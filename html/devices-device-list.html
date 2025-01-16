@@ -1150,6 +1150,23 @@ async function fetchConnectionPointsFromTable(connectionTableName, connectionPoi
     }
 }
 
+document.getElementById('startQuickQuery').addEventListener('click', function () {
+    const serialNumber = document.getElementById('quickSerialNumber').value;
+    const protocolType = document.getElementById('quickProtocolType').value;
+    const connectionPoint = document.getElementById('quickConnectionPoint').value;
+
+    if (!serialNumber || protocolType === "none" || connectionPoint === "none") {
+        alert("Lütfen tüm gerekli alanları doldurun.");
+        return;
+    }
+
+    if (protocolType === "M-BUS") {
+        queryMeterData(serialNumber, connectionPoint);
+    } else {
+        alert("Bu protokol tipi için desteklenen sorgu fonksiyonu tanımlı değil.");
+    }
+});
+
 function updateQuickProtocolDetails() {
     const protocolType = document.getElementById('quickProtocolType').value;
     const connectionPointFieldset = document.getElementById('quickConnectionPointFieldset');
