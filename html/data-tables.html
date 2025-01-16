@@ -613,7 +613,7 @@ function updateTable(data) {
         document.getElementById('tableStatusMessage').innerHTML = '<p class="text-warning">Kayıtlı tablo yoktur. Tablo oluşturun.</p>';
         document.getElementById('dataTablesTable').style.display = 'none';
     } else {
-        document.getElementById('tableStatusMessage').innerHTML = '';
+        document.getElementById('tableStatusMessage').style.display = 'none'
         document.getElementById('dataTablesTable').style.display = 'table';
 
         tableData.forEach(function (table) {
