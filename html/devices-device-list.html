@@ -1150,23 +1150,6 @@ async function fetchConnectionPointsFromTable(connectionTableName, connectionPoi
     }
 }
 
-document.getElementById('startQuickQuery').addEventListener('click', function () {
-    const serialNumber = document.getElementById('quickSerialNumber').value;
-    const protocolType = document.getElementById('quickProtocolType').value;
-    const connectionPoint = document.getElementById('quickConnectionPoint').value;
-
-    if (!serialNumber || protocolType === "none" || connectionPoint === "none") {
-        alert("Lütfen tüm gerekli alanları doldurun.");
-        return;
-    }
-
-    if (protocolType === "M-BUS") {
-        queryMeterData(serialNumber, connectionPoint);
-    } else {
-        alert("Bu protokol tipi için desteklenen sorgu fonksiyonu tanımlı değil.");
-    }
-});
-
 function updateQuickProtocolDetails() {
     const protocolType = document.getElementById('quickProtocolType').value;
     const connectionPointFieldset = document.getElementById('quickConnectionPointFieldset');
@@ -1252,20 +1235,35 @@ function updateQuickProtocolDetails() {
 }
 
 function startQuickQuery() {
-    const serialNumber = document.getElementById('quickSerialNumber').value;
-    const protocolType = document.getElementById('quickProtocolType').value;
-    const connectionPoint = document.getElementById('quickConnectionPoint').value;
-    const manufacturer = document.getElementById('quickManufacturer').value;
+    const serialNumberInput = document.getElementById('quickSerialNumber');
+    const protocolTypeSelect = document.getElementById('quickProtocolType');
+    const connectionPointSelect = document.getElementById('quickConnectionPoint');
 
-    if (!serialNumber || protocolType === 'none' || connectionPoint === 'none' || (protocolType === 'IEC 62056-21' && manufacturer === 'none')) {
-        alert('Lütfen tüm alanları doldurunuz.');
+    // Gerekli alanların kontrolü
+    if (!serialNumberInput.value || protocolTypeSelect.value === 'none' || connectionPointSelect.value === 'none') {
+        alert('Lütfen gerekli alanları doldurunuz!');
         return;
     }
 
-    // Hızlı sorgu işlemi başlat
-    console.log(`Sorgu başlatılıyor: Seri Numarası: ${serialNumber}, Protokol Tipi: ${protocolType}, Bağlantı Noktası: ${connectionPoint}, Marka: ${manufacturer}`);
-    // Burada API çağrısı yapılabilir.
+    const serialNumber = serialNumberInput.value.trim();
+    const protocolType = protocolTypeSelect.value;
+    const connectionPoint = connectionPointSelect.value;
+
+    if (protocolType === 'M-BUS') {
+        // M-BUS için özel işlem
+        console.log('M-BUS protokolü seçildi. Sorgu başlatılıyor...');
+        queryMeterData(serialNumber, connectionPoint);
+    } else {
+        // IEC 62056-21 veya diğer protokoller için genel işlem
+        console.log(`Sorgu başlatılıyor: Protokol - ${protocolType}, Seri No - ${serialNumber}, Bağlantı Noktası - ${connectionPoint}`);
+        alert(`Bu protokol için sorgu başlatma işlemi henüz uygulanmamış: ${protocolType}`);
+    }
+
+    // Modalı kapat ve formu sıfırla
+    $('#quickQueryModal').modal('hide');
+    document.getElementById('quickQueryForm').reset();
 }
+
 
 function updateTableContent() {
     const form = document.querySelector('#updateDataForm'); // Form elementini doğru seçin
