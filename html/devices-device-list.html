@@ -808,7 +808,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
           if (serialNumber && connectionPoint) {
             // MeterType'i ekleyerek queryMeterData'yı çağır
-            queryMeterData(serialNumber, connectionPoint, config.meterType);
+            queryMeterData(serialNumber, connectionPoint);
           } else {
             console.error("Serial Number or Connection Point could not be found.");
           }

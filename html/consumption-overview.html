@@ -632,7 +632,7 @@ document.addEventListener('click', function (event) {
     if (meterCategory === 'Elektrik') {
       queryIecMeterData(serialNumber, connectionPoint, brand);
     } else {
-      queryMeterData(serialNumber, connectionPoint, meterCategory);
+      queryMeterData(serialNumber, connectionPoint);
     }
   }
 });
