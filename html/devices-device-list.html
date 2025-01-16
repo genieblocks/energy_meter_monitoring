@@ -490,8 +490,7 @@
               </fieldset>
               <fieldset class="form-group">
                   <label for="quickProtocolType">Protokol Tipi</label>
-                  <select id="quickProtocolType" class="form-control" required>
-                  <!-- <select id="quickProtocolType" class="form-control" onchange="updateQuickProtocolDetails()" required> -->
+                  <select id="quickProtocolType" class="form-control" onchange="updateQuickProtocolDetails()" required>
                       <option value="none" disabled selected>Protokol Tipi Seçiniz</option>
                       <option value="IEC 62056-21">IEC 62056-21</option>
                       <option value="M-BUS">M-BUS</option>
@@ -512,8 +511,7 @@
           </div>
           <div class="modal-footer">
               <button type="button" class="btn btn-light btn-lg" data-dismiss="modal">Kapat</button>
-              <button type="button" class="btn btn-genie btn-lg">Sorgu Başlat</button>
-              <!-- <button type="button" class="btn btn-genie btn-lg" onclick="startQuickQuery()">Sorgu Başlat</button> -->
+              <button type="button" class="btn btn-genie btn-lg" onclick="startQuickQuery()">Sorgu Başlat</button>
           </div>
       </div>
   </div>
@@ -1150,6 +1148,106 @@ async function fetchConnectionPointsFromTable(connectionTableName, connectionPoi
         console.error('Error fetching connection points from table:', error);
         alert('Bağlantı noktaları yüklenirken bir hata oluştu.');
     }
+}
+
+function updateQuickProtocolDetails() {
+    const protocolType = document.getElementById('quickProtocolType').value;
+    const connectionPointFieldset = document.getElementById('quickConnectionPointFieldset');
+    const manufacturerFieldset = document.getElementById('quickManufacturerFieldset');
+    const connectionPointSelect = document.getElementById('quickConnectionPoint');
+    const manufacturerSelect = document.getElementById('quickManufacturer');
+
+    connectionPointFieldset.style.display = 'block';
+    connectionPointSelect.innerHTML = '<option value="none" disabled selected>Bağlantı Noktası Seçiniz</option>';
+
+    if (protocolType === 'IEC 62056-21') {
+        manufacturerFieldset.style.display = 'block';
+        manufacturerSelect.innerHTML = '<option value="none" disabled selected>Marka Seçiniz</option>';
+
+        // IEC Manufacturers tablosundan verileri çek
+        fetch(`${baseWebhookURL}/webhook/get-table-content`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ tableName: 'IECManufacturers' })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data[0]?.success && Array.isArray(data[0].data)) {
+                data[0].data.forEach(manufacturer => {
+                    const option = document.createElement('option');
+                    option.value = manufacturer.ManufacturerName;
+                    option.textContent = manufacturer.ManufacturerName;
+                    manufacturerSelect.appendChild(option);
+                });
+            } else {
+                console.error('Manufacturers tablosu yüklenemedi.');
+            }
+        })
+        .catch(error => console.error('Error fetching manufacturers:', error));
+    } else {
+        manufacturerFieldset.style.display = 'none';
+    }
+
+    // Bağlantı Noktalarını Yükle
+    fetch(`${baseWebhookURL}/webhook/get-table-content`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ tableName: 'Protocols' })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data[0]?.success && Array.isArray(data[0].data)) {
+            const protocol = data[0].data.find(item => item.ProtocolType === protocolType);
+            if (protocol) {
+                const connectionTableName = protocol.ConnectionTableName;
+                return fetch(`${baseWebhookURL}/webhook/get-table-content`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ tableName: connectionTableName })
+                });
+            } else {
+                console.error(`Protocol not found for type: ${protocolType}`);
+            }
+        } else {
+            console.error('Protocols tablosu yüklenemedi.');
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data[0]?.success && Array.isArray(data[0].data)) {
+            data[0].data.forEach(point => {
+                const option = document.createElement('option');
+                option.value = point.ConnectionName;
+                option.textContent = point.ConnectionName;
+                connectionPointSelect.appendChild(option);
+            });
+        } else {
+            console.error('Connection table verileri yüklenemedi.');
+        }
+    })
+    .catch(error => console.error('Error fetching connection points:', error));
+}
+
+function startQuickQuery() {
+    const serialNumber = document.getElementById('quickSerialNumber').value;
+    const protocolType = document.getElementById('quickProtocolType').value;
+    const connectionPoint = document.getElementById('quickConnectionPoint').value;
+    const manufacturer = document.getElementById('quickManufacturer').value;
+
+    if (!serialNumber || protocolType === 'none' || connectionPoint === 'none' || (protocolType === 'IEC 62056-21' && manufacturer === 'none')) {
+        alert('Lütfen tüm alanları doldurunuz.');
+        return;
+    }
+
+    // Hızlı sorgu işlemi başlat
+    console.log(`Sorgu başlatılıyor: Seri Numarası: ${serialNumber}, Protokol Tipi: ${protocolType}, Bağlantı Noktası: ${connectionPoint}, Marka: ${manufacturer}`);
+    // Burada API çağrısı yapılabilir.
 }
 
 function updateTableContent() {
