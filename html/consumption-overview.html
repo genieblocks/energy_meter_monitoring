@@ -621,6 +621,7 @@ document.addEventListener('click', function (event) {
     const meterCategory = row.children[0]?.innerText.trim(); // Sayaç Tipi
     const serialNumber = row.children[2]?.innerText.trim(); // Seri Numarası
     const connectionPoint = row.getAttribute('data-connection-point'); // Bağlantı Noktası
+    const brand = row.getAttribute('data-brand'); // Sayaç Markası
 
     if (!serialNumber || !connectionPoint) {
       console.error('Seri Numarası veya Bağlantı Noktası bilgisi eksik.');
@@ -629,7 +630,7 @@ document.addEventListener('click', function (event) {
 
     // Sayaç Tipine göre sorgu fonksiyonunu çağır
     if (meterCategory === 'Elektrik') {
-      queryIecMeterData(serialNumber, connectionPoint);
+      queryIecMeterData(serialNumber, connectionPoint, brand);
     } else {
       queryMeterData(serialNumber, connectionPoint, meterCategory);
     }
@@ -803,6 +804,7 @@ function showDetailModal(connection) {
 
               const row = document.createElement('tr');
               row.setAttribute('data-connection-point', meter.ConnectionPoint); // connectionPoint saklanıyor
+              row.setAttribute('data-brand', meter.Brand); // connectionPoint saklanıyor
 
               row.innerHTML = `
                 <td>${table.meterCategory}</td>
