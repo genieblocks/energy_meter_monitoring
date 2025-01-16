@@ -616,12 +616,14 @@ function initializeDataTable(tableId) {
         {
           extend: 'csvHtml5',
           text: 'CSV Olarak İndir',
-          title: fileName
+          title: fileName,
+          fileName: fileName
         },
         {
           extend: 'excelHtml5',
           text: 'Excel Olarak İndir',
-          title: fileName
+          title: fileName,
+          fileName: fileName
         }
       ],
       order: [[4, 'desc']],
