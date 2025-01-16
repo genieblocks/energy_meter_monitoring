@@ -587,27 +587,42 @@ function fetchCoolingMetersUsageData() {
 }
 
 function initializeDataTable(tableId) {
+  // Tablo ID'ye göre dosya isimleri
+  const fileNameMap = {
+    "#electricityMeterTable": "Elektrik Sayaç Listesi",
+    "#waterMeterTable": "Su Sayaç Listesi",
+    "#heatingMeterTable": "Kalorimetre Isıtma Sayaç Listesi",
+    "#coolingMeterTable": "Kalorimetre Soğutma Sayaç Listesi"
+  };
+
+  const fileNameBase = fileNameMap[tableId] || "Veri Listesi";
+
+  // Tarih ve saat formatı
+  const now = new Date();
+  const formattedDate = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+  const formattedTime = `${String(now.getHours()).padStart(2, '0')}-${String(now.getMinutes()).padStart(2, '0')}-${String(now.getSeconds()).padStart(2, '0')}`;
+  const fileName = `${fileNameBase}_${formattedDate}_${formattedTime}`;
+
+  // DataTable'i başlat
   if (!$.fn.DataTable.isDataTable(tableId)) {
     return $(tableId).DataTable({
       dom: '<"top"fl>rt<"bottom"Bp>',
       buttons: [
-          {
-              extend: 'copyHtml5',
-              text: 'Kopyala',
-              title: reportTitle
-          },
-          {
-              extend: 'csvHtml5',
-              text: 'CSV Olarak İndir',
-              title: reportTitle,  // Dosya ismini reportTitle olarak kullan
-              filename: reportTitle  // Dosya ismi
-          },
-          {
-              extend: 'excelHtml5',
-              text: 'Excel Olarak İndir',
-              title: reportTitle,  // Dosya ismini reportTitle olarak kullan
-              filename: reportTitle  // Dosya ismi
-          }
+        {
+          extend: 'copyHtml5',
+          text: 'Kopyala',
+          title: fileName
+        },
+        {
+          extend: 'csvHtml5',
+          text: 'CSV Olarak İndir',
+          title: fileName
+        },
+        {
+          extend: 'excelHtml5',
+          text: 'Excel Olarak İndir',
+          title: fileName
+        }
       ],
       order: [[4, 'desc']],
       pageLength: 15, // Default gösterilecek kayıt sayısı
