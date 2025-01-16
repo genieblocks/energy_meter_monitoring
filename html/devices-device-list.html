@@ -1237,34 +1237,56 @@ function updateQuickProtocolDetails() {
 }
 
 function startQuickQuery() {
-    const serialNumberInput = document.getElementById('quickSerialNumber');
-    const protocolTypeSelect = document.getElementById('quickProtocolType');
-    const connectionPointSelect = document.getElementById('quickConnectionPoint');
+    const serialNumber = document.getElementById('quickSerialNumber').value.trim();
+    const protocolType = document.getElementById('quickProtocolType').value;
+    const connectionPoint = document.getElementById('quickConnectionPoint').value;
+    const brandField = document.getElementById('quickManufacturer');
+    const brand = brandField ? brandField.value : ''; // IEC 62056-21 için marka bilgisi
 
-    // Gerekli alanların kontrolü
-    if (!serialNumberInput.value || protocolTypeSelect.value === 'none' || connectionPointSelect.value === 'none') {
-        alert('Lütfen gerekli alanları doldurunuz!');
+    // Alanların doluluk kontrolü
+    if (!serialNumber) {
+        alert('Lütfen seri numarasını giriniz.');
+        return;
+    }
+    if (protocolType === 'none') {
+        alert('Lütfen protokol tipini seçiniz.');
+        return;
+    }
+    if (connectionPoint === 'none') {
+        alert('Lütfen bağlantı noktasını seçiniz.');
+        return;
+    }
+    if (protocolType === 'IEC 62056-21' && (!brand || brand === 'none')) {
+        alert('Lütfen marka seçiniz.');
         return;
     }
 
-    const serialNumber = serialNumberInput.value.trim();
-    const protocolType = protocolTypeSelect.value;
-    const connectionPoint = connectionPointSelect.value;
+    // Sorgu başlatma işlemini UI'da blokla
+    $.blockUI({
+        message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
+        overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
+        css: { border: 0, padding: 0, backgroundColor: 'transparent' }
+    });
 
-    if (protocolType === 'M-BUS') {
-        // M-BUS için özel işlem
-        console.log('M-BUS protokolü seçildi. Sorgu başlatılıyor...');
-        queryMeterData(serialNumber, connectionPoint);
-    } else {
-        // IEC 62056-21 veya diğer protokoller için genel işlem
-        console.log(`Sorgu başlatılıyor: Protokol - ${protocolType}, Seri No - ${serialNumber}, Bağlantı Noktası - ${connectionPoint}`);
-        alert(`Bu protokol için sorgu başlatma işlemi henüz uygulanmamış: ${protocolType}`);
+    try {
+        if (protocolType === 'M-BUS') {
+            queryMeterData(serialNumber, connectionPoint);
+        } else if (protocolType === 'IEC 62056-21') {
+            queryIecMeterData(serialNumber, connectionPoint, brand);
+        } else {
+            alert('Desteklenmeyen protokol tipi seçildi.');
+        }
+    } catch (error) {
+        console.error('Error starting quick query:', error);
+        alert('Sorgu başlatılırken bir hata oluştu.');
+    } finally {
+        // Modalı kapat ve formu sıfırla
+        $('#quickQueryModal').modal('hide');
+        document.getElementById('quickQueryForm').reset();
+        $.unblockUI();
     }
-
-    // Modalı kapat ve formu sıfırla
-    $('#quickQueryModal').modal('hide');
-    document.getElementById('quickQueryForm').reset();
 }
+
 
 
 function updateTableContent() {
