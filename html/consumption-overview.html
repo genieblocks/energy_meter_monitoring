@@ -372,7 +372,7 @@
 /* ========================= Block Functions ========================= */
 /**********   Block Modal Functionality  **********/
 function blockModalById(modalId) {
-    var block_ele = $('#' + modalId).closest('.modal');
+    var block_ele = $('#' + modalId).find('.modal-body');
     $(block_ele).block({
         message: '<div class="ft-refresh-cw icon-spin font-medium-2"></div>',
         overlayCSS: {
