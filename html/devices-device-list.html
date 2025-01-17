@@ -1709,7 +1709,7 @@ function displayErrorInModal(modalId, tableId, queryNoContentMessageId, error) {
     return;
   }
 
-  const table = modal.querySelector(`#${tableId}`);
+  const table = modal.querySelector(tableId);
   const queryNoContentMessage = modal.querySelector(`#${queryNoContentMessageId}`);
 
   if (table) {
