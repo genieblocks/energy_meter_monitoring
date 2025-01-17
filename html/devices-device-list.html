@@ -1485,7 +1485,7 @@ function queryMeterData(serialNumber, connectionPoint) {
 
   // Modalı göster ve içerik yüklenirken blokla
   $(`#${modalId}`).modal('show');
-  hideLoadingInModalBody(modalId,tableId,'Loading data, please wait...');
+  showLoadingInModalBody(modalId,tableId,'Loading data, please wait...');
   // blockModalById(modalId, 'Loading data, please wait...');
   // $(`#${modalId} .modal-content`).block({
   //   message: `
@@ -1713,7 +1713,7 @@ function queryIecMeterData(serialNumber, connectionPoint, brand) {
 
   // Modalı göster ve içerik yüklenirken blokla
   $(`#${modalId}`).modal('show');
-  hideLoadingInModalBody(modalId, tableId, 'Loading data, please wait...');
+  showLoadingInModalBody(modalId, tableId, 'Loading data, please wait...');
   // blockModalById(modalId, 'Loading data, please wait...');
   // $(`#${modalId} .modal-content`).block({
   //   message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
