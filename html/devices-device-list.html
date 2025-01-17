@@ -1695,7 +1695,7 @@ function resetModal(modalId, tableId, queryNoContentMessageId) {
   const queryNoContentMessage = modal.querySelector(`#${queryNoContentMessageId}`);
 
   if (tableBody) {
-    tableBody.innerHTML = '';
+    tableBody.style.display = 'none';
   }
   if (queryNoContentMessage) {
     queryNoContentMessage.style.display = 'none';
@@ -1713,7 +1713,7 @@ function displayErrorInModal(modalId, tableId, queryNoContentMessageId, error) {
   const queryNoContentMessage = modal.querySelector(`#${queryNoContentMessageId}`);
 
   if (tableBody) {
-    tableBody.innerHTML = '';
+    tableBody.style.display = 'none';
   }
 
   let displayedMessage = 'Bilinmeyen bir hata oluştu.';
@@ -1831,6 +1831,7 @@ function updateSingleIecQueryModal(data) {
         tableBody.appendChild(row);
       }
     });
+    tableBody.style.display = '';
   } else {
     queryNoContentMessage.style.display = 'block'; // Hata mesajını göster
   }
