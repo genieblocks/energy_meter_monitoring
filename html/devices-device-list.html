@@ -815,7 +815,7 @@ function unblockModalById(modalId) {
 // 1. Fonksiyon: Modal-body içeriğini gizleyip yükleniyor mesajını göstermek
 function showLoadingInModalBody(modalId, elementId, message) {
     const modal = document.getElementById(modalId);
-    const modalBody = modal.querySelector(`#${elementId}`);
+    const modalBody = modal.querySelector(`${elementId}`);
     const loadingSpinner = message ? `
         <div class="d-flex justify-content-center align-items-center" style="height: 200px;">
             <div class="ft-refresh-cw icon-spin font-medium-2"></div>
@@ -833,7 +833,7 @@ function showLoadingInModalBody(modalId, elementId, message) {
 // 2. Fonksiyon: Modal-body yükleniyor spinnerını gizlemek
 function hideLoadingInModalBody(modalId, elementId) {
     const modal = document.getElementById(modalId);
-    const modalBody = modal ? modal.querySelector(`#${elementId}`) : null;
+    const modalBody = modal ? modal.querySelector(`${elementId}`) : null;
 
     if (modalBody && modalBody.hasAttribute('data-original-content')) {
         // Saklanan içeriği geri yüklüyoruz
