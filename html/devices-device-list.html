@@ -1578,8 +1578,7 @@ function updateSingleQueryModal(data, modalId, tableId, noContentMessageQueryId)
     noContentMessageQuery.style.display = 'block';
     noContentMessageQuery.textContent = 'Cihaza erişilemedi veya veri bulunamadı.';
   }
-  unblockModalById(modalId);
-  // $(`#${modalId} .modal-content`).unblock();
+  $(`#${modalId} .modal-content`).unblock();
 }
 
 // Genel ve dinamik başlık tanımlı hücre içeriği alma fonksiyonu
@@ -1713,7 +1712,8 @@ function queryIecMeterData(serialNumber, connectionPoint, brand) {
       displayErrorInModal(modalId, tableId, queryNoContentMessageId, error.message || error);
     })
     .finally(() => {
-      $(`#${modalId} .modal-content`).unblock();
+      unblockModalById(modalId);
+      // $(`#${modalId} .modal-content`).unblock();
     });
 }
 
