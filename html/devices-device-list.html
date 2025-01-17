@@ -1512,16 +1512,6 @@ function queryMeterData(serialNumber, connectionPoint) {
   // Modalı göster ve içerik yüklenirken blokla
   $(`#${modalId}`).modal('show');
   showLoadingInModalBody(modalId,tableId,'Loading data, please wait...');
-  // blockModalById(modalId, 'Loading data, please wait...');
-  // $(`#${modalId} .modal-content`).block({
-  //   message: `
-  //   <div style="text-align: center;">
-  //     <div class="icon-spinner9 icon-spin icon-lg" style="margin-bottom: 10px;"></div>
-  //     <h4>Veriler alınıyor, lütfen bekleyin...</h4>
-  //   </div>`,
-  //   overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
-  //   css: { border: 0, padding: 0, backgroundColor: 'transparent' }
-  // });
 
   fetch(`${baseWebhookURL}/webhook/query-meter-data`, {
     method: 'POST',
@@ -1551,8 +1541,6 @@ function queryMeterData(serialNumber, connectionPoint) {
     })
     .finally(() => {
       hideLoadingInModalBody(modalId,tableId);
-      // unblockModalById(modalId);
-      // $(`#${modalId} .modal-content`).unblock();
     });
 }
 
@@ -1778,8 +1766,6 @@ function queryIecMeterData(serialNumber, connectionPoint, brand) {
     })
     .finally(() => {
       hideLoadingInModalBody(modalId, tableId);
-      // unblockModalById(modalId);
-      // $(`#${modalId} .modal-content`).unblock();
     });
 }
 
