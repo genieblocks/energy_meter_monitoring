@@ -365,7 +365,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <table class="table table-hover table-bordered zero-configuration dataTable w-auto" id="singleIecQueryDataTable" role="grid">
+        <table class="table table-hover table-bordered zero-configuration dataTable w-auto" style="display: ;"" id="singleIecQueryDataTable" role="grid">
           <thead>
             <tr>
               <th>OBIS Kodu</th>
@@ -815,33 +815,36 @@ function unblockModalById(modalId) {
 // 1. Fonksiyon: Modal-body içeriğini gizleyip yükleniyor mesajını göstermek
 function showLoadingInModalBody(modalId, elementId, message) {
     const modal = document.getElementById(modalId);
-    const modalBody = modal.querySelector(`${elementId}`);
+    const modalBody = modal.querySelector(elementId);
     const loadingSpinner = message ? `
-        <div class="d-flex justify-content-center align-items-center" style="height: 200px;">
+        <div id="loading-spinner" class="d-flex justify-content-center align-items-center" style="height: 200px;">
             <div class="ft-refresh-cw icon-spin font-medium-2"></div>
             <span style="margin-left: 10px;">${message}</span>
         </div>
     ` : '';
 
-    if (loadingSpinner) {
-        // Yeni içeriği mevcut içeriğe ekliyoruz
-        modalBody.innerHTML += loadingSpinner;
-        // İlgili elementi gizliyoruz
-        modalBody.querySelector(`${elementId}`).style.display = 'none';
-    }
+    // Yeni içeriği mevcut içeriğe ekliyoruz
+    modalBody.innerHTML += loadingSpinner;
+    // İlgili elementi gizliyoruz
+    modalBody.querySelector(elementId).style.display = 'none';
 }
+
 // 2. Fonksiyon: Modal-body yükleniyor spinnerını gizlemek
 function hideLoadingInModalBody(modalId, elementId) {
     const modal = document.getElementById(modalId);
-    const modalBody = modal ? modal.querySelector(`${elementId}`) : null;
+    const modalBody = modal.querySelector(elementId);
 
-    if (modalBody && modalBody.hasAttribute('data-original-content')) {
-        // Saklanan içeriği geri yüklüyoruz
-        modalBody.innerHTML = modalBody.getAttribute('data-original-content');
-        // Eski içeriği saklamayı bırakıyoruz
-        modalBody.removeAttribute('data-original-content');
+    // Saklanan öğeyi geri gösteriyoruz
+    const hiddenElement = modalBody.querySelector(elementId);
+    hiddenElement.style.display = '';
+
+    // Loading spinner'ı gizliyoruz
+    const loadingSpinner = modalBody.querySelector('#loading-spinner');
+    if (loadingSpinner) {
+        loadingSpinner.style.display = 'none';
     }
 }
+
 
 document.addEventListener('DOMContentLoaded', function () {
   // Tablo ve MeterType tanımları
