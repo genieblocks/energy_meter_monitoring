@@ -1714,6 +1714,7 @@ function displayErrorInModal(modalId, tableId, queryNoContentMessageId, error) {
 
   if (table) {
     table.style.display = 'none';
+    console.log("Failed: ElectricMeters data is not an array or success flag is false", table);
   }
 
   let displayedMessage = 'Bilinmeyen bir hata oluştu.';
