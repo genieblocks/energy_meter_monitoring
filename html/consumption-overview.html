@@ -389,7 +389,7 @@ function blockModalById(modalId) {
 }
 /**********   UnBlock Modal Functionality  **********/
 function unblockModalById(modalId) {
-    var block_ele = $('#' + modalId).closest('.modal');
+    var block_ele = $('#' + modalId).find('.modal-body');
     $(block_ele).unblock();
 }
 
