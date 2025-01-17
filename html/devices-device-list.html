@@ -814,16 +814,22 @@ function unblockModalById(modalId) {
 }
 
 // 1. Fonksiyon: Modal-body içeriğini gizleyip yükleniyor mesajını göstermek
-function showLoadingInModalBody(modalId, elementId, message) {
+function showLoadingInModalBody(modalId, tableId, message) {
     const modal = document.getElementById(modalId);
     if (!modal) {
         console.error(`Modal with id '${modalId}' not found.`);
         return;
     }
 
-    const modalBody = modal.querySelector(elementId);
+    const modalBody = modal.querySelector('.modal-body');
     if (!modalBody) {
-        console.error(`Element with selector '${elementId}' not found in modal '${modalId}'.`);
+        console.error(`Modal-body not found in modal '${modalId}'.`);
+        return;
+    }
+
+    const table = modalBody.querySelector(`#${tableId}`);
+    if (!table) {
+        console.error(`Table with id '${tableId}' not found in modal-body.`);
         return;
     }
 
@@ -836,32 +842,32 @@ function showLoadingInModalBody(modalId, elementId, message) {
 
     // Yeni içeriği mevcut içeriğe ekliyoruz
     modalBody.innerHTML += loadingSpinner;
-    // İlgili elementi gizliyoruz
-    const hiddenElement = modalBody.querySelector(elementId);
-    if (hiddenElement) {
-        hiddenElement.style.display = 'none';
-    }
+    // Tabloyu gizliyoruz
+    table.style.display = 'none';
 }
 
 // 2. Fonksiyon: Modal-body yükleniyor spinnerını gizlemek
-function hideLoadingInModalBody(modalId, elementId) {
+function hideLoadingInModalBody(modalId, tableId) {
     const modal = document.getElementById(modalId);
     if (!modal) {
         console.error(`Modal with id '${modalId}' not found.`);
         return;
     }
 
-    const modalBody = modal.querySelector(elementId);
+    const modalBody = modal.querySelector('.modal-body');
     if (!modalBody) {
-        console.error(`Element with selector '${elementId}' not found in modal '${modalId}'.`);
+        console.error(`Modal-body not found in modal '${modalId}'.`);
         return;
     }
 
-    // Saklanan öğeyi geri gösteriyoruz
-    const hiddenElement = modalBody.querySelector(elementId);
-    if (hiddenElement) {
-        hiddenElement.style.display = '';
+    const table = modalBody.querySelector(`#${tableId}`);
+    if (!table) {
+        console.error(`Table with id '${tableId}' not found in modal-body.`);
+        return;
     }
+
+    // Tabloyu geri gösteriyoruz
+    table.style.display = '';
 
     // Loading spinner'ı gizliyoruz
     const loadingSpinner = modalBody.querySelector('#loading-spinner');
@@ -869,7 +875,6 @@ function hideLoadingInModalBody(modalId, elementId) {
         loadingSpinner.style.display = 'none';
     }
 }
-
 
 
 document.addEventListener('DOMContentLoaded', function () {
