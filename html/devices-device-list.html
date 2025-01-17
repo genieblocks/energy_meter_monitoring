@@ -813,7 +813,6 @@ function unblockModalById(modalId) {
     $(block_ele).unblock();
 }
 
-// 1. Fonksiyon: Modal-body içeriğini gizleyip yükleniyor mesajını göstermek
 function showLoadingInModalBody(modalId, tableId, message) {
     const modal = document.getElementById(modalId);
     if (!modal) {
@@ -833,20 +832,23 @@ function showLoadingInModalBody(modalId, tableId, message) {
         return;
     }
 
-    const loadingSpinner = message ? `
-        <div id="loading-spinner" class="d-flex justify-content-center align-items-center" style="height: 200px;">
-            <div class="ft-refresh-cw icon-spin font-medium-2"></div>
-            <span style="margin-left: 10px;">${message}</span>
-        </div>
-    ` : '';
+    const existingSpinner = modalBody.querySelector('#loading-spinner');
+    if (existingSpinner) {
+        existingSpinner.remove();
+    }
 
-    // Yeni içeriği mevcut içeriğe ekliyoruz
-    modalBody.innerHTML += loadingSpinner;
-    // Tabloyu gizliyoruz
+    const spinnerDiv = document.createElement('div');
+    spinnerDiv.id = 'loading-spinner';
+    spinnerDiv.className = 'd-flex justify-content-center align-items-center';
+    spinnerDiv.style.height = '200px';
+    spinnerDiv.innerHTML = `
+        <div class="ft-refresh-cw icon-spin font-medium-2"></div>
+        <span style="margin-left: 10px;">${message}</span>
+    `;
+    modalBody.appendChild(spinnerDiv);
     table.style.display = 'none';
 }
 
-// 2. Fonksiyon: Modal-body yükleniyor spinnerını gizlemek
 function hideLoadingInModalBody(modalId, tableId) {
     const modal = document.getElementById(modalId);
     if (!modal) {
@@ -866,13 +868,11 @@ function hideLoadingInModalBody(modalId, tableId) {
         return;
     }
 
-    // Tabloyu geri gösteriyoruz
     table.style.display = '';
 
-    // Loading spinner'ı gizliyoruz
     const loadingSpinner = modalBody.querySelector('#loading-spinner');
     if (loadingSpinner) {
-        loadingSpinner.style.display = 'none';
+        loadingSpinner.remove();
     }
 }
 
