@@ -786,6 +786,9 @@
 /* ========================= Block Functions ========================= */
 /**********   Block Modal Functionality  **********/
 function blockModalById(modalId, message = null) {
+  <div class="modal-body d-flex justify-content-center align-items-center" style="height: 200px;">
+    <div class="ft-refresh-cw icon-spin font-medium-2"></div><span style="margin-left: 10px;">yükleniyor.</span>
+</div>
     var block_ele = $('#' + modalId).find('.modal-body');
     var displayMessage = message ? `<div class="ft-refresh-cw icon-spin font-medium-2"></div><span style="margin-left: 10px;">${message}</span>` : '<div class="ft-refresh-cw icon-spin font-medium-2"></div>';
     $(block_ele).block({
@@ -808,6 +811,36 @@ function blockModalById(modalId, message = null) {
 function unblockModalById(modalId) {
     var block_ele = $('#' + modalId).find('.modal-body');
     $(block_ele).unblock();
+}
+// 1. Fonksiyon: Modal-body içeriğini gizleyip yükleniyor mesajını göstermek
+function showLoadingInModalBody(modalId, elementId, message) {
+    const modal = document.getElementById(modalId);
+    const modalBody = modal.querySelector(`#${elementId}`);
+    const loadingSpinner = message ? `
+        <div class="d-flex justify-content-center align-items-center" style="height: 200px;">
+            <div class="ft-refresh-cw icon-spin font-medium-2"></div>
+            <span style="margin-left: 10px;">${message}</span>
+        </div>
+    ` : '';
+
+    if (loadingSpinner) {
+        // Yeni içeriği mevcut içeriğe ekliyoruz
+        modalBody.innerHTML += loadingSpinner;
+        // İlgili elementi gizliyoruz
+        modalBody.querySelector(`#${elementId}`).style.display = 'none';
+    }
+}
+// 2. Fonksiyon: Modal-body yükleniyor spinnerını gizlemek
+function hideLoadingInModalBody(modalId, elementId) {
+    const modal = document.getElementById(modalId);
+    const modalBody = modal ? modal.querySelector(`#${elementId}`) : null;
+
+    if (modalBody && modalBody.hasAttribute('data-original-content')) {
+        // Saklanan içeriği geri yüklüyoruz
+        modalBody.innerHTML = modalBody.getAttribute('data-original-content');
+        // Eski içeriği saklamayı bırakıyoruz
+        modalBody.removeAttribute('data-original-content');
+    }
 }
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -1452,7 +1485,8 @@ function queryMeterData(serialNumber, connectionPoint) {
 
   // Modalı göster ve içerik yüklenirken blokla
   $(`#${modalId}`).modal('show');
-  blockModalById(modalId, 'Loading data, please wait...');
+  hideLoadingInModalBody(modalId,tableId,'Loading data, please wait...');
+  // blockModalById(modalId, 'Loading data, please wait...');
   // $(`#${modalId} .modal-content`).block({
   //   message: `
   //   <div style="text-align: center;">
@@ -1490,7 +1524,8 @@ function queryMeterData(serialNumber, connectionPoint) {
       displayErrorInModal(modalId, tableId, noContentMessageQueryId, error.message || error);
     })
     .finally(() => {
-      unblockModalById(modalId);
+      hideLoadingInModalBody(modalId,tableId);
+      // unblockModalById(modalId);
       // $(`#${modalId} .modal-content`).unblock();
     });
 }
@@ -1678,7 +1713,8 @@ function queryIecMeterData(serialNumber, connectionPoint, brand) {
 
   // Modalı göster ve içerik yüklenirken blokla
   $(`#${modalId}`).modal('show');
-  blockModalById(modalId, 'Loading data, please wait...');
+  hideLoadingInModalBody(modalId, tableId, 'Loading data, please wait...');
+  // blockModalById(modalId, 'Loading data, please wait...');
   // $(`#${modalId} .modal-content`).block({
   //   message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
   //   overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
@@ -1712,7 +1748,8 @@ function queryIecMeterData(serialNumber, connectionPoint, brand) {
       displayErrorInModal(modalId, tableId, queryNoContentMessageId, error.message || error);
     })
     .finally(() => {
-      unblockModalById(modalId);
+      hideLoadingInModalBody(modalId, tableId);
+      // unblockModalById(modalId);
       // $(`#${modalId} .modal-content`).unblock();
     });
 }
