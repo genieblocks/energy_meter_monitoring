@@ -1635,7 +1635,9 @@ function updateSingleQueryModal(data, modalId, tableId, noContentMessageQueryId)
         `;
         tableBody.appendChild(row);
       });
+      table.style.display = '';
   } else {
+    table.style.display = 'none';
     noContentMessageQuery.style.display = 'block';
     noContentMessageQuery.textContent = 'Cihaza erişilemedi veya veri bulunamadı.';
   }
