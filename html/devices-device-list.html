@@ -862,14 +862,6 @@ function hideLoadingInModalBody(modalId, tableId) {
         return;
     }
 
-    // const table = modalBody.querySelector(tableId);
-    // if (!table) {
-    //     console.error(`Table with id '${tableId}' not found in modal-body.`);
-    //     return;
-    // }
-
-    // table.style.display = 'none';
-
     const loadingSpinner = modalBody.querySelector('#loading-spinner');
     if (loadingSpinner) {
         loadingSpinner.remove();
@@ -1714,7 +1706,6 @@ function displayErrorInModal(modalId, tableId, queryNoContentMessageId, error) {
 
   if (table) {
     table.style.display = 'none';
-    console.log("Failed: ElectricMeters data is not an array or success flag is false", table);
   }
 
   let displayedMessage = 'Bilinmeyen bir hata oluştu.';
