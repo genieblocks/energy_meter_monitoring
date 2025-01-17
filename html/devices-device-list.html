@@ -785,28 +785,28 @@
 
 /* ========================= Block Functions ========================= */
 /**********   Block Modal Functionality  **********/
-function blockModalById(modalId, message = null) {
-  <div class="modal-body d-flex justify-content-center align-items-center" style="height: 200px;">
-    <div class="ft-refresh-cw icon-spin font-medium-2"></div><span style="margin-left: 10px;">yükleniyor.</span>
-</div>
-    var block_ele = $('#' + modalId).find('.modal-body');
-    var displayMessage = message ? `<div class="ft-refresh-cw icon-spin font-medium-2"></div><span style="margin-left: 10px;">${message}</span>` : '<div class="ft-refresh-cw icon-spin font-medium-2"></div>';
-    $(block_ele).block({
-        message: displayMessage,
-        overlayCSS: {
-            backgroundColor: '#fff',
-            opacity: 0.8,
-            cursor: 'wait'
-        },
-        css: {
-            border: 0,
-            padding: '10px',
-            backgroundColor: 'transparent',
-            color: '#000',
-            fontSize: '14px'
-        }
-    });
-}
+// function blockModalById(modalId, message = null) {
+//   <div class="modal-body d-flex justify-content-center align-items-center" style="height: 200px;">
+//     <div class="ft-refresh-cw icon-spin font-medium-2"></div><span style="margin-left: 10px;">yükleniyor.</span>
+// </div>
+//     var block_ele = $('#' + modalId).find('.modal-body');
+//     var displayMessage = message ? `<div class="ft-refresh-cw icon-spin font-medium-2"></div><span style="margin-left: 10px;">${message}</span>` : '<div class="ft-refresh-cw icon-spin font-medium-2"></div>';
+//     $(block_ele).block({
+//         message: displayMessage,
+//         overlayCSS: {
+//             backgroundColor: '#fff',
+//             opacity: 0.8,
+//             cursor: 'wait'
+//         },
+//         css: {
+//             border: 0,
+//             padding: '10px',
+//             backgroundColor: 'transparent',
+//             color: '#000',
+//             fontSize: '14px'
+//         }
+//     });
+// }
 /**********   UnBlock Modal Functionality  **********/
 function unblockModalById(modalId) {
     var block_ele = $('#' + modalId).find('.modal-body');
