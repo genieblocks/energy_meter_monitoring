@@ -371,10 +371,11 @@
 
 /* ========================= Block Functions ========================= */
 /**********   Block Modal Functionality  **********/
-function blockModalById(modalId) {
+function blockModalById(modalId, message = null) {
     var block_ele = $('#' + modalId).find('.modal-body');
+    var displayMessage = message ? `<div class="ft-refresh-cw icon-spin font-medium-2"></div><span style="margin-left: 10px;">${message}</span>` : '<div class="ft-refresh-cw icon-spin font-medium-2"></div>';
     $(block_ele).block({
-        message: '<div class="ft-refresh-cw icon-spin font-medium-2"></div>',
+        message: displayMessage,
         overlayCSS: {
             backgroundColor: '#fff',
             opacity: 0.8,
@@ -382,8 +383,10 @@ function blockModalById(modalId) {
         },
         css: {
             border: 0,
-            padding: 0,
-            backgroundColor: 'transparent'
+            padding: '10px',
+            backgroundColor: 'transparent',
+            color: '#000',
+            fontSize: '14px'
         }
     });
 }
@@ -438,7 +441,7 @@ function queryMeterData(serialNumber, connectionPoint) {
 
   // Modalı göster ve içerik yüklenirken blokla
   $(`#${modalId}`).modal('show');
-  blockModalById(modalId);
+  blockModalById(modalId, 'Loading data, please wait...');
   // $(`#${modalId} .modal-content`).block({
   //   message: `
   //   <div style="text-align: center;">
