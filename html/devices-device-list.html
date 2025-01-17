@@ -783,6 +783,33 @@
     const baseWebhookURL = "http://192.168.2.250:5678"; // Değiştirmek istediğiniz temel URL
     // const baseWebhookURL = "http://192.168.1.146:5678"; // Değiştirmek istediğiniz temel URL
 
+/* ========================= Block Functions ========================= */
+/**********   Block Modal Functionality  **********/
+function blockModalById(modalId, message = null) {
+    var block_ele = $('#' + modalId).find('.modal-body');
+    var displayMessage = message ? `<div class="ft-refresh-cw icon-spin font-medium-2"></div><span style="margin-left: 10px;">${message}</span>` : '<div class="ft-refresh-cw icon-spin font-medium-2"></div>';
+    $(block_ele).block({
+        message: displayMessage,
+        overlayCSS: {
+            backgroundColor: '#fff',
+            opacity: 0.8,
+            cursor: 'wait'
+        },
+        css: {
+            border: 0,
+            padding: '10px',
+            backgroundColor: 'transparent',
+            color: '#000',
+            fontSize: '14px'
+        }
+    });
+}
+/**********   UnBlock Modal Functionality  **********/
+function unblockModalById(modalId) {
+    var block_ele = $('#' + modalId).find('.modal-body');
+    $(block_ele).unblock();
+}
+
 document.addEventListener('DOMContentLoaded', function () {
   // Tablo ve MeterType tanımları
   const meterTypeTableConfig = [
@@ -1425,15 +1452,16 @@ function queryMeterData(serialNumber, connectionPoint) {
 
   // Modalı göster ve içerik yüklenirken blokla
   $(`#${modalId}`).modal('show');
-  $(`#${modalId} .modal-content`).block({
-    message: `
-    <div style="text-align: center;">
-      <div class="icon-spinner9 icon-spin icon-lg" style="margin-bottom: 10px;"></div>
-      <h4>Veriler alınıyor, lütfen bekleyin...</h4>
-    </div>`,
-    overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
-    css: { border: 0, padding: 0, backgroundColor: 'transparent' }
-  });
+  blockModalById(modalId, 'Loading data, please wait...');
+  // $(`#${modalId} .modal-content`).block({
+  //   message: `
+  //   <div style="text-align: center;">
+  //     <div class="icon-spinner9 icon-spin icon-lg" style="margin-bottom: 10px;"></div>
+  //     <h4>Veriler alınıyor, lütfen bekleyin...</h4>
+  //   </div>`,
+  //   overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
+  //   css: { border: 0, padding: 0, backgroundColor: 'transparent' }
+  // });
 
   fetch(`${baseWebhookURL}/webhook/query-meter-data`, {
     method: 'POST',
@@ -1462,7 +1490,8 @@ function queryMeterData(serialNumber, connectionPoint) {
       displayErrorInModal(modalId, tableId, noContentMessageQueryId, error.message || error);
     })
     .finally(() => {
-      $(`#${modalId} .modal-content`).unblock();
+      unblockModalById(modalId);
+      // $(`#${modalId} .modal-content`).unblock();
     });
 }
 
@@ -1549,8 +1578,8 @@ function updateSingleQueryModal(data, modalId, tableId, noContentMessageQueryId)
     noContentMessageQuery.style.display = 'block';
     noContentMessageQuery.textContent = 'Cihaza erişilemedi veya veri bulunamadı.';
   }
-
-  $(`#${modalId} .modal-content`).unblock();
+  unblockModalById(modalId);
+  // $(`#${modalId} .modal-content`).unblock();
 }
 
 // Genel ve dinamik başlık tanımlı hücre içeriği alma fonksiyonu
@@ -1650,11 +1679,12 @@ function queryIecMeterData(serialNumber, connectionPoint, brand) {
 
   // Modalı göster ve içerik yüklenirken blokla
   $(`#${modalId}`).modal('show');
-  $(`#${modalId} .modal-content`).block({
-    message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
-    overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
-    css: { border: 0, padding: 0, backgroundColor: 'transparent' }
-  });
+  blockModalById(modalId, 'Loading data, please wait...');
+  // $(`#${modalId} .modal-content`).block({
+  //   message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
+  //   overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
+  //   css: { border: 0, padding: 0, backgroundColor: 'transparent' }
+  // });
 
   fetch(`${baseWebhookURL}/webhook/query-iec-meter-data`, {
     method: 'POST',
