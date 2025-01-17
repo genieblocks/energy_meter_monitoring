@@ -862,13 +862,13 @@ function hideLoadingInModalBody(modalId, tableId) {
         return;
     }
 
-    const table = modalBody.querySelector(tableId);
-    if (!table) {
-        console.error(`Table with id '${tableId}' not found in modal-body.`);
-        return;
-    }
+    // const table = modalBody.querySelector(tableId);
+    // if (!table) {
+    //     console.error(`Table with id '${tableId}' not found in modal-body.`);
+    //     return;
+    // }
 
-    table.style.display = 'none';
+    // table.style.display = 'none';
 
     const loadingSpinner = modalBody.querySelector('#loading-spinner');
     if (loadingSpinner) {
