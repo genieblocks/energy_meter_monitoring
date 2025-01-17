@@ -210,7 +210,7 @@
 
 <!-- Single Query Modal -->
 <div class="modal fade text-left" id="singleQueryModal" tabindex="-1" role="dialog" aria-labelledby="singleQueryModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog modal-sm" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h4 class="modal-title text-bold-600" id="singleQueryModalLabel"></h4>
@@ -244,27 +244,26 @@
       <div class="modal-header">
         <h4 class="modal-title text-bold-600" id="singleIecQueryModalLabel"></h4>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
+          <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
         <table class="table table-hover table-bordered zero-configuration dataTable w-auto" id="singleIecQueryDataTable" role="grid">
-            <thead>
-                <tr>
-                  <th>OBIS Kodu</th>
-                  <th>Açıklama</th>
-                  <th>Değer</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Dinamik içerik buraya eklenecek -->
-            </tbody>
+          <thead>
+            <tr>
+              <th>OBIS Kodu</th>
+              <th>Açıklama</th>
+              <th>Değer</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Dinamik içerik buraya eklenecek -->
+          </tbody>
         </table>
-        <div id="no-content-message-query" class="alert alert-warning" style="display: none;">Cihaza Erişilemedi.
-        </div>
+        <div id="queryNoContentMessage" class="alert alert-warning" style="display: none;">Cihaza Erişilemedi.</div>
       </div>
       <div class="modal-footer">
-          <input type="reset" class="btn btn-light" data-dismiss="modal" value="Kapat">
+        <input type="reset" class="btn btn-light" data-dismiss="modal" value="Kapat">
       </div>
     </div>
   </div>
@@ -496,16 +495,7 @@ function queryMeterData(serialNumber, connectionPoint) {
 
   // Modalı göster ve içerik yüklenirken blokla
   $(`#${modalId}`).modal('show');
-  blockModalById(modalId, 'Loading data, please wait...');
-  // $(`#${modalId} .modal-content`).block({
-  //   message: `
-  //   <div style="text-align: center;">
-  //     <div class="icon-spinner9 icon-spin icon-lg" style="margin-bottom: 10px;"></div>
-  //     <h4>Veriler alınıyor, lütfen bekleyin...</h4>
-  //   </div>`,
-  //   overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
-  //   css: { border: 0, padding: 0, backgroundColor: 'transparent' }
-  // });
+  showLoadingInModalBody(modalId,tableId,'Loading data, please wait...');
 
   fetch(`${baseWebhookURL}/webhook/query-meter-data`, {
     method: 'POST',
@@ -534,41 +524,40 @@ function queryMeterData(serialNumber, connectionPoint) {
       displayErrorInModal(modalId, tableId, noContentMessageQueryId, error.message || error);
     })
     .finally(() => {
-      // $(`#${modalId} .modal-content`).unblock();
-      unblockModalById(modalId);
+      hideLoadingInModalBody(modalId,tableId);
     });
 }
 
-function resetModal(modalId, tableId, noContentMessageQueryId) {
+function resetModal(modalId, tableId, queryNoContentMessageId) {
   const modal = document.getElementById(modalId);
   if (!modal) {
     console.error(`Modal bulunamadı: ID="${modalId}"`);
     return;
   }
 
-  const tableBody = modal.querySelector(`${tableId} tbody`);
-  const noContentMessageQuery = modal.querySelector(`#${noContentMessageQueryId}`);
+  const table = modal.querySelector(tableId);
+  const queryNoContentMessage = modal.querySelector(`#${queryNoContentMessageId}`);
 
-  if (tableBody) {
-    tableBody.innerHTML = '';
+  if (table) {
+    table.style.display = 'none';
   }
-  if (noContentMessageQuery) {
-    noContentMessageQuery.style.display = 'none';
+  if (queryNoContentMessage) {
+    queryNoContentMessage.style.display = 'none';
   }
 }
 
-function displayErrorInModal(modalId, tableId, noContentMessageQueryId, error) {
+function displayErrorInModal(modalId, tableId, queryNoContentMessageId, error) {
   const modal = document.getElementById(modalId);
   if (!modal) {
     console.error(`Modal bulunamadı: ID="${modalId}"`);
     return;
   }
 
-  const tableBody = modal.querySelector(`${tableId} tbody`);
-  const noContentMessageQuery = modal.querySelector(`#${noContentMessageQueryId}`);
+  const table = modal.querySelector(tableId);
+  const queryNoContentMessage = modal.querySelector(`#${queryNoContentMessageId}`);
 
-  if (tableBody) {
-    tableBody.innerHTML = '';
+  if (table) {
+    table.style.display = 'none';
   }
 
   let displayedMessage = 'Bilinmeyen bir hata oluştu.';
@@ -585,11 +574,11 @@ function displayErrorInModal(modalId, tableId, noContentMessageQueryId, error) {
     }
   }
 
-  if (noContentMessageQuery) {
-    noContentMessageQuery.style.display = 'block';
-    noContentMessageQuery.textContent = displayedMessage;
+  if (queryNoContentMessage) {
+    queryNoContentMessage.style.display = 'block';
+    queryNoContentMessage.textContent = displayedMessage;
   } else {
-    console.error(`Hata mesajı göstermek için gerekli element bulunamadı: ${noContentMessageQueryId}`);
+    console.error(`Hata mesajı göstermek için gerekli element bulunamadı: ${queryNoContentMessageId}`);
   }
 }
 
@@ -602,6 +591,7 @@ function updateSingleQueryModal(data, modalId, tableId, noContentMessageQueryId)
 
   resetModal(modalId, tableId, noContentMessageQueryId);
 
+  const table = modal.querySelector(tableId);
   const tableBody = modal.querySelector(`${tableId} tbody`);
   const tableHead = modal.querySelector(`${tableId} thead`);
   const noContentMessageQuery = modal.querySelector(`#${noContentMessageQueryId}`);
@@ -672,11 +662,12 @@ function updateSingleQueryModal(data, modalId, tableId, noContentMessageQueryId)
         `;
         tableBody.appendChild(row);
       });
+      table.style.display = '';
   } else {
+    table.style.display = 'none';
     noContentMessageQuery.style.display = 'block';
     noContentMessageQuery.textContent = 'Cihaza erişilemedi veya veri bulunamadı.';
   }
-
   $(`#${modalId} .modal-content`).unblock();
 }
 
@@ -713,18 +704,19 @@ document.addEventListener('click', function (event) {
 function queryIecMeterData(serialNumber, connectionPoint, brand) {
   const modalId = 'singleIecQueryModal';
   const tableId = '#singleIecQueryDataTable';
-  const noContentMessageQueryId = 'no-content-message-query';
+  const queryNoContentMessageId = 'queryNoContentMessage';
 
-  resetModal(modalId, tableId, noContentMessageQueryId);
+  resetModal(modalId, tableId, queryNoContentMessageId);
 
   // Modalı göster ve içerik yüklenirken blokla
   $(`#${modalId}`).modal('show');
-  blockModalById(modalId);
-  // $(`#${modalId} .modal-content`).block({
-  //   message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
-  //   overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
-  //   css: { border: 0, padding: 0, backgroundColor: 'transparent' }
-  // });
+  showLoadingInModalBody(modalId, tableId, 'Loading data, please wait...');
+
+  // Modal başlığı güncelle
+  const modalTitleElement = document.getElementById(`${modalId}Label`);
+  if (modalTitleElement) {
+    modalTitleElement.innerText = `${serialNumber} Seri Numaralı Sayaç Bilgileri`;
+  }
 
   fetch(`${baseWebhookURL}/webhook/query-iec-meter-data`, {
     method: 'POST',
@@ -746,27 +738,28 @@ function queryIecMeterData(serialNumber, connectionPoint, brand) {
         updateSingleIecQueryModal(data);
       } else {
         console.warn('Cihaza erişim başarısız veya veri bulunamadı.');
-        displayErrorInModal(modalId, tableId, noContentMessageQueryId, 'Cihaza erişilemedi veya veri bulunamadı.');
+        displayErrorInModal(modalId, tableId, queryNoContentMessageId, 'Cihaza erişilemedi veya veri bulunamadı.');
       }
     })
     .catch(error => {
-      displayErrorInModal(modalId, tableId, noContentMessageQueryId, error.message || error);
+      displayErrorInModal(modalId, tableId, queryNoContentMessageId, error.message || error);
     })
     .finally(() => {
-      // $(`#${modalId} .modal-content`).unblock();
-      unblockModalById(modalId);
+      hideLoadingInModalBody(modalId, tableId);
     });
 }
 
 function updateSingleIecQueryModal(data) {
   // Modal açılmadan önce sıfırla
-  resetModal('singleIecQueryModal', '#singleIecQueryDataTable', 'no-content-message-query');
+  resetModal('singleIecQueryModal', '#singleIecQueryDataTable', 'queryNoContentMessage');
 
+  const modal = document.getElementById('singleIecQueryModal');
+  const table = modal.querySelector('#singleIecQueryDataTable');
   const tableBody = document.querySelector('#singleIecQueryDataTable tbody');
-  const noContentMessageQuery = document.getElementById('no-content-message-query');
+  const queryNoContentMessage = document.getElementById('queryNoContentMessage');
 
   if (data && data.length > 0) {
-    noContentMessageQuery.style.display = 'none'; // Hata mesajını gizle
+    queryNoContentMessage.style.display = 'none'; // Hata mesajını gizle
 
     // Identification mesajını ayıkla
     const identificationMsg = data[0].identification_msg || '';
@@ -801,8 +794,10 @@ function updateSingleIecQueryModal(data) {
         tableBody.appendChild(row);
       }
     });
+    table.style.display = '';
   } else {
-    noContentMessageQuery.style.display = 'block'; // Hata mesajını göster
+    table.style.display = 'none';
+    queryNoContentMessage.style.display = 'block'; // Hata mesajını göster
   }
 }
 
