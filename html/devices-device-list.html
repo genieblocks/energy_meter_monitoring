@@ -808,9 +808,31 @@
 //     });
 // }
 /**********   UnBlock Modal Functionality  **********/
-function unblockModalById(modalId) {
-    var block_ele = $('#' + modalId).find('.modal-body');
-    $(block_ele).unblock();
+// function unblockModalById(modalId) {
+//     var block_ele = $('#' + modalId).find('.modal-body');
+//     $(block_ele).unblock();
+// }
+
+function blockTable(tableId) {
+  $(tableId).block({
+    message: '<div class="icon-spinner9 icon-spin icon-lg"></div> Yükleniyor...',
+    overlayCSS: {
+      backgroundColor: '#fff',
+      opacity: 0.8,
+      cursor: 'wait'
+    },
+    css: {
+      border: 0,
+      padding: 0,
+      backgroundColor: 'transparent',
+      color: '#000',
+      fontSize: '14px'
+    }
+  });
+}
+
+function unblockTable(tableId) {
+  $(tableId).unblock();
 }
 
 function showLoadingInModalBody(modalId, tableId, message) {
@@ -1825,12 +1847,23 @@ function updateSingleIecQueryModal(data) {
 }
 
 function initializePage() {
+  // Bloklanacak tablo ID'lerini dizi olarak tanımlıyoruz
+  const tableIds = [
+    "#electricityMeterTable",
+    "#waterMeterTable",
+    "#heatingMeterTable",
+    "#coolingMeterTable"
+  ];
+
   // Block the entire page UI and show spinner
-  $.blockUI({
-    message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
-    overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
-    css: { border: 0, padding: 0, backgroundColor: 'transparent' }
-  });
+  // $.blockUI({
+  //   message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
+  //   overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
+  //   css: { border: 0, padding: 0, backgroundColor: 'transparent' }
+  // });
+
+  // Sayfa yüklenirken tabloları blokla
+  tableIds.forEach(tableId => blockTable(tableId));
 
   // Use Promise.all to unblock the UI after all fetch operations are completed
   Promise.all([
@@ -1840,11 +1873,15 @@ function initializePage() {
     fetchCoolingMetersData()
   ]).then(() => {
     // Unblock UI once all data has been fetched
-    $.unblockUI();
+    // $.unblockUI();
+    // Tüm veriler başarıyla yüklenince tabloların blokunu kaldır
+    tableIds.forEach(tableId => unblockTable(tableId));
   }).catch((error) => {
     console.error("Error initializing page:", error);
     // Unblock UI in case of any errors during fetch operations
-    $.unblockUI();
+    // $.unblockUI();
+    // Hata durumunda da tablo bloklarını açabiliriz
+    tableIds.forEach(tableId => unblockTable(tableId));
   });
 }
 
