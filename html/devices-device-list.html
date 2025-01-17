@@ -2203,7 +2203,7 @@ function fetchManufacturers(manufacturerTable, meterType) {
     } else {
       console.error('Manufacturer tablosu verileri yüklenemedi:', data[0].message);
     }
-    $.unblockUI();
+    // $.unblockUI();
   })
   .catch(error => console.error('Fetch error:', error));
 }
