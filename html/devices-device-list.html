@@ -812,10 +812,21 @@ function unblockModalById(modalId) {
     var block_ele = $('#' + modalId).find('.modal-body');
     $(block_ele).unblock();
 }
+
 // 1. Fonksiyon: Modal-body içeriğini gizleyip yükleniyor mesajını göstermek
 function showLoadingInModalBody(modalId, elementId, message) {
     const modal = document.getElementById(modalId);
+    if (!modal) {
+        console.error(`Modal with id '${modalId}' not found.`);
+        return;
+    }
+
     const modalBody = modal.querySelector(elementId);
+    if (!modalBody) {
+        console.error(`Element with selector '${elementId}' not found in modal '${modalId}'.`);
+        return;
+    }
+
     const loadingSpinner = message ? `
         <div id="loading-spinner" class="d-flex justify-content-center align-items-center" style="height: 200px;">
             <div class="ft-refresh-cw icon-spin font-medium-2"></div>
@@ -826,17 +837,31 @@ function showLoadingInModalBody(modalId, elementId, message) {
     // Yeni içeriği mevcut içeriğe ekliyoruz
     modalBody.innerHTML += loadingSpinner;
     // İlgili elementi gizliyoruz
-    modalBody.querySelector(elementId).style.display = 'none';
+    const hiddenElement = modalBody.querySelector(elementId);
+    if (hiddenElement) {
+        hiddenElement.style.display = 'none';
+    }
 }
 
 // 2. Fonksiyon: Modal-body yükleniyor spinnerını gizlemek
 function hideLoadingInModalBody(modalId, elementId) {
     const modal = document.getElementById(modalId);
+    if (!modal) {
+        console.error(`Modal with id '${modalId}' not found.`);
+        return;
+    }
+
     const modalBody = modal.querySelector(elementId);
+    if (!modalBody) {
+        console.error(`Element with selector '${elementId}' not found in modal '${modalId}'.`);
+        return;
+    }
 
     // Saklanan öğeyi geri gösteriyoruz
     const hiddenElement = modalBody.querySelector(elementId);
-    hiddenElement.style.display = '';
+    if (hiddenElement) {
+        hiddenElement.style.display = '';
+    }
 
     // Loading spinner'ı gizliyoruz
     const loadingSpinner = modalBody.querySelector('#loading-spinner');
@@ -844,6 +869,7 @@ function hideLoadingInModalBody(modalId, elementId) {
         loadingSpinner.style.display = 'none';
     }
 }
+
 
 
 document.addEventListener('DOMContentLoaded', function () {
