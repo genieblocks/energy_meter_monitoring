@@ -1791,7 +1791,8 @@ function queryIecMeterData(serialNumber, connectionPoint, brand) {
 function updateSingleIecQueryModal(data) {
   // Modal açılmadan önce sıfırla
   resetModal('singleIecQueryModal', '#singleIecQueryDataTable', 'queryNoContentMessage');
-
+  
+  const modal = document.getElementById('#singleIecQueryModal');
   const table = modal.querySelector('#singleIecQueryDataTable');
   const tableBody = document.querySelector('#singleIecQueryDataTable tbody');
   const queryNoContentMessage = document.getElementById('queryNoContentMessage');
