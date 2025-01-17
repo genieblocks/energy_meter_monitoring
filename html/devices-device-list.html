@@ -1342,37 +1342,17 @@ function startQuickQuery() {
     }
 
     // Sorgu başlatma işlemini UI'da blokla
-    $.blockUI({
-        message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
-        overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
-        css: { border: 0, padding: 0, backgroundColor: 'transparent' }
-    });
+    // $.blockUI({
+    //     message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
+    //     overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
+    //     css: { border: 0, padding: 0, backgroundColor: 'transparent' }
+    // });
 
     try {
         if (protocolType === 'M-BUS') {
-            queryMeterData(serialNumber, connectionPoint)
-              .then(() => {
-                // Sorgu bittikten sonra, modal açılıp veriler yüklendiğinde
-                // Quick Query modal'ı kapatalım ve blockUI'ı kaldıralım
-                $('#quickQueryModal').modal('hide');
-                document.getElementById('quickQueryForm').reset();
-                $.unblockUI();
-              })
-              .catch((err) => {
-                $.unblockUI();
-              });
+            queryMeterData(serialNumber, connectionPoint);
         } else if (protocolType === 'IEC 62056-21') {
-            queryIecMeterData(serialNumber, connectionPoint, brand)
-              .then(() => {
-                // Sorgu bittikten sonra, modal açılıp veriler yüklendiğinde
-                // Quick Query modal'ı kapatalım ve blockUI'ı kaldıralım
-                $('#quickQueryModal').modal('hide');
-                document.getElementById('quickQueryForm').reset();
-                $.unblockUI();
-              })
-              .catch((err) => {
-                $.unblockUI();
-              });
+            queryIecMeterData(serialNumber, connectionPoint, brand);
         } else {
             alert('Desteklenmeyen protokol tipi seçildi.');
         }
