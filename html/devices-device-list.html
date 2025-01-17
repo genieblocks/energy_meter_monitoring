@@ -1565,6 +1565,7 @@ function updateSingleQueryModal(data, modalId, tableId, noContentMessageQueryId)
 
   resetModal(modalId, tableId, noContentMessageQueryId);
 
+  const table = modal.querySelector(tableId);
   const tableBody = modal.querySelector(`${tableId} tbody`);
   const tableHead = modal.querySelector(`${tableId} thead`);
   const noContentMessageQuery = modal.querySelector(`#${noContentMessageQueryId}`);
