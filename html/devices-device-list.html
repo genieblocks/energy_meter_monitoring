@@ -1691,11 +1691,11 @@ function resetModal(modalId, tableId, queryNoContentMessageId) {
     return;
   }
 
-  const tableBody = modal.querySelector(`${tableId} tbody`);
+  const table = modal.querySelector(tableId);
   const queryNoContentMessage = modal.querySelector(`#${queryNoContentMessageId}`);
 
-  if (tableBody) {
-    tableBody.style.display = 'none';
+  if (table) {
+    table.style.display = 'none';
   }
   if (queryNoContentMessage) {
     queryNoContentMessage.style.display = 'none';
