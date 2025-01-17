@@ -827,7 +827,7 @@ function showLoadingInModalBody(modalId, tableId, message) {
         return;
     }
 
-    const table = modalBody.querySelector(`#${tableId}`);
+    const table = modalBody.querySelector(${tableId});
     if (!table) {
         console.error(`Table with id '${tableId}' not found in modal-body.`);
         return;
@@ -860,7 +860,7 @@ function hideLoadingInModalBody(modalId, tableId) {
         return;
     }
 
-    const table = modalBody.querySelector(`#${tableId}`);
+    const table = modalBody.querySelector(${tableId});
     if (!table) {
         console.error(`Table with id '${tableId}' not found in modal-body.`);
         return;
