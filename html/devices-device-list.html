@@ -827,7 +827,7 @@ function showLoadingInModalBody(modalId, elementId, message) {
         // Yeni içeriği mevcut içeriğe ekliyoruz
         modalBody.innerHTML += loadingSpinner;
         // İlgili elementi gizliyoruz
-        modalBody.querySelector(`#${elementId}`).style.display = 'none';
+        modalBody.querySelector(`${elementId}`).style.display = 'none';
     }
 }
 // 2. Fonksiyon: Modal-body yükleniyor spinnerını gizlemek
