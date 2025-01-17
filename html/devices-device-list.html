@@ -1350,10 +1350,13 @@ function startQuickQuery() {
 
     try {
         if (protocolType === 'M-BUS') {
+            $.unblockUI();
             queryMeterData(serialNumber, connectionPoint);
         } else if (protocolType === 'IEC 62056-21') {
+            $.unblockUI();
             queryIecMeterData(serialNumber, connectionPoint, brand);
         } else {
+            $.unblockUI();
             alert('Desteklenmeyen protokol tipi seçildi.');
         }
     } catch (error) {
