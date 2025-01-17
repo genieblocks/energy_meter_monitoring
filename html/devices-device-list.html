@@ -1743,12 +1743,12 @@ function queryIecMeterData(serialNumber, connectionPoint, brand) {
   // Modalı göster ve içerik yüklenirken blokla
   $(`#${modalId}`).modal('show');
   showLoadingInModalBody(modalId, tableId, 'Loading data, please wait...');
-  // blockModalById(modalId, 'Loading data, please wait...');
-  // $(`#${modalId} .modal-content`).block({
-  //   message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
-  //   overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
-  //   css: { border: 0, padding: 0, backgroundColor: 'transparent' }
-  // });
+
+  // Modal başlığı güncelle
+  const modalTitleElement = document.getElementById(`${modalId}Label`);
+  if (modalTitleElement) {
+    modalTitleElement.innerText = `${serialNumber} Seri Numaralı Sayaç Bilgileri`;
+  }
 
   fetch(`${baseWebhookURL}/webhook/query-iec-meter-data`, {
     method: 'POST',
