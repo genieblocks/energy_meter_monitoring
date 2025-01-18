@@ -1862,7 +1862,6 @@ function initializePage() {
   //   css: { border: 0, padding: 0, backgroundColor: 'transparent' }
   // });
 
-  tableIds.forEach(tableId => initializeDataTable('#electricityMeterTable')); // Initialize only once
   // Sayfa yüklenirken tabloları blokla
   tableIds.forEach(tableId => blockTable(tableId));
 
@@ -1876,10 +1875,7 @@ function initializePage() {
     // Unblock UI once all data has been fetched
     // $.unblockUI();
     // Tüm veriler başarıyla yüklenince tabloların blokunu kaldır
-    tableIds.forEach(tableId => {
-      unblockTable(tableId);
-      console.log(`unblockTable: ${tableId}`);
-    });
+    tableIds.forEach(tableId => unblockTable(tableId));
   }).catch((error) => {
     console.error("Error initializing page:", error);
     // Unblock UI in case of any errors during fetch operations
