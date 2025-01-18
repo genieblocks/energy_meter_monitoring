@@ -1875,8 +1875,10 @@ function initializePage() {
     // Unblock UI once all data has been fetched
     // $.unblockUI();
     // Tüm veriler başarıyla yüklenince tabloların blokunu kaldır
-    tableIds.forEach(tableId => unblockTable(tableId));
-    console.log(`unblockTable: ${tableId}`);
+    tableIds.forEach(tableId => {
+      unblockTable(tableId);
+      console.log(`unblockTable: ${tableId}`);
+    });
   }).catch((error) => {
     console.error("Error initializing page:", error);
     // Unblock UI in case of any errors during fetch operations
