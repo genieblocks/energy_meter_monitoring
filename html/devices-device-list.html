@@ -1423,11 +1423,17 @@ function updateTableContent() {
         FieldsToUpdate: fieldsToUpdate
     };
 
-    $.blockUI({
-        message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
-        overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
-        css: { border: 0, padding: 0, backgroundColor: 'transparent' }
-    });
+    // Tabloyu belirlemek için tableName -> tableId eşleştirmesi
+    let tableId = '';
+    if (tableName === 'ElectricMeters')  tableId = '#electricityMeterTable';
+    else if (tableName === 'WaterMeters')  tableId = '#waterMeterTable';
+    else if (tableName === 'HeatingMeters') tableId = '#heatingMeterTable';
+    else if (tableName === 'CoolingMeters') tableId = '#coolingMeterTable';
+
+    // Artık sadece ilgili tabloyu blockluyoruz
+    if (tableId) {
+      blockTable(tableId);
+    }
 
     fetch(`${baseWebhookURL}/webhook/update-table-content`, {
         method: 'POST',
@@ -1438,7 +1444,9 @@ function updateTableContent() {
     })
     .then(response => response.json())
     .then(data => {
-        $.unblockUI();
+        if (tableId) {
+          unblockTable(tableId);
+        }
         if (data[0].success) {
             $('#updateDataModal').modal('hide');
             location.reload(); // Sayfayı yeniden yükle.
@@ -1447,7 +1455,9 @@ function updateTableContent() {
         }
     })
     .catch(error => {
-        $.unblockUI();
+        if (tableId) {
+          unblockTable(tableId);
+        }
         alert('Veri güncellenirken bir hata oluştu.');
     });
 }
