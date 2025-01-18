@@ -1973,6 +1973,11 @@ function fetchElectricMetersData() {
     return response.json();
   })
   .then(data => {
+    const tableBody = document.querySelector('#electricityMeterTable tbody');
+    if (tableBody) {
+      tableBody.innerHTML = '';
+    }
+    
     if (data.length > 0 && data[0].success && Array.isArray(data[0].data)) {
       data[0].data.forEach(meter => {
         appendRowToTable(meter, '#electricityMeterTable');
