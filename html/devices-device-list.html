@@ -1944,7 +1944,6 @@ function fetchElectricMetersData() {
       data[0].data.forEach(meter => {
         appendRowToTable(meter, '#electricityMeterTable');
       });
-      initializeDataTable('#electricityMeterTable'); // Initialize only once
     } else {
       console.log("Failed: ElectricMeters data is not an array or success flag is false", data);
     }
@@ -1973,7 +1972,6 @@ function fetchWaterMetersData() {
       data[0].data.forEach(meter => {
         appendRowToTable(meter, '#waterMeterTable');
       });
-      initializeDataTable('#waterMeterTable'); // Initialize only once
     } else {
       console.log("Failed: WaterMeters data is not an array or success flag is false", data);
     }
@@ -2002,7 +2000,6 @@ function fetchHeatingMetersData() {
       data[0].data.forEach(meter => {
         appendRowToTable(meter, '#heatingMeterTable');
       });
-      initializeDataTable('#heatingMeterTable'); // Initialize only once
     } else {
       console.log("Failed: HeatingMeters data is not an array or success flag is false", data);
     }
@@ -2031,7 +2028,6 @@ function fetchCoolingMetersData() {
       data[0].data.forEach(meter => {
         appendRowToTable(meter, '#coolingMeterTable');
       });
-      initializeDataTable('#coolingMeterTable'); // Initialize only once
     } else {
       console.log("Failed: CoolingMeters data is not an array or success flag is false", data);
     }
