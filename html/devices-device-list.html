@@ -1862,6 +1862,7 @@ function initializePage() {
   //   css: { border: 0, padding: 0, backgroundColor: 'transparent' }
   // });
 
+  tableIds.forEach(tableId => initializeDataTable('#electricityMeterTable')); // Initialize only once
   // Sayfa yüklenirken tabloları blokla
   tableIds.forEach(tableId => blockTable(tableId));
 
