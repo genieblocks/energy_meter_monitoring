@@ -1847,42 +1847,82 @@ function updateSingleIecQueryModal(data) {
 }
 
 function initializePage() {
-  // Bloklanacak tablo ID'lerini dizi olarak tanımlıyoruz
-  const tableIds = [
-    "#electricityMeterTable",
-    "#waterMeterTable",
-    "#heatingMeterTable",
-    "#coolingMeterTable"
-  ];
+  // Sayfa yüklendiğinde her tabloyu ayrı bloklayıp, verileri çekelim
+  const tablePromises = [];
 
-  // Block the entire page UI and show spinner
-  // $.blockUI({
-  //   message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
-  //   overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
-  //   css: { border: 0, padding: 0, backgroundColor: 'transparent' }
-  // });
+  // Elektrik
+  tablePromises.push(
+    (async () => {
+      const tableId = "#electricityMeterTable";
+      blockTable(tableId); // 1) tabloyu kilitle
+      try {
+        await fetchElectricMetersData(); // 2) veriyi çek ve satır ekle
+        initializeDataTable(tableId);    // 3) DataTable başlat
+      } catch (error) {
+        console.error("Elektrik tablosu yüklenemedi:", error);
+      } finally {
+        unblockTable(tableId);          // 4) tabloyu aç
+      }
+    })()
+  );
 
-  // Sayfa yüklenirken tabloları blokla
-  tableIds.forEach(tableId => blockTable(tableId));
+  // Su
+  tablePromises.push(
+    (async () => {
+      const tableId = "#waterMeterTable";
+      blockTable(tableId);
+      try {
+        await fetchWaterMetersData();
+        initializeDataTable(tableId);
+      } catch (error) {
+        console.error("Su tablosu yüklenemedi:", error);
+      } finally {
+        unblockTable(tableId);
+      }
+    })()
+  );
 
-  // Use Promise.all to unblock the UI after all fetch operations are completed
-  Promise.all([
-    fetchElectricMetersData(),
-    fetchWaterMetersData(),
-    fetchHeatingMetersData(),
-    fetchCoolingMetersData()
-  ]).then(() => {
-    // Unblock UI once all data has been fetched
-    // $.unblockUI();
-    // Tüm veriler başarıyla yüklenince tabloların blokunu kaldır
-    tableIds.forEach(tableId => unblockTable(tableId));
-  }).catch((error) => {
-    console.error("Error initializing page:", error);
-    // Unblock UI in case of any errors during fetch operations
-    // $.unblockUI();
-    // Hata durumunda da tablo bloklarını açabiliriz
-    tableIds.forEach(tableId => unblockTable(tableId));
-  });
+  // Isıtma
+  tablePromises.push(
+    (async () => {
+      const tableId = "#heatingMeterTable";
+      blockTable(tableId);
+      try {
+        await fetchHeatingMetersData();
+        initializeDataTable(tableId);
+      } catch (error) {
+        console.error("Isıtma tablosu yüklenemedi:", error);
+      } finally {
+        unblockTable(tableId);
+      }
+    })()
+  );
+
+  // Soğutma
+  tablePromises.push(
+    (async () => {
+      const tableId = "#coolingMeterTable";
+      blockTable(tableId);
+      try {
+        await fetchCoolingMetersData();
+        initializeDataTable(tableId);
+      } catch (error) {
+        console.error("Soğutma tablosu yüklenemedi:", error);
+      } finally {
+        unblockTable(tableId);
+      }
+    })()
+  );
+
+  // Diğer işlemlerin hepsi tablolar da yüklendikten sonra bitsin istiyorsak:
+  Promise.all(tablePromises)
+    .then(() => {
+      console.log("Tüm tablolar yüklendi ve DataTable'lar başlatıldı!");
+      // Burada sayfadaki diğer işlemleri yapabilirsiniz...
+    })
+    .catch((err) => {
+      console.error("Tablolardan biri hatalı sonuçlandı:", err);
+    });
 }
 
 function fetchElectricMetersData() {
