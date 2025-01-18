@@ -1977,11 +1977,12 @@ function fetchElectricMetersData() {
     if (tableBody) {
       tableBody.innerHTML = '';
     }
-    
+
     if (data.length > 0 && data[0].success && Array.isArray(data[0].data)) {
       data[0].data.forEach(meter => {
         appendRowToTable(meter, '#electricityMeterTable');
       });
+      initializeDataTable('#heatingMeterTable');
     } else {
       console.log("Failed: ElectricMeters data is not an array or success flag is false", data);
     }
