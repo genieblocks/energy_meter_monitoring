@@ -1846,7 +1846,40 @@ function updateSingleIecQueryModal(data) {
   }
 }
 
+/**
+ * Verilen tabloya (tableId) yönelik thead içindeki sütun sayısına göre
+ * belirlenmiş sayıda (rowCount) boş satır ekler.
+ */
+ function fillEmptyRows(tableId, rowCount = 25) {
+  const table = document.querySelector(tableId);
+  if (!table) return;
+
+  // Bu tabloya ait <thead> içindeki kolon (th) sayısını bulalım:
+  const colCount = table.querySelectorAll("thead th").length;
+  const tableBody = table.querySelector("tbody");
+  
+  // Tablo gövdesi yoksa oluşturabilir veya fonksiyondan çıkabiliriz:
+  if (!tableBody) return;
+
+  // Belirtilen sayıda satır oluşturup ekleyelim
+  for (let i = 0; i < rowCount; i++) {
+    const row = document.createElement("tr");
+    // Her kolon için <td> ... </td> ekle
+    let emptyCells = "";
+    for (let j = 0; j < colCount; j++) {
+      emptyCells += "<td>---</td>";
+    }
+    row.innerHTML = emptyCells;
+    tableBody.appendChild(row);
+  }
+}
+
 function initializePage() {
+  // Her tablo ID'si için sırasıyla 25 adet boş satır ekle:
+  fillEmptyRows("#electricityMeterTable", 25);
+  fillEmptyRows("#waterMeterTable", 25);
+  fillEmptyRows("#heatingMeterTable", 25);
+  fillEmptyRows("#coolingMeterTable", 25);
   // Sayfa yüklendiğinde her tabloyu ayrı bloklayıp, verileri çekelim
   const tablePromises = [];
 
