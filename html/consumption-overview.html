@@ -495,7 +495,7 @@ function queryMeterData(serialNumber, connectionPoint) {
 
   // Modalı göster ve içerik yüklenirken blokla
   $(`#${modalId}`).modal('show');
-  showLoadingInModalBody(modalId,tableId,'Loading data, please wait...');
+  showLoadingInModalBody(modalId,tableId,'Veri yükleniyor, lütfen bekleyiniz...');
 
   fetch(`${baseWebhookURL}/webhook/query-meter-data`, {
     method: 'POST',
@@ -710,7 +710,7 @@ function queryIecMeterData(serialNumber, connectionPoint, brand) {
 
   // Modalı göster ve içerik yüklenirken blokla
   $(`#${modalId}`).modal('show');
-  showLoadingInModalBody(modalId, tableId, 'Loading data, please wait...');
+  showLoadingInModalBody(modalId, tableId, 'Veri yükleniyor, lütfen bekleyiniz...');
 
   // Modal başlığı güncelle
   const modalTitleElement = document.getElementById(`${modalId}Label`);
