@@ -1333,7 +1333,9 @@ function startQuickQuery() {
         alert('Lütfen marka seçiniz.');
         return;
     }
-
+    // Önce quickQueryModal'ı kapat
+    $('#quickQueryModal').modal('hide');
+    
     // Modal kapandığında çalışacak event:
     $('#quickQueryModal').on('hidden.bs.modal', function () {
         // Kapanma event’ini hemen silmek (tekrar tetiklenmesin diye)
