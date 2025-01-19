@@ -784,35 +784,6 @@
     // const baseWebhookURL = "http://192.168.1.146:5678"; // Değiştirmek istediğiniz temel URL
 
 /* ========================= Block Functions ========================= */
-/**********   Block Modal Functionality  **********/
-// function blockModalById(modalId, message = null) {
-//   <div class="modal-body d-flex justify-content-center align-items-center" style="height: 200px;">
-//     <div class="ft-refresh-cw icon-spin font-medium-2"></div><span style="margin-left: 10px;">yükleniyor.</span>
-// </div>
-//     var block_ele = $('#' + modalId).find('.modal-body');
-//     var displayMessage = message ? `<div class="ft-refresh-cw icon-spin font-medium-2"></div><span style="margin-left: 10px;">${message}</span>` : '<div class="ft-refresh-cw icon-spin font-medium-2"></div>';
-//     $(block_ele).block({
-//         message: displayMessage,
-//         overlayCSS: {
-//             backgroundColor: '#fff',
-//             opacity: 0.8,
-//             cursor: 'wait'
-//         },
-//         css: {
-//             border: 0,
-//             padding: '10px',
-//             backgroundColor: 'transparent',
-//             color: '#000',
-//             fontSize: '14px'
-//         }
-//     });
-// }
-/**********   UnBlock Modal Functionality  **********/
-// function unblockModalById(modalId) {
-//     var block_ele = $('#' + modalId).find('.modal-body');
-//     $(block_ele).unblock();
-// }
-
 function blockTable(tableId) {
   $(tableId).block({
     message: '<div class="icon-spinner9 icon-spin icon-lg"></div> Yükleniyor...',
