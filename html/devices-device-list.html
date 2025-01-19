@@ -2421,7 +2421,7 @@ function fetchConnections(connectionTable, meterType) {
     })
     .catch(error => console.error('Fetch error:', error))
     .finally(() => {
-      $.unblockUI();
+      // $.unblockUI();
     });
   });
 
@@ -2489,7 +2489,7 @@ function fetchConnections(connectionTable, meterType) {
     })
     .catch(error => console.error('Fetch error:', error))
     .finally(() => {
-      $.unblockUI();
+      // $.unblockUI();
     });
   });
 
@@ -2557,7 +2557,7 @@ function fetchConnections(connectionTable, meterType) {
     })
     .catch(error => console.error('Fetch error:', error))
     .finally(() => {
-      $.unblockUI();
+      // $.unblockUI();
     });
   });
 
@@ -2625,7 +2625,7 @@ function fetchConnections(connectionTable, meterType) {
     })
     .catch(error => console.error('Fetch error:', error))
     .finally(() => {
-      $.unblockUI();
+      // $.unblockUI();
     });
   });
 
@@ -2634,11 +2634,11 @@ function capitalize(str) {
 }
 
 function deleteTableRow(tableName, tableField, tableFieldValue) {
-    $.blockUI({
-        message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
-        overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
-        css: { border: 0, padding: 0, backgroundColor: 'transparent' }
-    });
+    // $.blockUI({
+    //     message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
+    //     overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
+    //     css: { border: 0, padding: 0, backgroundColor: 'transparent' }
+    // });
 
     fetch(`${baseWebhookURL}/webhook/delete-table-row`, {
         method: 'POST',
@@ -2649,7 +2649,7 @@ function deleteTableRow(tableName, tableField, tableFieldValue) {
     })
     .then(response => response.json())
     .then(data => {
-        $.unblockUI();
+        // $.unblockUI();
         if (data[0].success) {
             alert('Veri başarıyla silindi.');
             location.reload(); // Sayfayı yeniden yükle.
@@ -2658,7 +2658,7 @@ function deleteTableRow(tableName, tableField, tableFieldValue) {
         }
     })
     .catch(error => {
-        $.unblockUI();
+        // $.unblockUI();
         alert('Veri silinirken bir hata oluştu.');
     });
 }
