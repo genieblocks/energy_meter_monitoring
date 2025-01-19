@@ -1335,7 +1335,7 @@ function startQuickQuery() {
     }
     // Önce quickQueryModal'ı kapat
     $('#quickQueryModal').modal('hide');
-    
+
     // Modal kapandığında çalışacak event:
     $('#quickQueryModal').on('hidden.bs.modal', function () {
         // Kapanma event’ini hemen silmek (tekrar tetiklenmesin diye)
@@ -1885,8 +1885,6 @@ function initializePage() {
   // Diğer işlemlerin hepsi tablolar da yüklendikten sonra bitsin istiyorsak:
   Promise.all(tablePromises)
     .then(() => {
-      console.log("Tüm tablolar yüklendi ve DataTable'lar başlatıldı!");
-      // Burada sayfadaki diğer işlemleri yapabilirsiniz...
     })
     .catch((err) => {
       console.error("Tablolardan biri hatalı sonuçlandı:", err);
@@ -1913,7 +1911,7 @@ function fetchElectricMetersData() {
         appendRowToTable(meter, '#electricityMeterTable');
       });
     } else {
-      console.log("Failed: ElectricMeters data is not an array or success flag is false", data);
+      console.warn("Failed: ElectricMeters data is not an array or success flag is false", data);
     }
   })
   .catch(error => {
@@ -1941,7 +1939,7 @@ function fetchWaterMetersData() {
         appendRowToTable(meter, '#waterMeterTable');
       });
     } else {
-      console.log("Failed: WaterMeters data is not an array or success flag is false", data);
+      console.warn("Failed: WaterMeters data is not an array or success flag is false", data);
     }
   })
   .catch(error => {
@@ -1969,7 +1967,7 @@ function fetchHeatingMetersData() {
         appendRowToTable(meter, '#heatingMeterTable');
       });
     } else {
-      console.log("Failed: HeatingMeters data is not an array or success flag is false", data);
+      console.warn("Failed: HeatingMeters data is not an array or success flag is false", data);
     }
   })
   .catch(error => {
@@ -1997,7 +1995,7 @@ function fetchCoolingMetersData() {
         appendRowToTable(meter, '#coolingMeterTable');
       });
     } else {
-      console.log("Failed: CoolingMeters data is not an array or success flag is false", data);
+      console.warn("Failed: CoolingMeters data is not an array or success flag is false", data);
     }
   })
   .catch(error => {
@@ -2120,9 +2118,7 @@ function initializeDataTable(tableId) {
         zeroRecords: "Eşleşen kayıt bulunamadı"
       }
     });
-    console.log(`DataTable initialized for: ${tableId}`);
   } else {
-    console.log(`DataTable already initialized for: ${tableId}`);
   }
 }
 
