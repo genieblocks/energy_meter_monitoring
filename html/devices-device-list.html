@@ -1363,32 +1363,20 @@ function startQuickQuery() {
         return;
     }
 
-    // Sorgu başlatma işlemini UI'da blokla
-    // $.blockUI({
-    //     message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
-    //     overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
-    //     css: { border: 0, padding: 0, backgroundColor: 'transparent' }
-    // });
-
     try {
         if (protocolType === 'M-BUS') {
-            // $.unblockUI();
             queryMeterData(serialNumber, connectionPoint);
         } else if (protocolType === 'IEC 62056-21') {
-            // $.unblockUI();
             queryIecMeterData(serialNumber, connectionPoint, brand);
         } else {
-            // $.unblockUI();
             alert('Desteklenmeyen protokol tipi seçildi.');
         }
     } catch (error) {
         console.error('Error starting quick query:', error);
         alert('Sorgu başlatılırken bir hata oluştu.');
     } finally {
-        // Modalı kapat ve formu sıfırla
         $('#quickQueryModal').modal('hide');
         document.getElementById('quickQueryForm').reset();
-        // $.unblockUI();
     }
 }
 
@@ -2289,7 +2277,6 @@ function fetchManufacturers(manufacturerTable, meterType) {
     } else {
       console.error('Manufacturer tablosu verileri yüklenemedi:', data[0].message);
     }
-    // $.unblockUI();
   })
   .catch(error => console.error('Fetch error:', error));
 }
@@ -2386,13 +2373,6 @@ function fetchConnections(connectionTable, meterType) {
 
     const ElectricMeterID = 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'; 
 
-    // Modalı kilitle ve bekleme işareti göster
-    // $.blockUI({
-    //   message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
-    //   overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
-    //   css: { border: 0, padding: 0, backgroundColor: 'transparent' }
-    // });
-
     fetch(`${baseWebhookURL}/webhook/insert-table-content`, {
       method: 'POST',
       headers: {
@@ -2421,7 +2401,6 @@ function fetchConnections(connectionTable, meterType) {
     })
     .catch(error => console.error('Fetch error:', error))
     .finally(() => {
-      // $.unblockUI();
     });
   });
 
@@ -2455,13 +2434,6 @@ function fetchConnections(connectionTable, meterType) {
 
     const WaterMeterID = 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'; 
 
-    // Modalı kilitle ve bekleme işareti göster
-    // $.blockUI({
-    //   message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
-    //   overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
-    //   css: { border: 0, padding: 0, backgroundColor: 'transparent' }
-    // });
-
     fetch(`${baseWebhookURL}/webhook/insert-table-content`, {
       method: 'POST',
       headers: {
@@ -2489,7 +2461,6 @@ function fetchConnections(connectionTable, meterType) {
     })
     .catch(error => console.error('Fetch error:', error))
     .finally(() => {
-      // $.unblockUI();
     });
   });
 
@@ -2523,13 +2494,6 @@ function fetchConnections(connectionTable, meterType) {
 
     const HeatingMeterID = 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'; 
 
-    // Modalı kilitle ve bekleme işareti göster
-    // $.blockUI({
-    //   message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
-    //   overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
-    //   css: { border: 0, padding: 0, backgroundColor: 'transparent' }
-    // });
-
     fetch(`${baseWebhookURL}/webhook/insert-table-content`, {
       method: 'POST',
       headers: {
@@ -2557,7 +2521,6 @@ function fetchConnections(connectionTable, meterType) {
     })
     .catch(error => console.error('Fetch error:', error))
     .finally(() => {
-      // $.unblockUI();
     });
   });
 
@@ -2591,13 +2554,6 @@ function fetchConnections(connectionTable, meterType) {
 
     const CoolingMeterID = 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'; 
 
-    // Modalı kilitle ve bekleme işareti göster
-    // $.blockUI({
-    //   message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
-    //   overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
-    //   css: { border: 0, padding: 0, backgroundColor: 'transparent' }
-    // });
-
     fetch(`${baseWebhookURL}/webhook/insert-table-content`, {
       method: 'POST',
       headers: {
@@ -2625,7 +2581,6 @@ function fetchConnections(connectionTable, meterType) {
     })
     .catch(error => console.error('Fetch error:', error))
     .finally(() => {
-      // $.unblockUI();
     });
   });
 
@@ -2634,11 +2589,6 @@ function capitalize(str) {
 }
 
 function deleteTableRow(tableName, tableField, tableFieldValue) {
-    // $.blockUI({
-    //     message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
-    //     overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
-    //     css: { border: 0, padding: 0, backgroundColor: 'transparent' }
-    // });
 
     fetch(`${baseWebhookURL}/webhook/delete-table-row`, {
         method: 'POST',
@@ -2649,7 +2599,6 @@ function deleteTableRow(tableName, tableField, tableFieldValue) {
     })
     .then(response => response.json())
     .then(data => {
-        // $.unblockUI();
         if (data[0].success) {
             alert('Veri başarıyla silindi.');
             location.reload(); // Sayfayı yeniden yükle.
@@ -2658,7 +2607,6 @@ function deleteTableRow(tableName, tableField, tableFieldValue) {
         }
     })
     .catch(error => {
-        // $.unblockUI();
         alert('Veri silinirken bir hata oluştu.');
     });
 }
