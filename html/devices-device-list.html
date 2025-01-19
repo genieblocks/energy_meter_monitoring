@@ -1334,21 +1334,18 @@ function startQuickQuery() {
         return;
     }
 
-    try {
+    // Modal kapandığında çalışacak event:
+    $('#quickQueryModal').on('hidden.bs.modal', function () {
+        // Kapanma event’ini hemen silmek (tekrar tetiklenmesin diye)
+        $('#quickQueryModal').off('hidden.bs.modal');
+
+        // Sonra asıl sorguyu aç
         if (protocolType === 'M-BUS') {
             queryMeterData(serialNumber, connectionPoint);
         } else if (protocolType === 'IEC 62056-21') {
             queryIecMeterData(serialNumber, connectionPoint, brand);
-        } else {
-            alert('Desteklenmeyen protokol tipi seçildi.');
         }
-    } catch (error) {
-        console.error('Error starting quick query:', error);
-        alert('Sorgu başlatılırken bir hata oluştu.');
-    } finally {
-        $('#quickQueryModal').modal('hide');
-        document.getElementById('quickQueryForm').reset();
-    }
+    });
 }
 
 
