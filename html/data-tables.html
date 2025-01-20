@@ -1080,11 +1080,6 @@ function updateTableName(oldTableName, tableRow) {
         return;
     }
 
-    // $.blockUI({
-    //     message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
-    //     overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
-    //     css: { border: 0, padding: 0, backgroundColor: 'transparent' }
-    // });
     blockElementById('#tableCard');
 
     fetch(`${baseWebhookURL}/webhook/update-table-name`, {
@@ -1096,7 +1091,6 @@ function updateTableName(oldTableName, tableRow) {
     })
     .then(response => response.json())
     .then(data => {
-        // $.unblockUI();
         if (data[0].success) {
             tableRow.querySelector('td:first-child').textContent = newTableName;
             unblockElementById('#tableCard');
@@ -1107,7 +1101,6 @@ function updateTableName(oldTableName, tableRow) {
         }
     })
     .catch(error => {
-        // $.unblockUI();
         alert('Tablo ismi güncellenirken bir hata oluştu.');
         unblockElementById('#tableCard');
     });
