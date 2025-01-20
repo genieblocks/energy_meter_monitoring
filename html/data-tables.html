@@ -885,11 +885,6 @@ function showUpdateDataForm(tableName, rowData) {
     // Clear previous form fields
     formBody.innerHTML = '';
 
-    // $.blockUI({
-    //     message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
-    //     overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
-    //     css: { border: 0, padding: 0, backgroundColor: 'transparent' }
-    // });
     blockElementById($('#updateDataModal').find('.modal-body'));
 
     fetch(`${baseWebhookURL}/webhook/get-table-column-names`, {
@@ -901,7 +896,6 @@ function showUpdateDataForm(tableName, rowData) {
     })
     .then(response => response.json())
     .then(data => {
-        // $.unblockUI();
         if (data && Array.isArray(data)) {
             data.forEach((column, index) => {
                 const value = rowData[index] || ''; // Get the value from rowData based on index or use an empty string
@@ -929,7 +923,6 @@ function showUpdateDataForm(tableName, rowData) {
         }
     })
     .catch(error => {
-        // $.unblockUI();
         alert('Sütun bilgileri getirilirken bir hata oluştu.');
         unblockElementById($('#updateDataModal').find('.modal-body'));
     });
