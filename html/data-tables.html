@@ -938,11 +938,12 @@ function showNewDataForm(tableName) {
     // Clear previous form fields
     formBody.innerHTML = '';
 
-    $.blockUI({
-        message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
-        overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
-        css: { border: 0, padding: 0, backgroundColor: 'transparent' }
-    });
+    // $.blockUI({
+    //     message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
+    //     overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
+    //     css: { border: 0, padding: 0, backgroundColor: 'transparent' }
+    // });
+    blockElementById($('#newDataModal').find('.modal-body'));
 
     fetch(`${baseWebhookURL}/webhook/get-table-column-names`, {
         method: 'POST',
@@ -953,7 +954,7 @@ function showNewDataForm(tableName) {
     })
     .then(response => response.json())
     .then(data => {
-        $.unblockUI();
+        // $.unblockUI();
         if (data && Array.isArray(data)) {
             data.forEach(column => {
                 const formGroup = document.createElement('div');
@@ -971,14 +972,17 @@ function showNewDataForm(tableName) {
                 }
                 formBody.appendChild(formGroup);
             });
+            unblockElementById($('#newDataModal').find('.modal-body'));
             modal.modal('show');
         } else {
             alert('Sütun bilgileri getirilirken bir hata oluştu.');
+            unblockElementById($('#newDataModal').find('.modal-body'));
         }
     })
     .catch(error => {
-        $.unblockUI();
+        // $.unblockUI();
         alert('Sütun bilgileri getirilirken bir hata oluştu.');
+        unblockElementById($('#newDataModal').find('.modal-body'));
     });
 }
 
