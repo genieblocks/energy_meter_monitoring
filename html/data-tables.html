@@ -445,11 +445,12 @@ function unblockElementById(elementId) {
             columns: columns
         };
 
-        $.blockUI({
-            message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
-            overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
-            css: { border: 0, padding: 0, backgroundColor: 'transparent' }
-        });
+        // $.blockUI({
+        //     message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
+        //     overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
+        //     css: { border: 0, padding: 0, backgroundColor: 'transparent' }
+        // });
+        blockElementById($('#addTableModal').find('.modal-body'));
 
         fetch(`${baseWebhookURL}/webhook/create-table`, {
             method: 'POST',
@@ -460,8 +461,8 @@ function unblockElementById(elementId) {
         })
             .then(response => response.json())
             .then(data => {
-                $.unblockUI();
-
+                // $.unblockUI();
+                unblockElementById($('#addTableModal').find('.modal-body'));
                 if (data.success) {
                     $('#addTableModal').modal('hide');
                     alert('Tablo başarıyla oluşturuldu.');
@@ -471,7 +472,8 @@ function unblockElementById(elementId) {
                 }
             })
             .catch(error => {
-                $.unblockUI();
+                // $.unblockUI();
+                unblockElementById($('#addTableModal').find('.modal-body'));
                 alert('Tablo oluşturulurken bir hata oluştu.');
             });
     });
@@ -693,11 +695,6 @@ function updateTable(data) {
 // Show table content with error handling
 function showTableContent(tableName) {
     blockElementById($('#tableContentModal').find('.modal-body'));
-    // $.blockUI({
-    //     message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
-    //     overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
-    //     css: { border: 0, padding: 0, backgroundColor: 'transparent' }
-    // });
 
     fetch(`${baseWebhookURL}/webhook/get-table-content`, {
         method: 'POST',
@@ -709,13 +706,11 @@ function showTableContent(tableName) {
     .then(handleFetchError) // Handle fetch errors
     .then(response => response.json())
     .then(data => {
-        // $.unblockUI();
         unblockElementById($('#tableContentModal').find('.modal-body'));
         updateModalWithData(data, tableName);
         $('#tableContentModal').modal('show');
     })
     .catch(error => {
-        // $.unblockUI();
         unblockElementById($('#tableContentModal').find('.modal-body'));
         console.error('Error fetching table content:', error); // Log the error
         alert('Tablo içeriği getirilirken bir hata oluştu.');
