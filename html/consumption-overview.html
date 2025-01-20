@@ -1505,11 +1505,6 @@ function updateTableContent() {
         FieldsToUpdate: fieldsToUpdate
     };
 
-    // $.blockUI({
-    //     message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
-    //     overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
-    //     css: { border: 0, padding: 0, backgroundColor: 'transparent' }
-    // });
     blockElementById($('#updateDataModal').find('.modal-body'));
 
     fetch(`${baseWebhookURL}/webhook/update-table-content`, {
@@ -1521,17 +1516,15 @@ function updateTableContent() {
     })
     .then(response => response.json())
     .then(data => {
-        // $.unblockUI();
         unblockElementById($('#updateDataModal').find('.modal-body'));
         if (data[0].success) {
             $('#updateDataModal').modal('hide');
-            location.reload(); // Sayfayı yeniden yükle.
+            location.reload(); // Güncellenecek: meter-detail-modal icerisindeki tablo tekrar yüklenecek.
         } else {
             alert('Veri güncellenirken bir hata oluştu: ' + data[0].message);
         }
     })
     .catch(error => {
-        // $.unblockUI();
         unblockElementById($('#updateDataModal').find('.modal-body'));
         alert('Veri güncellenirken bir hata oluştu.');
     });
