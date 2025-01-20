@@ -391,31 +391,6 @@ function unblockElementById(elementId) {
   $(elementId).unblock();
 }
 
-/**********   Block Modal Functionality  **********/
-function blockModalById(modalId, message = null) {
-    var block_ele = $('#' + modalId).find('.modal-body');
-    var displayMessage = message ? `<div class="ft-refresh-cw icon-spin font-medium-2"></div><span style="margin-left: 10px;">${message}</span>` : '<div class="ft-refresh-cw icon-spin font-medium-2"></div>';
-    $(block_ele).block({
-        message: displayMessage,
-        overlayCSS: {
-            backgroundColor: '#fff',
-            opacity: 0.8,
-            cursor: 'wait'
-        },
-        css: {
-            border: 0,
-            padding: '10px',
-            backgroundColor: 'transparent',
-            color: '#000',
-            fontSize: '14px'
-        }
-    });
-}
-/**********   UnBlock Modal Functionality  **********/
-function unblockModalById(modalId) {
-    var block_ele = $('#' + modalId).find('.modal-body');
-    $(block_ele).unblock();
-}
 
 function showLoadingInModalBody(modalId, tableId, message) {
     const modal = document.getElementById(modalId);
@@ -981,12 +956,6 @@ document.addEventListener('DOMContentLoaded', function () {
         yearElement.textContent = currentYear;
     }
 
-    // UI'yi kilitle ve spinner göster
-    // $.blockUI({
-    //     message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
-    //     overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
-    //     css: { border: 0, padding: 0, backgroundColor: 'transparent' },
-    // });
     blockElementById('#subscriberCard');
 
     // Blok verilerini al
@@ -1070,7 +1039,6 @@ document.addEventListener('DOMContentLoaded', function () {
         })
         .catch((error) => console.error('Error:', error))
         .finally(() => {
-            // $.unblockUI(); // UI'yi aç ve spinnerı kaldır
             unblockElementById('#subscriberCard');
         });
 });
@@ -1537,11 +1505,12 @@ function updateTableContent() {
         FieldsToUpdate: fieldsToUpdate
     };
 
-    $.blockUI({
-        message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
-        overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
-        css: { border: 0, padding: 0, backgroundColor: 'transparent' }
-    });
+    // $.blockUI({
+    //     message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
+    //     overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
+    //     css: { border: 0, padding: 0, backgroundColor: 'transparent' }
+    // });
+    blockElementById('#updateDataModal');
 
     fetch(`${baseWebhookURL}/webhook/update-table-content`, {
         method: 'POST',
@@ -1552,7 +1521,8 @@ function updateTableContent() {
     })
     .then(response => response.json())
     .then(data => {
-        $.unblockUI();
+        // $.unblockUI();
+        unblockElementById('#updateDataModal');
         if (data[0].success) {
             $('#updateDataModal').modal('hide');
             location.reload(); // Sayfayı yeniden yükle.
@@ -1561,7 +1531,8 @@ function updateTableContent() {
         }
     })
     .catch(error => {
-        $.unblockUI();
+        // $.unblockUI();
+        unblockElementById('#updateDataModal');
         alert('Veri güncellenirken bir hata oluştu.');
     });
 }
