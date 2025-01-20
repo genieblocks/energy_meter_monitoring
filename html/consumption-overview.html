@@ -1820,6 +1820,7 @@ function defineMeter() {
         // $.unblockUI();
         // unblockElementById($('#meter-detail-modal').find('.modal-body'));
         if (data[0].success) {
+            $('#defineMeterModal').modal('hide');
             $('#meter-detail-modal').modal('hide');
             unblockElementById($('#meter-detail-modal').find('.modal-body'));
             location.reload(); // Sayfayı yeniden yükle.
