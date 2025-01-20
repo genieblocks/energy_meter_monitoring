@@ -445,11 +445,6 @@ function unblockElementById(elementId) {
             columns: columns
         };
 
-        // $.blockUI({
-        //     message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
-        //     overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
-        //     css: { border: 0, padding: 0, backgroundColor: 'transparent' }
-        // });
         blockElementById($('#addTableModal').find('.modal-body'));
 
         fetch(`${baseWebhookURL}/webhook/create-table`, {
@@ -461,7 +456,6 @@ function unblockElementById(elementId) {
         })
             .then(response => response.json())
             .then(data => {
-                // $.unblockUI();
                 unblockElementById($('#addTableModal').find('.modal-body'));
                 if (data.success) {
                     $('#addTableModal').modal('hide');
@@ -472,7 +466,6 @@ function unblockElementById(elementId) {
                 }
             })
             .catch(error => {
-                // $.unblockUI();
                 unblockElementById($('#addTableModal').find('.modal-body'));
                 alert('Tablo oluşturulurken bir hata oluştu.');
             });
