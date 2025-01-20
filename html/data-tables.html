@@ -849,11 +849,6 @@ function handleFetchError(response) {
 }
 
 function deleteTableRow(tableName, tableField, tableFieldValue) {
-    // $.blockUI({
-    //     message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
-    //     overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
-    //     css: { border: 0, padding: 0, backgroundColor: 'transparent' }
-    // });
     blockElementById($('#tableContentModal').find('.modal-body'));
 
     fetch(`${baseWebhookURL}/webhook/delete-table-row`, {
@@ -865,7 +860,6 @@ function deleteTableRow(tableName, tableField, tableFieldValue) {
     })
     .then(response => response.json())
     .then(data => {
-        // $.unblockUI();
         if (data[0].success) {
             showTableContent(tableName); // Refresh table content
             blockElementById($('#tableContentModal').find('.modal-body'));
@@ -876,7 +870,6 @@ function deleteTableRow(tableName, tableField, tableFieldValue) {
         }
     })
     .catch(error => {
-        // $.unblockUI();
         unblockElementById($('#tableContentModal').find('.modal-body'));
         alert('Veri silinirken bir hata oluştu.');
     });
