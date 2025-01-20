@@ -1510,7 +1510,7 @@ function updateTableContent() {
     //     overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
     //     css: { border: 0, padding: 0, backgroundColor: 'transparent' }
     // });
-    blockElementById('#updateDataModal');
+    blockElementById($('#updateDataModal').find('.modal-body'));
 
     fetch(`${baseWebhookURL}/webhook/update-table-content`, {
         method: 'POST',
@@ -1522,7 +1522,7 @@ function updateTableContent() {
     .then(response => response.json())
     .then(data => {
         // $.unblockUI();
-        unblockElementById('#updateDataModal');
+        unblockElementById($('#updateDataModal').find('.modal-body'));
         if (data[0].success) {
             $('#updateDataModal').modal('hide');
             location.reload(); // Sayfayı yeniden yükle.
@@ -1532,7 +1532,7 @@ function updateTableContent() {
     })
     .catch(error => {
         // $.unblockUI();
-        unblockElementById('#updateDataModal');
+        unblockElementById($('#updateDataModal').find('.modal-body'));
         alert('Veri güncellenirken bir hata oluştu.');
     });
 }
@@ -1612,7 +1612,7 @@ function showUpdateSubscriberDataForm(tableName, subscriberData, flatID) {
     // Set the tableName as a data attribute on the modal
     modal.data('tableName', tableName);
 
-    modal.find('.modal-title').text(`Abone Güncelleme`);
+    modal.find('.modal-title').text(`Abone Değiştir`);
     const form = modal.find('form')[0];
     const formBody = modal.find('.modal-body > form')[0];
 
