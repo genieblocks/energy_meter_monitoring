@@ -1098,9 +1098,9 @@ function updateTableName(oldTableName, tableRow) {
     .then(data => {
         // $.unblockUI();
         if (data[0].success) {
+            tableRow.querySelector('td:first-child').textContent = newTableName;
             unblockElementById('#tableCard');
             alert('Tablo ismi başarıyla güncellendi.');
-            tableRow.querySelector('td:first-child').textContent = newTableName;
         } else {
             alert('Tablo ismi güncellenirken bir hata oluştu.');
             unblockElementById('#tableCard');
