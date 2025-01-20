@@ -854,6 +854,7 @@ function deleteTableRow(tableName, tableField, tableFieldValue) {
     //     overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
     //     css: { border: 0, padding: 0, backgroundColor: 'transparent' }
     // });
+    blockElementById($('#tableContentModal').find('.modal-body'));
 
     fetch(`${baseWebhookURL}/webhook/delete-table-row`, {
         method: 'POST',
@@ -867,13 +868,16 @@ function deleteTableRow(tableName, tableField, tableFieldValue) {
         // $.unblockUI();
         if (data[0].success) {
             showTableContent(tableName); // Refresh table content
+            blockElementById($('#tableContentModal').find('.modal-body'));
             alert('Veri başarıyla silindi.');
         } else {
             alert('Veri silinirken bir hata oluştu.');
+            blockElementById($('#tableContentModal').find('.modal-body'));
         }
     })
     .catch(error => {
         // $.unblockUI();
+        unblockElementById($('#tableContentModal').find('.modal-body'));
         alert('Veri silinirken bir hata oluştu.');
     });
 }
