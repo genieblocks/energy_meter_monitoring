@@ -1107,11 +1107,12 @@ function updateTableName(oldTableName, tableRow) {
 }
   
 function deleteTable(tableName) {
-    $.blockUI({
-        message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
-        overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
-        css: { border: 0, padding: 0, backgroundColor: 'transparent' }
-    });
+    // $.blockUI({
+    //     message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
+    //     overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
+    //     css: { border: 0, padding: 0, backgroundColor: 'transparent' }
+    // });
+    blockElementById('#tableCard');
 
     fetch(`${baseWebhookURL}/webhook/delete-table`, {
         method: 'POST',
@@ -1122,18 +1123,21 @@ function deleteTable(tableName) {
     })
     .then(response => response.json())
     .then(data => {
-        $.unblockUI();
-
+        // $.unblockUI();
+        // unblockElementById('#tableCard');
         if (data.success) {
             alert('Tablo başarıyla silindi.');
-            location.reload(); // Sayfayı yenile
+            // location.reload(); // Sayfayı yenile
+            unblockElementById('#tableCard');
         } else {
             alert('Tablo silinirken bir hata oluştu.');
+            unblockElementById('#tableCard');
         }
     })
     .catch(error => {
-        $.unblockUI();
+        // $.unblockUI();
         alert('Tablo silinirken bir hata oluştu.');
+        unblockElementById('#tableCard');
     });
 }
   </script>
