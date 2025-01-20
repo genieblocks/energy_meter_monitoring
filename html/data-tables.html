@@ -594,18 +594,18 @@ function fetchTableData() {
     //     overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
     //     css: { border: 0, padding: 0, backgroundColor: 'transparent' }
     // });
-    blockElementById("#cardTable");
+    blockElementById("#tableCard");
 
     fetch(`${baseWebhookURL}/webhook/get-tables-status`)
         .then(response => response.json())
         .then(data => {
             // $.unblockUI();
-            unblockElementById("#cardTable");
+            unblockElementById("#tableCard");
             updateTable(data);
         })
         .catch(error => {
             // $.unblockUI();
-            unblockElementById("#cardTable");
+            unblockElementById("#tableCard");
             document.getElementById('tableStatusMessage').innerHTML = '<p class="text-danger">Veri tabloları yüklenirken hata oluştu.</p>';
             document.getElementById('tableStatusMessage').style.display = 'show';
         });
