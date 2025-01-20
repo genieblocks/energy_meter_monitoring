@@ -1818,11 +1818,13 @@ function defineMeter() {
     .then(response => response.json())
     .then(data => {
         // $.unblockUI();
-        unblockElementById($('#meter-detail-modal').find('.modal-body'));
+        // unblockElementById($('#meter-detail-modal').find('.modal-body'));
         if (data[0].success) {
             $('#meter-detail-modal').modal('hide');
+            unblockElementById($('#meter-detail-modal').find('.modal-body'));
             location.reload(); // Sayfayı yeniden yükle.
         } else {
+            unblockElementById($('#meter-detail-modal').find('.modal-body'));
             alert('Sayaç tanımlanırken bir hata oluştu: ' + data[0].message);
         }
     })
