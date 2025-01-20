@@ -998,11 +998,6 @@ function submitTableContent() {
         jsonData[key] = value;
     });
 
-    // $.blockUI({
-    //     message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
-    //     overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
-    //     css: { border: 0, padding: 0, backgroundColor: 'transparent' }
-    // });
     blockElementById($('#tableContentModal').find('.modal-body'));
 
     fetch(`${baseWebhookURL}/webhook/insert-table-content`, {
@@ -1014,7 +1009,6 @@ function submitTableContent() {
     })
     .then(response => response.json())
     .then(data => {
-        // $.unblockUI();
         if (data[0].success) {
             $('#newDataModal').modal('hide');
             showTableContent($('#tableContentModal .modal-title').text());
