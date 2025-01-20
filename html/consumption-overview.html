@@ -1722,7 +1722,7 @@ function removeDefinedMeter(tableName, meterIDFieldNameData, meterIDData) {
         FieldsToUpdate: fieldsToUpdate
     };
 
-    blockElementById($('#meter-detail').find('.modal-body'));
+    blockElementById($('#meter-detail-modal').find('.modal-body'));
     // $.blockUI({
     //     message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
     //     overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
@@ -1739,7 +1739,7 @@ function removeDefinedMeter(tableName, meterIDFieldNameData, meterIDData) {
     .then(response => response.json())
     .then(data => {
         // $.unblockUI();
-        unblockElementById($('#meter-detail').find('.modal-body'));
+        unblockElementById($('#meter-detail-modal').find('.modal-body'));
         if (data[0].success) {
             $('#meter-detail-modal').modal('hide');
             location.reload(); // Sayfayı yeniden yükle.
@@ -1749,7 +1749,7 @@ function removeDefinedMeter(tableName, meterIDFieldNameData, meterIDData) {
     })
     .catch(error => {
         // $.unblockUI();
-        unblockElementById($('#meter-detail').find('.modal-body'));
+        unblockElementById($('#meter-detail-modal').find('.modal-body'));
         alert('Veri kaldırılırken bir hata oluştu.');
     });
 }
@@ -1760,7 +1760,7 @@ function defineMeter() {
     //     overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
     //     css: { border: 0, padding: 0, backgroundColor: 'transparent' }
     // });
-    blockElementById($('#meter-detail').find('.modal-body'));
+    blockElementById($('#meter-detail-modal').find('.modal-body'));
 
     // Sayaç tanımlama modalındaki select öğesini seç
     const modal = document.getElementById('defineMeterModal');
@@ -1818,7 +1818,7 @@ function defineMeter() {
     .then(response => response.json())
     .then(data => {
         // $.unblockUI();
-        unblockElementById($('#meter-detail').find('.modal-body'));
+        unblockElementById($('#meter-detail-modal').find('.modal-body'));
         if (data[0].success) {
             $('#meter-detail-modal').modal('hide');
             location.reload(); // Sayfayı yeniden yükle.
@@ -1828,7 +1828,7 @@ function defineMeter() {
     })
     .catch(error => {
         // $.unblockUI();
-        unblockElementById($('#meter-detail').find('.modal-body'));
+        unblockElementById($('#meter-detail-modal').find('.modal-body'));
         alert('Sayaç tanımlanırken bir hata oluştu.');
     });
 }
