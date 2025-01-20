@@ -784,7 +784,7 @@
     // const baseWebhookURL = "http://192.168.1.146:5678"; // Değiştirmek istediğiniz temel URL
 
 /* ========================= Block Functions ========================= */
-function blockTable(tableId) {
+function blockElementById(tableId) {
   $(tableId).block({
     message: '<div class="icon-spinner9 icon-spin icon-lg"></div> Yükleniyor...',
     overlayCSS: {
@@ -802,7 +802,7 @@ function blockTable(tableId) {
   });
 }
 
-function unblockTable(tableId) {
+function unblockElementById(tableId) {
   $(tableId).unblock();
 }
 
@@ -1390,7 +1390,7 @@ function updateTableContent() {
 
     // Artık sadece ilgili tabloyu blockluyoruz
     if (tableId) {
-      blockTable(tableId);
+      blockElementById(tableId);
     }
 
     fetch(`${baseWebhookURL}/webhook/update-table-content`, {
@@ -1403,7 +1403,7 @@ function updateTableContent() {
     .then(response => response.json())
     .then(data => {
         if (tableId) {
-          unblockTable(tableId);
+          unblockElementById(tableId);
         }
         if (data[0].success) {
             $('#updateDataModal').modal('hide');
@@ -1414,7 +1414,7 @@ function updateTableContent() {
     })
     .catch(error => {
         if (tableId) {
-          unblockTable(tableId);
+          unblockElementById(tableId);
         }
         alert('Veri güncellenirken bir hata oluştu.');
     });
@@ -1822,14 +1822,14 @@ function initializePage() {
   tablePromises.push(
     (async () => {
       const tableId = "#electricityMeterTable";
-      blockTable(tableId); // 1) tabloyu kilitle
+      blockElementById(tableId); // 1) tabloyu kilitle
       try {
         await fetchElectricMetersData(); // 2) veriyi çek ve satır ekle
         initializeDataTable(tableId);    // 3) DataTable başlat
       } catch (error) {
         console.error("Elektrik tablosu yüklenemedi:", error);
       } finally {
-        unblockTable(tableId);          // 4) tabloyu aç
+        unblockElementById(tableId);          // 4) tabloyu aç
       }
     })()
   );
@@ -1838,14 +1838,14 @@ function initializePage() {
   tablePromises.push(
     (async () => {
       const tableId = "#waterMeterTable";
-      blockTable(tableId);
+      blockElementById(tableId);
       try {
         await fetchWaterMetersData();
         initializeDataTable(tableId);
       } catch (error) {
         console.error("Su tablosu yüklenemedi:", error);
       } finally {
-        unblockTable(tableId);
+        unblockElementById(tableId);
       }
     })()
   );
@@ -1854,14 +1854,14 @@ function initializePage() {
   tablePromises.push(
     (async () => {
       const tableId = "#heatingMeterTable";
-      blockTable(tableId);
+      blockElementById(tableId);
       try {
         await fetchHeatingMetersData();
         initializeDataTable(tableId);
       } catch (error) {
         console.error("Isıtma tablosu yüklenemedi:", error);
       } finally {
-        unblockTable(tableId);
+        unblockElementById(tableId);
       }
     })()
   );
@@ -1870,14 +1870,14 @@ function initializePage() {
   tablePromises.push(
     (async () => {
       const tableId = "#coolingMeterTable";
-      blockTable(tableId);
+      blockElementById(tableId);
       try {
         await fetchCoolingMetersData();
         initializeDataTable(tableId);
       } catch (error) {
         console.error("Soğutma tablosu yüklenemedi:", error);
       } finally {
-        unblockTable(tableId);
+        unblockElementById(tableId);
       }
     })()
   );
