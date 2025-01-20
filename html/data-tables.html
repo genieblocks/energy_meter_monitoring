@@ -938,11 +938,6 @@ function showNewDataForm(tableName) {
     // Clear previous form fields
     formBody.innerHTML = '';
 
-    // $.blockUI({
-    //     message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
-    //     overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
-    //     css: { border: 0, padding: 0, backgroundColor: 'transparent' }
-    // });
     blockElementById($('#newDataModal').find('.modal-body'));
 
     fetch(`${baseWebhookURL}/webhook/get-table-column-names`, {
@@ -954,7 +949,6 @@ function showNewDataForm(tableName) {
     })
     .then(response => response.json())
     .then(data => {
-        // $.unblockUI();
         if (data && Array.isArray(data)) {
             data.forEach(column => {
                 const formGroup = document.createElement('div');
@@ -980,7 +974,6 @@ function showNewDataForm(tableName) {
         }
     })
     .catch(error => {
-        // $.unblockUI();
         alert('Sütun bilgileri getirilirken bir hata oluştu.');
         unblockElementById($('#newDataModal').find('.modal-body'));
     });
@@ -1054,11 +1047,7 @@ function updateTableContent() {
         FieldsToUpdate: fieldsToUpdate
     };
 
-    $.blockUI({
-        message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
-        overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
-        css: { border: 0, padding: 0, backgroundColor: 'transparent' }
-    });
+    blockElementById($('#tableContentModal').find('.modal-body'));
 
     fetch(`${baseWebhookURL}/webhook/update-table-content`, {
         method: 'POST',
@@ -1069,17 +1058,18 @@ function updateTableContent() {
     })
     .then(response => response.json())
     .then(data => {
-        $.unblockUI();
         if (data[0].success) {
             $('#updateDataModal').modal('hide');
             showTableContent($('#tableContentModal .modal-title').text());
+            unblockElementById($('#tableContentModal').find('.modal-body'));
         } else {
             alert('Veri güncellenirken bir hata oluştu: ' + data[0].message);
+            unblockElementById($('#tableContentModal').find('.modal-body'));
         }
     })
     .catch(error => {
-        $.unblockUI();
         alert('Veri güncellenirken bir hata oluştu.');
+        unblockElementById($('#tableContentModal').find('.modal-body'));
     });
 }
 
