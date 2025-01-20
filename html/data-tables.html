@@ -998,11 +998,12 @@ function submitTableContent() {
         jsonData[key] = value;
     });
 
-    $.blockUI({
-        message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
-        overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
-        css: { border: 0, padding: 0, backgroundColor: 'transparent' }
-    });
+    // $.blockUI({
+    //     message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
+    //     overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
+    //     css: { border: 0, padding: 0, backgroundColor: 'transparent' }
+    // });
+    blockElementById($('#tableContentModal').find('.modal-body'));
 
     fetch(`${baseWebhookURL}/webhook/insert-table-content`, {
         method: 'POST',
@@ -1013,17 +1014,19 @@ function submitTableContent() {
     })
     .then(response => response.json())
     .then(data => {
-        $.unblockUI();
+        // $.unblockUI();
         if (data[0].success) {
             $('#newDataModal').modal('hide');
             showTableContent($('#tableContentModal .modal-title').text());
+            unblockElementById($('#tableContentModal').find('.modal-body'));
         } else {
             alert('Veri eklenirken bir hata oluştu: ' + data[0].message);
+            unblockElementById($('#tableContentModal').find('.modal-body'));
         }
     })
     .catch(error => {
-        $.unblockUI();
         alert('Veri eklenirken bir hata oluştu.');
+        unblockElementById($('#tableContentModal').find('.modal-body'));
     });
 }
 
