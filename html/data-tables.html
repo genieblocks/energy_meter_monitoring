@@ -692,11 +692,12 @@ function updateTable(data) {
   
 // Show table content with error handling
 function showTableContent(tableName) {
-    $.blockUI({
-        message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
-        overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
-        css: { border: 0, padding: 0, backgroundColor: 'transparent' }
-    });
+    blockElementById($('#tableContentModal').find('.modal-body'));
+    // $.blockUI({
+    //     message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
+    //     overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
+    //     css: { border: 0, padding: 0, backgroundColor: 'transparent' }
+    // });
 
     fetch(`${baseWebhookURL}/webhook/get-table-content`, {
         method: 'POST',
@@ -708,12 +709,14 @@ function showTableContent(tableName) {
     .then(handleFetchError) // Handle fetch errors
     .then(response => response.json())
     .then(data => {
-        $.unblockUI();
+        // $.unblockUI();
+        unblockElementById($('#tableContentModal').find('.modal-body'));
         updateModalWithData(data, tableName);
         $('#tableContentModal').modal('show');
     })
     .catch(error => {
-        $.unblockUI();
+        // $.unblockUI();
+        unblockElementById($('#tableContentModal').find('.modal-body'));
         console.error('Error fetching table content:', error); // Log the error
         alert('Tablo içeriği getirilirken bir hata oluştu.');
     });
