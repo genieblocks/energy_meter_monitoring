@@ -117,7 +117,7 @@
         <section id="block-subscriber-details">
           <div class="row">
             <div class="col-xs-12 col-md-12">
-              <div class="card border-genie">
+              <div class="card border-genie" id="subscriberCard">
                 <div class="card-header">
                   <h4 class="card-title" id="block-title"></h4> <!-- Dinamik Başlık eklenecek -->
                   <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
@@ -369,6 +369,28 @@
 
 
 /* ========================= Block Functions ========================= */
+function blockTable(tableId) {
+  $(tableId).block({
+    message: '<div class="icon-spinner9 icon-spin icon-lg"></div> Yükleniyor...',
+    overlayCSS: {
+      backgroundColor: '#fff',
+      opacity: 0.8,
+      cursor: 'wait'
+    },
+    css: {
+      border: 0,
+      padding: 0,
+      backgroundColor: 'transparent',
+      color: '#000',
+      fontSize: '14px'
+    }
+  });
+}
+
+function unblockTable(tableId) {
+  $(tableId).unblock();
+}
+
 /**********   Block Modal Functionality  **********/
 function blockModalById(modalId, message = null) {
     var block_ele = $('#' + modalId).find('.modal-body');
@@ -960,11 +982,12 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // UI'yi kilitle ve spinner göster
-    $.blockUI({
-        message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
-        overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
-        css: { border: 0, padding: 0, backgroundColor: 'transparent' },
-    });
+    // $.blockUI({
+    //     message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
+    //     overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
+    //     css: { border: 0, padding: 0, backgroundColor: 'transparent' },
+    // });
+    blockTable('#subscriberCard');
 
     // Blok verilerini al
     const blockParam = new URLSearchParams(window.location.search).get('block');
@@ -1047,7 +1070,8 @@ document.addEventListener('DOMContentLoaded', function () {
         })
         .catch((error) => console.error('Error:', error))
         .finally(() => {
-            $.unblockUI(); // UI'yi aç ve spinnerı kaldır
+            // $.unblockUI(); // UI'yi aç ve spinnerı kaldır
+            unblockTable('#subscriberCard');
         });
 });
 
