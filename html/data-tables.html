@@ -866,8 +866,8 @@ function deleteTableRow(tableName, tableField, tableFieldValue) {
     .then(data => {
         // $.unblockUI();
         if (data[0].success) {
-            alert('Veri başarıyla silindi.');
             showTableContent(tableName); // Refresh table content
+            alert('Veri başarıyla silindi.');
         } else {
             alert('Veri silinirken bir hata oluştu.');
         }
