@@ -784,9 +784,9 @@
     // const baseWebhookURL = "http://192.168.1.146:5678"; // Değiştirmek istediğiniz temel URL
 
 /* ========================= Block Functions ========================= */
-function blockElementById(tableId) {
-  $(tableId).block({
-    message: '<div class="icon-spinner9 icon-spin icon-lg"></div> Yükleniyor...',
+function blockElementById(elementId, message = " Yükleniyor...") {
+  $(elementId).block({
+    message: `<div class="icon-spinner9 icon-spin icon-lg"></div>${message}`,
     overlayCSS: {
       backgroundColor: '#fff',
       opacity: 0.8,
@@ -802,8 +802,8 @@ function blockElementById(tableId) {
   });
 }
 
-function unblockElementById(tableId) {
-  $(tableId).unblock();
+function unblockElementById(elementId) {
+  $(elementId).unblock();
 }
 
 function showLoadingInModalBody(modalId, tableId, message) {
