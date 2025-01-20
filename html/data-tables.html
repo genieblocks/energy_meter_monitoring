@@ -1060,8 +1060,8 @@ function updateTableContent() {
     .then(data => {
         if (data[0].success) {
             showTableContent($('#tableContentModal .modal-title').text());
-            $('#updateDataModal').modal('hide');
             unblockElementById($('#tableContentModal').find('.modal-body'));
+            $('#updateDataModal').modal('hide');
         } else {
             alert('Veri güncellenirken bir hata oluştu: ' + data[0].message);
             unblockElementById($('#tableContentModal').find('.modal-body'));
