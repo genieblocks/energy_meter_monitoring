@@ -369,9 +369,9 @@
 
 
 /* ========================= Block Functions ========================= */
-function blockTable(tableId) {
-  $(tableId).block({
-    message: '<div class="icon-spinner9 icon-spin icon-lg"></div> Yükleniyor...',
+function blockElementById(elementId, message = " Yükleniyor...") {
+  $(elementId).block({
+    message: `<div class="icon-spinner9 icon-spin icon-lg"></div>${message}`,
     overlayCSS: {
       backgroundColor: '#fff',
       opacity: 0.8,
@@ -387,8 +387,8 @@ function blockTable(tableId) {
   });
 }
 
-function unblockTable(tableId) {
-  $(tableId).unblock();
+function unblockElementById(elementId) {
+  $(elementId).unblock();
 }
 
 /**********   Block Modal Functionality  **********/
@@ -987,7 +987,7 @@ document.addEventListener('DOMContentLoaded', function () {
     //     overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
     //     css: { border: 0, padding: 0, backgroundColor: 'transparent' },
     // });
-    blockTable('#subscriberCard');
+    blockElementById('#subscriberCard');
 
     // Blok verilerini al
     const blockParam = new URLSearchParams(window.location.search).get('block');
@@ -1071,7 +1071,7 @@ document.addEventListener('DOMContentLoaded', function () {
         .catch((error) => console.error('Error:', error))
         .finally(() => {
             // $.unblockUI(); // UI'yi aç ve spinnerı kaldır
-            unblockTable('#subscriberCard');
+            unblockElementById('#subscriberCard');
         });
 });
 
