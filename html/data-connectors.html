@@ -502,13 +502,6 @@ document.addEventListener('DOMContentLoaded', function() {
       yearElement.textContent = currentYear;
   }
 
-  // // UI'yi kilitle ve spinner göster
-  // $.blockUI({
-  //   message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
-  //   overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
-  //   css: { border: 0, padding: 0, backgroundColor: 'transparent' }
-  // });
-  // blockElementById('#content-wrapper');
   blockElementById('#iec-section');
   blockElementById('#m-bus-section');
 
@@ -586,9 +579,6 @@ document.addEventListener('DOMContentLoaded', function() {
   })
   .catch(error => console.error('Error:', error))
   .finally(() => {
-    // UI'yi aç ve spinnerı kaldır
-    // $.unblockUI();
-    // unblockElementById('#content-wrapper');
     unblockElementById('#iec-section');
     unblockElementById('#m-bus-section');
   });
@@ -735,11 +725,7 @@ document.addEventListener('DOMContentLoaded', function() {
     };
 
     // Modalı kilitle ve bekleme işareti göster
-    $.blockUI({
-    message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
-    overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
-    css: { border: 0, padding: 0, backgroundColor: 'transparent' }
-    });
+    blockElementById('#iec-section');
 
     fetch(`${baseWebhookURL}/webhook/insert-table-content`, {
         method: 'POST',
@@ -750,7 +736,7 @@ document.addEventListener('DOMContentLoaded', function() {
     })
     .then(response => response.json())
     .then(data => {
-        $.unblockUI();
+        unblockElementById('#iec-section');
         console.log("Received response from insert-table-content:", data); // Debug log
         if (data[0].success) {
             $('#addIecConnectionModal').modal('hide');
@@ -777,8 +763,8 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     })
     .catch(error => {
-        $.unblockUI();
         alert('Veri eklenirken bir hata oluştu.');
+        unblockElementById('#iec-section');
         console.error('Error:', error);
     });
   });
