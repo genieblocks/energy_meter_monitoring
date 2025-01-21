@@ -441,7 +441,7 @@ function unblockElementById(elementId) {
     }
 
     function loadReportLists() {
-      blockElementById('#content-body');
+      blockElementById('#app-content');
 
       fetch(`${baseWebhookURL}/webhook/get-table-content`, {
         method: 'POST',
@@ -478,7 +478,7 @@ function unblockElementById(elementId) {
         alert(`Raporlar yüklenirken bir hata oluştu: ${error.message}`);
       })
       .finally(() => {
-        unblockElementById('#content-body');
+        unblockElementById('#app-content');
       });
     }
 
