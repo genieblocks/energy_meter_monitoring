@@ -1214,12 +1214,14 @@ async function fetchConnectionPointsFromTable(connectionTableName, connectionPoi
 
         if (data[0]?.success && Array.isArray(data[0].data)) {
             connectionPointSelect.innerHTML = '<option value="none" disabled selected>Bağlantı Noktası Seçiniz</option>';
-            data[0].data.forEach(point => {
+            data[0].data
+              .sort((a, b) => a.ConnectionName.localeCompare(b.ConnectionName, 'tr', { sensitivity: 'base' }))
+              .forEach(point => {
                 const option = document.createElement('option');
                 option.value = point.ConnectionName;
                 option.textContent = point.ConnectionName;
                 connectionPointSelect.appendChild(option);
-            });
+              });
         } else {
             console.error('Connection table data could not be loaded:', data[0]?.message || 'No data');
             alert('Bağlantı noktaları yüklenemedi.');
