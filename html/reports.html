@@ -81,7 +81,7 @@
     </div>
   </div>
 
-  <div class="app-content content bg-white">
+  <div class="app-content content bg-white" id="app-content">
     <div class="content-body">
       <nav
         class="header-navbar navbar-expand-md navbar navbar-with-menu navbar-light navbar-border navbar-brand-center">
@@ -117,7 +117,7 @@
         <section id="form-repeater">
           <div class="row">
             <div class="col-xs-12 col-md-12">
-              <div class="card border-genie" id="tableCard">
+              <div class="card border-genie">
                 <div class="card-header">
                   <h4 class="card-title" id="report-form-header">Raporlar</h4>
                   <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
@@ -433,7 +433,7 @@ function unblockElementById(elementId) {
     }
 
     function loadReportLists() {
-      blockElementById('#tableCard');
+      blockElementById('#app-content');
 
       fetch(`${baseWebhookURL}/webhook/get-table-content`, {
         method: 'POST',
@@ -470,7 +470,7 @@ function unblockElementById(elementId) {
         alert(`Raporlar yüklenirken bir hata oluştu: ${error.message}`);
       })
       .finally(() => {
-        unblockElementById('#tableCard');
+        unblockElementById('#app-content');
       });
     }
 
@@ -803,7 +803,7 @@ function unblockElementById(elementId) {
   });
 
   function initiateTimeReportRequest() {
-      blockElementById('#tableCard');
+      blockElementById('#app-content');
 
       fetch(`${baseWebhookURL}/webhook/get-electricity-meter-time-report`, {
           method: 'GET',
@@ -816,12 +816,12 @@ function unblockElementById(elementId) {
           alert(`Error initiating time report request: ${error.message}`);
       })
       .finally(() => {
-          unblockElementById('#tableCard');
+          unblockElementById('#app-content');
     });
   }
 
   function initiateMoxaDeviceStatusReportRequest() {
-      blockElementById('#tableCard');
+      blockElementById('#app-content');
 
       fetch(`${baseWebhookURL}/webhook/get-moxa-device-status-report`, {
           method: 'GET',
@@ -834,7 +834,7 @@ function unblockElementById(elementId) {
           alert(`Error initiating Moxa device status report request: ${error.message}`);
       })
       .finally(() => {
-          unblockElementById('#tableCard');
+          unblockElementById('#app-content');
       });
   }
     
