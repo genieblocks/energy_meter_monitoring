@@ -74,7 +74,7 @@
     </div>
   </div>
 
-  <div class="app-content content bg-white">
+  <div class="app-content content bg-white" id="app-content">
     <div class="content-body">
       <nav
         class="header-navbar navbar-expand-md navbar navbar-with-menu navbar-light navbar-border navbar-brand-center">
@@ -441,7 +441,7 @@ function unblockElementById(elementId) {
     }
 
     function loadReportLists() {
-      blockElementById('#tableCard');
+      blockElementById('#app-content');
 
       fetch(`${baseWebhookURL}/webhook/get-table-content`, {
         method: 'POST',
@@ -478,7 +478,7 @@ function unblockElementById(elementId) {
         alert(`Raporlar yüklenirken bir hata oluştu: ${error.message}`);
       })
       .finally(() => {
-        unblockElementById('#tableCard');
+        unblockElementById('#app-content');
       });
     }
 
