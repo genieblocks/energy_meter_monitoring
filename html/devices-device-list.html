@@ -1307,11 +1307,13 @@ function updateQuickProtocolDetails() {
     .then(response => response.json())
     .then(data => {
         if (data[0]?.success && Array.isArray(data[0].data)) {
-            data[0].data.forEach(point => {
-                const option = document.createElement('option');
-                option.value = point.ConnectionName;
-                option.textContent = point.ConnectionName;
-                connectionPointSelect.appendChild(option);
+          data[0].data
+            .sort((a, b) => a.ConnectionName.localeCompare(b.ConnectionName, 'tr', { sensitivity: 'base' }))
+            .forEach(point => {
+              const option = document.createElement('option');
+              option.value = point.ConnectionName;
+              option.textContent = point.ConnectionName;
+              connectionPointSelect.appendChild(option);
             });
         } else {
             console.error('Connection table verileri yüklenemedi.');
