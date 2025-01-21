@@ -508,7 +508,9 @@ document.addEventListener('DOMContentLoaded', function() {
   //   overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
   //   css: { border: 0, padding: 0, backgroundColor: 'transparent' }
   // });
-  blockElementById('#content-wrapper');
+  // blockElementById('#content-wrapper');
+  blockElementById('#iec-section');
+  blockElementById('#m-bus-section');
 
   // IEC 62056-21 verilerini çek ve tabloya ekle
   fetch(`${baseWebhookURL}/webhook/get-table-content`, {
@@ -586,7 +588,9 @@ document.addEventListener('DOMContentLoaded', function() {
   .finally(() => {
     // UI'yi aç ve spinnerı kaldır
     // $.unblockUI();
-    unblockElementById('#content-wrapper');
+    // unblockElementById('#content-wrapper');
+    unblockElementById('#iec-section');
+    unblockElementById('#m-bus-section');
   });
 });
 
