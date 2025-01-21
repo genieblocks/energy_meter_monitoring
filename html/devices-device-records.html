@@ -141,7 +141,7 @@
             aria-expanded="false">Kalorimetre Soğutma Sayaçları</a>
         </li>
       </ul>
-      <div class="tab-content px-1 pt-1">
+      <div class="tab-content px-1 pt-1" id="tab-content">
         <div role="tabpanel" class="tab-pane active" id="tab31" aria-expanded="true" aria-labelledby="base-tab31">
         <!-- <div class="tab-pane" id="tab31" aria-labelledby="base-tab31"> -->
           <div class="row mb-1">
@@ -382,22 +382,22 @@ $(document).ready(function() {
 
 
 function initializeFilters(table, serialFilterId, dateFilterId) {
-    // Seri numarasına göre arama
-    $(serialFilterId).keyup(function() {
-      table.column(0).search(this.value, true, false).draw();
-    });
+  // Seri numarasına göre arama
+  $(serialFilterId).keyup(function() {
+    table.column(0).search(this.value, true, false).draw();
+  });
 
-    // Başlangıç zamanına göre arama
-    $(dateFilterId).keyup(function() {
-      table.column(4).search(this.value, true, false).draw();
-    });
-  }
+  // Başlangıç zamanına göre arama
+  $(dateFilterId).keyup(function() {
+    table.column(4).search(this.value, true, false).draw();
+  });
+}
 
-  function initializePage() {
-  blockElementById('#DataTables_Table_Electricity_Meter_Records');
-  blockElementById('#DataTables_Table_Water_Meter_Records');
-  blockElementById('#DataTables_Table_Calorimeter_Hot_Meter_Records');
-  blockElementById('#DataTables_Table_Calorimeter_Cold_Meter_Records');
+function initializePage() {
+  blockElementById('#tab-content');
+  // blockElementById('#DataTables_Table_Water_Meter_Records');
+  // blockElementById('#DataTables_Table_Calorimeter_Hot_Meter_Records');
+  // blockElementById('#DataTables_Table_Calorimeter_Cold_Meter_Records');
 
   const fetchPromises = [
     fetchElectricMetersUsageData(),
@@ -409,16 +409,16 @@ function initializeFilters(table, serialFilterId, dateFilterId) {
   Promise.all(fetchPromises).then(() => {
     initializeDataTables(); // Bu satırı ekleyin
   }).catch(error => {
-    unblockElementById('#DataTables_Table_Electricity_Meter_Records');
-    unblockElementById('#DataTables_Table_Water_Meter_Records');
-    unblockElementById('#DataTables_Table_Calorimeter_Hot_Meter_Records');
-    unblockElementById('#DataTables_Table_Calorimeter_Cold_Meter_Records');
+    unblockElementById('#tab-content');
+    // unblockElementById('#DataTables_Table_Water_Meter_Records');
+    // unblockElementById('#DataTables_Table_Calorimeter_Hot_Meter_Records');
+    // unblockElementById('#DataTables_Table_Calorimeter_Cold_Meter_Records');
     console.error("Error initializing page:", error);
   });
-  unblockElementById('#DataTables_Table_Electricity_Meter_Records');
-  unblockElementById('#DataTables_Table_Water_Meter_Records');
-  unblockElementById('#DataTables_Table_Calorimeter_Hot_Meter_Records');
-  unblockElementById('#DataTables_Table_Calorimeter_Cold_Meter_Records');
+  unblockElementById('#tab-content');
+  // unblockElementById('#DataTables_Table_Water_Meter_Records');
+  // unblockElementById('#DataTables_Table_Calorimeter_Hot_Meter_Records');
+  // unblockElementById('#DataTables_Table_Calorimeter_Cold_Meter_Records');
 }
 
   function initializeDataTables() {
