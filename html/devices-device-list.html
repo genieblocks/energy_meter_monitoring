@@ -68,6 +68,13 @@
             </select>
           </fieldset>
           <fieldset class="form-group floating-label-form-group">
+            <label for="electricityConnectionPoint">Bağlantı Noktası</label>
+            <select id="electricityConnectionPoint" name="connectionPoint" class="form-control" required>
+              <option value="none" selected disabled>Bağlantı Noktası Seçiniz.</option>
+              <!-- Dinamik olarak doldurulacak -->
+            </select>
+          </fieldset>
+          <fieldset class="form-group floating-label-form-group">
             <label for="electricityManufacturer">Sayaç Markası</label>
             <select id="electricityManufacturer" name="manufacturer" class="form-control" required>
               <option value="none" selected disabled>Sayaç Markası Seçiniz.</option>
@@ -77,13 +84,6 @@
           <fieldset class="form-group floating-label-form-group">
             <label for="electricityMeterMultiplier">Sayaç Çarpanı</label>
             <input type="number" class="form-control" id="electricityMeterMultiplier" name="meterMultiplier" min="1" placeholder="Sayaç Çarpanı" required>
-          </fieldset>
-          <fieldset class="form-group floating-label-form-group">
-            <label for="electricityConnectionPoint">Bağlantı Noktası</label>
-            <select id="electricityConnectionPoint" name="connectionPoint" class="form-control" required>
-              <option value="none" selected disabled>Bağlantı Noktası Seçiniz.</option>
-              <!-- Dinamik olarak doldurulacak -->
-            </select>
           </fieldset>
           <fieldset class="form-group floating-label-form-group">
             <label for="electricityInvoiceReport">Faturalandırılma</label>
@@ -408,6 +408,12 @@
               <option value="none" disabled selected>Protokol Tipi Seçiniz</option>
             </select>
           </fieldset>
+          <fieldset class="form-group">
+            <label for="editConnectionPoint">Bağlantı Noktası</label>
+            <select class="form-control" id="editConnectionPoint" name="ConnectionPoint" required>
+              <option value="none" disabled selected>Bağlantı Noktası Seçiniz</option>
+            </select>
+          </fieldset>
           <fieldset class="form-group floating-label-form-group" id="editElectricityManufacturerFieldset">
             <label for="editElectricityManufacturer">Sayaç Markası</label>
             <select class="form-control" id="editElectricityManufacturer" name="Brand" required>
@@ -417,12 +423,6 @@
           <fieldset class="form-group" id="editMeterMultiplierFieldset">
               <label for="editMeterMultiplier">Sayaç Çarpanı</label>
               <input type="number" class="form-control" id="editMeterMultiplier" name="MeterMultiplier">
-          </fieldset>
-          <fieldset class="form-group">
-            <label for="editConnectionPoint">Bağlantı Noktası</label>
-            <select class="form-control" id="editConnectionPoint" name="ConnectionPoint" required>
-              <option value="none" disabled selected>Bağlantı Noktası Seçiniz</option>
-            </select>
           </fieldset>
           <fieldset class="form-group floating-label-form-group" id="editMbusDataBlockFieldset">
             <label for="editMbusDataBlock">Okunacak M-Bus Veri ID'si</label>
