@@ -1241,7 +1241,7 @@ function updateQuickProtocolDetails() {
 
     connectionPointFieldset.style.display = 'block';
     connectionPointSelect.innerHTML = '<option value="" disabled selected>Yükleniyor...</option>';
-    
+
     // Bağlantı Noktalarını Yükle
     fetch(`${baseWebhookURL}/webhook/get-table-content`, {
         method: 'POST',
@@ -2224,7 +2224,9 @@ function fetchProtocolDetails(protocolType, meterType) {
   .then(response => response.json())
   .then(data => {
     const manufacturerSelect = document.querySelector(`#${meterType}Manufacturer`);
-    manufacturerSelect.innerHTML = '<option value="none" selected disabled>Sayaç Markası Seçiniz.</option>';
+    manufacturerSelect.innerHTML = ''; 
+    manufacturerSelect.innerHTML = '<option value="" disabled selected>Yükleniyor...</option>';
+    
 
     if (data[0].success && Array.isArray(data[0].data)) {
       const protocol = data[0].data.find(item => item.ProtocolType === protocolType);
@@ -2239,6 +2241,8 @@ function fetchProtocolDetails(protocolType, meterType) {
 }
   
 function fetchManufacturers(manufacturerTable, meterType) {
+  const manufacturerSelect = document.querySelector(`#${meterType}Manufacturer`);
+
   fetch(`${baseWebhookURL}/webhook/get-table-content`, {
     method: 'POST',
     headers: {
@@ -2248,7 +2252,8 @@ function fetchManufacturers(manufacturerTable, meterType) {
   })
   .then(response => response.json())
   .then(data => {
-    const manufacturerSelect = document.querySelector(`#${meterType}Manufacturer`);
+    manufacturerSelect.innerHTML = '';
+    manufacturerSelect.innerHTML = '<option value="none" selected disabled>Sayaç Markası Seçiniz.</option>';
     if (data[0].success && Array.isArray(data[0].data)) {
       data[0].data.forEach(manufacturer => {
         const option = document.createElement('option');
@@ -2274,7 +2279,8 @@ function fetchConnectionPoints(protocolType, meterType) {
     .then(response => response.json())
     .then(data => {
         const connectionPointSelect = document.querySelector(`#${meterType}ConnectionPoint`);
-        connectionPointSelect.innerHTML = '<option value="none" selected disabled>Bağlantı Noktası Seçiniz.</option>';
+        connectionPointSelect.innerHTML = ''; 
+        connectionPointSelect.innerHTML = '<option value="" disabled selected>Yükleniyor...</option>';
 
         if (data[0].success && Array.isArray(data[0].data)) {
             const protocol = data[0].data.find(item => item.ProtocolType === protocolType);
@@ -2300,6 +2306,8 @@ function fetchConnectionPoints(protocolType, meterType) {
 }
   
 function fetchConnections(connectionTable, meterType) {
+  const connectionPointSelect = document.querySelector(`#${meterType}ConnectionPoint`);
+
   fetch(`${baseWebhookURL}/webhook/get-table-content`, {
     method: 'POST',
     headers: {
@@ -2309,8 +2317,9 @@ function fetchConnections(connectionTable, meterType) {
   })
   .then(response => response.json())
   .then(data => {
-    const connectionPointSelect = document.querySelector(`#${meterType}ConnectionPoint`);
     if (data[0].success && Array.isArray(data[0].data)) {
+      connectionPointSelect.innerHTML = ''; 
+      connectionPointSelect.innerHTML = '<option value="none" disabled selected>Bağlantı Noktası Seçiniz</option>';
       data[0].data
         .sort((a, b) => a.ConnectionName.localeCompare(b.ConnectionName, 'tr', { sensitivity: 'base' }))
         .forEach(connection => {
