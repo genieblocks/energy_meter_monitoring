@@ -1240,45 +1240,8 @@ function updateQuickProtocolDetails() {
     const manufacturerSelect = document.getElementById('quickManufacturer');
 
     connectionPointFieldset.style.display = 'block';
-    // connectionPointSelect.innerHTML = '<option value="none" disabled selected>Bağlantı Noktası Seçiniz</option>';
     connectionPointSelect.innerHTML = '<option value="" disabled selected>Yükleniyor...</option>';
-
-    if (protocolType === 'IEC 62056-21') {
-        manufacturerFieldset.style.display = 'block';
-        // manufacturerSelect.innerHTML = '<option value="none" disabled selected>Marka Seçiniz</option>';
-        manufacturerSelect.innerHTML = '<option value="" disabled selected>Yükleniyor...</option>';
-
-        // IEC Manufacturers tablosundan verileri çek
-        fetch(`${baseWebhookURL}/webhook/get-table-content`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ tableName: 'IECManufacturers' })
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data[0]?.success && Array.isArray(data[0].data)) {
-                manufacturerSelect.innerHTML = '';
-                manufacturerSelect.innerHTML = '<option value="none" disabled selected>Marka Seçiniz</option>';
-                const sortedData = data[0].data.sort((a, b) => 
-                    a.ManufacturerName.localeCompare(b.ManufacturerName, 'tr', { sensitivity: 'base' })
-                );
-                sortedData.forEach(manufacturer => {
-                    const option = document.createElement('option');
-                    option.value = manufacturer.ManufacturerName;
-                    option.textContent = manufacturer.ManufacturerName;
-                    manufacturerSelect.appendChild(option);
-                });
-            } else {
-                console.error('Manufacturers tablosu yüklenemedi.');
-            }
-        })
-        .catch(error => console.error('Error fetching manufacturers:', error));
-    } else {
-        manufacturerFieldset.style.display = 'none';
-    }
-
+    
     // Bağlantı Noktalarını Yükle
     fetch(`${baseWebhookURL}/webhook/get-table-content`, {
         method: 'POST',
@@ -1325,6 +1288,41 @@ function updateQuickProtocolDetails() {
         }
     })
     .catch(error => console.error('Error fetching connection points:', error));
+
+    if (protocolType === 'IEC 62056-21') {
+        manufacturerFieldset.style.display = 'block';
+        manufacturerSelect.innerHTML = '<option value="" disabled selected>Yükleniyor...</option>';
+
+        // IEC Manufacturers tablosundan verileri çek
+        fetch(`${baseWebhookURL}/webhook/get-table-content`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ tableName: 'IECManufacturers' })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data[0]?.success && Array.isArray(data[0].data)) {
+                manufacturerSelect.innerHTML = '';
+                manufacturerSelect.innerHTML = '<option value="none" disabled selected>Marka Seçiniz</option>';
+                const sortedData = data[0].data.sort((a, b) => 
+                    a.ManufacturerName.localeCompare(b.ManufacturerName, 'tr', { sensitivity: 'base' })
+                );
+                sortedData.forEach(manufacturer => {
+                    const option = document.createElement('option');
+                    option.value = manufacturer.ManufacturerName;
+                    option.textContent = manufacturer.ManufacturerName;
+                    manufacturerSelect.appendChild(option);
+                });
+            } else {
+                console.error('Manufacturers tablosu yüklenemedi.');
+            }
+        })
+        .catch(error => console.error('Error fetching manufacturers:', error));
+    } else {
+        manufacturerFieldset.style.display = 'none';
+    }
 }
 
 function startQuickQuery() {
