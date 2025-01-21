@@ -110,7 +110,7 @@
         <section id="form-repeater">
           <div class="row">
             <div class="col-xs-12 col-md-12">
-              <div class="card border-genie">
+              <div class="card border-genie" id="tableCard">
                 <div class="card-header">
                   <h4 class="card-title" id="repeat-form">Raporlar</h4>
                   <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
@@ -275,6 +275,29 @@
     // const baseWebhookURL = "http://192.168.1.146:5678"; // Değiştirmek istediğiniz temel URL
     // const baseWebhookURL = "http://192.168.1.119:5678"; // gbenergy_lenovo URL
 
+/* ========================= Block Functions ========================= */
+function blockElementById(elementId, message = " Yükleniyor...") {
+  $(elementId).block({
+    message: `<div class="icon-spinner9 icon-spin icon-lg"></div>${message}`,
+    overlayCSS: {
+      backgroundColor: '#fff',
+      opacity: 0.8,
+      cursor: 'wait'
+    },
+    css: {
+      border: 0,
+      padding: 0,
+      backgroundColor: 'transparent',
+      color: '#000',
+      fontSize: '14px'
+    }
+  });
+}
+
+function unblockElementById(elementId) {
+  $(elementId).unblock();
+}
+
     document.addEventListener('DOMContentLoaded', () => {
       const yearElement = document.getElementById('footer-dynamic-year');
       if (yearElement) {
@@ -418,12 +441,7 @@
     }
 
     function loadReportLists() {
-      // Arayüzü veri alırken blokla
-      $.blockUI({
-        message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
-        overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
-        css: { border: 0, padding: 0, backgroundColor: 'transparent' }
-      });
+      blockElementById('#tableCard');
 
       fetch(`${baseWebhookURL}/webhook/get-table-content`, {
         method: 'POST',
@@ -460,7 +478,7 @@
         alert(`Raporlar yüklenirken bir hata oluştu: ${error.message}`);
       })
       .finally(() => {
-        $.unblockUI();
+        unblockElementById('#tableCard');
       });
     }
 
