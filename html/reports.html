@@ -433,13 +433,6 @@ function unblockElementById(elementId) {
     }
 
     function loadReportLists() {
-      // Arayüzü veri alırken blokla
-      // $.blockUI({
-      //   message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
-      //   overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
-      //   css: { border: 0, padding: 0, backgroundColor: 'transparent' }
-      // });
-
       blockElementById('#tableCard');
 
       fetch(`${baseWebhookURL}/webhook/get-table-content`, {
@@ -477,7 +470,6 @@ function unblockElementById(elementId) {
         alert(`Raporlar yüklenirken bir hata oluştu: ${error.message}`);
       })
       .finally(() => {
-        // $.unblockUI();
         unblockElementById('#tableCard');
       });
     }
@@ -650,11 +642,7 @@ function unblockElementById(elementId) {
     }
 
     function fetchReportData(reportTableName, reportRequestDate, reportTitle) {
-      $.blockUI({
-        message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
-        overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
-        css: { border: 0, padding: 0, backgroundColor: 'transparent' }
-      });
+      blockElementById($('#reportModal').find('.modal-body'));
 
       fetch(`${baseWebhookURL}/webhook/get-report-data`, {
         method: 'POST',
@@ -672,7 +660,7 @@ function unblockElementById(elementId) {
         console.error('Error fetching report data:', error.message);
       })
       .finally(() => {
-        $.unblockUI();
+        unblockElementById($('#reportModal').find('.modal-body'));
       });
     }
 
