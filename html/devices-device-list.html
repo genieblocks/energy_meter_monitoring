@@ -1240,11 +1240,13 @@ function updateQuickProtocolDetails() {
     const manufacturerSelect = document.getElementById('quickManufacturer');
 
     connectionPointFieldset.style.display = 'block';
-    connectionPointSelect.innerHTML = '<option value="none" disabled selected>Bağlantı Noktası Seçiniz</option>';
+    // connectionPointSelect.innerHTML = '<option value="none" disabled selected>Bağlantı Noktası Seçiniz</option>';
+    connectionPointSelect.innerHTML = '<option value="" disabled selected>Yükleniyor...</option>';
 
     if (protocolType === 'IEC 62056-21') {
         manufacturerFieldset.style.display = 'block';
-        manufacturerSelect.innerHTML = '<option value="none" disabled selected>Marka Seçiniz</option>';
+        // manufacturerSelect.innerHTML = '<option value="none" disabled selected>Marka Seçiniz</option>';
+        manufacturerSelect.innerHTML = '<option value="" disabled selected>Yükleniyor...</option>';
 
         // IEC Manufacturers tablosundan verileri çek
         fetch(`${baseWebhookURL}/webhook/get-table-content`, {
