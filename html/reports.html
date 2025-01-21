@@ -803,11 +803,7 @@ function unblockElementById(elementId) {
   });
 
   function initiateTimeReportRequest() {
-      $.blockUI({
-          message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
-          overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
-          css: { border: 0, padding: 0, backgroundColor: 'transparent' }
-      });
+      blockElementById('#tableCard');
 
       fetch(`${baseWebhookURL}/webhook/get-electricity-meter-time-report`, {
           method: 'GET',
@@ -820,16 +816,12 @@ function unblockElementById(elementId) {
           alert(`Error initiating time report request: ${error.message}`);
       })
       .finally(() => {
-          $.unblockUI();
+          unblockElementById('#tableCard');
     });
   }
 
   function initiateMoxaDeviceStatusReportRequest() {
-      $.blockUI({
-          message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
-          overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
-          css: { border: 0, padding: 0, backgroundColor: 'transparent' }
-      });
+      blockElementById('#tableCard');
 
       fetch(`${baseWebhookURL}/webhook/get-moxa-device-status-report`, {
           method: 'GET',
@@ -842,7 +834,7 @@ function unblockElementById(elementId) {
           alert(`Error initiating Moxa device status report request: ${error.message}`);
       })
       .finally(() => {
-          $.unblockUI();
+          unblockElementById('#tableCard');
       });
   }
     
