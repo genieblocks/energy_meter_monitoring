@@ -1142,7 +1142,12 @@ async function fetchBrandFromTable(protocolType, manufacturerSelect) {
 
         // Manufacturer select içeriği doldurulur
         manufacturerSelect.innerHTML = '<option value="none" selected disabled>Sayaç Markası Seçiniz.</option>';
-        manufacturerData[0].data.forEach(manufacturer => {
+        const sortedManufacturers = manufacturerData[0].data.sort((a, b) => {
+            const nameA = a.ManufacturerName.toLowerCase();
+            const nameB = b.ManufacturerName.toLowerCase();
+            return nameA.localeCompare(nameB);
+        });
+        sortedManufacturers.forEach(manufacturer => {
             const option = document.createElement('option');
             option.value = manufacturer.ManufacturerName;
             option.textContent = manufacturer.ManufacturerName;
