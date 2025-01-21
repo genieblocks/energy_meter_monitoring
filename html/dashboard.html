@@ -383,6 +383,29 @@
   const baseURL = "http://192.168.2.250";
 </script>
 <script>
+/* ========================= Block Functions ========================= */
+function blockElementById(elementId, message = " Yükleniyor...") {
+  $(elementId).block({
+    message: `<div class="icon-spinner9 icon-spin icon-lg"></div>${message}`,
+    overlayCSS: {
+      backgroundColor: '#fff',
+      opacity: 0.8,
+      cursor: 'wait'
+    },
+    css: {
+      border: 0,
+      padding: 0,
+      backgroundColor: 'transparent',
+      color: '#000',
+      fontSize: '14px'
+    }
+  });
+}
+
+function unblockElementById(elementId) {
+  $(elementId).unblock();
+}
+
 // document.addEventListener('DOMContentLoaded', function () {
 //     // app-menu.js tarafından yapılan değişiklikleri engelle
 //     const originalReset = $.app.menu.reset;
