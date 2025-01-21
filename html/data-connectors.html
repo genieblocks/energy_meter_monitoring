@@ -117,9 +117,9 @@
           </div>
         </div>
       </nav>
-      <div class="content-wrapper">
+      <div class="content-wrapper" id="content-wrapper">
 <!-- IEC 62056-21 section start -->
-<section id="form-repeater">
+<section id="iec-section">
   <div class="row">
     <div class="col-xs-12 col-md-12">
       <div class="card border-genie">
@@ -472,6 +472,29 @@ aria-hidden="true">
   const baseWebhookURL = "http://192.168.2.250:5678"; // Değiştirmek istediğiniz temel URL
   // const baseWebhookURL = "http://192.168.1.146:5678"; // Değiştirmek istediğiniz temel URL
 
+/* ========================= Block Functions ========================= */
+function blockElementById(elementId, message = " Yükleniyor...") {
+  $(elementId).block({
+    message: `<div class="icon-spinner9 icon-spin icon-lg"></div>${message}`,
+    overlayCSS: {
+      backgroundColor: '#fff',
+      opacity: 0.8,
+      cursor: 'wait'
+    },
+    css: {
+      border: 0,
+      padding: 0,
+      backgroundColor: 'transparent',
+      color: '#000',
+      fontSize: '14px'
+    }
+  });
+}
+
+function unblockElementById(elementId) {
+  $(elementId).unblock();
+}
+
 document.addEventListener('DOMContentLoaded', function() {
   const yearElement = document.getElementById('footer-dynamic-year');
   if (yearElement) {
@@ -479,12 +502,13 @@ document.addEventListener('DOMContentLoaded', function() {
       yearElement.textContent = currentYear;
   }
 
-  // UI'yi kilitle ve spinner göster
-  $.blockUI({
-    message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
-    overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
-    css: { border: 0, padding: 0, backgroundColor: 'transparent' }
-  });
+  // // UI'yi kilitle ve spinner göster
+  // $.blockUI({
+  //   message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
+  //   overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
+  //   css: { border: 0, padding: 0, backgroundColor: 'transparent' }
+  // });
+  blockElementById('#content-wrapper');
 
   // IEC 62056-21 verilerini çek ve tabloya ekle
   fetch(`${baseWebhookURL}/webhook/get-table-content`, {
@@ -561,7 +585,8 @@ document.addEventListener('DOMContentLoaded', function() {
   .catch(error => console.error('Error:', error))
   .finally(() => {
     // UI'yi aç ve spinnerı kaldır
-    $.unblockUI();
+    // $.unblockUI();
+    unblockElementById('#content-wrapper');
   });
 });
 
