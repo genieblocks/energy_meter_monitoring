@@ -1255,7 +1255,11 @@ function updateQuickProtocolDetails() {
         .then(response => response.json())
         .then(data => {
             if (data[0]?.success && Array.isArray(data[0].data)) {
-                data[0].data.forEach(manufacturer => {
+                const sortedData = data[0].data.sort((a, b) => 
+                    a.ManufacturerName.localeCompare(b.ManufacturerName, 'tr', { sensitivity: 'base' })
+                );
+
+                sortedData.forEach(manufacturer => {
                     const option = document.createElement('option');
                     option.value = manufacturer.ManufacturerName;
                     option.textContent = manufacturer.ManufacturerName;
