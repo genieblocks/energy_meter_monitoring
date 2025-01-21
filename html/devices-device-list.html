@@ -2304,12 +2304,14 @@ function fetchConnections(connectionTable, meterType) {
   .then(data => {
     const connectionPointSelect = document.querySelector(`#${meterType}ConnectionPoint`);
     if (data[0].success && Array.isArray(data[0].data)) {
-      data[0].data.forEach(connection => {
-        const option = document.createElement('option');
-        option.value = connection.ConnectionName;
-        option.textContent = connection.ConnectionName;
-        connectionPointSelect.appendChild(option);
-      });
+      data[0].data
+        .sort((a, b) => a.ConnectionName.localeCompare(b.ConnectionName, 'tr', { sensitivity: 'base' }))
+        .forEach(connection => {
+          const option = document.createElement('option');
+          option.value = connection.ConnectionName;
+          option.textContent = connection.ConnectionName;
+          connectionPointSelect.appendChild(option);
+        });
     } else {
       console.error('Connection tablosu verileri yüklenemedi:', data[0].message);
     }
