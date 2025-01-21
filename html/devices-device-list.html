@@ -1259,10 +1259,11 @@ function updateQuickProtocolDetails() {
         .then(response => response.json())
         .then(data => {
             if (data[0]?.success && Array.isArray(data[0].data)) {
+                manufacturerSelect.innerHTML = '';
+                manufacturerSelect.innerHTML = '<option value="none" disabled selected>Marka Seçiniz</option>';
                 const sortedData = data[0].data.sort((a, b) => 
                     a.ManufacturerName.localeCompare(b.ManufacturerName, 'tr', { sensitivity: 'base' })
                 );
-
                 sortedData.forEach(manufacturer => {
                     const option = document.createElement('option');
                     option.value = manufacturer.ManufacturerName;
@@ -1309,6 +1310,8 @@ function updateQuickProtocolDetails() {
     .then(response => response.json())
     .then(data => {
         if (data[0]?.success && Array.isArray(data[0].data)) {
+          connectionPointSelect.innerHTML = ''; 
+          connectionPointSelect.innerHTML = '<option value="none" disabled selected>Bağlantı Noktası Seçiniz</option>';
           data[0].data
             .sort((a, b) => a.ConnectionName.localeCompare(b.ConnectionName, 'tr', { sensitivity: 'base' }))
             .forEach(point => {
