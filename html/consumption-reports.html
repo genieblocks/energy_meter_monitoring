@@ -657,11 +657,7 @@ function unblockElementById(elementId) {
     }
 
     function fetchReportData(reportTableName, reportRequestDate, reportTitle) {
-      $.blockUI({
-        message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
-        overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
-        css: { border: 0, padding: 0, backgroundColor: 'transparent' }
-      });
+      blockElementById($('#reportModal').find('.modal-body'));
 
       fetch(`${baseWebhookURL}/webhook/get-report-data`, {
         method: 'POST',
@@ -679,7 +675,7 @@ function unblockElementById(elementId) {
         console.error('Error fetching report data:', error.message);
       })
       .finally(() => {
-        $.unblockUI();
+        unblockElementById($('#reportModal').find('.modal-body'));
       });
     }
 
@@ -1058,11 +1054,7 @@ function unblockElementById(elementId) {
             return;
         }
 
-        $.blockUI({
-            message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
-            overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
-            css: { border: 0, padding: 0, backgroundColor: 'transparent' }
-        });
+        blockElementById('#app-content');
 
         fetch(`${baseWebhookURL}${endpoint}`, {
             method: "GET",
@@ -1084,16 +1076,12 @@ function unblockElementById(elementId) {
             alert(`Rapor oluşturulurken bir hata oluştu: ${error.message}`);
         })
         .finally(() => {
-            $.unblockUI();
+            unblockElementById('#app-content');
         });
     }
 
     function initiatePreviousMonthElectricityReportRequest() {
-        $.blockUI({
-            message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
-            overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
-            css: { border: 0, padding: 0, backgroundColor: 'transparent' }
-        });
+        blockElementById('#app-content');
 
         fetch(`${baseWebhookURL}/webhook/get-previous-month-electricity-report`, {
             method: 'GET',
@@ -1106,16 +1094,12 @@ function unblockElementById(elementId) {
             alert(`Error initiating report: ${error.message}`);
         })
         .finally(() => {
-            $.unblockUI();
+            unblockElementById('#app-content');
         });
     }
 
     function initiateTimeReportRequest() {
-        $.blockUI({
-            message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
-            overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
-            css: { border: 0, padding: 0, backgroundColor: 'transparent' }
-        });
+        blockElementById('#app-content');
 
         fetch(`${baseWebhookURL}/webhook/get-electricity-meter-time-report`, {
             method: 'GET',
@@ -1128,16 +1112,12 @@ function unblockElementById(elementId) {
             alert(`Error initiating time report request: ${error.message}`);
         })
         .finally(() => {
-            $.unblockUI();
+            unblockElementById('#app-content');
         });
     }
 
     function initiateMoxaDeviceStatusReportRequest() {
-        $.blockUI({
-            message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
-            overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
-            css: { border: 0, padding: 0, backgroundColor: 'transparent' }
-        });
+        blockElementById('#app-content');
 
         fetch(`${baseWebhookURL}/webhook/get-moxa-device-status-report`, {
             method: 'GET',
@@ -1150,16 +1130,12 @@ function unblockElementById(elementId) {
             alert(`Error initiating Moxa device status report request: ${error.message}`);
         })
         .finally(() => {
-            $.unblockUI();
+            unblockElementById('#app-content');
         });
     }
 
     function initiateSubscribersMeterListReportRequest() {
-        $.blockUI({
-            message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
-            overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
-            css: { border: 0, padding: 0, backgroundColor: 'transparent' }
-        });
+        blockElementById('#app-content');
 
         fetch(`${baseWebhookURL}/webhook/get-subscribers-meter-list-report`, {
             method: 'GET',
@@ -1172,7 +1148,7 @@ function unblockElementById(elementId) {
             alert(`Error initiating report: ${error.message}`);
         })
         .finally(() => {
-            $.unblockUI();
+            unblockElementById('#app-content');
         });
     }
     
