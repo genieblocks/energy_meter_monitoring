@@ -344,6 +344,29 @@
   const baseWebhookURL = "http://192.168.2.250:5678"; // Değiştirmek istediğiniz temel URL
   // const baseWebhookURL = "http://192.168.1.146:5678"; // Değiştirmek istediğiniz temel URL
 
+/* ========================= Block Functions ========================= */
+function blockElementById(elementId, message = " Yükleniyor...") {
+  $(elementId).block({
+    message: `<div class="icon-spinner9 icon-spin icon-lg"></div>${message}`,
+    overlayCSS: {
+      backgroundColor: '#fff',
+      opacity: 0.8,
+      cursor: 'wait'
+    },
+    css: {
+      border: 0,
+      padding: 0,
+      backgroundColor: 'transparent',
+      color: '#000',
+      fontSize: '14px'
+    }
+  });
+}
+
+function unblockElementById(elementId) {
+  $(elementId).unblock();
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   const yearElement = document.getElementById('footer-dynamic-year');
   if (yearElement) {
