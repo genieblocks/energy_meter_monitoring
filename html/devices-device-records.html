@@ -371,11 +371,10 @@ function initializeFilters(table, serialFilterId, dateFilterId) {
   }
 
   function initializePage() {
-  $.blockUI({
-    message: '<div class="icon-spinner9 icon-spin icon-lg"></div>',
-    overlayCSS: { backgroundColor: '#fff', opacity: 0.8, cursor: 'wait' },
-    css: { border: 0, padding: 0, backgroundColor: 'transparent' }
-  });
+  blockElementById('#DataTables_Table_Electricity_Meter_Records');
+  blockElementById('#DataTables_Table_Water_Meter_Records');
+  blockElementById('#DataTables_Table_Calorimeter_Hot_Meter_Records');
+  blockElementById('#DataTables_Table_Calorimeter_Cold_Meter_Records');
 
   const fetchPromises = [
     fetchElectricMetersUsageData(),
@@ -386,11 +385,17 @@ function initializeFilters(table, serialFilterId, dateFilterId) {
 
   Promise.all(fetchPromises).then(() => {
     initializeDataTables(); // Bu satırı ekleyin
-    $.unblockUI();
   }).catch(error => {
-    $.unblockUI();
+    unblockElementById('#DataTables_Table_Electricity_Meter_Records');
+    unblockElementById('#DataTables_Table_Water_Meter_Records');
+    unblockElementById('#DataTables_Table_Calorimeter_Hot_Meter_Records');
+    unblockElementById('#DataTables_Table_Calorimeter_Cold_Meter_Records');
     console.error("Error initializing page:", error);
   });
+  unblockElementById('#DataTables_Table_Electricity_Meter_Records');
+  unblockElementById('#DataTables_Table_Water_Meter_Records');
+  unblockElementById('#DataTables_Table_Calorimeter_Hot_Meter_Records');
+  unblockElementById('#DataTables_Table_Calorimeter_Cold_Meter_Records');
 }
 
   function initializeDataTables() {
