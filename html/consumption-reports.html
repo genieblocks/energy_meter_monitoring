@@ -105,7 +105,7 @@
           </div>
         </div>
       </nav>
-      <div class="content-wrapper">
+      <div class="content-wrapper" id="content-wrapper">
         <!-- Report Section Start -->
         <section id="form-repeater">
           <div class="row">
@@ -441,7 +441,7 @@ function unblockElementById(elementId) {
     }
 
     function loadReportLists() {
-      blockElementById('#app-content');
+      blockElementById('#content-wrapper');
 
       fetch(`${baseWebhookURL}/webhook/get-table-content`, {
         method: 'POST',
@@ -478,7 +478,7 @@ function unblockElementById(elementId) {
         alert(`Raporlar yüklenirken bir hata oluştu: ${error.message}`);
       })
       .finally(() => {
-        unblockElementById('#app-content');
+        unblockElementById('#content-wrapper');
       });
     }
 
