@@ -688,6 +688,7 @@ function updateTable(data) {
 // Show table content with error handling
 function showTableContent(tableName) {
     blockElementById($('#tableContentModal').find('.modal-body'));
+    $('#tableContentModal').modal('show');
 
     fetch(`${baseWebhookURL}/webhook/get-table-content`, {
         method: 'POST',
@@ -701,7 +702,6 @@ function showTableContent(tableName) {
     .then(data => {
         unblockElementById($('#tableContentModal').find('.modal-body'));
         updateModalWithData(data, tableName);
-        $('#tableContentModal').modal('show');
     })
     .catch(error => {
         unblockElementById($('#tableContentModal').find('.modal-body'));
