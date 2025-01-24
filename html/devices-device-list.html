@@ -1688,6 +1688,7 @@ function resetModal(modalId, tableId, queryNoContentMessageId) {
 
   if (table) {
     table.style.display = 'none';
+    tableBody.innerHTML = '';
   }
   if (queryNoContentMessage) {
     queryNoContentMessage.style.display = 'none';
