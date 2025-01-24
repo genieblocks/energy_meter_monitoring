@@ -813,7 +813,7 @@ function showDetailModal(connection) {
       console.error('defined-meters-table bulunamadı.');
   }
 
-  definedMetersTable.innerHTML = ''; // Mevcut içeriği temizle
+  detailTableBody.innerHTML = ''; // Mevcut içeriği temizle
 
   // Modal başlığı güncelle
   const title = `Bina No: ${connection.BuildingNo ?? '-'} Daire: ${connection.Flat ?? '-'} Abone: ${connection.Subscriber ?? '-'}`;
