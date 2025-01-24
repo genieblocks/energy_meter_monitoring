@@ -925,11 +925,11 @@ function showDetailModal(connection) {
       } else {
         console.error(`${table.name} verisi alınırken bir hata oluştu:`, data[0].message);
       }
+      definedMetersTable.style.display = '';
     })
     .catch(error => {
       console.error(`${table.name} verisi çekilirken bir hata oluştu:`, error);
     });
-    definedMetersTable.style.display = '';
   });
 }
 
