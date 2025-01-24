@@ -927,6 +927,8 @@ function showDetailModal(connection) {
       } else {
         console.error(`${table.name} verisi alınırken bir hata oluştu:`, data[0].message);
       }
+      definedMetersTable.style.display = '';
+      unblockElementById($('#meter-detail-modal').find('.modal-body'));
     })
     .catch(error => {
       // unblockElementById($('#meter-detail-modal').find('.modal-body'));
