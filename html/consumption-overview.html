@@ -814,7 +814,7 @@ function showDetailModal(connection) {
       console.error('defined-meters-table bulunamadı.');
   }
 
-  detailTableBody.innerHTML = ''; // Mevcut içeriği temizle
+  definedMetersTable.innerHTML = ''; // Mevcut içeriği temizle
 
   // Modal başlığı güncelle
   const title = `Bina No: ${connection.BuildingNo ?? '-'} Daire: ${connection.Flat ?? '-'} Abone: ${connection.Subscriber ?? '-'}`;
@@ -919,7 +919,7 @@ function showDetailModal(connection) {
             } else {
               console.error('Meter value verisi alınırken bir hata oluştu:', latestData[0].message);
             }
-            detailTableBody.style.display = '';
+            definedMetersTable.style.display = '';
             unblockElementById($('#meter-detail-modal').find('.modal-body'));
           })
           .catch(error => {
