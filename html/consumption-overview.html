@@ -805,7 +805,6 @@ function updateSingleIecQueryModal(data) {
 function showDetailModal(connection) {
   const detailTableBody = document.getElementById('detailTableBody');
   const definedMetersTable = document.getElementById('defined-meters-table'); // Tablonun elementini seçiyoruz
-  definedMetersTable.style.display = 'none';
 
   // `FlatID` özelliğini `defined-meters-table` tablosuna attribute olarak ekle
   if (definedMetersTable) {
@@ -919,27 +918,22 @@ function showDetailModal(connection) {
             } else {
               console.error('Meter value verisi alınırken bir hata oluştu:', latestData[0].message);
             }
-            definedMetersTable.style.display = '';
             unblockElementById($('#meter-detail-modal').find('.modal-body'));
           })
           .catch(error => {
             console.error('Meter value API çağrısında bir hata oluştu:', error);
           });
         });
-        definedMetersTable.style.display = '';
         unblockElementById($('#meter-detail-modal').find('.modal-body'));
       } else {
-        definedMetersTable.style.display = '';
         unblockElementById($('#meter-detail-modal').find('.modal-body'));
         console.error(`${table.name} verisi alınırken bir hata oluştu:`, data[0].message);
       }
-      definedMetersTable.style.display = '';
       unblockElementById($('#meter-detail-modal').find('.modal-body'));
     })
     .catch(error => {
       console.error(`${table.name} verisi çekilirken bir hata oluştu:`, error);
     });
-    definedMetersTable.style.display = '';
     unblockElementById($('#meter-detail-modal').find('.modal-body'));
   });
 }
