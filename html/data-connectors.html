@@ -519,7 +519,10 @@ document.addEventListener('DOMContentLoaded', function() {
     tableBodyIEC.innerHTML = ''; // Mevcut satırları temizle
 
     if (data[0].success && Array.isArray(data[0].data)) {
-      data[0].data.forEach(connection => {
+      // Verileri alfabetik olarak sırala
+      const sortedData = data[0].data.sort((a, b) => a.ConnectionName.localeCompare(b.ConnectionName));
+
+      sortedData.forEach(connection => {
         const row = document.createElement('tr');
         row.innerHTML = `
           <td>${connection.ConnectionName}</td>
@@ -556,7 +559,10 @@ document.addEventListener('DOMContentLoaded', function() {
     tableBodyMbus.innerHTML = ''; // Mevcut satırları temizle
 
     if (data[0].success && Array.isArray(data[0].data)) {
-      data[0].data.forEach(connection => {
+      // Verileri alfabetik olarak sırala
+      const sortedData = data[0].data.sort((a, b) => a.ConnectionName.localeCompare(b.ConnectionName));
+
+      sortedData.forEach(connection => {
         const row = document.createElement('tr');
         row.innerHTML = `
           <td>${connection.ConnectionName}</td>
