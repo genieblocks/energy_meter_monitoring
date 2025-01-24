@@ -805,6 +805,7 @@ function updateSingleIecQueryModal(data) {
 function showDetailModal(connection) {
   const detailTableBody = document.getElementById('detailTableBody');
   const definedMetersTable = document.getElementById('defined-meters-table'); // Tablonun elementini seçiyoruz
+  detailTableBody.style.display = 'none';
 
   // `FlatID` özelliğini `defined-meters-table` tablosuna attribute olarak ekle
   if (definedMetersTable) {
@@ -918,6 +919,7 @@ function showDetailModal(connection) {
             } else {
               console.error('Meter value verisi alınırken bir hata oluştu:', latestData[0].message);
             }
+            detailTableBody.style.display = '';
             unblockElementById($('#meter-detail-modal').find('.modal-body'));
           })
           .catch(error => {
