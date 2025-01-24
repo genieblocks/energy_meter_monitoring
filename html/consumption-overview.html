@@ -815,6 +815,15 @@ function showDetailModal(connection) {
 
   detailTableBody.innerHTML = ''; // Mevcut içeriği temizle
 
+  // Modal başlığı güncelle
+  const title = `Bina No: ${connection.BuildingNo ?? '-'} Daire: ${connection.Flat ?? '-'} Abone: ${connection.Subscriber ?? '-'}`;
+  document.getElementById('meter-detail-modalLabel').innerText = title;
+
+  // Modalı göster
+  $('#meter-detail-modal').modal('show');
+
+  blockElementById($('#meter-detail-modal').find('.modal-body'));
+
   const flatID = connection.FlatID;
   if (!flatID) {
     console.error("FlatID bulunamadı.");
@@ -917,18 +926,13 @@ function showDetailModal(connection) {
       } else {
         console.error(`${table.name} verisi alınırken bir hata oluştu:`, data[0].message);
       }
+      unblockElementById($('#meter-detail-modal').find('.modal-body'));
     })
     .catch(error => {
+      unblockElementById($('#meter-detail-modal').find('.modal-body'));
       console.error(`${table.name} verisi çekilirken bir hata oluştu:`, error);
     });
   });
-
-  // Modal başlığı güncelle
-  const title = `Bina No: ${connection.BuildingNo ?? '-'} Daire: ${connection.Flat ?? '-'} Abone: ${connection.Subscriber ?? '-'}`;
-  document.getElementById('meter-detail-modalLabel').innerText = title;
-
-  // Modalı göster
-  $('#meter-detail-modal').modal('show');
 }
 
 // Tarih formatı
