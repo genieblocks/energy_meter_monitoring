@@ -925,13 +925,14 @@ function showDetailModal(connection) {
           });
         });
       } else {
+        definedMetersTable.style.display = '';
+        unblockElementById($('#meter-detail-modal').find('.modal-body'));
         console.error(`${table.name} verisi alınırken bir hata oluştu:`, data[0].message);
       }
       definedMetersTable.style.display = '';
       unblockElementById($('#meter-detail-modal').find('.modal-body'));
     })
     .catch(error => {
-      // unblockElementById($('#meter-detail-modal').find('.modal-body'));
       console.error(`${table.name} verisi çekilirken bir hata oluştu:`, error);
     });
     definedMetersTable.style.display = '';
