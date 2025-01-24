@@ -1688,7 +1688,6 @@ function resetModal(modalId, tableId, queryNoContentMessageId) {
 
   if (table) {
     table.style.display = 'none';
-    tableBody.innerHTML = '';
   }
   if (queryNoContentMessage) {
     queryNoContentMessage.style.display = 'none';
@@ -1790,6 +1789,9 @@ function updateSingleIecQueryModal(data) {
 
   if (data && data.length > 0) {
     queryNoContentMessage.style.display = 'none'; // Hata mesajını gizle
+
+    // Tablo içeriğini tamamen temizle
+    tableBody.innerHTML = '';
 
     // Identification mesajını ayıkla
     const identificationMsg = data[0].identification_msg || '';
