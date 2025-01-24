@@ -803,6 +803,8 @@ function updateSingleIecQueryModal(data) {
 
 // Detay modalını açan ve içeriği dinamik olarak dolduran fonksiyon (async yapıda)
 async function showDetailModal(connection) {
+  const modalId = 'meter-detail-modal';
+  const tableId ='#defined-meters-table';
   const detailTableBody = document.getElementById('detailTableBody');
   const definedMetersTable = document.getElementById('defined-meters-table'); // Tablonun elementini seçiyoruz
   
@@ -823,7 +825,7 @@ async function showDetailModal(connection) {
   // İçeriği temizle ve Modal'ı göster
   detailTableBody.innerHTML = '';
   $('#meter-detail-modal').modal('show');
-  blockElementById($('#meter-detail-modal').find('.modal-body'));
+  showLoadingInModalBody(modalId,tableId,'Veri yükleniyor, lütfen bekleyiniz...');
 
   const flatID = connection.FlatID;
   if (!flatID) {
@@ -934,7 +936,7 @@ async function showDetailModal(connection) {
 
   // Tüm asenkron işlemler bittikten sonra tabloyu göster
   definedMetersTable.style.display = '';
-  unblockElementById($('#meter-detail-modal').find('.modal-body'));
+  hideLoadingInModalBody(modalId, tableId);
 }
 
 // Tarih formatı
