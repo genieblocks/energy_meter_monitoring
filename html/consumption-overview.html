@@ -823,7 +823,7 @@ async function showDetailModal(connection) {
   // İçeriği temizle ve Modal'ı göster
   detailTableBody.innerHTML = '';
   $('#meter-detail-modal').modal('show');
-  blockElementById($('#updateDataModal').find('.modal-body'));
+  blockElementById($('#meter-detail-modal').find('.modal-body'));
 
   const flatID = connection.FlatID;
   if (!flatID) {
@@ -934,7 +934,7 @@ async function showDetailModal(connection) {
 
   // Tüm asenkron işlemler bittikten sonra tabloyu göster
   definedMetersTable.style.display = '';
-  unblockElementById($('#updateDataModal').find('.modal-body'));
+  unblockElementById($('#meter-detail-modal').find('.modal-body'));
 }
 
 // Tarih formatı
