@@ -129,7 +129,7 @@
                 </div>
                 <div class="card-body">
                   <div class="card-block">
-                    <table class="table table-hover table-bordered" id="block-detail-table">
+                    <table class="table table-hover table-striped compact dataTable table-bordered" id="block-detail-table">
                       <thead>
                         <tr>
                           <th class="d-none">Sıra No</th>
@@ -175,7 +175,7 @@
         </div>
       </div>
       <div class="modal-body">
-        <table class="table table-hover table-bordered" id="defined-meters-table">
+        <table class="table table-hover table-striped compact dataTable table-bordered" id="defined-meters-table">
           <thead>
             <tr>
               <th>Sayaç Tipi</th>
@@ -219,7 +219,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <table class="table table-hover table-bordered zero-configuration dataTable w-auto" id="singleQueryDataTable" role="grid">
+        <table class="table table-hover table-striped compact dataTable table-bordered zero-configuration w-auto" id="singleQueryDataTable" role="grid">
             <thead>
                 <!-- Dinamik içerik buraya eklenecek -->
             </thead>
@@ -248,7 +248,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <table class="table table-hover table-bordered zero-configuration dataTable w-auto" id="singleIecQueryDataTable" role="grid">
+        <table class="table table-hover table-striped compact dataTable table-bordered zero-configuration w-auto" id="singleIecQueryDataTable" role="grid">
           <thead>
             <tr>
               <th>OBIS Kodu</th>
@@ -467,7 +467,7 @@ function queryMeterData(serialNumber, connectionPoint) {
     const modalBody = modalElement.querySelector('.modal-body');
     if (modalBody) {
       modalBody.innerHTML = `
-        <table class="table table-hover table-bordered zero-configuration dataTable w-auto" id="singleQueryDataTable" role="grid">
+        <table class="table table-hover table-striped compact dataTable table-bordered zero-configuration w-auto" id="singleQueryDataTable" role="grid">
             <thead>
                 <!-- Dinamik içerik buraya eklenecek -->
             </thead>

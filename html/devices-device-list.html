@@ -336,7 +336,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <table class="table table-hover table-bordered zero-configuration dataTable w-auto" id="singleQueryDataTable" role="grid">
+        <table class="table table-hover table-striped compact dataTable table-bordered zero-configuration w-auto" id="singleQueryDataTable" role="grid">
             <thead>
                 <!-- Dinamik içerik buraya eklenecek -->
             </thead>
@@ -365,7 +365,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <table class="table table-hover table-bordered zero-configuration dataTable w-auto" id="singleIecQueryDataTable" role="grid">
+        <table class="table table-hover table-striped compact dataTable table-bordered zero-configuration w-auto" id="singleIecQueryDataTable" role="grid">
           <thead>
             <tr>
               <th>OBIS Kodu</th>
@@ -625,7 +625,7 @@
               <button class="btn btn-sm btn-genie white" type="button" data-toggle="modal" data-target="#electricityMeterModal">Sayaç Ekle</button>
             </div>
           </div>
-          <table class="table table-hover table-bordered zero-configuration dataTable" id="electricityMeterTable"
+          <table class="table table-hover table-striped compact dataTable table-bordered zero-configuration" id="electricityMeterTable"
             role="grid" aria-describedby="DataTables_Table_0_info">
             <thead>
               <tr>
@@ -657,7 +657,7 @@
               <button class="btn btn-sm btn-genie white" type="button" data-toggle="modal" data-target="#waterMeterModal">Sayaç Ekle</button>
             </div>
           </div>
-          <table class="table table-hover table-bordered zero-configuration dataTable" id="waterMeterTable"
+          <table class="table table-hover table-striped compact dataTable table-bordered zero-configuration" id="waterMeterTable"
             role="grid" aria-describedby="DataTables_Table_0_info">
             <thead>
               <tr>
@@ -687,7 +687,7 @@
               <button class="btn btn-sm btn-genie white" type="button" data-toggle="modal" data-target="#heatingMeterModal">Sayaç Ekle</button>
             </div>
           </div>
-          <table class="table table-hover table-bordered zero-configuration dataTable" id="heatingMeterTable"
+          <table class="table table-hover table-striped compact dataTable table-bordered zero-configuration" id="heatingMeterTable"
             role="grid" aria-describedby="DataTables_Table_0_info">
             <thead>
               <tr>
@@ -717,7 +717,7 @@
               <button class="btn btn-sm btn-genie white" type="button" data-toggle="modal" data-target="#coolingMeterModal">Sayaç Ekle</button>
             </div>
           </div>
-          <table class="table table-hover table-bordered zero-configuration dataTable" id="coolingMeterTable"
+          <table class="table table-hover table-striped compact dataTable table-bordered zero-configuration" id="coolingMeterTable"
             role="grid" aria-describedby="DataTables_Table_1_info">
             <thead>
               <tr>
@@ -1495,7 +1495,7 @@ function queryMeterData(serialNumber, connectionPoint) {
     const modalBody = modalElement.querySelector('.modal-body');
     if (modalBody) {
       modalBody.innerHTML = `
-        <table class="table table-hover table-bordered zero-configuration dataTable w-auto" id="singleQueryDataTable" role="grid">
+        <table class="table table-hover table-striped compact dataTable table-bordered zero-configuration w-auto" id="singleQueryDataTable" role="grid">
             <thead>
                 <!-- Dinamik içerik buraya eklenecek -->
             </thead>
