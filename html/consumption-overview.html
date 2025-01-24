@@ -929,8 +929,8 @@ function showDetailModal(connection) {
     .catch(error => {
       console.error(`${table.name} verisi çekilirken bir hata oluştu:`, error);
     });
+    definedMetersTable.style.display = '';
   });
-  definedMetersTable.style.display = '';
 }
 
 // Tarih formatı
