@@ -294,6 +294,7 @@ const obisDescriptionsTedas = {
     "0.1.2*11": "11 Önceki Demant Sıfırlama Tarih ve Saatleri",
     "0.1.2*12": "12 Önceki Demant Sıfırlama Tarih ve Saatleri",
     "96.7.4": "Gerilim Uyarı Sayısı",
+    "96.77.4": "Gerilim Uyarı Sayısı", // Şartnamede ve Cihaz cevabı tutarlı değil.
     "96.77.4*1": "1 Önceki Gerilim Uyarısının Başlangıç ve Bitiş Tarih Saatleri",
     "96.77.4*2": "2 Önceki Gerilim Uyarısının Başlangıç ve Bitiş Tarih Saatleri",
     "96.77.4*3": "3 Önceki Gerilim Uyarısının Başlangıç ve Bitiş Tarih Saatleri",
@@ -305,6 +306,7 @@ const obisDescriptionsTedas = {
     "96.77.4*9": "9 Önceki Gerilim Uyarısının Başlangıç ve Bitiş Tarih Saatleri",
     "96.77.4*10": "10 Önceki Gerilim Uyarısının Başlangıç ve Bitiş Tarih Saatleri",
     "96.7.5": "Akım Uyarı Sayısı",
+    "96.77.5": "Akım Uyarı Sayısı", // Şartnamede ve Cihaz cevabı tutarlı değil.
     "96.77.5*1": "1 Önceki Akım Uyarısının Başlangıç ve Bitiş Tarih Saatleri",
     "96.77.5*2": "2 Önceki Akım Uyarısının Başlangıç ve Bitiş Tarih Saatleri",
     "96.77.5*3": "3 Önceki Akım Uyarısının Başlangıç ve Bitiş Tarih Saatleri",
@@ -316,6 +318,7 @@ const obisDescriptionsTedas = {
     "96.77.5*9": "9 Önceki Akım Uyarısının Başlangıç ve Bitiş Tarih Saatleri",
     "96.77.5*10": "10 Önceki Akım Uyarısının Başlangıç ve Bitiş Tarih Saatleri",
     "96.7.6": "Manyetik Alan Uyarı Sayısı ve Toplam Süresi",
+    "96.77.6": "Manyetik Alan Uyarı Sayısı ve Toplam Süresi", // Şartnamede ve Cihaz cevabı tutarlı değil.
     "96.77.6*1": "1 Önceki Manyetik Alan Uyarısının Başlangıç ve Bitiş Tarih Saatleri",
     "96.77.6*2": "2 Önceki Manyetik Alan Uyarısının Başlangıç ve Bitiş Tarih Saatleri",
     "96.77.6*3": "3 Önceki Manyetik Alan Uyarısının Başlangıç ve Bitiş Tarih Saatleri",
@@ -327,6 +330,7 @@ const obisDescriptionsTedas = {
     "96.77.6*9": "9 Önceki Manyetik Alan Uyarısının Başlangıç ve Bitiş Tarih Saatleri",
     "96.77.6*10": "10 Önceki Manyetik Alan Uyarısının Başlangıç ve Bitiş Tarih Saatleri",
     "96.7.0": "Üç Faz Uzun Kesinti Sayısı",
+    "96.77.0": "Üç Faz Uzun Kesinti Sayısı", // Şartnamede ve Cihaz cevabı tutarlı değil.
     "96.77.0*1": "1 Önceki Üç Faz Uzun Kesintinin Başlangıç ve Bitiş Tarih Saatleri",
     "96.77.0*2": "2 Önceki Üç Faz Uzun Kesintinin Başlangıç ve Bitiş Tarih Saatleri",
     "96.77.0*3": "3 Önceki Üç Faz Uzun Kesintinin Başlangıç ve Bitiş Tarih Saatleri",
@@ -427,6 +431,7 @@ const obisDescriptionsTedas = {
     "96.77.0*98": "98 Önceki Üç Faz Uzun Kesintinin Başlangıç ve Bitiş Tarih Saatleri",
     "96.77.0*99": "99 Önceki Üç Faz Uzun Kesintinin Başlangıç ve Bitiş Tarih Saatleri",
     "96.7.00": "Üç Faz Kısa Kesinti Sayısı",
+    "96.77.00": "Üç Faz Kısa Kesinti Sayısı", // Şartnamede ve Cihaz cevabı tutarlı değil.
     "96.77.00*1": "1 Önceki Üç Faz Kısa Kesintinin Başlangıç ve Bitiş Tarih Saatleri",
     "96.77.00*2": "2 Önceki Üç Faz Kısa Kesintinin Başlangıç ve Bitiş Tarih Saatleri",
     "96.77.00*3": "3 Önceki Üç Faz Kısa Kesintinin Başlangıç ve Bitiş Tarih Saatleri",
@@ -527,6 +532,7 @@ const obisDescriptionsTedas = {
     "96.77.00*98": "98 Önceki Üç Faz Kısa Kesintinin Başlangıç ve Bitiş Tarih Saatleri",
     "96.77.00*99": "99 Önceki Üç Faz Kısa Kesintinin Başlangıç ve Bitiş Tarih Saatleri",
     "96.7.1": "1. Faz Uzun Kesinti Sayısı",
+    "96.77.1": "1. Faz Uzun Kesinti Sayısı", // Şartnamede ve Cihaz cevabı tutarlı değil.
     "96.77.1*1": "1 Önceki 1. Faz Uzun Kesintinin Başlangıç ve Bitiş Tarih Saatleri",
     "96.77.1*2": "2 Önceki 1. Faz Uzun Kesintinin Başlangıç ve Bitiş Tarih Saatleri",
     "96.77.1*3": "3 Önceki 1. Faz Uzun Kesintinin Başlangıç ve Bitiş Tarih Saatleri",
@@ -627,6 +633,7 @@ const obisDescriptionsTedas = {
     "96.77.1*98": "98 Önceki 1. Faz Uzun Kesintinin Başlangıç ve Bitiş Tarih Saatleri",
     "96.77.1*99": "99 Önceki 1. Faz Uzun Kesintinin Başlangıç ve Bitiş Tarih Saatleri",
     "96.7.10": "1. Faz Kısa Kesinti Sayısı",
+    "96.77.10": "1. Faz Kısa Kesinti Sayısı", // Şartnamede ve Cihaz cevabı tutarlı değil.
     "96.77.10*1": "1 Önceki 1. Faz Kısa Kesintinin Başlangıç ve Bitiş Tarih Saatleri",
     "96.77.10*2": "2 Önceki 1. Faz Kısa Kesintinin Başlangıç ve Bitiş Tarih Saatleri",
     "96.77.10*3": "3 Önceki 1. Faz Kısa Kesintinin Başlangıç ve Bitiş Tarih Saatleri",
@@ -727,6 +734,7 @@ const obisDescriptionsTedas = {
     "96.77.10*98": "98 Önceki 1. Faz Kısa Kesintinin Başlangıç ve Bitiş Tarih Saatleri",
     "96.77.10*99": "99 Önceki 1. Faz Kısa Kesintinin Başlangıç ve Bitiş Tarih Saatleri",
     "96.7.2": "2. Faz Uzun Kesinti Sayısı",
+    "96.77.2": "2. Faz Uzun Kesinti Sayısı", // Şartnamede ve Cihaz cevabı tutarlı değil.
     "96.77.2*1": "1 Önceki 2. Faz Uzun Kesintinin Başlangıç ve Bitiş Tarih Saatleri",
     "96.77.2*2": "2 Önceki 2. Faz Uzun Kesintinin Başlangıç ve Bitiş Tarih Saatleri",
     "96.77.2*3": "3 Önceki 2. Faz Uzun Kesintinin Başlangıç ve Bitiş Tarih Saatleri",
@@ -827,6 +835,7 @@ const obisDescriptionsTedas = {
     "96.77.2*98": "98 Önceki 2. Faz Uzun Kesintinin Başlangıç ve Bitiş Tarih Saatleri",
     "96.77.2*99": "99 Önceki 2. Faz Uzun Kesintinin Başlangıç ve Bitiş Tarih Saatleri",
     "96.7.20": "2. Faz Kısa Kesinti Sayısı",
+    "96.77.20": "2. Faz Kısa Kesinti Sayısı", // Şartnamede ve Cihaz cevabı tutarlı değil.
     "96.77.20*1": "1 Önceki 2. Faz Kısa Kesintinin Başlangıç ve Bitiş Tarih Saatleri",
     "96.77.20*2": "2 Önceki 2. Faz Kısa Kesintinin Başlangıç ve Bitiş Tarih Saatleri",
     "96.77.20*3": "3 Önceki 2. Faz Kısa Kesintinin Başlangıç ve Bitiş Tarih Saatleri",
@@ -927,6 +936,7 @@ const obisDescriptionsTedas = {
     "96.77.20*98": "98 Önceki 2. Faz Kısa Kesintinin Başlangıç ve Bitiş Tarih Saatleri",
     "96.77.20*99": "99 Önceki 2. Faz Kısa Kesintinin Başlangıç ve Bitiş Tarih Saatleri",
     "96.7.3": "3. Faz Uzun Kesinti Sayısı",
+    "96.77.3": "3. Faz Uzun Kesinti Sayısı", // Şartnamede ve Cihaz cevabı tutarlı değil.
     "96.77.3*1": "1 Önceki 3. Faz Uzun Kesintinin Başlangıç ve Bitiş Tarih Saatleri",
     "96.77.3*2": "2 Önceki 3. Faz Uzun Kesintinin Başlangıç ve Bitiş Tarih Saatleri",
     "96.77.3*3": "3 Önceki 3. Faz Uzun Kesintinin Başlangıç ve Bitiş Tarih Saatleri",
@@ -1027,6 +1037,7 @@ const obisDescriptionsTedas = {
     "96.77.3*98": "98 Önceki 3. Faz Uzun Kesintinin Başlangıç ve Bitiş Tarih Saatleri",
     "96.77.3*99": "99 Önceki 3. Faz Uzun Kesintinin Başlangıç ve Bitiş Tarih Saatleri",
     "96.7.30": "3. Faz Kısa Kesinti Sayısı",
+    "96.77.30": "3. Faz Kısa Kesinti Sayısı", // Şartnamede ve Cihaz cevabı tutarlı değil.
     "96.77.30*1": "1 Önceki 3. Faz Kısa Kesintinin Başlangıç ve Bitiş Tarih Saatleri",
     "96.77.30*2": "2 Önceki 3. Faz Kısa Kesintinin Başlangıç ve Bitiş Tarih Saatleri",
     "96.77.30*3": "3 Önceki 3. Faz Kısa Kesintinin Başlangıç ve Bitiş Tarih Saatleri",
