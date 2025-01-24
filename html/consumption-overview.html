@@ -758,6 +758,9 @@ function updateSingleIecQueryModal(data) {
   if (data && data.length > 0) {
     queryNoContentMessage.style.display = 'none'; // Hata mesajını gizle
 
+    // Tablo içeriğini tamamen temizle
+    tableBody.innerHTML = '';
+
     // Identification mesajını ayıkla
     const identificationMsg = data[0].identification_msg || '';
     const versionMatch = identificationMsg.match(/<(\d+)>/);
