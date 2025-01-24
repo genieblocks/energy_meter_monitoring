@@ -919,6 +919,8 @@ function showDetailModal(connection) {
             } else {
               console.error('Meter value verisi alınırken bir hata oluştu:', latestData[0].message);
             }
+            definedMetersTable.style.display = '';
+            unblockElementById($('#meter-detail-modal').find('.modal-body'));
           })
           .catch(error => {
             console.error('Meter value API çağrısında bir hata oluştu:', error);
