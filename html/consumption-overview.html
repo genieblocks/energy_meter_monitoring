@@ -801,26 +801,27 @@ function updateSingleIecQueryModal(data) {
   }
 }
 
-// Detay modalını açan ve içeriği dinamik olarak dolduran fonksiyon
-function showDetailModal(connection) {
+// Detay modalını açan ve içeriği dinamik olarak dolduran fonksiyon (async yapıda)
+async function showDetailModal(connection) {
   const detailTableBody = document.getElementById('detailTableBody');
   const definedMetersTable = document.getElementById('defined-meters-table'); // Tablonun elementini seçiyoruz
+  
+  // Tablonun ilk başta gizli olması
   definedMetersTable.style.display = 'none';
 
   // `FlatID` özelliğini `defined-meters-table` tablosuna attribute olarak ekle
   if (definedMetersTable) {
-      definedMetersTable.setAttribute('data-flat-id', connection.FlatID ?? '-');
+    definedMetersTable.setAttribute('data-flat-id', connection.FlatID ?? '-');
   } else {
-      console.error('defined-meters-table bulunamadı.');
+    console.error('defined-meters-table bulunamadı.');
   }
-
-  detailTableBody.innerHTML = ''; // Mevcut içeriği temizle
 
   // Modal başlığı güncelle
   const title = `Bina No: ${connection.BuildingNo ?? '-'} Daire: ${connection.Flat ?? '-'} Abone: ${connection.Subscriber ?? '-'}`;
   document.getElementById('meter-detail-modalLabel').innerText = title;
 
-  // Modalı göster
+  // İçeriği temizle ve Modal'ı göster
+  detailTableBody.innerHTML = '';
   $('#meter-detail-modal').modal('show');
 
   const flatID = connection.FlatID;
@@ -837,58 +838,59 @@ function showDetailModal(connection) {
     { name: "WaterMeters", meterCategory: "Su", meterIDFieldName: "WaterMeterID"}
   ];
 
-  // Her tablo için veri çek ve tabloya ekle
-  tables.forEach(table => {
-    fetch(`${baseWebhookURL}/webhook/get-table-row`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        tableName: table.name,
-        primaryKey: "RelatedID",
-        primaryKeyValue: flatID
-      })
-    })
-    .then(response => response.json())
-    .then(data => {
+  // tables içindeki her tablo için, verileri çekip işleyen asenkron döngü
+  for (const table of tables) {
+    try {
+      // İlgili tablonun verilerini çek
+      const response = await fetch(`${baseWebhookURL}/webhook/get-table-row`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          tableName: table.name,
+          primaryKey: "RelatedID",
+          primaryKeyValue: flatID
+        })
+      });
+
+      const data = await response.json();
+
       if (data[0].success && data[0].data) {
         const meterData = data[0].data;
 
-        meterData.forEach(meter => {
-          fetch(`${baseWebhookURL}/webhook/get-latest-single-meter-values`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-              tableName: table.name,
-              SerialNumber: meter.SerialNumber
-            })
-          })
-          .then(response => response.json())
-          .then(latestData => {
+        // Her sayaç için en son değerleri çekip tabloya satır ekle
+        for (const meter of meterData) {
+          try {
+            const latestResponse = await fetch(`${baseWebhookURL}/webhook/get-latest-single-meter-values`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                tableName: table.name,
+                SerialNumber: meter.SerialNumber
+              })
+            });
+
+            const latestData = await latestResponse.json();
+
             if (latestData[0].success && latestData[0].data) {
               const latestValues = latestData[0].data[0];
-
               const formattedDate = latestValues.QueryStartTime
                 ? formatDate(latestValues.QueryStartTime)
                 : '-';
 
-              const meterMultiplier = table.meterCategory === "Elektrik" 
-                ? (meter.MeterMultiplier ?? '-') 
+              const meterMultiplier = table.meterCategory === "Elektrik"
+                ? (meter.MeterMultiplier ?? '-')
                 : 1;
 
               const row = document.createElement('tr');
-              row.setAttribute('data-connection-point', meter.ConnectionPoint); // connectionPoint saklanıyor
-              row.setAttribute('data-brand', meter.Brand); // connectionPoint saklanıyor
+              row.setAttribute('data-connection-point', meter.ConnectionPoint); 
+              row.setAttribute('data-brand', meter.Brand);
 
               row.innerHTML = `
                 <td>${table.meterCategory}</td>
                 <td>${meter.CustomName && meter.CustomName !== 'null' ? meter.CustomName : '-'}</td>
                 <td>${meter.SerialNumber && meter.SerialNumber !== 'null' ? meter.SerialNumber : '-'}</td>
                 <td>${meterMultiplier}</td>
-                <td>${latestValues.MeterValue && latestValues.MeterValue!== 'null' ? latestValues.MeterValue : '-'}</td>
+                <td>${latestValues.MeterValue && latestValues.MeterValue !== 'null' ? latestValues.MeterValue : '-'}</td>
                 <td>${formattedDate}</td>
                 <td class="d-none">${table.name}</td>
                 <td class="d-none">${table.meterIDFieldName}</td>
@@ -917,20 +919,20 @@ function showDetailModal(connection) {
             } else {
               console.error('Meter value verisi alınırken bir hata oluştu:', latestData[0].message);
             }
-          })
-          .catch(error => {
+          } catch (error) {
             console.error('Meter value API çağrısında bir hata oluştu:', error);
-          });
-        });
+          }
+        }
       } else {
         console.error(`${table.name} verisi alınırken bir hata oluştu:`, data[0].message);
       }
-      definedMetersTable.style.display = '';
-    })
-    .catch(error => {
+    } catch (error) {
       console.error(`${table.name} verisi çekilirken bir hata oluştu:`, error);
-    });
-  });
+    }
+  }
+
+  // Tüm asenkron işlemler bittikten sonra tabloyu göster
+  definedMetersTable.style.display = '';
 }
 
 // Tarih formatı
