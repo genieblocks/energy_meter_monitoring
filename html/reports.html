@@ -296,6 +296,68 @@ function unblockElementById(elementId) {
   $(elementId).unblock();
 }
 
+function showLoadingInModalBody(modalId, tableId, message) {
+    const modal = document.getElementById(modalId);
+    if (!modal) {
+        console.error(`Modal with id '${modalId}' not found.`);
+        return;
+    }
+
+    const modalBody = modal.querySelector('.modal-body');
+    if (!modalBody) {
+        console.error(`Modal-body not found in modal '${modalId}'.`);
+        return;
+    }
+
+    const table = modalBody.querySelector(tableId);
+    if (!table) {
+        console.error(`Table with id '${tableId}' not found in modal-body.`);
+        return;
+    }
+
+    const existingSpinner = modalBody.querySelector('#loading-spinner');
+    if (existingSpinner) {
+        existingSpinner.remove();
+    }
+
+    const spinnerDiv = document.createElement('div');
+    spinnerDiv.id = 'loading-spinner';
+    spinnerDiv.className = 'd-flex justify-content-center align-items-center';
+    spinnerDiv.style.height = '200px';
+    spinnerDiv.innerHTML = `
+        <div class="icon-spinner9 icon-spin icon-lg"></div>
+        <span style="margin-left: 10px;">${message}</span>
+    `;
+    modalBody.appendChild(spinnerDiv);
+    table.style.display = 'none';
+}
+
+function hideLoadingInModalBody(modalId, tableId) {
+    const modal = document.getElementById(modalId);
+    if (!modal) {
+        console.error(`Modal with id '${modalId}' not found.`);
+        return;
+    }
+
+    const modalBody = modal.querySelector('.modal-body');
+    if (!modalBody) {
+        console.error(`Modal-body not found in modal '${modalId}'.`);
+        return;
+    }
+
+    const table = modalBody.querySelector(tableId);
+    if (!table) {
+        console.error(`Table with id '${tableId}' not found in modal-body.`);
+        return;
+    }
+
+    const loadingSpinner = modalBody.querySelector('#loading-spinner');
+    if (loadingSpinner) {
+        loadingSpinner.remove();
+        table.style.display = '';
+    }
+}
+
     document.addEventListener('DOMContentLoaded', () => {
       const yearElement = document.getElementById('footer-dynamic-year');
       if (yearElement) {
@@ -642,7 +704,9 @@ function unblockElementById(elementId) {
     }
 
     function fetchReportData(reportTableName, reportRequestDate, reportTitle) {
-      blockElementById($('#reportModal').find('.modal-body'));
+      const modalId = 'reportModal';
+      const tableId = '#modal-report-table';
+      showLoadingInModalBody(modalId,tableId,'Veri yükleniyor, lütfen bekleyiniz...');
 
       fetch(`${baseWebhookURL}/webhook/get-report-data`, {
         method: 'POST',
@@ -660,7 +724,7 @@ function unblockElementById(elementId) {
         console.error('Error fetching report data:', error.message);
       })
       .finally(() => {
-        unblockElementById($('#reportModal').find('.modal-body'));
+        hideLoadingInModalBody(modalId,tableId);
       });
     }
 

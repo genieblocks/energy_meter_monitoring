@@ -719,7 +719,6 @@ function hideLoadingInModalBody(modalId, tableId) {
     }
 
     function fetchReportData(reportTableName, reportRequestDate, reportTitle) {
-      // blockElementById($('#reportModal').find('.modal-body'));
       const modalId = 'reportModal';
       const tableId = '#modal-report-table';
       showLoadingInModalBody(modalId,tableId,'Veri yükleniyor, lütfen bekleyiniz...');
@@ -741,7 +740,6 @@ function hideLoadingInModalBody(modalId, tableId) {
       })
       .finally(() => {
         hideLoadingInModalBody(modalId,tableId);
-        // unblockElementById($('#reportModal').find('.modal-body'));
       });
     }
 
