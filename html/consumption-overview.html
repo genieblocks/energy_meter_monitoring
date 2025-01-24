@@ -918,12 +918,12 @@ function showDetailModal(connection) {
             } else {
               console.error('Meter value verisi alınırken bir hata oluştu:', latestData[0].message);
             }
+            unblockElementById($('#meter-detail-modal').find('.modal-body'));
           })
           .catch(error => {
             console.error('Meter value API çağrısında bir hata oluştu:', error);
           });
         });
-        unblockElementById($('#meter-detail-modal').find('.modal-body'));
       } else {
         console.error(`${table.name} verisi alınırken bir hata oluştu:`, data[0].message);
       }
