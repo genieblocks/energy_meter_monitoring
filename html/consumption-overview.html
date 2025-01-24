@@ -805,11 +805,13 @@ function updateSingleIecQueryModal(data) {
 async function showDetailModal(connection) {
   const modalId = 'meter-detail-modal';
   const tableId ='#defined-meters-table';
+  const defineMeterButton = document.getElementById('defineMeterButton');
   const detailTableBody = document.getElementById('detailTableBody');
   const definedMetersTable = document.getElementById('defined-meters-table'); // Tablonun elementini seçiyoruz
   
   // Tablonun ilk başta gizli olması
   definedMetersTable.style.display = 'none';
+  defineMeterButton.style.display = 'none';
 
   // `FlatID` özelliğini `defined-meters-table` tablosuna attribute olarak ekle
   if (definedMetersTable) {
@@ -936,6 +938,7 @@ async function showDetailModal(connection) {
 
   // Tüm asenkron işlemler bittikten sonra tabloyu göster
   definedMetersTable.style.display = '';
+  defineMeterButton.style.display = '';
   hideLoadingInModalBody(modalId, tableId);
 }
 
