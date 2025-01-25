@@ -1827,6 +1827,7 @@ function defineMeter() {
     .then(response => response.json())
     .then(data => {
         if (data[0].success) {
+            unblockElementById($('#meter-detail-modal').find('.modal-body'));
             $('#defineMeterModal').modal('hide');
             const flatID = document.querySelector('#defined-meters-table').getAttribute('data-flat-id');
             const connection = blockData.find(conn => conn.FlatID === flatID);
