@@ -1533,7 +1533,11 @@ function updateTableContent() {
         unblockElementById($('#updateDataModal').find('.modal-body'));
         if (data[0].success) {
             $('#updateDataModal').modal('hide');
-            location.reload(); // Güncellenecek: meter-detail-modal icerisindeki tablo tekrar yüklenecek.
+            const flatID = document.querySelector('#defined-meters-table').getAttribute('data-flat-id');
+            const connection = blockData.find(conn => conn.FlatID === flatID);
+            if (connection) {
+                showDetailModal(connection);
+            }
         } else {
             alert('Veri güncellenirken bir hata oluştu: ' + data[0].message);
         }
@@ -1749,8 +1753,11 @@ function removeDefinedMeter(tableName, meterIDFieldNameData, meterIDData) {
     .then(data => {
         unblockElementById($('#meter-detail-modal').find('.modal-body'));
         if (data[0].success) {
-            $('#meter-detail-modal').modal('hide');
-            location.reload(); // Güncellenecek: meter-detail-modal icerisindeki tablo tekrar yüklenecek.
+            const flatID = document.querySelector('#defined-meters-table').getAttribute('data-flat-id');
+            const connection = blockData.find(conn => conn.FlatID === flatID);
+            if (connection) {
+                showDetailModal(connection);
+            }
         } else {
             alert('Veri kaldırılırken bir hata oluştu: ' + data[0].message);
         }
