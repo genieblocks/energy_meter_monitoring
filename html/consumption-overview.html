@@ -1828,9 +1828,11 @@ function defineMeter() {
     .then(data => {
         if (data[0].success) {
             $('#defineMeterModal').modal('hide');
-            $('#meter-detail-modal').modal('hide');
-            unblockElementById($('#meter-detail-modal').find('.modal-body'));
-            location.reload(); // Güncellenecek: meter-detail-modal icerisindeki tablo tekrar yüklenecek.
+            const flatID = document.querySelector('#defined-meters-table').getAttribute('data-flat-id');
+            const connection = blockData.find(conn => conn.FlatID === flatID);
+            if (connection) {
+                showDetailModal(connection);
+            }
         } else {
             unblockElementById($('#meter-detail-modal').find('.modal-body'));
             alert('Sayaç tanımlanırken bir hata oluştu: ' + data[0].message);
