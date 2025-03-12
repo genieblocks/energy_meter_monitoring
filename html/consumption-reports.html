@@ -970,7 +970,11 @@ function calculateReportPeriod(dateString) {
               // Rapor Dönem (Sadece PreviousMonthElectricityReport için)
               if (reportTableName === 'PreviousMonthElectricityReport') {
                 const reportPeriodCell = document.createElement('td');
-                reportPeriodCell.textContent = calculateReportPeriod(item.QueryStartTime);
+                if (item.MeterValue === '-' || !item.MeterValue) {
+                  reportPeriodCell.textContent = 'Okunamadı';
+                } else {
+                  reportPeriodCell.textContent = calculateReportPeriod(item.QueryStartTime);
+                }
                 row.appendChild(reportPeriodCell);
               }
 
