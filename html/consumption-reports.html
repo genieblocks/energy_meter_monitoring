@@ -990,7 +990,11 @@ function calculateReportPeriod(dateString) {
 
               // Okuma Zamanı
               const queryStartTimeCell = document.createElement('td');
-              queryStartTimeCell.textContent = item.QueryStartTime || '-';
+              if (item.MeterValue === '-' || !item.MeterValue) {
+                queryStartTimeCell.textContent = '-';
+              } else {
+                queryStartTimeCell.textContent = item.QueryStartTime || '-';
+              }
               row.appendChild(queryStartTimeCell);
           } else if (reportTableName === 'SubscribersMeterListReport') {
               // Sıra No
