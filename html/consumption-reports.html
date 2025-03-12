@@ -870,8 +870,10 @@ function calculateReportPeriod(dateString) {
           headers = ['Sayaç Seri Numarası', 'Sayaç Tarihi', 'Sayaç Saati', 'Mevcut Tarih', 'Mevcut Saat', 'Zaman Farkı'];
       } else if (reportTableName === 'MoxaDeviceStatusReport') {
           headers = ['Moxa IP Adresi', 'Durumu'];
-      } else if (['LatestHeatUsageReport', 'LatestCoolUsageReport', 'LatestElectricityUsageReport', 'PreviousMonthElectricityReport'].includes(reportTableName)) {
-          headers = ['Sıra No', 'Blok', 'Bina No', 'Daire', 'Abone', 'Sayaç İsmi', 'Rapor Dönem', 'Seri Numarası', 'Değeri (kWh)', 'Okuma Zamanı'];
+      } else if (reportTableName === 'PreviousMonthElectricityReport') {
+        headers = ['Sıra No', 'Blok', 'Bina No', 'Daire', 'Abone', 'Sayaç İsmi', 'Rapor Dönem', 'Seri Numarası', 'Değeri (kWh)', 'Okuma Zamanı'];
+      } else if (['LatestHeatUsageReport', 'LatestCoolUsageReport', 'LatestElectricityUsageReport'].includes(reportTableName)) {
+        headers = ['Sıra No', 'Blok', 'Bina No', 'Daire', 'Abone', 'Sayaç İsmi', 'Seri Numarası', 'Değeri (kWh)', 'Okuma Zamanı'];
       } else if (reportTableName === 'LatestWaterUsageReport') {
           headers = ['Sıra No', 'Blok', 'Bina No', 'Daire', 'Abone', 'Sayaç İsmi', 'Seri Numarası', 'Değeri (m3)', 'Okuma Zamanı'];
       } else if (reportTableName === 'SubscribersMeterListReport') {
@@ -965,10 +967,12 @@ function calculateReportPeriod(dateString) {
               customNameCell.textContent = item.CustomName || '-';
               row.appendChild(customNameCell);
 
-              // Rapor Dönem
-              const reportPeriodCell = document.createElement('td');
-              reportPeriodCell.textContent = calculateReportPeriod(item.QueryStartTime);
-              row.appendChild(reportPeriodCell);
+              // Rapor Dönem (Sadece PreviousMonthElectricityReport için)
+              if (reportTableName === 'PreviousMonthElectricityReport') {
+                const reportPeriodCell = document.createElement('td');
+                reportPeriodCell.textContent = calculateReportPeriod(item.QueryStartTime);
+                row.appendChild(reportPeriodCell);
+              }
 
               // Seri Numarası
               const serialNumberCell = document.createElement('td');
