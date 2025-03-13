@@ -1650,6 +1650,26 @@ function showHistoryDefinedMeterDataForm(tableName, serialNumber) {
     hiddenTableInput.name = 'tableName';
     hiddenTableInput.value = tableName;
     formBody.appendChild(hiddenTableInput);
+    
+    // Determine usage table name based on tableName
+    let usageTableName = '';
+    if (tableName === 'WaterMeters') {
+      usageTableName = 'WaterUsage';
+    } else if (tableName === 'ElectricMeters') {
+      usageTableName = 'ElectricityUsage';
+    } else if (tableName === 'HeatingMeters') {
+      usageTableName = 'HeatingUsage';
+    } else if (tableName === 'CoolingMeters') {
+      usageTableName = 'CoolingUsage';
+    }
+    
+    // Add hidden input for usageTableName
+    const hiddenUsageTableInput = document.createElement('input');
+    hiddenUsageTableInput.type = 'hidden';
+    hiddenUsageTableInput.id = 'usageTableName';
+    hiddenUsageTableInput.name = 'usageTableName';
+    hiddenUsageTableInput.value = usageTableName;
+    formBody.appendChild(hiddenUsageTableInput);
 
     // Add date form group for Başlangıç Tarihi
     const formGroupStart = document.createElement('div');
