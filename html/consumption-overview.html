@@ -1642,6 +1642,14 @@ function showHistoryDefinedMeterDataForm(tableName, serialNumber) {
     hiddenSerialInput.name = 'serialNumber';
     hiddenSerialInput.value = serialNumber;
     formBody.appendChild(hiddenSerialInput);
+    
+    // Add hidden input for tableName
+    const hiddenTableInput = document.createElement('input');
+    hiddenTableInput.type = 'hidden';
+    hiddenTableInput.id = 'tableName';
+    hiddenTableInput.name = 'tableName';
+    hiddenTableInput.value = tableName;
+    formBody.appendChild(hiddenTableInput);
 
     // Add date form group for Başlangıç Tarihi
     const formGroupStart = document.createElement('div');
