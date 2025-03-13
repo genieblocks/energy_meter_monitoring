@@ -1568,42 +1568,36 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function getHistoryDataContent() {
-    const form = document.querySelector('#historyDataForm'); // Form elementini doğru seçin
+    // Select the form within the historyDataQueryModal
+    const form = document.querySelector('#historyDataQueryModal form');
     if (!form || !(form instanceof HTMLFormElement)) {
         console.error('Form element not found or incorrect type');
         return;
     }
 
+    // Retrieve form data
     const formData = new FormData(form);
-    const tableName = $('#historyDataQueryModal').data('tableName'); // Modal data attribute'tan tablo ismi alınır
-    const targetRecord = {};
-    const fieldsToUpdate = {};
+    const serialNumber = formData.get('serialNumber');
+    const tableName = formData.get('tableName');
+    const usageTableName = formData.get('usageTableName');
+    const startDate = formData.get('startDate');
+    const finishDate = formData.get('finishDate');
 
-    let isFirstField = true;
-
-    formData.forEach((value, key) => {
-        if (isFirstField) {
-            targetRecord[key] = value; // İlk alan TargetRecord içine alınır
-            isFirstField = false;
-        } else {
-            fieldsToUpdate[key] = value; // Diğer alanlar FieldsToUpdate içine alınır
-        }
-    });
-
+    // Build JSON payload with the retrieved values
     const jsonData = {
         tableName: tableName,
+        usageTableName: usageTableName,
         serialNumber: serialNumber,
         startDate: startDate,
         finishDate: finishDate
     };
 
+    // Block the modal body during the request
     blockElementById($('#historyDataQueryModal').find('.modal-body'));
 
     fetch(`${baseWebhookURL}/webhook/get-history-table-content`, {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(jsonData)
     })
     .then(response => response.json())
@@ -1613,12 +1607,12 @@ function getHistoryDataContent() {
             $('#historyDataQueryModal').modal('hide');
             showHistoryModal();
         } else {
-            alert('Veri güncellenirken bir hata oluştu: ' + data[0].message);
+            alert('Veri getirilirken bir hata oluştu: ' + data[0].message);
         }
     })
     .catch(error => {
         unblockElementById($('#historyDataQueryModal').find('.modal-body'));
-        alert('Veri güncellenirken bir hata oluştu.');
+        alert('Veri getirilirken bir hata oluştu.');
     });
 }
 
