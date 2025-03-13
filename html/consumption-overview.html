@@ -1578,7 +1578,6 @@ function getHistoryDataContent() {
     // Retrieve form data
     const formData = new FormData(form);
     const serialNumber = formData.get('serialNumber');
-    const tableName = formData.get('tableName');
     const usageTableName = formData.get('usageTableName');
     const startDate = formData.get('startDate');
     const finishDate = formData.get('finishDate');
@@ -1610,8 +1609,7 @@ function getHistoryDataContent() {
 
     // Build JSON payload with the retrieved values
     const jsonData = {
-        tableName: tableName,
-        usageTableName: usageTableName,
+        tableName: usageTableName,
         serialNumber: serialNumber,
         startDate: startDate,
         finishDate: finishDate
