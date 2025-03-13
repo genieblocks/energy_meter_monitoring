@@ -1635,56 +1635,6 @@ function showHistoryDefinedMeterDataForm(tableName, serialNumber) {
 
     // Clear previous form fields
     formBody.innerHTML = '';
-        
-    // İlk alan TargetRecord --> MeterID
-    let formGroup = document.createElement('div');
-    formGroup.className = 'form-group';
-    formGroup.style.display = 'none'; // Form grubunu gizlemek için
-    formGroup.innerHTML = `
-        <label for="${meterIDFieldNameData}">${meterIDFieldNameData}</label>
-        <input type="text" id="${meterIDFieldNameData}" name="${meterIDFieldNameData}" class="form-control" readonly="readonly" value="${meterIDData}">
-    `;
-    formBody.appendChild(formGroup);
-
-    // Diğer alanlar FieldsToUpdate --> CustomName
-    formGroup = document.createElement('div');
-    formGroup.className = 'form-group';
-    formGroup.innerHTML = `
-        <label for="CustomName">Sayaç İsmi</label>
-        <input type="text" id="CustomName" name="CustomName" class="form-control" value="${customNameData}" required>
-    `;
-    formBody.appendChild(formGroup);
-
-    // Diğer alanlar FieldsToUpdate --> Note
-    formGroup = document.createElement('div');
-    formGroup.className = 'form-group';
-    formGroup.innerHTML = `
-        <label for="Note">Not</label>
-        <input type="text" id="Note" name="Note" class="form-control" value="${noteData}" required>
-    `;
-    formBody.appendChild(formGroup);
-
-    // Diğer alanlar FieldsToUpdate --> IsVisibleInInvoiceReport
-    formGroup = document.createElement('div');
-    formGroup.className = 'form-group';
-    if (isVisibleInInvoiceReportData === true || isVisibleInInvoiceReportData === 'true'){
-      formGroup.innerHTML = `
-          <label for="IsVisibleInInvoiceReport">Faturalandırma</label>
-          <select id="IsVisibleInInvoiceReport" name="IsVisibleInInvoiceReport" class="form-control">
-              <option value="true" selected>Evet</option>
-              <option value="false" >Hayır</option>
-          </select>
-      `;
-    } else {
-      formGroup.innerHTML = `
-          <label for="IsVisibleInInvoiceReport">Faturalandırma</label>
-          <select id="IsVisibleInInvoiceReport" name="IsVisibleInInvoiceReport" class="form-control">
-              <option value="true" >Evet</option>
-              <option value="false" selected>Hayır</option>
-          </select>
-      `;
-    }
-    formBody.appendChild(formGroup);
 
     modal.modal('show');
 }
