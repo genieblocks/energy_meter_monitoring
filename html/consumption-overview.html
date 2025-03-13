@@ -1583,6 +1583,31 @@ function getHistoryDataContent() {
     const startDate = formData.get('startDate');
     const finishDate = formData.get('finishDate');
 
+    // Date validations
+    const startDateObj = new Date(startDate);
+    const finishDateObj = new Date(finishDate);
+    const today = new Date();
+    // Reset time parts to ensure accurate date comparisons
+    today.setHours(0, 0, 0, 0);
+    startDateObj.setHours(0, 0, 0, 0);
+    finishDateObj.setHours(0, 0, 0, 0);
+
+    if (startDateObj >= finishDateObj) {
+        alert("Başlangıç tarihi, bitiş tarihinden önce olmalıdır.");
+        return;
+    }
+    if (finishDateObj > today) {
+        alert("Bitiş tarihi bugünün tarihinden sonra olamaz.");
+        return;
+    }
+    // Check if the difference between start and finish exceeds 2 months
+    let twoMonthsAfterStart = new Date(startDateObj);
+    twoMonthsAfterStart.setMonth(twoMonthsAfterStart.getMonth() + 2);
+    if (finishDateObj > twoMonthsAfterStart) {
+        alert("Başlangıç tarihi ile bitiş tarihi arasındaki fark 2 aydan fazla olamaz.");
+        return;
+    }
+
     // Build JSON payload with the retrieved values
     const jsonData = {
         tableName: tableName,
