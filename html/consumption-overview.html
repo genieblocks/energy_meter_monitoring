@@ -1654,6 +1654,16 @@ function showHistoryDefinedMeterDataForm(tableName, serialNumber) {
     `;
     formBody.appendChild(formGroupEnd);
 
+    // Set default values: finishDate = today, startDate = one month ago
+    const today = new Date();
+    const finishDateInput = document.getElementById('finishDate');
+    finishDateInput.value = today.toISOString().split('T')[0]; // Format: yyyy-mm-dd
+
+    const oneMonthAgo = new Date(today);
+    oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
+    const startDateInput = document.getElementById('startDate');
+    startDateInput.value = oneMonthAgo.toISOString().split('T')[0];
+
     modal.modal('show');
 }
 
