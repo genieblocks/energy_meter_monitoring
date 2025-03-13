@@ -292,6 +292,29 @@
   </div>
 </div>
 
+<!-- History Query Data Modal -->
+<div class="modal fade text-left" id="historyDataQueryModal" tabindex="-1" role="dialog" aria-labelledby="historyDataQueryModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h4 class="modal-title" id="historyDataQueryModalLabel">Geçmiş Veri</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+          <div class="modal-body">
+            <form id="historyDataForm">
+                <!-- Dinamik form alanları buraya eklenecek -->
+            </form>
+          </div>
+          <div class="modal-footer">
+              <input type="reset" class="btn btn-light" data-dismiss="modal" value="Kapat">
+              <input type="button" class="btn btn-genie white" value="Getir" onclick="getHistoryDataContent()">
+          </div>
+      </div>
+  </div>
+</div>
+
 <!-- Define Meter Modal -->
 <div class="modal fade text-left" id="defineMeterModal" tabindex="-1" role="dialog" aria-labelledby="defineMeterModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-sm" role="document">
@@ -1267,6 +1290,54 @@ document.addEventListener('click', function(event) {
       }
     }
 
+    // History Defined Meters Button Clicks
+    if (target.id === 'history-defined-meter-button') {
+        event.preventDefault();
+
+        const tableRow = target.closest('tr');
+        if (!tableRow) {
+            console.error('Satır bulunamadı.');
+            return;
+        }
+
+        const table = document.querySelector('#defined-meters-table');
+        const headers = Array.from(table.querySelectorAll('thead th'));
+
+        // *************************** SerialNumber *************************** 
+        // Tablo başlıklarından "SerialNumber" sütununun indeksini bul
+        const serialNumberIndex = headers.findIndex(header => header.textContent.trim() === 'Seri Numarası');
+
+        if (serialNumberIndex === -1) {
+            console.error('"SerialNumber" sütunu bulunamadı.');
+            return;
+        }
+
+        // SerialNumber verisini al
+        const serialNumber = tableRow.children[serialNumberIndex]?.textContent.trim();
+        if (!serialNumber) {
+            console.warn('"SerialNumber" verisi bulunamadı.');
+            return;
+        }
+
+        // *************************** TableName *************************** 
+        // Tablo başlıklarından "TableName" sütununun indeksini bul
+        const tableNameIndex = headers.findIndex(header => header.textContent.trim() === 'TableName');
+
+        if (tableNameIndex === -1) {
+            console.error('"TableName" sütunu bulunamadı.');
+            return;
+        }
+
+        // TableName verisini al
+        const tableName = tableRow.children[tableNameIndex]?.textContent.trim();
+        if (!tableName) {
+            console.warn('"TableName" verisi bulunamadı.');
+            return;
+        }
+
+        showHistoryDefinedMeterDataForm(tableName, serialNumber);
+    }
+
     // Update Defined Meters Button Clicks
     if (target.id === 'update-defined-meter-button') {
         event.preventDefault();
@@ -1495,6 +1566,128 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
 });
+
+function getHistoryDataContent() {
+    const form = document.querySelector('#historyDataForm'); // Form elementini doğru seçin
+    if (!form || !(form instanceof HTMLFormElement)) {
+        console.error('Form element not found or incorrect type');
+        return;
+    }
+
+    const formData = new FormData(form);
+    const tableName = $('#historyDataQueryModal').data('tableName'); // Modal data attribute'tan tablo ismi alınır
+    const targetRecord = {};
+    const fieldsToUpdate = {};
+
+    let isFirstField = true;
+
+    formData.forEach((value, key) => {
+        if (isFirstField) {
+            targetRecord[key] = value; // İlk alan TargetRecord içine alınır
+            isFirstField = false;
+        } else {
+            fieldsToUpdate[key] = value; // Diğer alanlar FieldsToUpdate içine alınır
+        }
+    });
+
+    const jsonData = {
+        tableName: tableName,
+        serialNumber: serialNumber,
+        startDate: startDate,
+        finishDate: finishDate
+    };
+
+    blockElementById($('#historyDataQueryModal').find('.modal-body'));
+
+    fetch(`${baseWebhookURL}/webhook/get-history-table-content`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(jsonData)
+    })
+    .then(response => response.json())
+    .then(data => {
+        unblockElementById($('#historyDataQueryModal').find('.modal-body'));
+        if (data[0].success) {
+            $('#historyDataQueryModal').modal('hide');
+            showHistoryModal();
+        } else {
+            alert('Veri güncellenirken bir hata oluştu: ' + data[0].message);
+        }
+    })
+    .catch(error => {
+        unblockElementById($('#historyDataQueryModal').find('.modal-body'));
+        alert('Veri güncellenirken bir hata oluştu.');
+    });
+}
+
+function showHistoryDefinedMeterDataForm(tableName, serialNumber) {
+    // Modal gösterme işlemleri ve diğer işlevler buraya eklenebilir
+    const modal = $('#updateDataModal');
+
+    // Set the tableName as a data attribute on the modal
+    modal.data('tableName', tableName);
+
+    modal.find('.modal-title').text(`${serialNumber} Nolu Sayaç Güncelleme`);
+    const form = modal.find('form')[0];
+    const formBody = modal.find('.modal-body > form')[0];
+
+    // Clear previous form fields
+    formBody.innerHTML = '';
+        
+    // İlk alan TargetRecord --> MeterID
+    let formGroup = document.createElement('div');
+    formGroup.className = 'form-group';
+    formGroup.style.display = 'none'; // Form grubunu gizlemek için
+    formGroup.innerHTML = `
+        <label for="${meterIDFieldNameData}">${meterIDFieldNameData}</label>
+        <input type="text" id="${meterIDFieldNameData}" name="${meterIDFieldNameData}" class="form-control" readonly="readonly" value="${meterIDData}">
+    `;
+    formBody.appendChild(formGroup);
+
+    // Diğer alanlar FieldsToUpdate --> CustomName
+    formGroup = document.createElement('div');
+    formGroup.className = 'form-group';
+    formGroup.innerHTML = `
+        <label for="CustomName">Sayaç İsmi</label>
+        <input type="text" id="CustomName" name="CustomName" class="form-control" value="${customNameData}" required>
+    `;
+    formBody.appendChild(formGroup);
+
+    // Diğer alanlar FieldsToUpdate --> Note
+    formGroup = document.createElement('div');
+    formGroup.className = 'form-group';
+    formGroup.innerHTML = `
+        <label for="Note">Not</label>
+        <input type="text" id="Note" name="Note" class="form-control" value="${noteData}" required>
+    `;
+    formBody.appendChild(formGroup);
+
+    // Diğer alanlar FieldsToUpdate --> IsVisibleInInvoiceReport
+    formGroup = document.createElement('div');
+    formGroup.className = 'form-group';
+    if (isVisibleInInvoiceReportData === true || isVisibleInInvoiceReportData === 'true'){
+      formGroup.innerHTML = `
+          <label for="IsVisibleInInvoiceReport">Faturalandırma</label>
+          <select id="IsVisibleInInvoiceReport" name="IsVisibleInInvoiceReport" class="form-control">
+              <option value="true" selected>Evet</option>
+              <option value="false" >Hayır</option>
+          </select>
+      `;
+    } else {
+      formGroup.innerHTML = `
+          <label for="IsVisibleInInvoiceReport">Faturalandırma</label>
+          <select id="IsVisibleInInvoiceReport" name="IsVisibleInInvoiceReport" class="form-control">
+              <option value="true" >Evet</option>
+              <option value="false" selected>Hayır</option>
+          </select>
+      `;
+    }
+    formBody.appendChild(formGroup);
+
+    modal.modal('show');
+}
 
 function updateTableContent() {
     const form = document.querySelector('#updateDataForm'); // Form elementini doğru seçin
