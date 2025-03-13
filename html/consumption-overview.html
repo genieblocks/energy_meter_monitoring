@@ -1636,6 +1636,24 @@ function showHistoryDefinedMeterDataForm(tableName, serialNumber) {
     // Clear previous form fields
     formBody.innerHTML = '';
 
+    // Add date form group for Başlangıç Tarihi
+    const formGroupStart = document.createElement('div');
+    formGroupStart.className = 'form-group';
+    formGroupStart.innerHTML = `
+      <label for="startDate">Başlangıç Tarihi</label>
+      <input type="date" id="startDate" name="startDate" class="form-control" required>
+    `;
+    formBody.appendChild(formGroupStart);
+
+    // Add date form group for Bitiş Tarihi
+    const formGroupEnd = document.createElement('div');
+    formGroupEnd.className = 'form-group';
+    formGroupEnd.innerHTML = `
+      <label for="finishDate">Bitiş Tarihi</label>
+      <input type="date" id="finishDate" name="finishDate" class="form-control" required>
+    `;
+    formBody.appendChild(formGroupEnd);
+
     modal.modal('show');
 }
 
