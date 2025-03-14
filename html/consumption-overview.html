@@ -1599,6 +1599,33 @@ document.addEventListener('DOMContentLoaded', function() {
 
 });
 
+function showMeterHistoryModal(data) {
+    // Get the meterHistoryModal modal element
+    const modal = $('#meterHistoryModal');
+    // Get the tbody of the meterHistoryDataTable
+    const tableBody = document.querySelector('#meterHistoryDataTable tbody');
+    tableBody.innerHTML = ''; // Clear existing rows
+
+    if (Array.isArray(data) && data.length > 0) {
+        data.forEach(item => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${item.date || '-'}</td>
+                <td>${item.meterValue || '-'}</td>
+                <td>${item.unit || '-'}</td>
+                <td>${item.description || '-'}</td>
+            `;
+            tableBody.appendChild(row);
+        });
+    } else {
+        const row = document.createElement('tr');
+        row.innerHTML = `<td colspan="4">Veri bulunamadı.</td>`;
+        tableBody.appendChild(row);
+    }
+    // Open the modal
+    modal.modal('show');
+}
+
 function getHistoryDataContent() {
     // Select the form within the historyDataQueryModal
     const form = document.querySelector('#historyDataQueryModal form');
@@ -1618,7 +1645,6 @@ function getHistoryDataContent() {
     const startDateObj = new Date(startDate);
     const finishDateObj = new Date(finishDate);
     const today = new Date();
-    // Reset time parts to ensure accurate date comparisons
     today.setHours(0, 0, 0, 0);
     startDateObj.setHours(0, 0, 0, 0);
     finishDateObj.setHours(0, 0, 0, 0);
@@ -1631,7 +1657,6 @@ function getHistoryDataContent() {
         alert("Bitiş tarihi bugünün tarihinden sonra olamaz.");
         return;
     }
-    // Check if the difference between start and finish exceeds 2 months
     let twoMonthsAfterStart = new Date(startDateObj);
     twoMonthsAfterStart.setMonth(twoMonthsAfterStart.getMonth() + 2);
     if (finishDateObj > twoMonthsAfterStart) {
@@ -1639,7 +1664,6 @@ function getHistoryDataContent() {
         return;
     }
 
-    // Build JSON payload with the retrieved values
     const jsonData = {
         tableName: usageTableName,
         serialNumber: serialNumber,
@@ -1647,7 +1671,6 @@ function getHistoryDataContent() {
         finishDate: finishDate
     };
 
-    // Block the modal body during the request
     blockElementById($('#historyDataQueryModal').find('.modal-body'));
 
     fetch(`${baseWebhookURL}/webhook/get-history-table-content`, {
@@ -1660,7 +1683,7 @@ function getHistoryDataContent() {
         unblockElementById($('#historyDataQueryModal').find('.modal-body'));
         if (data[0].success) {
             $('#historyDataQueryModal').modal('hide');
-            showMeterHistoryModal();
+            showMeterHistoryModal(data[0].data);
         } else {
             alert('Veri getirilirken bir hata oluştu: ' + data[0].message);
         }
