@@ -371,7 +371,6 @@
               <th>Tarih</th>
               <th>Sayaç Değeri</th>
               <th>Birim</th>
-              <th>Açıklama</th>
             </tr>
           </thead>
           <tbody>
@@ -1599,7 +1598,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 });
 
-function showMeterHistoryModal(data) {
+function showMeterHistoryModal(data, usageTableName) {
     // Get the meterHistoryModal modal element
     const modal = $('#meterHistoryModal');
     // Get the tbody of the meterHistoryDataTable
@@ -1608,18 +1607,25 @@ function showMeterHistoryModal(data) {
 
     if (Array.isArray(data) && data.length > 0) {
         data.forEach(item => {
+            let meterValue = '-';
+            if (usageTableName === 'ElectricityUsage') {
+                meterValue = item.PositiveActiveEnergyTotal_kWh || '-';
+            } else if (usageTableName === 'WaterUsage') {
+                meterValue = item.MeterValue_m3 || '-';
+            } else if (usageTableName === 'HeatingUsage' || usageTableName === 'CoolingUsage') {
+                meterValue = item.MeterValue_kWh || '-';
+            }
             const row = document.createElement('tr');
             row.innerHTML = `
-                <td>${item.date || '-'}</td>
-                <td>${item.meterValue || '-'}</td>
+                <td>${item.QueryStartTime || '-'}</td>
+                <td>${meterValue}</td>
                 <td>${item.unit || '-'}</td>
-                <td>${item.description || '-'}</td>
             `;
             tableBody.appendChild(row);
         });
     } else {
         const row = document.createElement('tr');
-        row.innerHTML = `<td colspan="4">Veri bulunamadı.</td>`;
+        row.innerHTML = `<td colspan="3">Veri bulunamadı.</td>`;
         tableBody.appendChild(row);
     }
     // Open the modal
@@ -1683,7 +1689,7 @@ function getHistoryDataContent() {
         unblockElementById($('#historyDataQueryModal').find('.modal-body'));
         if (data[0].success) {
             $('#historyDataQueryModal').modal('hide');
-            showMeterHistoryModal(data[0].data);
+            showMeterHistoryModal(data[0].data, usageTableName);
         } else {
             alert('Veri getirilirken bir hata oluştu: ' + data[0].message);
         }
