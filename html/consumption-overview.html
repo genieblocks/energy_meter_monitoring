@@ -1807,15 +1807,15 @@ function showHistoryDefinedMeterDataForm(tableName, serialNumber) {
 
     formBody.appendChild(rowDiv);
 
-    // Set default values: finishDate = today, startDate = one month ago
+    // Set default values: finishDate = today, startDate = one week ago
     const today = new Date();
     const finishDateInput = document.getElementById('finishDate');
     finishDateInput.value = today.toISOString().split('T')[0]; // yyyy-mm-dd
 
-    const oneMonthAgo = new Date(today);
-    oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
+    const oneWeekAgo = new Date(today);
+    oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
     const startDateInput = document.getElementById('startDate');
-    startDateInput.value = oneMonthAgo.toISOString().split('T')[0];
+    startDateInput.value = oneWeekAgo.toISOString().split('T')[0];
 
     modal.modal('show');
 }
