@@ -1619,13 +1619,13 @@ function showMeterHistoryModal(data, usageTableName) {
                 meterValue = item.PositiveActiveEnergyTotal_kWh || '-';
             } else if (usageTableName === 'WaterUsage') {
                 meterValue = item.MeterValue_m3 || '-';
-            } else if (usageTableName === 'HeatingUsage' || usageTableName === 'CoolingUsage') {
+            } else if (usageTableName === 'HeatUsage' || usageTableName === 'CoolUsage') {
                 meterValue = item.MeterValue_kWh || '-';
             }
             
             // Manually set the unit based on usageTableName
             let unit = '-';
-            if (usageTableName === 'ElectricityUsage' || usageTableName === 'HeatingUsage' || usageTableName === 'CoolingUsage') {
+            if (usageTableName === 'ElectricityUsage' || usageTableName === 'HeatUsage' || usageTableName === 'CoolUsage') {
                 unit = 'kWh';
             } else if (usageTableName === 'WaterUsage') {
                 unit = 'm3';
