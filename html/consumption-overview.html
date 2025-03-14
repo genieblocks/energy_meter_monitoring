@@ -1718,6 +1718,7 @@ function showHistoryDefinedMeterDataForm(tableName, serialNumber) {
 
     modal.find('.modal-title').text(`${serialNumber} Nolu Sayaç Geçmiş Sorgulama`);
     const form = modal.find('form')[0];
+    form.style.display = 'block';
     const formBody = modal.find('.modal-body > form')[0];
 
     // Clear previous form fields
