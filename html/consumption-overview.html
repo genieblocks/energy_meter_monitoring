@@ -1606,6 +1606,13 @@ function showMeterHistoryModal(data, usageTableName) {
     tableBody.innerHTML = ''; // Clear existing rows
 
     if (Array.isArray(data) && data.length > 0) {
+        // Sort data by QueryStartTime in ascending order
+        data.sort((a, b) => {
+            let dateA = a.QueryStartTime ? new Date(a.QueryStartTime) : new Date(0);
+            let dateB = b.QueryStartTime ? new Date(b.QueryStartTime) : new Date(0);
+            return dateA - dateB;
+        });
+
         data.forEach(item => {
             let meterValue = '-';
             if (usageTableName === 'ElectricityUsage') {
