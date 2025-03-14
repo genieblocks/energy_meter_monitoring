@@ -1722,22 +1722,25 @@ function showHistoryDefinedMeterDataForm(tableName, serialNumber) {
 
     // Clear previous form fields
     formBody.innerHTML = '';
-    // Add hidden input for serialNumber
-    const hiddenSerialInput = document.createElement('input');
-    hiddenSerialInput.type = 'hidden';
-    hiddenSerialInput.id = 'serialNumber';
-    hiddenSerialInput.name = 'serialNumber';
-    hiddenSerialInput.value = serialNumber;
-    formBody.appendChild(hiddenSerialInput);
-    
-    // Add hidden input for tableName
-    const hiddenTableInput = document.createElement('input');
-    hiddenTableInput.type = 'hidden';
-    hiddenTableInput.id = 'tableName';
-    hiddenTableInput.name = 'tableName';
-    hiddenTableInput.value = tableName;
-    formBody.appendChild(hiddenTableInput);
-    
+
+    // Add serialNumber input (hidden via display: none)
+    const serialNumberInput = document.createElement('input');
+    serialNumberInput.type = 'text';
+    serialNumberInput.id = 'serialNumber';
+    serialNumberInput.name = 'serialNumber';
+    serialNumberInput.value = serialNumber;
+    serialNumberInput.style.display = 'none'; // type="hidden" yerine bu
+    formBody.appendChild(serialNumberInput);
+
+    // Add tableName input (hidden via display: none)
+    const tableNameInput = document.createElement('input');
+    tableNameInput.type = 'text';
+    tableNameInput.id = 'tableName';
+    tableNameInput.name = 'tableName';
+    tableNameInput.value = tableName;
+    tableNameInput.style.display = 'none';
+    formBody.appendChild(tableNameInput);
+
     // Determine usage table name based on tableName
     let usageTableName = '';
     if (tableName === 'WaterMeters') {
@@ -1749,14 +1752,15 @@ function showHistoryDefinedMeterDataForm(tableName, serialNumber) {
     } else if (tableName === 'CoolingMeters') {
       usageTableName = 'CoolUsage';
     }
-    
-    // Add hidden input for usageTableName
-    const hiddenUsageTableInput = document.createElement('input');
-    hiddenUsageTableInput.type = 'hidden';
-    hiddenUsageTableInput.id = 'usageTableName';
-    hiddenUsageTableInput.name = 'usageTableName';
-    hiddenUsageTableInput.value = usageTableName;
-    formBody.appendChild(hiddenUsageTableInput);
+
+    // Add usageTableName input (hidden via display: none)
+    const usageTableNameInput = document.createElement('input');
+    usageTableNameInput.type = 'text';
+    usageTableNameInput.id = 'usageTableName';
+    usageTableNameInput.name = 'usageTableName';
+    usageTableNameInput.value = usageTableName;
+    usageTableNameInput.style.display = 'none';
+    formBody.appendChild(usageTableNameInput);
 
     // Create a row to display the date inputs side by side
     const rowDiv = document.createElement('div');
@@ -1789,7 +1793,7 @@ function showHistoryDefinedMeterDataForm(tableName, serialNumber) {
     // Set default values: finishDate = today, startDate = one month ago
     const today = new Date();
     const finishDateInput = document.getElementById('finishDate');
-    finishDateInput.value = today.toISOString().split('T')[0]; // Format: yyyy-mm-dd
+    finishDateInput.value = today.toISOString().split('T')[0]; // yyyy-mm-dd
 
     const oneMonthAgo = new Date(today);
     oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
