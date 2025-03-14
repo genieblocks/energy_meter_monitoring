@@ -1758,23 +1758,33 @@ function showHistoryDefinedMeterDataForm(tableName, serialNumber) {
     hiddenUsageTableInput.value = usageTableName;
     formBody.appendChild(hiddenUsageTableInput);
 
-    // Add date form group for Başlangıç Tarihi
-    const formGroupStart = document.createElement('div');
-    formGroupStart.className = 'form-group';
-    formGroupStart.innerHTML = `
-      <label for="startDate">Başlangıç Tarihi</label>
-      <input type="date" id="startDate" name="startDate" class="form-control" required>
-    `;
-    formBody.appendChild(formGroupStart);
+    // Create a row to display the date inputs side by side
+    const rowDiv = document.createElement('div');
+    rowDiv.className = 'row';
 
-    // Add date form group for Bitiş Tarihi
-    const formGroupEnd = document.createElement('div');
-    formGroupEnd.className = 'form-group';
-    formGroupEnd.innerHTML = `
-      <label for="finishDate">Bitiş Tarihi</label>
-      <input type="date" id="finishDate" name="finishDate" class="form-control" required>
+    // Column for Başlangıç Tarihi
+    const colStart = document.createElement('div');
+    colStart.className = 'col-md-6';
+    colStart.innerHTML = `
+      <div class="form-group">
+        <label for="startDate">Başlangıç Tarihi</label>
+        <input type="date" id="startDate" name="startDate" class="form-control" required>
+      </div>
     `;
-    formBody.appendChild(formGroupEnd);
+    rowDiv.appendChild(colStart);
+
+    // Column for Bitiş Tarihi
+    const colEnd = document.createElement('div');
+    colEnd.className = 'col-md-6';
+    colEnd.innerHTML = `
+      <div class="form-group">
+        <label for="finishDate">Bitiş Tarihi</label>
+        <input type="date" id="finishDate" name="finishDate" class="form-control" required>
+      </div>
+    `;
+    rowDiv.appendChild(colEnd);
+
+    formBody.appendChild(rowDiv);
 
     // Set default values: finishDate = today, startDate = one month ago
     const today = new Date();
