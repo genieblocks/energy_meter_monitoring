@@ -1615,11 +1615,20 @@ function showMeterHistoryModal(data, usageTableName) {
             } else if (usageTableName === 'HeatingUsage' || usageTableName === 'CoolingUsage') {
                 meterValue = item.MeterValue_kWh || '-';
             }
+            
+            // Manually set the unit based on usageTableName
+            let unit = '-';
+            if (usageTableName === 'ElectricityUsage' || usageTableName === 'HeatingUsage' || usageTableName === 'CoolingUsage') {
+                unit = 'kWh';
+            } else if (usageTableName === 'WaterUsage') {
+                unit = 'm3';
+            }
+            
             const row = document.createElement('tr');
             row.innerHTML = `
                 <td>${item.QueryStartTime || '-'}</td>
                 <td>${meterValue}</td>
-                <td>${item.unit || '-'}</td>
+                <td>${unit}</td>
             `;
             tableBody.appendChild(row);
         });
