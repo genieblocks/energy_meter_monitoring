@@ -354,6 +354,7 @@
         <table class="table table-hover table-striped compact dataTable table-bordered" id="meterHistoryDataTable">
           <thead>
             <tr>
+              <th style="display: none;">Raw Tarih</th>
               <th>Tarih</th>
               <th>Sayaç Değeri</th>
               <th>Birim</th>
@@ -1633,7 +1634,8 @@ function showMeterHistoryModal(data, usageTableName) {
             
             const row = document.createElement('tr');
             row.innerHTML = `
-                <td>${item.QueryStartTime || '-'}</td>
+                <td style="display: none;">${item.QueryStartTime || '-'}</td>
+                <td>${formatDate(item.QueryStartTime)}</td>
                 <td>${meterValue}</td>
                 <td>${unit}</td>
             `;
