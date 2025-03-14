@@ -1697,8 +1697,9 @@ function getHistoryDataContent() {
     .then(data => {
         hideLoadingInModalBody('historyDataQueryModal', '#historyDataForm');
         if (data[0].success) {
-            $('#historyDataQueryModal').modal('hide');
-            showMeterHistoryModal(data[0].data, usageTableName);
+            $('#historyDataQueryModal').modal('hide').one('hidden.bs.modal', function() {
+                showMeterHistoryModal(data[0].data, usageTableName);
+            });
         } else {
             alert('Veri getirilirken bir hata oluştu: ' + data[0].message);
         }
