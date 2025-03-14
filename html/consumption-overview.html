@@ -1599,7 +1599,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
 });
 
-function showMeterHistoryModal(data, usageTableName) {
+function showMeterHistoryModal(data, usageTableName, serialNumber) {
+    // Update the modal label to include the serial number
+    const label = document.getElementById('meterHistoryModalLabel');
+    if (label) {
+        label.textContent = `Sayaç Geçmiş Verileri - ${serialNumber}`;
+    }
+
     // Get the meterHistoryModal modal element
     const modal = $('#meterHistoryModal');
     // Get the tbody of the meterHistoryDataTable
@@ -1707,7 +1713,7 @@ function getHistoryDataContent() {
         hideLoadingInModalBody('historyDataQueryModal', '#historyDataForm');
         if (data[0].success) {
             $('#historyDataQueryModal').modal('hide').one('hidden.bs.modal', function() {
-                showMeterHistoryModal(data[0].data, usageTableName);
+                showMeterHistoryModal(data[0].data, usageTableName, serialNumber);
             });
         } else {
             alert('Veri getirilirken bir hata oluştu: ' + data[0].message);
