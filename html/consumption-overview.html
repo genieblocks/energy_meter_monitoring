@@ -1686,7 +1686,7 @@ function getHistoryDataContent() {
         finishDate: finishDate
     };
 
-    blockElementById($('#historyDataQueryModal').find('.modal-body'));
+    showLoadingInModalBody('historyDataQueryModal', '#historyDataForm', 'Veri yükleniyor, lütfen bekleyiniz...');
 
     fetch(`${baseWebhookURL}/webhook/get-history-table-content`, {
         method: 'POST',
@@ -1695,7 +1695,7 @@ function getHistoryDataContent() {
     })
     .then(response => response.json())
     .then(data => {
-        unblockElementById($('#historyDataQueryModal').find('.modal-body'));
+        hideLoadingInModalBody('historyDataQueryModal', '#historyDataForm');
         if (data[0].success) {
             $('#historyDataQueryModal').modal('hide');
             showMeterHistoryModal(data[0].data, usageTableName);
@@ -1704,7 +1704,7 @@ function getHistoryDataContent() {
         }
     })
     .catch(error => {
-        unblockElementById($('#historyDataQueryModal').find('.modal-body'));
+        hideLoadingInModalBody('historyDataQueryModal', '#historyDataForm');
         alert('Veri getirilirken bir hata oluştu.');
     });
 }
