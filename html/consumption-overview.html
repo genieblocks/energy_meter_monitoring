@@ -1660,7 +1660,7 @@ function getHistoryDataContent() {
         unblockElementById($('#historyDataQueryModal').find('.modal-body'));
         if (data[0].success) {
             $('#historyDataQueryModal').modal('hide');
-            showHistoryModal();
+            showMeterHistoryModal();
         } else {
             alert('Veri getirilirken bir hata oluştu: ' + data[0].message);
         }
@@ -1707,9 +1707,9 @@ function showHistoryDefinedMeterDataForm(tableName, serialNumber) {
     } else if (tableName === 'ElectricMeters') {
       usageTableName = 'ElectricityUsage';
     } else if (tableName === 'HeatingMeters') {
-      usageTableName = 'HeatingUsage';
+      usageTableName = 'HeatUsage';
     } else if (tableName === 'CoolingMeters') {
-      usageTableName = 'CoolingUsage';
+      usageTableName = 'CoolUsage';
     }
     
     // Add hidden input for usageTableName
