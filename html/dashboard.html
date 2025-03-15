@@ -534,12 +534,15 @@ function updateMeterReport() {
                 }
             });
         }
-        $("#offlineDevicesModal").modal("show");
+        // Removed modal show from updateMeterReport
     })
     .catch(error => console.error("Error fetching meter data:", error));
 }
 
-document.getElementById("list-button").addEventListener("click", updateMeterReport);
+document.getElementById("list-button").addEventListener("click", () => {
+    updateMeterReport();
+    $("#offlineDevicesModal").modal("show");
+});
 
 document.addEventListener('DOMContentLoaded', () => {
     const yearElement = document.getElementById('footer-dynamic-year');
