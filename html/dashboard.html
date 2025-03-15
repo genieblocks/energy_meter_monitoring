@@ -513,43 +513,51 @@ function updateMeterReport() {
         tabsContainer.innerHTML = "";
         contentContainer.innerHTML = "";
 
-        let first = true;
-        Object.keys(meterTypes).forEach(type => {
-            if (offlineMeters[type].length > 0) {
-                // Create tab button
-                let btn = document.createElement("button");
-                btn.classList.add("btn", "btn-secondary");
-                btn.setAttribute("data-type", type);
-                btn.textContent = meterTypes[type];
-                if(first) {
-                    btn.classList.add("active");
-                }
-                tabsContainer.appendChild(btn);
+        // If there are no offline devices across all types, show a warning message
+        if (Object.values(offlineMeters).every(arr => arr.length === 0)) {
+            contentContainer.innerHTML = "<p class='text-center text-muted'>Offline cihaz bulunmamaktadır.</p>";
+        } else {
+            let first = true;
+            Object.keys(meterTypes).forEach(type => {
+                if (offlineMeters[type].length > 0) {
+                    // Create tab button
+                    let btn = document.createElement("button");
+                    btn.classList.add("btn", "btn-secondary");
+                    btn.setAttribute("data-type", type);
+                    btn.textContent = meterTypes[type];
+                    if(first) {
+                        btn.classList.add("active");
+                    }
+                    tabsContainer.appendChild(btn);
 
-                // Create content container for this type
-                let div = document.createElement("div");
-                div.id = `offlineDevicesContent-${type}`;
-                div.classList.add("offline-devices-list");
-                if(!first) {
-                    div.style.display = "none";
-                }
-                let ul = document.createElement("ul");
-                ul.classList.add("list-group");
-                offlineMeters[type].forEach(serial => {
-                    let li = document.createElement("li");
-                    li.classList.add("list-group-item");
-                    li.textContent = serial;
-                    ul.appendChild(li);
-                });
-                div.appendChild(ul);
-                contentContainer.appendChild(div);
+                    // Create content container for this type
+                    let div = document.createElement("div");
+                    div.id = `offlineDevicesContent-${type}`;
+                    div.classList.add("offline-devices-list");
+                    if(!first) {
+                        div.style.display = "none";
+                    }
+                    let ul = document.createElement("ul");
+                    ul.classList.add("list-group");
+                    offlineMeters[type].forEach(serial => {
+                        let li = document.createElement("li");
+                        li.classList.add("list-group-item");
+                        li.textContent = serial;
+                        ul.appendChild(li);
+                    });
+                    div.appendChild(ul);
+                    contentContainer.appendChild(div);
 
-                first = false;
+                    first = false;
+                }
+            });
+
+            // If no tab buttons were created, show a warning in the tabs container
+            if(tabsContainer.children.length === 0) {
+                tabsContainer.innerHTML = "<p class='text-center text-muted'>Offline cihaz kategorisi bulunmamaktadır.</p>";
             }
-        });
 
-        // Add click events to tab buttons
-        if(tabsContainer){
+            // Add click events to tab buttons
             tabsContainer.querySelectorAll("button").forEach(btn => {
                 btn.addEventListener("click", function(){
                     tabsContainer.querySelectorAll("button").forEach(b => b.classList.remove("active"));
@@ -563,6 +571,8 @@ function updateMeterReport() {
                 });
             });
         }
+        // After updating content, show the modal
+        $("#offlineDevicesModal").modal("show");
         // Modal show removed - now triggered by Listele butonuna tıklanması
     })
     .catch(error => console.error("Error fetching meter data:", error));
