@@ -189,44 +189,54 @@
                       <div id="audience-list-scroll" class="table-responsive height-300 position-relative">
                           <table class="table mb-0">
                               <tbody>
-                                  <tr>
-                                      <td>Online Elektrik Sayaç Sayısı</td>
-                                      <td class="text-center font-small-2 w-50">
-                                          80/100
-                                          <div class="progress mt-1 mb-0" style="height: 7px;">
-                                              <div class="progress-bar bg-success" role="progressbar" style="width: 80%" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"></div>
-                                          </div>
-                                      </td>
-                                  </tr>
-                                  <tr>
-                                      <td>Online Su Sayaç Sayısı</td>
-                                      <td class="text-center font-small-2 w-50">
-                                          170/200
-                                          <div class="progress mt-1 mb-0" style="height: 7px;">
-                                              <div class="progress-bar bg-success" role="progressbar" style="width: 85%" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"></div>
-                                          </div>
-                                      </td>
-                                  </tr>
-                                  <tr>
-                                      <td>Online Kalorimetre Sayaç Sayısı</td>
-                                      <td class="text-center font-small-2 w-50">
-                                          210/300
-                                          <div class="progress mt-1 mb-0" style="height: 7px;">
-                                              <div class="progress-bar bg-success" role="progressbar" style="width: 70%" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"></div>
-                                          </div>
-                                      </td>
-                                  </tr>
-                                  <tr>
-                                      <td>Online Moxa Sayısı</td>
-                                      <td class="text-center font-small-2 w-50">
-                                          8/10
-                                          <div class="progress mt-1 mb-0" style="height: 7px;">
-                                              <div class="progress-bar bg-success" role="progressbar" style="width: 80%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-                                          </div>
-                                      </td>
-                                  </tr>
+                                    <tr>
+                                        <td>Online Elektrik Sayaç Sayısı</td>
+                                        <td class="text-center font-small-2 w-50">
+                                            <span id="count-electricity">0/0</span>
+                                            <div class="progress mt-1 mb-0" style="height: 7px;">
+                                                <div id="progress-electricity" class="progress-bar bg-success" role="progressbar" style="width: 0%" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Online Su Sayaç Sayısı</td>
+                                        <td class="text-center font-small-2 w-50">
+                                            <span id="count-water">0/0</span>
+                                            <div class="progress mt-1 mb-0" style="height: 7px;">
+                                                <div id="progress-water" class="progress-bar bg-success" role="progressbar" style="width: 0%" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Online Kalorimetre Sıcak Sayaç Sayısı</td>
+                                        <td class="text-center font-small-2 w-50">
+                                            <span id="count-hot_calorimeter">0/0</span>
+                                            <div class="progress mt-1 mb-0" style="height: 7px;">
+                                                <div id="progress-hot_calorimeter" class="progress-bar bg-success" role="progressbar" style="width: 0%" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Online Kalorimetre Soğuk Sayaç Sayısı</td>
+                                        <td class="text-center font-small-2 w-50">
+                                            <span id="count-cold_calorimeter">0/0</span>
+                                            <div class="progress mt-1 mb-0" style="height: 7px;">
+                                                <div id="progress-cold_calorimeter" class="progress-bar bg-success" role="progressbar" style="width: 0%" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Online Moxa Sayısı</td>
+                                        <td class="text-center font-small-2 w-50">
+                                            8/10
+                                            <div class="progress mt-1 mb-0" style="height: 7px;">
+                                                <div class="progress-bar bg-success" role="progressbar" style="width: 80%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                        </td>
+                                    </tr>
                               </tbody>
                           </table>
+                        <div id="offline-meters-list" class="mt-2"></div>
                       </div>
                   </div>
               </div>
@@ -406,55 +416,90 @@ function unblockElementById(elementId) {
   $(elementId).unblock();
 }
 
-// document.addEventListener('DOMContentLoaded', function () {
-//     // app-menu.js tarafından yapılan değişiklikleri engelle
-//     const originalReset = $.app.menu.reset;
-//     $.app.menu.reset = function () {
-//         console.log('reset fonksiyonu engellendi.');
-//     };
+function updateMeterReport() {
+    fetch(`${baseWebhookURL}/webhook/get-unreadable-meters-list`)
+        .then(response => response.json())
+        .then(data => {
+            const meterTypes = {
+                electricity: "Elektrik Sayaç Sayısı",
+                hot_calorimeter: "Kalorimetre Sıcak Sayaç Sayısı",
+                cold_calorimeter: "Kalorimetre Soğuk Sayaç Sayısı",
+                water: "Su Sayaç Sayısı"
+            };
 
-//     const originalChange = $.app.menu.change;
-//     $.app.menu.change = function () {
-//         console.log('change fonksiyonu engellendi.');
-//     };
+            let offlineMeters = {
+                electricity: [],
+                hot_calorimeter: [],
+                cold_calorimeter: [],
+                water: []
+            };
 
-//     // Eğer ihtiyaç olursa, orijinal fonksiyonlar şu şekilde çağrılabilir:
-//     // originalReset.apply($.app.menu, arguments);
-//     // originalChange.apply($.app.menu, arguments);
-// });
-// document.addEventListener('DOMContentLoaded', function () {
-//         // Orijinal change fonksiyonunu sakla
-//         const originalChange = $.app.menu.change;
+            let totalMeters = {
+                electricity: 0,
+                hot_calorimeter: 0,
+                cold_calorimeter: 0,
+                water: 0
+            };
 
-//         // Yeni bir change fonksiyonu tanımla
-//         $.app.menu.change = function () {
-//             console.log('change fonksiyonu çağrıldı.');
-//             console.trace(); // Çağrının izini sür
+            let onlineMeters = {
+                electricity: 0,
+                hot_calorimeter: 0,
+                cold_calorimeter: 0,
+                water: 0
+            };
 
-//             // Eğer orijinal işlevi çalıştırmak isterseniz, aşağıdaki satırı aktif edin
-//             // originalChange.apply(this, arguments);
-//         };
-//     });
-// document.addEventListener('DOMContentLoaded', function () {
-//     const body = document.body;
+            // Veriyi ayrıştır ve offline sayaçları belirle
+            data.forEach(meter => {
+                const { type, serialNumber, totalCount, offlineCount, offlineDevices } = meter;
 
-//     const observer = new MutationObserver((mutations) => {
-//         mutations.forEach((mutation) => {
-//             if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
-//                 console.log('Body class değişti:', body.className);
+                if (meterTypes[type]) {
+                    totalMeters[type] = totalCount;
+                    onlineMeters[type] = totalCount - offlineCount;
+                    offlineMeters[type] = offlineDevices || [];
+                }
+            });
 
-//                 // Detaylı bilgi ekle
-//                 console.trace('Sınıf değişikliğini tetikleyen kod:');
-//             }
-//         });
-//     });
+            // Progress bar ve sayaç sayılarını güncelle
+            Object.keys(meterTypes).forEach(type => {
+                const progress = document.getElementById(`progress-${type}`);
+                const countText = document.getElementById(`count-${type}`);
 
-//     observer.observe(body, {
-//         attributes: true,
-//     });
+                if (progress && countText) {
+                    let percentage = (onlineMeters[type] / totalMeters[type]) * 100;
+                    progress.style.width = `${percentage}%`;
+                    countText.innerHTML = `${onlineMeters[type]}/${totalMeters[type]}`;
+                }
+            });
 
-//     console.log('İlk body class:', body.className);
-// });
+            // Offline cihazları listele
+            let offlineListElement = document.getElementById("offline-meters-list");
+            if (offlineListElement) {
+                offlineListElement.innerHTML = ""; // Önce listeyi temizle
+                Object.keys(offlineMeters).forEach(type => {
+                    if (offlineMeters[type].length > 0) {
+                        let listHeader = document.createElement("h6");
+                        listHeader.textContent = meterTypes[type];
+                        offlineListElement.appendChild(listHeader);
+
+                        let list = document.createElement("ul");
+                        list.className = "list-unstyled";
+                        offlineMeters[type].forEach(serial => {
+                            let listItem = document.createElement("li");
+                            listItem.textContent = serial;
+                            list.appendChild(listItem);
+                        });
+
+                        offlineListElement.appendChild(list);
+                    }
+                });
+            }
+        })
+        .catch(error => console.error("Error fetching meter data:", error));
+}
+
+// Sayfa yüklendiğinde veriyi çek
+document.addEventListener("DOMContentLoaded", updateMeterReport);
+
 document.addEventListener('DOMContentLoaded', () => {
     const yearElement = document.getElementById('footer-dynamic-year');
     if (yearElement) {
