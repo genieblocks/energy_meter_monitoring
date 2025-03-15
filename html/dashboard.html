@@ -418,89 +418,100 @@ function unblockElementById(elementId) {
 
 function updateMeterReport() {
     fetch(`${baseWebhookURL}/webhook/get-unreadable-meters-list`, {
-        method: "POST",
+        method: "GET",
         headers: {
-            'Content-Type': 'application/json'
+            "Content-Type": "application/json"
         }
     })
-        .then(response => response.json())
-        .then(data => {
-            const meterTypes = {
-                electricity: "Elektrik Sayaç Sayısı",
-                hot_calorimeter: "Kalorimetre Sıcak Sayaç Sayısı",
-                cold_calorimeter: "Kalorimetre Soğuk Sayaç Sayısı",
-                water: "Su Sayaç Sayısı"
-            };
+    .then(response => response.json())
+    .then(data => {
+        const meterTypes = {
+            electricity: "Elektrik Sayaç Sayısı",
+            hot_calorimeter: "Kalorimetre Sıcak Sayaç Sayısı",
+            cold_calorimeter: "Kalorimetre Soğuk Sayaç Sayısı",
+            water: "Su Sayaç Sayısı"
+        };
 
-            let offlineMeters = {
-                electricity: [],
-                hot_calorimeter: [],
-                cold_calorimeter: [],
-                water: []
-            };
+        let offlineMeters = {
+            electricity: [],
+            hot_calorimeter: [],
+            cold_calorimeter: [],
+            water: []
+        };
 
-            let totalMeters = {
-                electricity: 0,
-                hot_calorimeter: 0,
-                cold_calorimeter: 0,
-                water: 0
-            };
+        let totalMeters = {
+            electricity: 0,
+            hot_calorimeter: 0,
+            cold_calorimeter: 0,
+            water: 0
+        };
 
-            let onlineMeters = {
-                electricity: 0,
-                hot_calorimeter: 0,
-                cold_calorimeter: 0,
-                water: 0
-            };
+        let onlineMeters = {
+            electricity: 0,
+            hot_calorimeter: 0,
+            cold_calorimeter: 0,
+            water: 0
+        };
 
-            // Veriyi ayrıştır ve offline sayaçları belirle
-            data.forEach(meter => {
-                const { type, serialNumber, totalCount, offlineCount, offlineDevices } = meter;
+        // Veriyi ayrıştır ve offline sayaçları belirle
+        data.forEach(meter => {
+            const { type, totalCount, offlineCount, offlineDevices } = meter;
 
-                if (meterTypes[type]) {
-                    totalMeters[type] = totalCount;
-                    onlineMeters[type] = totalCount - offlineCount;
-                    offlineMeters[type] = offlineDevices || [];
+            if (meterTypes[type]) {
+                totalMeters[type] = totalCount;
+                onlineMeters[type] = totalCount - offlineCount;
+                
+                // Eğer offlineDevices string olarak geldiyse, diziye çevir
+                if (typeof offlineDevices === "string") {
+                    offlineMeters[type] = offlineDevices.split(", ").map(serial => serial.trim());
+                } else if (Array.isArray(offlineDevices)) {
+                    offlineMeters[type] = offlineDevices;
+                } else {
+                    offlineMeters[type] = [];
                 }
-            });
-
-            // Progress bar ve sayaç sayılarını güncelle
-            Object.keys(meterTypes).forEach(type => {
-                const progress = document.getElementById(`progress-${type}`);
-                const countText = document.getElementById(`count-${type}`);
-
-                if (progress && countText) {
-                    let percentage = (onlineMeters[type] / totalMeters[type]) * 100;
-                    progress.style.width = `${percentage}%`;
-                    countText.innerHTML = `${onlineMeters[type]}/${totalMeters[type]}`;
-                }
-            });
-
-            // Offline cihazları listele
-            let offlineListElement = document.getElementById("offline-meters-list");
-            if (offlineListElement) {
-                offlineListElement.innerHTML = ""; // Önce listeyi temizle
-                Object.keys(offlineMeters).forEach(type => {
-                    if (offlineMeters[type].length > 0) {
-                        let listHeader = document.createElement("h6");
-                        listHeader.textContent = meterTypes[type];
-                        offlineListElement.appendChild(listHeader);
-
-                        let list = document.createElement("ul");
-                        list.className = "list-unstyled";
-                        offlineMeters[type].forEach(serial => {
-                            let listItem = document.createElement("li");
-                            listItem.textContent = serial;
-                            list.appendChild(listItem);
-                        });
-
-                        offlineListElement.appendChild(list);
-                    }
-                });
             }
-        })
-        .catch(error => console.error("Error fetching meter data:", error));
+        });
+
+        // Progress bar ve sayaç sayılarını güncelle
+        Object.keys(meterTypes).forEach(type => {
+            const progress = document.getElementById(`progress-${type}`);
+            const countText = document.getElementById(`count-${type}`);
+
+            if (progress && countText) {
+                let percentage = (onlineMeters[type] / totalMeters[type]) * 100;
+                progress.style.width = `${percentage}%`;
+                countText.innerHTML = `${onlineMeters[type]}/${totalMeters[type]}`;
+            }
+        });
+
+        // Offline cihazları listele
+        let offlineListElement = document.getElementById("offline-meters-list");
+        if (offlineListElement) {
+            offlineListElement.innerHTML = ""; // Önce listeyi temizle
+            Object.keys(offlineMeters).forEach(type => {
+                if (offlineMeters[type].length > 0) {
+                    let listHeader = document.createElement("h6");
+                    listHeader.textContent = meterTypes[type];
+                    offlineListElement.appendChild(listHeader);
+
+                    let list = document.createElement("ul");
+                    list.className = "list-unstyled";
+                    offlineMeters[type].forEach(serial => {
+                        let listItem = document.createElement("li");
+                        listItem.textContent = serial;
+                        list.appendChild(listItem);
+                    });
+
+                    offlineListElement.appendChild(list);
+                }
+            });
+        }
+    })
+    .catch(error => console.error("Error fetching meter data:", error));
 }
+
+// Sayfa yüklendiğinde veriyi çek
+document.addEventListener("DOMContentLoaded", updateMeterReport);
 
 // Sayfa yüklendiğinde veriyi çek
 document.addEventListener("DOMContentLoaded", updateMeterReport);
