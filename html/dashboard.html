@@ -417,7 +417,12 @@ function unblockElementById(elementId) {
 }
 
 function updateMeterReport() {
-    fetch(`${baseWebhookURL}/webhook/get-unreadable-meters-list`)
+    fetch(`${baseWebhookURL}/webhook/get-unreadable-meters-list`, {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
         .then(response => response.json())
         .then(data => {
             const meterTypes = {
