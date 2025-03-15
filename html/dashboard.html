@@ -507,41 +507,67 @@ function updateMeterReport() {
             }
         });
 
-        // Offline cihazları listele in modal
-        let offlineListElement = document.getElementById("offlineDevicesList");
-        if (offlineListElement) {
-            offlineListElement.innerHTML = ""; // Önce listeyi temizle
-            Object.keys(offlineMeters).forEach(type => {
-                if (offlineMeters[type].length > 0) {
-                    let section = document.createElement("div");
-                    section.classList.add("mb-3");
+        // Offline cihazları listele in modal (Accordion yapısı)
+        let offlineAccordion = document.getElementById("offlineDevicesAccordion");
+        offlineAccordion.innerHTML = "";
 
-                    let header = document.createElement("h6");
-                    header.textContent = meterTypes[type];
-                    section.appendChild(header);
+        Object.keys(offlineMeters).forEach(type => {
+            if (offlineMeters[type].length > 0) {
+                let card = document.createElement("div");
+                card.classList.add("card");
 
-                    let list = document.createElement("ul");
-                    list.classList.add("list-group");
-                    offlineMeters[type].forEach(serial => {
-                        let listItem = document.createElement("li");
-                        listItem.classList.add("list-group-item");
-                        listItem.textContent = serial;
-                        list.appendChild(listItem);
-                    });
+                let cardHeader = document.createElement("div");
+                cardHeader.classList.add("card-header");
+                cardHeader.setAttribute("id", `heading-${type}`);
 
-                    section.appendChild(list);
-                    offlineListElement.appendChild(section);
-                }
-            });
-        }
-        // Removed modal show from updateMeterReport
+                let h5 = document.createElement("h5");
+                h5.classList.add("mb-0");
+
+                let button = document.createElement("button");
+                button.classList.add("btn", "btn-link", "collapsed");
+                button.setAttribute("data-toggle", "collapse");
+                button.setAttribute("data-target", `#collapse-${type}`);
+                button.setAttribute("aria-expanded", "false");
+                button.setAttribute("aria-controls", `collapse-${type}`);
+                button.textContent = meterTypes[type];
+
+                h5.appendChild(button);
+                cardHeader.appendChild(h5);
+                card.appendChild(cardHeader);
+
+                let collapseDiv = document.createElement("div");
+                collapseDiv.id = `collapse-${type}`;
+                collapseDiv.classList.add("collapse");
+                collapseDiv.setAttribute("aria-labelledby", `heading-${type}`);
+                collapseDiv.setAttribute("data-parent", "#offlineDevicesAccordion");
+
+                let cardBody = document.createElement("div");
+                cardBody.classList.add("card-body");
+
+                let ul = document.createElement("ul");
+                ul.classList.add("list-group");
+
+                offlineMeters[type].forEach(serial => {
+                    let listItem = document.createElement("li");
+                    listItem.classList.add("list-group-item");
+                    listItem.textContent = serial;
+                    ul.appendChild(listItem);
+                });
+
+                cardBody.appendChild(ul);
+                collapseDiv.appendChild(cardBody);
+                card.appendChild(collapseDiv);
+                offlineAccordion.appendChild(card);
+            }
+        });
+        // Modalı aç
+        $("#offlineDevicesModal").modal("show");
     })
     .catch(error => console.error("Error fetching meter data:", error));
 }
 
 document.getElementById("list-button").addEventListener("click", () => {
     updateMeterReport();
-    $("#offlineDevicesModal").modal("show");
 });
 
 document.addEventListener('DOMContentLoaded', () => {
