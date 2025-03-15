@@ -560,14 +560,14 @@ function updateMeterReport() {
                 offlineAccordion.appendChild(card);
             }
         });
-        // Modalı aç
-        $("#offlineDevicesModal").modal("show");
+        // Modal show removed - now triggered by Listele butonuna tıklanması
     })
     .catch(error => console.error("Error fetching meter data:", error));
 }
 
 document.getElementById("list-button").addEventListener("click", () => {
     updateMeterReport();
+    $("#offlineDevicesModal").modal("show");
 });
 
 document.addEventListener('DOMContentLoaded', () => {
