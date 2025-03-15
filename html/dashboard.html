@@ -358,8 +358,28 @@
             <span class="float-md-right d-block d-md-inline-block d-none d-lg-block">Made with <i
                 class="ft-heart pink"></i></span>
         </p>
-    </footer>
-
+  </footer>
+  
+  <!-- Offline Devices Modal -->
+  <div class="modal fade" id="offlineDevicesModal" tabindex="-1" role="dialog" aria-labelledby="offlineDevicesModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="offlineDevicesModalLabel">Offline Cihazlar</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                  </button>
+              </div>
+              <div class="modal-body">
+                  <div id="offlineDevicesList"></div>
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+              </div>
+          </div>
+      </div>
+  </div>
+  
   <!-- BEGIN VENDOR JS-->  
   <script src="../app-assets/vendors/js/ui/popper.min.js"></script>
 
@@ -485,37 +505,39 @@ function updateMeterReport() {
             }
         });
 
-        // Offline cihazları listele
-        let offlineListElement = document.getElementById("offline-meters-list");
+        // Offline cihazları listele in modal
+        let offlineListElement = document.getElementById("offlineDevicesList");
         if (offlineListElement) {
             offlineListElement.innerHTML = ""; // Önce listeyi temizle
             Object.keys(offlineMeters).forEach(type => {
                 if (offlineMeters[type].length > 0) {
-                    let listHeader = document.createElement("h6");
-                    listHeader.textContent = meterTypes[type];
-                    offlineListElement.appendChild(listHeader);
+                    let section = document.createElement("div");
+                    section.classList.add("mb-3");
+
+                    let header = document.createElement("h6");
+                    header.textContent = meterTypes[type];
+                    section.appendChild(header);
 
                     let list = document.createElement("ul");
-                    list.className = "list-unstyled";
+                    list.classList.add("list-group");
                     offlineMeters[type].forEach(serial => {
                         let listItem = document.createElement("li");
+                        listItem.classList.add("list-group-item");
                         listItem.textContent = serial;
                         list.appendChild(listItem);
                     });
 
-                    offlineListElement.appendChild(list);
+                    section.appendChild(list);
+                    offlineListElement.appendChild(section);
                 }
             });
         }
+        $("#offlineDevicesModal").modal("show");
     })
     .catch(error => console.error("Error fetching meter data:", error));
 }
 
-// Sayfa yüklendiğinde veriyi çek
-document.addEventListener("DOMContentLoaded", updateMeterReport);
-
-// Sayfa yüklendiğinde veriyi çek
-document.addEventListener("DOMContentLoaded", updateMeterReport);
+document.getElementById("list-button").addEventListener("click", updateMeterReport);
 
 document.addEventListener('DOMContentLoaded', () => {
     const yearElement = document.getElementById('footer-dynamic-year');
