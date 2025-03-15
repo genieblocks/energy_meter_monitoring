@@ -507,59 +507,62 @@ function updateMeterReport() {
             }
         });
 
-        // Offline cihazları listele in modal (Accordion yapısı)
-        let offlineAccordion = document.getElementById("offlineDevicesAccordion");
-        offlineAccordion.innerHTML = "";
+        // Build tab-based offline devices list
+        let tabsContainer = document.querySelector("#offlineDevicesTabs .btn-group");
+        let contentContainer = document.getElementById("offlineDevicesContent");
+        tabsContainer.innerHTML = "";
+        contentContainer.innerHTML = "";
 
-        Object.keys(offlineMeters).forEach(type => {
+        let first = true;
+        Object.keys(meterTypes).forEach(type => {
             if (offlineMeters[type].length > 0) {
-                let card = document.createElement("div");
-                card.classList.add("card");
+                // Create tab button
+                let btn = document.createElement("button");
+                btn.classList.add("btn", "btn-secondary");
+                btn.setAttribute("data-type", type);
+                btn.textContent = meterTypes[type];
+                if(first) {
+                    btn.classList.add("active");
+                }
+                tabsContainer.appendChild(btn);
 
-                let cardHeader = document.createElement("div");
-                cardHeader.classList.add("card-header");
-                cardHeader.setAttribute("id", `heading-${type}`);
-
-                let h5 = document.createElement("h5");
-                h5.classList.add("mb-0");
-
-                let button = document.createElement("button");
-                button.classList.add("btn", "btn-link", "collapsed");
-                button.setAttribute("data-toggle", "collapse");
-                button.setAttribute("data-target", `#collapse-${type}`);
-                button.setAttribute("aria-expanded", "false");
-                button.setAttribute("aria-controls", `collapse-${type}`);
-                button.textContent = meterTypes[type];
-
-                h5.appendChild(button);
-                cardHeader.appendChild(h5);
-                card.appendChild(cardHeader);
-
-                let collapseDiv = document.createElement("div");
-                collapseDiv.id = `collapse-${type}`;
-                collapseDiv.classList.add("collapse");
-                collapseDiv.setAttribute("aria-labelledby", `heading-${type}`);
-                collapseDiv.setAttribute("data-parent", "#offlineDevicesAccordion");
-
-                let cardBody = document.createElement("div");
-                cardBody.classList.add("card-body");
-
+                // Create content container for this type
+                let div = document.createElement("div");
+                div.id = `offlineDevicesContent-${type}`;
+                div.classList.add("offline-devices-list");
+                if(!first) {
+                    div.style.display = "none";
+                }
                 let ul = document.createElement("ul");
                 ul.classList.add("list-group");
-
                 offlineMeters[type].forEach(serial => {
-                    let listItem = document.createElement("li");
-                    listItem.classList.add("list-group-item");
-                    listItem.textContent = serial;
-                    ul.appendChild(listItem);
+                    let li = document.createElement("li");
+                    li.classList.add("list-group-item");
+                    li.textContent = serial;
+                    ul.appendChild(li);
                 });
+                div.appendChild(ul);
+                contentContainer.appendChild(div);
 
-                cardBody.appendChild(ul);
-                collapseDiv.appendChild(cardBody);
-                card.appendChild(collapseDiv);
-                offlineAccordion.appendChild(card);
+                first = false;
             }
         });
+
+        // Add click events to tab buttons
+        if(tabsContainer){
+            tabsContainer.querySelectorAll("button").forEach(btn => {
+                btn.addEventListener("click", function(){
+                    tabsContainer.querySelectorAll("button").forEach(b => b.classList.remove("active"));
+                    this.classList.add("active");
+                    let selectedType = this.getAttribute("data-type");
+                    contentContainer.querySelectorAll(".offline-devices-list").forEach(div => {
+                        div.style.display = "none";
+                    });
+                    let selectedDiv = document.getElementById(`offlineDevicesContent-${selectedType}`);
+                    if(selectedDiv) selectedDiv.style.display = "block";
+                });
+            });
+        }
         // Modal show removed - now triggered by Listele butonuna tıklanması
     })
     .catch(error => console.error("Error fetching meter data:", error));
