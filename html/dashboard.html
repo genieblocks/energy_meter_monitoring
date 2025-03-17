@@ -464,6 +464,17 @@ function updateMeterReport() {
     })
     .then(response => response.json())
     .then(data => {
+        if (data.length > 0) {
+            let queryStartTime = new Date(data[0].queryStartTime);
+            let formattedTime = queryStartTime.toLocaleString("tr-TR", {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+                hour: "2-digit",
+                minute: "2-digit"
+            });
+            document.querySelector(".card-subtitle span").textContent = formattedTime;
+        }
         const meterTypes = {
             electricity: "Elektrik Sayaçları",
             hot_calorimeter: "Kalorimetre Sıcak Sayaçları",
