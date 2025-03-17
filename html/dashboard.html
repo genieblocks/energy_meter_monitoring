@@ -561,21 +561,45 @@ function updateMeterReport() {
                 let thead = document.createElement("thead");
                 let tbody = document.createElement("tbody");
 
-                // Create header row
+                // Create header row with new columns
                 let trHead = document.createElement("tr");
                 let thSerial = document.createElement("th");
                 thSerial.textContent = "Seri Numarası";
                 trHead.appendChild(thSerial);
+                let thBlok = document.createElement("th");
+                thBlok.textContent = "Blok";
+                trHead.appendChild(thBlok);
+                let thBinaNo = document.createElement("th");
+                thBinaNo.textContent = "Bina No";
+                trHead.appendChild(thBinaNo);
+                let thDaire = document.createElement("th");
+                thDaire.textContent = "Daire";
+                trHead.appendChild(thDaire);
+                let thAbone = document.createElement("th");
+                thAbone.textContent = "Abone";
+                trHead.appendChild(thAbone);
                 thead.appendChild(trHead);
 
                 // Sort offline device list in ascending order based on serial numbers
                 offlineMeters[type].sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
                 // Create rows for each offline device
-                offlineMeters[type].forEach(serial => {
+                offlineMeters[type].forEach(device => {
                     let tr = document.createElement("tr");
-                    let td = document.createElement("td");
-                    td.textContent = serial;
-                    tr.appendChild(td);
+                    let tdSerial = document.createElement("td");
+                    tdSerial.textContent = (typeof device === 'object' && device.serial) ? device.serial : device;
+                    tr.appendChild(tdSerial);
+                    let tdBlok = document.createElement("td");
+                    tdBlok.textContent = (typeof device === 'object' && device.blok) ? device.blok : "";
+                    tr.appendChild(tdBlok);
+                    let tdBinaNo = document.createElement("td");
+                    tdBinaNo.textContent = (typeof device === 'object' && device.binaNo) ? device.binaNo : "";
+                    tr.appendChild(tdBinaNo);
+                    let tdDaire = document.createElement("td");
+                    tdDaire.textContent = (typeof device === 'object' && device.daire) ? device.daire : "";
+                    tr.appendChild(tdDaire);
+                    let tdAbone = document.createElement("td");
+                    tdAbone.textContent = (typeof device === 'object' && device.abone) ? device.abone : "";
+                    tr.appendChild(tdAbone);
                     tbody.appendChild(tr);
                 });
 
