@@ -508,8 +508,14 @@ function updateMeterReport() {
         });
 
         // Build tab-based offline devices list
-        let tabsContainer = document.querySelector("#offlineDevicesTabs .btn-group");
         let contentContainer = document.getElementById("offlineDevicesContent");
+        let tabsContainer = document.getElementById("offlineDevicesTabs");
+
+        if (!contentContainer || !tabsContainer) {
+            console.error("Offline devices modal elements not found.");
+            return;
+        }
+        
         tabsContainer.innerHTML = "";
         contentContainer.innerHTML = "";
 
