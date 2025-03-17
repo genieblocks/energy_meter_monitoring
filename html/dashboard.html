@@ -466,6 +466,20 @@ function updateMeterReport() {
             water: "Su Sayaçları"
         };
 
+        let onlineMeters = {
+            electricity: 0,
+            hot_calorimeter: 0,
+            cold_calorimeter: 0,
+            water: 0
+        };
+
+        let totalMeters = {
+            electricity: 0,
+            hot_calorimeter: 0,
+            cold_calorimeter: 0,
+            water: 0
+        };
+
         let offlineMeters = {
             electricity: [],
             hot_calorimeter: [],
@@ -474,16 +488,32 @@ function updateMeterReport() {
         };
 
         data.forEach(meter => {
-            const { type, offlineDevices } = meter;
+            const { type, offlineDevices, onlineCount, totalCount } = meter;
 
             if (meterTypes[type]) {
+                totalMeters[type] = totalCount || 0;
+                onlineMeters[type] = onlineCount || 0;
                 offlineMeters[type] = typeof offlineDevices === "string" 
                     ? offlineDevices.split(", ").map(serial => serial.trim()) 
                     : [];
             }
         });
 
-        // Offline cihaz listesi oluştur
+        // **Progress bar ve sayaç sayılarını güncelle**
+        Object.keys(meterTypes).forEach(type => {
+            const progress = document.getElementById(`progress-${type}`);
+            const countText = document.getElementById(`count-${type}`);
+
+            if (progress && countText) {
+                let percentage = totalMeters[type] > 0 
+                    ? (onlineMeters[type] / totalMeters[type]) * 100 
+                    : 0;
+                progress.style.width = `${percentage}%`;
+                countText.innerHTML = `${onlineMeters[type]}/${totalMeters[type]}`;
+            }
+        });
+
+        // **Offline cihaz listesi oluştur**
         tabsContainer.innerHTML = "";
         contentContainer.innerHTML = "";
 
@@ -517,7 +547,7 @@ function updateMeterReport() {
             }
         });
 
-        // Tab butonlarına click event ekle
+        // **Tab butonlarına click event ekle**
         tabsContainer.querySelectorAll("button").forEach(btn => {
             btn.addEventListener("click", function() {
                 tabsContainer.querySelectorAll("button").forEach(b => b.classList.remove("active"));
