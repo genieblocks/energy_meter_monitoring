@@ -487,15 +487,22 @@ function updateMeterReport() {
             water: []
         };
 
+        // Veriyi ayrıştır ve offline sayaçları belirle
         data.forEach(meter => {
-            const { type, offlineDevices, onlineCount, totalCount } = meter;
+            const { type, totalCount, offlineCount, offlineDevices } = meter;
 
             if (meterTypes[type]) {
-                totalMeters[type] = totalCount || 0;
-                onlineMeters[type] = onlineCount || 0;
-                offlineMeters[type] = typeof offlineDevices === "string" 
-                    ? offlineDevices.split(", ").map(serial => serial.trim()) 
-                    : [];
+                totalMeters[type] = totalCount;
+                onlineMeters[type] = totalCount - offlineCount;
+                
+                // Eğer offlineDevices string olarak geldiyse, diziye çevir
+                if (typeof offlineDevices === "string") {
+                    offlineMeters[type] = offlineDevices.split(", ").map(serial => serial.trim());
+                } else if (Array.isArray(offlineDevices)) {
+                    offlineMeters[type] = offlineDevices;
+                } else {
+                    offlineMeters[type] = [];
+                }
             }
         });
 
