@@ -546,7 +546,7 @@ function updateMeterReport() {
         Object.keys(meterTypes).forEach(type => {
             if (offlineMeters[type].length > 0) {
                 let btn = document.createElement("button");
-                btn.classList.add("btn", "btn-primary");
+                btn.classList.add("btn", "btn-outline-primary");
                 btn.setAttribute("data-type", type);
                 btn.textContent = meterTypes[type];
                 if (first) btn.classList.add("active");
@@ -556,51 +556,46 @@ function updateMeterReport() {
                 div.id = `offlineDevicesContent-${type}`;
                 div.classList.add("offline-devices-table");
                 if (!first) div.style.display = "none";
-                // Create table structure for offline devices
+
+                // Tablo yapısını oluştur
                 let table = document.createElement("table");
                 table.classList.add("table", "table-striped", "table-bordered", "table-sm");
                 let thead = document.createElement("thead");
                 let tbody = document.createElement("tbody");
 
-                // Create header row with new columns
+                // Başlık satırı oluştur
                 let trHead = document.createElement("tr");
-                let thSerial = document.createElement("th");
-                thSerial.textContent = "Seri Numarası";
-                trHead.appendChild(thSerial);
-                let thBlok = document.createElement("th");
-                thBlok.textContent = "Blok";
-                trHead.appendChild(thBlok);
-                let thBinaNo = document.createElement("th");
-                thBinaNo.textContent = "Bina No";
-                trHead.appendChild(thBinaNo);
-                let thDaire = document.createElement("th");
-                thDaire.textContent = "Daire";
-                trHead.appendChild(thDaire);
-                let thAbone = document.createElement("th");
-                thAbone.textContent = "Abone";
-                trHead.appendChild(thAbone);
+                ["Seri Numarası", "Blok", "Bina No", "Daire", "Abone"].forEach(headerText => {
+                    let th = document.createElement("th");
+                    th.textContent = headerText;
+                    trHead.appendChild(th);
+                });
                 thead.appendChild(trHead);
 
-                // Sort offline device list in ascending order based on serial numbers
-                offlineMeters[type].sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
-                // Create rows for each offline device
-                offlineMeters[type].forEach(device => {
+                // `offlineDevicesDetails` JSON formatında string olarak geldiği için parse edelim
+                let offlineDetails = [];
+                data.forEach(meter => {
+                    if (meter.type === type && meter.offlineDevicesDetails) {
+                        try {
+                            let parsedDetails = JSON.parse(meter.offlineDevicesDetails);
+                            offlineDetails = offlineDetails.concat(parsedDetails);
+                        } catch (error) {
+                            console.error("JSON parse hatası:", error);
+                        }
+                    }
+                });
+
+                // Seri numarasına göre sıralama yap
+                offlineDetails.sort((a, b) => a.SerialNumber.localeCompare(b.SerialNumber, undefined, { numeric: true }));
+
+                // Her cihaz için satır ekleyelim
+                offlineDetails.forEach(device => {
                     let tr = document.createElement("tr");
-                    let tdSerial = document.createElement("td");
-                    tdSerial.textContent = (typeof device === 'object' && device.SerialNumber) ? device.SerialNumber : device;
-                    tr.appendChild(tdSerial);
-                    let tdBlok = document.createElement("td");
-                    tdBlok.textContent = (typeof device === 'object' && device.Block) ? device.Block : "";
-                    tr.appendChild(tdBlok);
-                    let tdBinaNo = document.createElement("td");
-                    tdBinaNo.textContent = (typeof device === 'object' && device.BuildingNo) ? device.BuildingNo : "";
-                    tr.appendChild(tdBinaNo);
-                    let tdDaire = document.createElement("td");
-                    tdDaire.textContent = (typeof device === 'object' && device.Flat) ? device.Flat : "";
-                    tr.appendChild(tdDaire);
-                    let tdAbone = document.createElement("td");
-                    tdAbone.textContent = (typeof device === 'object' && device.Subscriber) ? device.Subscriber : "";
-                    tr.appendChild(tdAbone);
+                    ["SerialNumber", "Block", "BuildingNo", "Flat", "Subscriber"].forEach(key => {
+                        let td = document.createElement("td");
+                        td.textContent = device[key] || "-";
+                        tr.appendChild(td);
+                    });
                     tbody.appendChild(tr);
                 });
 
