@@ -542,6 +542,10 @@ document.getElementById("list-button").addEventListener("click", () => {
 });
 
 document.addEventListener('DOMContentLoaded', () => {
+    updateMeterReport();
+});
+
+document.addEventListener('DOMContentLoaded', () => {
     const yearElement = document.getElementById('footer-dynamic-year');
     if (yearElement) {
         const currentYear = new Date().getFullYear();
