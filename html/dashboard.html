@@ -520,53 +520,27 @@ function updateMeterReport() {
             }
         });
 
-        // **Offline cihaz listesi oluştur**
-        tabsContainer.innerHTML = "";
-        contentContainer.innerHTML = "";
-
-        let first = true;
+        // **Offline cihaz tablosunu oluştur**
+        contentContainer.innerHTML = `
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Cihaz Tipi</th>
+                        <th>Seri Numarası</th>
+                    </tr>
+                </thead>
+                <tbody id="offlineDevicesTableBody"></tbody>
+            </table>
+        `;
+        let tableBody = document.getElementById("offlineDevicesTableBody");
         Object.keys(meterTypes).forEach(type => {
-            if (offlineMeters[type].length > 0) {
-                let btn = document.createElement("button");
-                btn.classList.add("btn", "btn-secondary");
-                btn.setAttribute("data-type", type);
-                btn.textContent = meterTypes[type];
-                if (first) btn.classList.add("active");
-                tabsContainer.appendChild(btn);
-
-                let div = document.createElement("div");
-                div.id = `offlineDevicesContent-${type}`;
-                div.classList.add("offline-devices-list");
-                if (!first) div.style.display = "none";
-                let ul = document.createElement("ul");
-                ul.classList.add("list-group");
-
-                offlineMeters[type].forEach(serial => {
-                    let li = document.createElement("li");
-                    li.classList.add("list-group-item");
-                    li.textContent = serial;
-                    ul.appendChild(li);
-                });
-
-                div.appendChild(ul);
-                contentContainer.appendChild(div);
-                first = false;
-            }
-        });
-
-        // **Tab butonlarına click event ekle**
-        tabsContainer.querySelectorAll("button").forEach(btn => {
-            btn.addEventListener("click", function() {
-                tabsContainer.querySelectorAll("button").forEach(b => b.classList.remove("active"));
-                this.classList.add("active");
-
-                let selectedType = this.getAttribute("data-type");
-                contentContainer.querySelectorAll(".offline-devices-list").forEach(div => {
-                    div.style.display = "none";
-                });
-
-                let selectedDiv = document.getElementById(`offlineDevicesContent-${selectedType}`);
-                if (selectedDiv) selectedDiv.style.display = "block";
+            offlineMeters[type].forEach(serial => {
+                let row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${meterTypes[type]}</td>
+                    <td>${serial}</td>
+                `;
+                tableBody.appendChild(row);
             });
         });
     })
