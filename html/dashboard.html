@@ -464,6 +464,7 @@ function updateMeterReport() {
     })
     .then(response => response.json())
     .then(data => {
+        console.log("Fetch Response:", data); // Fetch cevabını konsola bas
         if (data.length > 0) {
             let queryStartTime = new Date(data[0].queryStartTime);
             let formattedTime = queryStartTime.toLocaleString("tr-TR", {
