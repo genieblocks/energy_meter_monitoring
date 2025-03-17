@@ -554,6 +554,8 @@ function updateMeterReport() {
                 trHead.appendChild(thSerial);
                 thead.appendChild(trHead);
 
+                // Sort offline device list in ascending order based on serial numbers
+                offlineMeters[type].sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
                 // Create rows for each offline device
                 offlineMeters[type].forEach(serial => {
                     let tr = document.createElement("tr");
