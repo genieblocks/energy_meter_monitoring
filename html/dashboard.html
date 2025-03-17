@@ -531,7 +531,7 @@ function updateMeterReport() {
         Object.keys(meterTypes).forEach(type => {
             if (offlineMeters[type].length > 0) {
                 let btn = document.createElement("button");
-                btn.classList.add("btn", "btn-secondary");
+                btn.classList.add("btn", "btn-primary");
                 btn.setAttribute("data-type", type);
                 btn.textContent = meterTypes[type];
                 if (first) btn.classList.add("active");
