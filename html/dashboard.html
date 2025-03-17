@@ -536,19 +536,33 @@ function updateMeterReport() {
 
                 let div = document.createElement("div");
                 div.id = `offlineDevicesContent-${type}`;
-                div.classList.add("offline-devices-list");
+                div.classList.add("offline-devices-table");
                 if (!first) div.style.display = "none";
-                let ul = document.createElement("ul");
-                ul.classList.add("list-group");
+                // Create table structure for offline devices
+                let table = document.createElement("table");
+                table.classList.add("table", "table-striped", "table-bordered");
+                let thead = document.createElement("thead");
+                let tbody = document.createElement("tbody");
 
+                // Create header row
+                let trHead = document.createElement("tr");
+                let thSerial = document.createElement("th");
+                thSerial.textContent = "Seri Numarası";
+                trHead.appendChild(thSerial);
+                thead.appendChild(trHead);
+
+                // Create rows for each offline device
                 offlineMeters[type].forEach(serial => {
-                    let li = document.createElement("li");
-                    li.classList.add("list-group-item");
-                    li.textContent = serial;
-                    ul.appendChild(li);
+                    let tr = document.createElement("tr");
+                    let td = document.createElement("td");
+                    td.textContent = serial;
+                    tr.appendChild(td);
+                    tbody.appendChild(tr);
                 });
 
-                div.appendChild(ul);
+                table.appendChild(thead);
+                table.appendChild(tbody);
+                div.appendChild(table);
                 contentContainer.appendChild(div);
                 first = false;
             }
