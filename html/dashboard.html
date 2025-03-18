@@ -606,44 +606,18 @@ function updateMeterReport() {
                 first = false;
             }
         });
+        // Ensure header is displayed for the active tab when modal opens
+        if (!document.getElementById("offlineDevicesHeader") && tabsContainer.children.length > 0) {
+            let header = document.createElement("h5");
+            header.id = "offlineDevicesHeader";
+            header.classList.add("text-center", "mt-3", "font-weight-bold");
+            let activeButton = tabsContainer.querySelector("button.active");
+            if (activeButton) {
+                header.textContent = activeButton.textContent + " Listesi";
+            }
+            contentContainer.prepend(header);
+        }
 
-        // **Tab butonlarına click event ekle using event delegation**
-        // tabsContainer.addEventListener("click", function(e) {
-        //     if (e.target.tagName.toLowerCase() !== "button") return;
-
-        //     // Tüm butonlardan "active" sınıfını ve "aria-pressed" özelliğini kaldır
-        //     document.querySelectorAll("#offlineDevicesTabs button").forEach(btn => {
-        //         btn.classList.remove("active");
-        //         btn.setAttribute("aria-pressed", "false");
-        //     });
-
-        //     // Tıklanan butona "active" sınıfını ekle ve "aria-pressed" değerini true yap
-        //     e.target.classList.add("active");
-        //     e.target.setAttribute("aria-pressed", "true");
-
-        //     let selectedType = e.target.getAttribute("data-type");
-
-        //     // Tüm içerik divlerini gizle
-        //     document.querySelectorAll("#offlineDevicesContent > div").forEach(div => {
-        //         div.style.display = "none";
-        //     });
-
-        //     // Seçilen tipin içeriğini göster
-        //     let selectedDiv = document.getElementById(`offlineDevicesContent-${selectedType}`);
-        //     if (selectedDiv) {
-        //         selectedDiv.style.display = "block";
-        //     }
-
-        //     // Başlık güncelleme
-        //     let selectedHeader = document.getElementById("offlineDevicesHeader");
-        //     if (!selectedHeader) {
-        //         selectedHeader = document.createElement("h5");
-        //         selectedHeader.id = "offlineDevicesHeader";
-        //         selectedHeader.classList.add("text-center", "mt-3");
-        //         document.getElementById("offlineDevicesContent").prepend(selectedHeader);
-        //     }
-        //     selectedHeader.textContent = e.target.textContent + " Listesi";
-        // });
         document.getElementById("offlineDevicesTabs").addEventListener("click", function (e) {
             if (e.target.tagName.toLowerCase() !== "button") return;
 
