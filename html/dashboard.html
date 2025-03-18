@@ -609,30 +609,40 @@ function updateMeterReport() {
 
         // **Tab butonlarına click event ekle using event delegation**
         tabsContainer.addEventListener("click", function(e) {
-            if(e.target.tagName.toLowerCase() !== "button") return;
-            // Tüm butonlardan active sınıfını kaldır
-            tabsContainer.querySelectorAll("button").forEach(b => b.classList.remove("active"));
-            // Sadece tıklanan butona active sınıfını ekle
+            if (e.target.tagName.toLowerCase() !== "button") return;
+
+            // Tüm butonlardaki "active" sınıfını kaldır
+            document.querySelectorAll("#offlineDevicesTabs button").forEach(btn => {
+                btn.classList.remove("active");
+                btn.setAttribute("aria-pressed", "false");
+            });
+
+            // Tıklanan butona "active" sınıfını ekle ve aria-pressed değerini true yap
             e.target.classList.add("active");
+            e.target.setAttribute("aria-pressed", "true");
 
             let selectedType = e.target.getAttribute("data-type");
+
             // Tüm içerik divlerini gizle
-            contentContainer.querySelectorAll(".offline-devices-table").forEach(div => {
+            document.querySelectorAll("#offlineDevicesContent > div").forEach(div => {
                 div.style.display = "none";
             });
 
+            // Seçilen tipin içeriğini göster
             let selectedDiv = document.getElementById(`offlineDevicesContent-${selectedType}`);
-            if (selectedDiv) selectedDiv.style.display = "block";
+            if (selectedDiv) {
+                selectedDiv.style.display = "block";
+            }
 
-            // Yeni başlığı güncelle veya ekle
+            // Başlık güncelleme
             let selectedHeader = document.getElementById("offlineDevicesHeader");
             if (!selectedHeader) {
                 selectedHeader = document.createElement("h5");
                 selectedHeader.id = "offlineDevicesHeader";
                 selectedHeader.classList.add("text-center", "mt-3");
-                contentContainer.prepend(selectedHeader);
+                document.getElementById("offlineDevicesContent").prepend(selectedHeader);
             }
-            selectedHeader.textContent = meterTypes[selectedType] + " Listesi";
+            selectedHeader.textContent = e.target.textContent + " Listesi";
         });
     })
     .catch(error => console.error("Error fetching meter data:", error));
