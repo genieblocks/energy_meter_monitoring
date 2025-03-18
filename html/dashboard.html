@@ -608,9 +608,47 @@ function updateMeterReport() {
         });
 
         // **Tab butonlarına click event ekle using event delegation**
-        tabsContainer.addEventListener("click", function(e) {
+        // tabsContainer.addEventListener("click", function(e) {
+        //     if (e.target.tagName.toLowerCase() !== "button") return;
+
+        //     // Tüm butonlardan "active" sınıfını ve "aria-pressed" özelliğini kaldır
+        //     document.querySelectorAll("#offlineDevicesTabs button").forEach(btn => {
+        //         btn.classList.remove("active");
+        //         btn.setAttribute("aria-pressed", "false");
+        //     });
+
+        //     // Tıklanan butona "active" sınıfını ekle ve "aria-pressed" değerini true yap
+        //     e.target.classList.add("active");
+        //     e.target.setAttribute("aria-pressed", "true");
+
+        //     let selectedType = e.target.getAttribute("data-type");
+
+        //     // Tüm içerik divlerini gizle
+        //     document.querySelectorAll("#offlineDevicesContent > div").forEach(div => {
+        //         div.style.display = "none";
+        //     });
+
+        //     // Seçilen tipin içeriğini göster
+        //     let selectedDiv = document.getElementById(`offlineDevicesContent-${selectedType}`);
+        //     if (selectedDiv) {
+        //         selectedDiv.style.display = "block";
+        //     }
+
+        //     // Başlık güncelleme
+        //     let selectedHeader = document.getElementById("offlineDevicesHeader");
+        //     if (!selectedHeader) {
+        //         selectedHeader = document.createElement("h5");
+        //         selectedHeader.id = "offlineDevicesHeader";
+        //         selectedHeader.classList.add("text-center", "mt-3");
+        //         document.getElementById("offlineDevicesContent").prepend(selectedHeader);
+        //     }
+        //     selectedHeader.textContent = e.target.textContent + " Listesi";
+        // });
+        document.getElementById("offlineDevicesTabs").addEventListener("click", function (e) {
             if (e.target.tagName.toLowerCase() !== "button") return;
 
+            console.log("Tıklanan buton:", e.target.textContent);
+            
             // Tüm butonlardan "active" sınıfını ve "aria-pressed" özelliğini kaldır
             document.querySelectorAll("#offlineDevicesTabs button").forEach(btn => {
                 btn.classList.remove("active");
@@ -621,6 +659,8 @@ function updateMeterReport() {
             e.target.classList.add("active");
             e.target.setAttribute("aria-pressed", "true");
 
+            console.log("Seçilen buton active mi?:", e.target.classList.contains("active"));
+            
             let selectedType = e.target.getAttribute("data-type");
 
             // Tüm içerik divlerini gizle
@@ -643,6 +683,8 @@ function updateMeterReport() {
                 document.getElementById("offlineDevicesContent").prepend(selectedHeader);
             }
             selectedHeader.textContent = e.target.textContent + " Listesi";
+
+            console.log("Aktif butonlar:", [...document.querySelectorAll("#offlineDevicesTabs button.active")].map(btn => btn.textContent));
         });
     })
     .catch(error => console.error("Error fetching meter data:", error));
