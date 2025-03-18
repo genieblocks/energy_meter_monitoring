@@ -607,33 +607,33 @@ function updateMeterReport() {
             }
         });
 
-// **Tab butonlarına click event ekle using event delegation**
-tabsContainer.addEventListener("click", function(e) {
-    if(e.target.tagName.toLowerCase() !== "button") return;
-    // Tüm butonlardan active sınıfını kaldır
-    tabsContainer.querySelectorAll("button").forEach(b => b.classList.remove("active"));
-    // Sadece tıklanan butona active sınıfını ekle
-    e.target.classList.add("active");
+        // **Tab butonlarına click event ekle using event delegation**
+        tabsContainer.addEventListener("click", function(e) {
+            if(e.target.tagName.toLowerCase() !== "button") return;
+            // Tüm butonlardan active sınıfını kaldır
+            tabsContainer.querySelectorAll("button").forEach(b => b.classList.remove("active"));
+            // Sadece tıklanan butona active sınıfını ekle
+            e.target.classList.add("active");
 
-    let selectedType = e.target.getAttribute("data-type");
-    // Tüm içerik divlerini gizle
-    contentContainer.querySelectorAll(".offline-devices-table").forEach(div => {
-        div.style.display = "none";
-    });
+            let selectedType = e.target.getAttribute("data-type");
+            // Tüm içerik divlerini gizle
+            contentContainer.querySelectorAll(".offline-devices-table").forEach(div => {
+                div.style.display = "none";
+            });
 
-    let selectedDiv = document.getElementById(`offlineDevicesContent-${selectedType}`);
-    if (selectedDiv) selectedDiv.style.display = "block";
+            let selectedDiv = document.getElementById(`offlineDevicesContent-${selectedType}`);
+            if (selectedDiv) selectedDiv.style.display = "block";
 
-    // Yeni başlığı güncelle veya ekle
-    let selectedHeader = document.getElementById("offlineDevicesHeader");
-    if (!selectedHeader) {
-        selectedHeader = document.createElement("h5");
-        selectedHeader.id = "offlineDevicesHeader";
-        selectedHeader.classList.add("text-center", "mt-3");
-        contentContainer.prepend(selectedHeader);
-    }
-    selectedHeader.textContent = meterTypes[selectedType] + " Listesi";
-});
+            // Yeni başlığı güncelle veya ekle
+            let selectedHeader = document.getElementById("offlineDevicesHeader");
+            if (!selectedHeader) {
+                selectedHeader = document.createElement("h5");
+                selectedHeader.id = "offlineDevicesHeader";
+                selectedHeader.classList.add("text-center", "mt-3");
+                contentContainer.prepend(selectedHeader);
+            }
+            selectedHeader.textContent = meterTypes[selectedType] + " Listesi";
+        });
     })
     .catch(error => console.error("Error fetching meter data:", error));
 }
