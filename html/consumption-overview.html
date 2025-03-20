@@ -1623,11 +1623,14 @@ function showMeterHistoryModal(data, usageTableName, serialNumber) {
         data.forEach(item => {
             let meterValue = '-';
             if (usageTableName === 'ElectricityUsage') {
-                meterValue = item.PositiveActiveEnergyTotal_kWh || '-';
+                meterValue = (item.PositiveActiveEnergyTotal_kWh === null || item.PositiveActiveEnergyTotal_kWh === undefined)
+                    ? '-' : item.PositiveActiveEnergyTotal_kWh;
             } else if (usageTableName === 'WaterUsage') {
-                meterValue = item.MeterValue_m3 || '-';
+                meterValue = (item.MeterValue_m3 === null || item.MeterValue_m3 === undefined)
+                    ? '-' : item.MeterValue_m3;
             } else if (usageTableName === 'HeatUsage' || usageTableName === 'CoolUsage') {
-                meterValue = item.MeterValue_kWh || '-';
+                meterValue = (item.MeterValue_kWh === null || item.MeterValue_kWh === undefined)
+                    ? '-' : item.MeterValue_kWh;
             }
             
             // Manually set the unit based on usageTableName
