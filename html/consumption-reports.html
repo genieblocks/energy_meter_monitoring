@@ -985,7 +985,8 @@ function calculateReportPeriod(dateString) {
 
               // Değeri (kWh)
               const meterValueCell = document.createElement('td');
-              meterValueCell.textContent = item.MeterValue || '-';
+              // meterValueCell.textContent = item.MeterValue || '-';
+              meterValueCell.textContent = (item.MeterValue === null || item.MeterValue === undefined) ? '-' : item.MeterValue;
               row.appendChild(meterValueCell);
 
               // Okuma Zamanı
