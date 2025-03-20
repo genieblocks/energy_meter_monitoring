@@ -987,6 +987,7 @@ function calculateReportPeriod(dateString) {
               const meterValueCell = document.createElement('td');
               // meterValueCell.textContent = item.MeterValue || '-';
               meterValueCell.textContent = (item.MeterValue === null || item.MeterValue === undefined) ? '-' : item.MeterValue;
+              console.log(`meterValueCell= ${meterValueCell}:`, meterValueCell.textContent);
               row.appendChild(meterValueCell);
 
               // Okuma Zamanı
