@@ -896,31 +896,31 @@ function calculateReportPeriod(dateString) {
 
           if (reportTableName === 'ElectricMeterDateTimeSyncReport') {
               const serialNumberCell = document.createElement('td');
-              serialNumberCell.textContent = item.SerialNumber || '-';
+              serialNumberCell.textContent = (item.SerialNumber === null || item.SerialNumber === undefined) ? '-' : item.SerialNumber;
               row.appendChild(serialNumberCell);
 
               const meterDateCell = document.createElement('td');
-              meterDateCell.textContent = item.MeterDate || '-';
+              meterDateCell.textContent = (item.MeterDate === null || item.MeterDate === undefined) ? '-' : item.MeterDate;
               row.appendChild(meterDateCell);
 
               const meterTimeCell = document.createElement('td');
-              meterTimeCell.textContent = item.MeterTime || '-';
+              meterTimeCell.textContent = (item.MeterTime === null || item.MeterTime === undefined) ? '-' : item.MeterTime;
               row.appendChild(meterTimeCell);
 
               const currentDateCell = document.createElement('td');
-              currentDateCell.textContent = item.CurrentDate || '-';
+              currentDateCell.textContent = (item.CurrentDate === null || item.CurrentDate === undefined) ? '-' : item.CurrentDate;
               row.appendChild(currentDateCell);
 
               const currentTimeCell = document.createElement('td');
-              currentTimeCell.textContent = item.CurrentTime || '-';
+              currentTimeCell.textContent = (item.CurrentTime === null || item.CurrentTime === undefined) ? '-' : item.CurrentTime;
               row.appendChild(currentTimeCell);
 
               const timeDifferenceCell = document.createElement('td');
-              timeDifferenceCell.textContent = item.TimeDifference || '-';
+              timeDifferenceCell.textContent = (item.TimeDifference === null || item.TimeDifference === undefined) ? '-' : item.TimeDifference;
               row.appendChild(timeDifferenceCell);
           } else if (reportTableName === 'MoxaDeviceStatusReport') {
               const ipAddressCell = document.createElement('td');
-              ipAddressCell.textContent = item.IPAddress || '-';
+              ipAddressCell.textContent = (item.IPAddress === null || item.IPAddress === undefined) ? '-' : item.IPAddress;
               row.appendChild(ipAddressCell);
 
               const statusCell = document.createElement('td');
@@ -932,39 +932,39 @@ function calculateReportPeriod(dateString) {
                   statusBadge.classList.add('badge', 'badge-danger');
                   statusBadge.textContent = 'Offline';
               } else {
-                  statusBadge.textContent = item.OnlineStatus || '-';
+                  statusBadge.textContent = (item.OnlineStatus === null || item.OnlineStatus === undefined) ? '-' : item.OnlineStatus;
               }
               statusCell.appendChild(statusBadge);
               row.appendChild(statusCell);
           } else if (['LatestHeatUsageReport', 'LatestCoolUsageReport', 'LatestElectricityUsageReport', 'LatestWaterUsageReport', 'PreviousMonthElectricityReport'].includes(reportTableName)) {
               // Sıra No
               const indexCell = document.createElement('td');
-              indexCell.textContent = item.Index || '-';
+              indexCell.textContent = (item.Index === null || item.Index === undefined) ? '-' : item.Index;
               row.appendChild(indexCell);
 
               // Blok
               const blockCell = document.createElement('td');
-              blockCell.textContent = item.Block || '-';
+              blockCell.textContent = (item.Block === null || item.Block === undefined) ? '-' : item.Block;
               row.appendChild(blockCell);
 
               // Bina No
               const buildingNoCell = document.createElement('td');
-              buildingNoCell.textContent = item.BuildingNo || '-';
+              buildingNoCell.textContent = (item.BuildingNo === null || item.BuildingNo === undefined) ? '-' : item.BuildingNo;
               row.appendChild(buildingNoCell);
 
               // Daire
               const flatCell = document.createElement('td');
-              flatCell.textContent = item.Flat || '-';
+              flatCell.textContent = (item.Flat === null || item.Flat === undefined) ? '-' : item.Flat;
               row.appendChild(flatCell);
 
               // Abone
               const subscriberCell = document.createElement('td');
-              subscriberCell.textContent = item.Subscriber || '-';
+              subscriberCell.textContent = (item.Subscriber === null || item.Subscriber === undefined) ? '-' : item.Subscriber;
               row.appendChild(subscriberCell);
 
               // Sayaç İsmi
               const customNameCell = document.createElement('td');
-              customNameCell.textContent = item.CustomName || '-';
+              customNameCell.textContent = (item.CustomName === null || item.CustomName === undefined) ? '-' : item.CustomName;
               row.appendChild(customNameCell);
 
               // Rapor Dönem (Sadece PreviousMonthElectricityReport için)
@@ -980,15 +980,12 @@ function calculateReportPeriod(dateString) {
 
               // Seri Numarası
               const serialNumberCell = document.createElement('td');
-              serialNumberCell.textContent = item.SerialNumber || '-';
+              serialNumberCell.textContent = (item.SerialNumber === null || item.SerialNumber === undefined) ? '-' : item.SerialNumber;
               row.appendChild(serialNumberCell);
 
               // Değeri (kWh)
               const meterValueCell = document.createElement('td');
-              // meterValueCell.textContent = item.MeterValue || '-';
               meterValueCell.textContent = (item.MeterValue === null || item.MeterValue === undefined) ? '-' : item.MeterValue;
-              console.log(`meterValueCell:`, meterValueCell);
-              console.log(`meterValueCell.textContent:`, meterValueCell.textContent);
               row.appendChild(meterValueCell);
 
               // Okuma Zamanı
@@ -996,33 +993,33 @@ function calculateReportPeriod(dateString) {
               if (item.MeterValue === '-' || !item.MeterValue) {
                 queryStartTimeCell.textContent = '-';
               } else {
-                queryStartTimeCell.textContent = item.QueryStartTime || '-';
+                queryStartTimeCell.textContent = (item.QueryStartTime === null || item.QueryStartTime === undefined) ? '-' : item.QueryStartTime;
               }
               row.appendChild(queryStartTimeCell);
           } else if (reportTableName === 'SubscribersMeterListReport') {
               // Sıra No
               const indexCell = document.createElement('td');
-              indexCell.textContent = item.Index || '-';
+              indexCell.textContent = (item.Index === null || item.Index === undefined) ? '-' : item.Index;
               row.appendChild(indexCell);
 
               // Blok
               const blockCell = document.createElement('td');
-              blockCell.textContent = item.Block || '-';
+              blockCell.textContent = (item.Block === null || item.Block === undefined) ? '-' : item.Block;
               row.appendChild(blockCell);
 
               // Bina No
               const buildingNoCell = document.createElement('td');
-              buildingNoCell.textContent = item.BuildingNo || '-';
+              buildingNoCell.textContent = (item.BuildingNo === null || item.BuildingNo === undefined) ? '-' : item.BuildingNo;
               row.appendChild(buildingNoCell);
 
               // Daire
               const flatCell = document.createElement('td');
-              flatCell.textContent = item.Flat || '-';
+              flatCell.textContent = (item.Flat === null || item.Flat === undefined) ? '-' : item.Flat;
               row.appendChild(flatCell);
 
               // Abone
               const subscriberCell = document.createElement('td');
-              subscriberCell.textContent = item.Subscriber || '-';
+              subscriberCell.textContent = (item.Subscriber === null || item.Subscriber === undefined) ? '-' : item.Subscriber;
               row.appendChild(subscriberCell);
 
               // Sayaç Tipi
@@ -1047,27 +1044,27 @@ function calculateReportPeriod(dateString) {
 
               // Sayaç İsmi
               const customNameCell = document.createElement('td');
-              customNameCell.textContent = item.CustomName || '-';
+              customNameCell.textContent = (item.CustomName === null || item.CustomName === undefined) ? '-' : item.CustomName;
               row.appendChild(customNameCell);
 
               // Seri Numarası
               const serialNumberCell = document.createElement('td');
-              serialNumberCell.textContent = item.SerialNumber || '-';
+              serialNumberCell.textContent = (item.SerialNumber === null || item.SerialNumber === undefined) ? '-' : item.SerialNumber;
               row.appendChild(serialNumberCell);
 
               // Sayaç Markası
               const meterBrandCell = document.createElement('td');
-              meterBrandCell.textContent = item.Brand || '-';
+              meterBrandCell.textContent = (item.Brand === null || item.Brand === undefined) ? '-' : item.Brand;
               row.appendChild(meterBrandCell);
 
               // Sayaç Çarpanı
               const meterMultiplierCell = document.createElement('td');
-              meterMultiplierCell.textContent = item.MeterMultiplier || '-';
+              meterMultiplierCell.textContent = (item.MeterMultiplier === null || item.MeterMultiplier === undefined) ? '-' : item.MeterMultiplier;
               row.appendChild(meterMultiplierCell);
 
               // Bağlantı Noktası
               const connectionPointCell = document.createElement('td');
-              connectionPointCell.textContent = item.ConnectionPoint || '-';
+              connectionPointCell.textContent = (item.ConnectionPoint === null || item.ConnectionPoint === undefined) ? '-' : item.ConnectionPoint;
               row.appendChild(connectionPointCell);
 
               // Faturalandırma
