@@ -956,7 +956,7 @@ async function showDetailModal(connection) {
                 <td>${meter.CustomName && meter.CustomName !== 'null' ? meter.CustomName : '-'}</td>
                 <td>${meter.SerialNumber && meter.SerialNumber !== 'null' ? meter.SerialNumber : '-'}</td>
                 <td>${meterMultiplier}</td>
-                <td>${latestValues.MeterValue && latestValues.MeterValue !== 'null' ? latestValues.MeterValue : '-'}</td>
+                <td>${latestValues.MeterValue === null || latestValues.MeterValue === undefined ? '-' : latestValues.MeterValue}</td>
                 <td>${formattedDate}</td>
                 <td class="d-none">${table.name}</td>
                 <td class="d-none">${table.meterIDFieldName}</td>
