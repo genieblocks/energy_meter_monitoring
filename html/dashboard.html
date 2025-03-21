@@ -606,7 +606,7 @@ function updateMeterReport() {
                 div.appendChild(table);
                 contentContainer.appendChild(div);
                 $(`#${div.id} table`).DataTable({
-                    dom: 'Brt',
+                    dom: 'rt<"bottom"B>',
                     paging: false,
                     autoWidth: false,
                     buttons: [
