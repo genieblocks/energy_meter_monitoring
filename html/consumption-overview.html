@@ -1612,6 +1612,12 @@ function showMeterHistoryModal(data, usageTableName, serialNumber) {
     const modal = $('#meterHistoryModal');
     // Get the tbody of the meterHistoryDataTable
     const tableBody = document.querySelector('#meterHistoryDataTable tbody');
+
+    // Destroy any existing DataTable instance to avoid duplicate data
+    if ($.fn.DataTable.isDataTable('#meterHistoryDataTable')) {
+      $('#meterHistoryDataTable').DataTable().clear().destroy();
+    }
+    
     tableBody.innerHTML = ''; // Clear existing rows
 
     if (Array.isArray(data) && data.length > 0) {
@@ -1656,11 +1662,6 @@ function showMeterHistoryModal(data, usageTableName, serialNumber) {
         const row = document.createElement('tr');
         row.innerHTML = `<td colspan="3">Veri bulunamadı.</td>`;
         tableBody.appendChild(row);
-    }
-
-    // Destroy any existing DataTable instance to avoid duplicate data
-    if ($.fn.DataTable.isDataTable('#meterHistoryDataTable')) {
-      $('#meterHistoryDataTable').DataTable().clear().destroy();
     }
 
     // Reinitialize the DataTable with new data
