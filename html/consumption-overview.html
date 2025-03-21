@@ -1660,6 +1660,7 @@ function showMeterHistoryModal(data, usageTableName, serialNumber) {
     const fileName = `Geçmiş_Veri_Listesi_${serialNumber}`;
     $('#meterHistoryDataTable').DataTable({
       dom: 'Brt',
+      paging: false,  // Disable pagination to show all records
       buttons: [
         {
           extend: 'excelHtml5',
