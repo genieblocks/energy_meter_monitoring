@@ -1655,6 +1655,19 @@ function showMeterHistoryModal(data, usageTableName, serialNumber) {
         row.innerHTML = `<td colspan="3">Veri bulunamadı.</td>`;
         tableBody.appendChild(row);
     }
+    const fileName = `Geçmiş_Veri_Listesi_${serialNumber}`;
+    $('#meterHistoryDataTable').DataTable({
+      dom: 'Bfrtip',
+      buttons: [
+        {
+          extend: 'excelHtml5',
+          text: 'Excel Olarak İndir',
+          title: 'Geçmiş Veri Listesi',
+          filename: fileName
+        }
+      ],
+      destroy: true
+    });
     // Open the modal
     modal.modal('show');
 }
