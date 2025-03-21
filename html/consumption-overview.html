@@ -1667,7 +1667,7 @@ function showMeterHistoryModal(data, usageTableName, serialNumber) {
     // Reinitialize the DataTable with new data
     const fileName = `Geçmiş_Veri_Listesi_${serialNumber}`;
     $('#meterHistoryDataTable').DataTable({
-      dom: 'Brt',
+      dom: 'rt<"bottom"B>',
       paging: false,  // Disable pagination to show all records
       autoWidth: false,  // Bu satırı ekle
       buttons: [
