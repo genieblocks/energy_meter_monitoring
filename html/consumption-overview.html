@@ -1674,8 +1674,8 @@ function showMeterHistoryModal(data, usageTableName, serialNumber) {
         {
           extend: 'excelHtml5',
           text: 'Excel Olarak İndir',
-          title: 'Geçmiş Veri Listesi',
-          filename: fileName
+          title: `${serialNumber} Nolu Sayaç Geçmiş Verileri`,
+          filename: `Geçmiş_Veri_Listesi_Seri_No_${serialNumber}`
         }
       ],
       destroy: true
