@@ -17,6 +17,7 @@
     
   <!-- BEGIN VENDOR CSS-->
   <link rel="stylesheet" type="text/css" href="../app-assets/css/bootstrap.css">
+  <link rel="stylesheet" type="text/css" href="../app-assets/vendors/css/tables/datatable/jquery.dataTables.min.css">
   <!-- font icons-->
   <link rel="stylesheet" type="text/css" href="../app-assets/fonts/icomoon.css">
   <link rel="stylesheet" type="text/css" href="../app-assets/vendors/css/sliders/slick/slick.css">
@@ -406,6 +407,7 @@
   <!-- BEGIN PAGE VENDOR JS-->
   <script src="../assets/js/image-map-pro.min.js"></script>
   <script src="../app-assets/vendors/js/charts/plotly-latest.min.js"></script>
+  <script src="../app-assets/vendors/js/tables/datatable/datatables.min.js"></script>
   <!-- END PAGE VENDOR JS-->
   <!-- BEGIN TEMPLATE JS-->
   <script src="../app-assets/js/core/app-menu.js"></script>
@@ -603,6 +605,20 @@ function updateMeterReport() {
                 table.appendChild(tbody);
                 div.appendChild(table);
                 contentContainer.appendChild(div);
+                $(`#${div.id} table`).DataTable({
+                    dom: 'Brt',
+                    paging: false,
+                    autoWidth: false,
+                    buttons: [
+                        {
+                            extend: 'excelHtml5',
+                            text: 'Excel Olarak İndir',
+                            title: 'Offline Sayaç Listesi',
+                            filename: `offline_sayac_listesi_${type}`
+                        }
+                    ],
+                    destroy: true
+                });
                 first = false;
             }
         });
