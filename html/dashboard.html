@@ -613,8 +613,8 @@ function updateMeterReport() {
                         {
                             extend: 'excelHtml5',
                             text: 'Excel Olarak İndir',
-                            title: 'Offline Sayaç Listesi',
-                            filename: `offline_sayac_listesi_${meterTypes[type]}`
+                            title: `Offline ${meterTypes[type]} Listesi`,
+                            filename: `offline_(${meterTypes[type]})_listesi`
                         }
                     ],
                     destroy: true
