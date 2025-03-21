@@ -1658,19 +1658,19 @@ function showMeterHistoryModal(data, usageTableName, serialNumber) {
         tableBody.appendChild(row);
     }
     const fileName = `Geçmiş_Veri_Listesi_${serialNumber}`;
-    $('#meterHistoryDataTable').DataTable({
-      dom: 'Brt',
-      paging: false,  // Disable pagination to show all records
-      buttons: [
-        {
-          extend: 'excelHtml5',
-          text: 'Excel Olarak İndir',
-          title: 'Geçmiş Veri Listesi',
-          filename: fileName
-        }
-      ],
-      destroy: true
-    });
+    // $('#meterHistoryDataTable').DataTable({
+    //   dom: 'Brt',
+    //   paging: false,  // Disable pagination to show all records
+    //   buttons: [
+    //     {
+    //       extend: 'excelHtml5',
+    //       text: 'Excel Olarak İndir',
+    //       title: 'Geçmiş Veri Listesi',
+    //       filename: fileName
+    //     }
+    //   ],
+    //   destroy: true
+    // });
     // Open the modal
     modal.modal('show');
 }
