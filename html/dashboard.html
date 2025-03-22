@@ -2472,6 +2472,7 @@ Plotly.plot('graph-gun', data1, layout_gun, {displayModeBar: false});
         })
         .then(response => response.json())
         .then(data => {
+            console.log("Jeneratör durum verisi:", data);
             let recentChanges = [];
             if (data.recentStatusChanges) {
                 try {
