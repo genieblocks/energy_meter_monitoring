@@ -256,10 +256,6 @@
                     </div>
                     <div class="card-content">
                         <div class="card-body">
-                            <div class="d-flex justify-content-center align-items-center flex-column pb-1">
-                            <span class="display-4 font-weight-bold">35</span>
-                            <span class="text-muted">Dakika</span>
-                            </div>
                             <div id="graph-gun"></div>
                         </div>
                     </div>
@@ -697,9 +693,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     updateMeterReport();
 });
-</script>
-<script>
-    const imageMapProSettings = {
+  </script>
+  <script>
+      const imageMapProSettings = {
       "id": "6a9b4235-e000-4087-b038-3b68c6f358e5",
       "general": {
           "name": "Akaretler-Sıraevler"
@@ -2464,3 +2460,53 @@ Plotly.plot('graph-gun', data1, layout_gun, {displayModeBar: false});
 </script>
 </body>
 </html>
+  <script>
+    function updateGeneratorStatusChart() {
+      fetch(`${baseWebhookURL}/webhook/get-generator-status`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" }
+      })
+      .then(response => response.json())
+      .then(data => {
+        const now = new Date();
+        const minutes = 15;
+        const labels = [];
+        const values = [];
+        let currentStatus = 0;
+
+        for (let i = minutes - 1; i >= 0; i--) {
+          const time = new Date(now.getTime() - i * 60000);
+          const timeLabel = time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+          labels.push(timeLabel);
+          const relevantData = data.filter(entry => new Date(entry.timestamp) <= time);
+          if (relevantData.length > 0) {
+            currentStatus = relevantData[relevantData.length - 1].status;
+          }
+          values.push(currentStatus);
+        }
+
+        Plotly.newPlot('graph-gun', [{
+          x: labels,
+          y: values,
+          type: 'scatter',
+          mode: 'lines+markers',
+          line: { shape: 'hv', color: '#28a745' },
+          fill: 'tozeroy'
+        }], {
+          margin: { t: 0 },
+          yaxis: {
+            tickvals: [0, 1],
+            ticktext: ["Devre Dışı", "Devrede"],
+            range: [-0.2, 1.2]
+          },
+          xaxis: {
+            tickangle: -45
+          },
+          height: 180
+        });
+      });
+    }
+
+    setInterval(updateGeneratorStatusChart, 60000);
+    document.addEventListener('DOMContentLoaded', updateGeneratorStatusChart);
+  </script>
