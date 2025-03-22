@@ -2472,7 +2472,14 @@ Plotly.plot('graph-gun', data1, layout_gun, {displayModeBar: false});
         })
         .then(response => response.json())
         .then(data => {
-            const recentChanges = data.recentStatusChanges;
+            let recentChanges = [];
+            if (data.recentStatusChanges) {
+                try {
+                    recentChanges = JSON.parse(data.recentStatusChanges);
+                } catch (e) {
+                    console.error("recentStatusChanges JSON parse error:", e);
+                }
+            }
             const lastKnownStatus = data.IsOnline;
             const lastChangeTime = new Date(data.StatusChangeTime);
             const now = new Date();
