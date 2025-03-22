@@ -2469,12 +2469,14 @@ Plotly.plot('graph-gun', data1, layout_gun, {displayModeBar: false});
         headers: { "Content-Type": "application/json" }
       })
       .then(response => response.json())
-      .then(data => {
+      .then(result => {
+        const data = result.statusHistory || [];
+        const lastKnown = result.lastKnownStatus || { status: 0, timestamp: null };
         const now = new Date();
         const minutes = 15;
         const labels = [];
         const values = [];
-        let currentStatus = 0;
+        let currentStatus = lastKnown.status || 0;
 
         for (let i = minutes - 1; i >= 0; i--) {
           const time = new Date(now.getTime() - i * 60000);
@@ -2483,6 +2485,8 @@ Plotly.plot('graph-gun', data1, layout_gun, {displayModeBar: false});
           const relevantData = data.filter(entry => new Date(entry.timestamp) <= time);
           if (relevantData.length > 0) {
             currentStatus = relevantData[relevantData.length - 1].status;
+          } else {
+            currentStatus = lastKnown.status || 0;
           }
           values.push(currentStatus);
         }
