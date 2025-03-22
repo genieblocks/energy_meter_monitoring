@@ -2466,53 +2466,67 @@ Plotly.plot('graph-gun', data1, layout_gun, {displayModeBar: false});
     function updateGeneratorStatusChart() {
         fetch(`${baseWebhookURL}/webhook/get-generator-status`, {
             method: "POST",
-            headers: { "Content-Type": "application/json" }
+            headers: {
+            "Content-Type": "application/json"
+            }
         })
         .then(response => response.json())
         .then(data => {
+            const recentChanges = data.recentStatusChanges;
+            const lastKnownStatus = data.IsOnline;
+            const lastChangeTime = new Date(data.StatusChangeTime);
             const now = new Date();
-            const minutes = 15;
-            const labels = [];
-            const values = [];
+            const fifteenMinutesAgo = new Date(now.getTime() - 15 * 60 * 1000);
 
-            let currentStatus = data.lastKnownStatus?.IsOnline || 0;
-
-            for (let i = minutes - 1; i >= 0; i--) {
-            const time = new Date(now.getTime() - i * 60000);
-            const timeLabel = time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-            labels.push(timeLabel);
-
-            const relevantData = data.statusHistory.filter(entry => {
-                const entryTime = new Date(entry.StatusChangeTime);
-                return entryTime <= time;
+            let statusData = [];
+            let currentTime = new Date(fifteenMinutesAgo);
+            while (currentTime <= now) {
+            statusData.push({
+                time: new Date(currentTime),
+                value: lastKnownStatus
             });
-
-            if (relevantData.length > 0) {
-                currentStatus = relevantData[relevantData.length - 1].IsOnline;
+            currentTime.setMinutes(currentTime.getMinutes() + 1);
             }
 
-            values.push(currentStatus);
+            // Geçmiş değişiklikleri uygula
+            if (Array.isArray(recentChanges)) {
+            recentChanges.forEach(change => {
+                const changeTime = new Date(change.StatusChangeTime);
+                if (changeTime >= fifteenMinutesAgo && changeTime <= now) {
+                statusData.forEach(entry => {
+                    if (entry.time >= changeTime) {
+                    entry.value = change.IsOnline;
+                    }
+                });
+                }
+            });
             }
 
-            Plotly.newPlot('graph-gun', [{
-            x: labels,
-            y: values,
+            const plotData = [{
+            x: statusData.map(d => d.time),
+            y: statusData.map(d => d.value ? "Devrede" : "Devre Dışı"),
             type: 'scatter',
             mode: 'lines+markers',
-            line: { shape: 'hv', color: '#28a745' },
-            fill: 'tozeroy'
-            }], {
-            margin: { t: 0 },
+            line: { shape: 'hv' },
+            marker: { color: 'green' }
+            }];
+
+            const layout = {
+            margin: { t: 10 },
             yaxis: {
-                tickvals: [0, 1],
-                ticktext: ["Devre Dışı", "Devrede"],
-                range: [-0.2, 1.2]
+                title: '',
+                tickvals: ["Devrede", "Devre Dışı"],
+                automargin: true
             },
             xaxis: {
-                tickangle: -45
-            },
-            height: 180
-            });
+                automargin: true
+            }
+            };
+
+            Plotly.newPlot('graph-gun', plotData, layout, { responsive: true });
+        })
+        .catch(error => {
+            console.error("Jeneratör durumu alınamadı:", error);
         });
     }
 
