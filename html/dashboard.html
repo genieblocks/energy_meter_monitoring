@@ -2471,18 +2471,31 @@ Plotly.plot('graph-gun', data1, layout_gun, {displayModeBar: false});
             }
         })
         .then(response => response.json())
-        .then(data => {
-            console.log("Jeneratör durum verisi:", data);
-            let recentChanges = [];
-            if (data.recentStatusChanges) {
-                try {
-                    recentChanges = JSON.parse(data.recentStatusChanges);
-                } catch (e) {
-                    console.error("recentStatusChanges JSON parse error:", e);
-                }
+    .then(data => {
+        if (Array.isArray(data) && data.length > 0) {
+            data = data[0]; // Use the first object in the array
+        }
+        console.log("Jeneratör durum verisi:", data);
+        let recentChanges = [];
+        if (data.recentStatusChanges) {
+            try {
+                recentChanges = JSON.parse(data.recentStatusChanges);
+            } catch (e) {
+                console.error("recentStatusChanges JSON parse error:", e);
             }
-            const lastKnownStatus = data.IsOnline;
-            const lastChangeTime = new Date(data.StatusChangeTime);
+        }
+        let lastKnownStatus = false;
+        let lastChangeTime = new Date();
+
+        if (data.lastKnownStatus) {
+            try {
+                const parsedStatus = JSON.parse(data.lastKnownStatus);
+                lastKnownStatus = parsedStatus.IsOnline;
+                lastChangeTime = new Date(parsedStatus.StatusChangeTime);
+            } catch (e) {
+                console.error("lastKnownStatus JSON parse error:", e);
+            }
+        }
             const now = new Date();
             const fifteenMinutesAgo = new Date(now.getTime() - 15 * 60 * 1000);
 
