@@ -2464,53 +2464,56 @@ Plotly.plot('graph-gun', data1, layout_gun, {displayModeBar: false});
 </html>
   <script>
     function updateGeneratorStatusChart() {
-      fetch(`${baseWebhookURL}/webhook/get-generator-status`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" }
-      })
-      .then(response => response.json())
-      .then(result => {
-        const data = result.statusHistory || [];
-        const lastKnown = result.lastKnownStatus || { status: 0, timestamp: null };
-        const now = new Date();
-        const minutes = 15;
-        const labels = [];
-        const values = [];
-        let currentStatus = lastKnown.status || 0;
+        fetch(`${baseWebhookURL}/webhook/get-generator-status`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" }
+        })
+        .then(response => response.json())
+        .then(data => {
+            const now = new Date();
+            const minutes = 15;
+            const labels = [];
+            const values = [];
 
-        for (let i = minutes - 1; i >= 0; i--) {
-          const time = new Date(now.getTime() - i * 60000);
-          const timeLabel = time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-          labels.push(timeLabel);
-          const relevantData = data.filter(entry => new Date(entry.timestamp) <= time);
-          if (relevantData.length > 0) {
-            currentStatus = relevantData[relevantData.length - 1].status;
-          } else {
-            currentStatus = lastKnown.status || 0;
-          }
-          values.push(currentStatus);
-        }
+            let currentStatus = data.lastKnownStatus?.IsOnline || 0;
 
-        Plotly.newPlot('graph-gun', [{
-          x: labels,
-          y: values,
-          type: 'scatter',
-          mode: 'lines+markers',
-          line: { shape: 'hv', color: '#28a745' },
-          fill: 'tozeroy'
-        }], {
-          margin: { t: 0 },
-          yaxis: {
-            tickvals: [0, 1],
-            ticktext: ["Devre Dışı", "Devrede"],
-            range: [-0.2, 1.2]
-          },
-          xaxis: {
-            tickangle: -45
-          },
-          height: 180
+            for (let i = minutes - 1; i >= 0; i--) {
+            const time = new Date(now.getTime() - i * 60000);
+            const timeLabel = time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            labels.push(timeLabel);
+
+            const relevantData = data.statusHistory.filter(entry => {
+                const entryTime = new Date(entry.StatusChangeTime);
+                return entryTime <= time;
+            });
+
+            if (relevantData.length > 0) {
+                currentStatus = relevantData[relevantData.length - 1].IsOnline;
+            }
+
+            values.push(currentStatus);
+            }
+
+            Plotly.newPlot('graph-gun', [{
+            x: labels,
+            y: values,
+            type: 'scatter',
+            mode: 'lines+markers',
+            line: { shape: 'hv', color: '#28a745' },
+            fill: 'tozeroy'
+            }], {
+            margin: { t: 0 },
+            yaxis: {
+                tickvals: [0, 1],
+                ticktext: ["Devre Dışı", "Devrede"],
+                range: [-0.2, 1.2]
+            },
+            xaxis: {
+                tickangle: -45
+            },
+            height: 180
+            });
         });
-      });
     }
 
     setInterval(updateGeneratorStatusChart, 60000);
