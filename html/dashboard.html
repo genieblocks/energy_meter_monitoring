@@ -2555,4 +2555,19 @@ Plotly.plot('graph-gun', data1, layout_gun, {displayModeBar: false});
 
     setInterval(updateGeneratorStatusChart, 60000);
     document.addEventListener('DOMContentLoaded', updateGeneratorStatusChart);
-  </script>
+</script>
+<script>
+function scheduleGraphGunUpdate() {
+    const now = new Date();
+    const delay = 60000 - (now.getSeconds() * 1000 + now.getMilliseconds());
+
+    setTimeout(() => {
+        updateGeneratorStatusChart(); // initial call at next minute mark
+        setInterval(updateGeneratorStatusChart, 60000); // then every minute
+    }, delay);
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    scheduleGraphGunUpdate(); // replaces or complements existing update mechanism
+});
+</script>
