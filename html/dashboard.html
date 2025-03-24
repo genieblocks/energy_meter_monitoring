@@ -2502,25 +2502,39 @@ Plotly.plot('graph-gun', data1, layout_gun, {displayModeBar: false});
             let statusData = [];
             let currentTime = new Date(fifteenMinutesAgo);
             while (currentTime <= now) {
-            statusData.push({
-                time: new Date(currentTime),
-                value: lastKnownStatus
-            });
-            currentTime.setMinutes(currentTime.getMinutes() + 1);
+                statusData.push({
+                    time: new Date(currentTime),
+                    value: null
+                });
+                currentTime.setMinutes(currentTime.getMinutes() + 1);
             }
 
             // Geçmiş değişiklikleri uygula
             if (Array.isArray(recentChanges)) {
-            recentChanges.forEach(change => {
-                const changeTime = new Date(change.StatusChangeTime);
-                if (changeTime >= fifteenMinutesAgo && changeTime <= now) {
-                statusData.forEach(entry => {
-                    if (entry.time >= changeTime) {
-                    entry.value = change.IsOnline;
+                recentChanges.forEach(change => {
+                    const changeTime = new Date(change.StatusChangeTime);
+                    if (changeTime >= fifteenMinutesAgo && changeTime <= now) {
+                        statusData.forEach(entry => {
+                            if (entry.time >= changeTime) {
+                                entry.value = change.IsOnline;
+                            }
+                        });
                     }
                 });
+            }
+
+            let lastStatusTime = new Date(lastChangeTime);
+            statusData.forEach(entry => {
+                if (entry.time >= lastStatusTime && entry.value === null) {
+                    entry.value = lastKnownStatus;
                 }
             });
+
+            // For any remaining null values (before lastStatusTime), fill backwards with reverse walk
+            for (let i = statusData.length - 2; i >= 0; i--) {
+                if (statusData[i].value === null) {
+                    statusData[i].value = statusData[i + 1].value;
+                }
             }
 
             const plotData = [{
