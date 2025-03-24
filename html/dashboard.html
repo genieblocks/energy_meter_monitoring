@@ -2524,24 +2524,26 @@ Plotly.plot('graph-gun', data1, layout_gun, {displayModeBar: false});
             }
 
             const plotData = [{
-            x: statusData.map(d => d.time),
-            y: statusData.map(d => d.value ? "Devrede" : "Devre Dışı"),
-            type: 'scatter',
-            mode: 'lines+markers',
-            line: { shape: 'hv' },
-            marker: { color: 'green' }
+                x: statusData.map(d => d.time),
+                y: statusData.map(d => d.value ? 1 : 0),
+                type: 'scatter',
+                mode: 'lines+markers',
+                line: { shape: 'hv' },
+                marker: { color: 'green' }
             }];
 
             const layout = {
-            margin: { t: 10 },
-            yaxis: {
-                title: '',
-                tickvals: ["Devrede", "Devre Dışı"],
-                automargin: true
-            },
-            xaxis: {
-                automargin: true
-            }
+                margin: { t: 10 },
+                yaxis: {
+                    title: '',
+                    tickvals: [0, 1],
+                    ticktext: ["Devre Dışı", "Devrede"],
+                    range: [-0.5, 1.5],
+                    automargin: true
+                },
+                xaxis: {
+                    automargin: true
+                }
             };
 
             Plotly.newPlot('graph-gun', plotData, layout, { responsive: true });
