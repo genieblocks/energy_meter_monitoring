@@ -2419,7 +2419,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             };
 
-            Plotly.newPlot('generator-status-chart', plotData, layout, { responsive: true });
+            Plotly.newPlot('generator-status-chart', plotData, layout, { responsive: true, displayModeBar: false });
         })
         .catch(error => {
             console.error("Jeneratör durumu alınamadı:", error);
