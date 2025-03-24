@@ -2511,16 +2511,18 @@ Plotly.plot('graph-gun', data1, layout_gun, {displayModeBar: false});
 
             // Geçmiş değişiklikleri uygula
             if (Array.isArray(recentChanges)) {
-            recentChanges.forEach(change => {
-                const changeTime = new Date(change.StatusChangeTime);
-                if (changeTime >= fifteenMinutesAgo && changeTime <= now) {
-                statusData.forEach(entry => {
-                    if (entry.time >= changeTime) {
-                    entry.value = change.IsOnline;
+                // Önce zaman sırasına göre sırala
+                recentChanges.sort((a, b) => new Date(a.StatusChangeTime) - new Date(b.StatusChangeTime));
+                recentChanges.forEach(change => {
+                    const changeTime = new Date(change.StatusChangeTime);
+                    if (changeTime <= now) {
+                        statusData.forEach(entry => {
+                            if (entry.time >= changeTime) {
+                                entry.value = change.IsOnline;
+                            }
+                        });
                     }
                 });
-                }
-            });
             }
 
             const plotData = [{
