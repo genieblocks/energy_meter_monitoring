@@ -2527,9 +2527,8 @@ Plotly.plot('graph-gun', data1, layout_gun, {displayModeBar: false});
                 x: statusData.map(d => d.time),
                 y: statusData.map(d => d.value ? 1 : 0),
                 type: 'scatter',
-                mode: 'lines+markers',
-                line: { shape: 'hv' },
-                marker: { color: 'green' },
+                mode: 'lines',
+                line: { shape: 'hv', color: 'blue' },
                 fill: 'tozeroy',
                 fillcolor: 'rgba(0,123,255,0.2)',
             }];
