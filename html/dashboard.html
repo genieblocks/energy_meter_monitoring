@@ -2556,6 +2556,8 @@ Plotly.plot('graph-gun', data1, layout_gun, {displayModeBar: false});
 </script>
 <script>
 function scheduleGraphGunUpdate() {
+    updateGeneratorStatusChart(); // immediately fetch and draw the chart
+
     const now = new Date();
     const delay = 60000 - (now.getSeconds() * 1000 + now.getMilliseconds());
 
