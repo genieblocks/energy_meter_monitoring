@@ -259,7 +259,7 @@
                     </div>
                     <div class="card-content">
                         <div class="card-body" style="height: 300px;">
-                            <div id="graph-gun" style="height: 100%;"></div>
+                            <div id="generator-status-chart" style="height: 100%;"></div>
                         </div>
                     </div>
                 </div>
@@ -2457,7 +2457,7 @@ var layout_gun = {
     height: 140 // Grafik yüksekliği ayarlandı
 };
 
-Plotly.plot('graph-gun', data1, layout_gun, {displayModeBar: false});
+Plotly.plot('generator-status-chart', data1, layout_gun, {displayModeBar: false});
 
 </script>
 </body>
@@ -2552,7 +2552,7 @@ Plotly.plot('graph-gun', data1, layout_gun, {displayModeBar: false});
                 }
             };
 
-            Plotly.newPlot('graph-gun', plotData, layout, { responsive: true });
+            Plotly.newPlot('generator-status-chart', plotData, layout, { responsive: true });
         })
         .catch(error => {
             console.error("Jeneratör durumu alınamadı:", error);
