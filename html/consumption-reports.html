@@ -1094,9 +1094,9 @@ function calculateReportPeriod(dateString) {
       });
 
       const tableId = '#modal-report-table';
-      if (typeof moment !== 'undefined' && $.fn.dataTable.moment) {
-          $.fn.dataTable.moment('DD.MM.YYYY HH:mm');
-      }
+      // if (typeof moment !== 'undefined' && $.fn.dataTable.moment) {
+      //     $.fn.dataTable.moment('DD.MM.YYYY HH:mm');
+      // }
       if (!$.fn.DataTable.isDataTable(tableId)) {
           $(tableId).DataTable({
               dom: '<"top"fl>rt<"bottom"Bp>',
@@ -1120,7 +1120,8 @@ function calculateReportPeriod(dateString) {
                   }
               ],
               columnDefs: [
-                  { targets: -1, type: 'datetime-moment' }
+                  { targets: 4, type: 'custom-date' }, // İstek Zamanı
+                  { targets: 5, type: 'custom-date' }  // Oluşturulma Zamanı
               ],
               order: [[0, 'asc']],
               language: {
