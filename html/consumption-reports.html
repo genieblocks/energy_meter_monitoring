@@ -1008,7 +1008,7 @@ function calculateReportPeriod(dateString) {
               // Okuma Zamanı
               const queryStartTimeCell = document.createElement('td');
               if (item.MeterValue === null || item.MeterValue === undefined || item.QueryStartTime === null || item.QueryStartTime === undefined) {
-                queryStartTimeCell.textContent = '';
+                queryStartTimeCell.textContent = '-';
               } else {
                 queryStartTimeCell.textContent = formatDate(item.QueryStartTime);
               }
