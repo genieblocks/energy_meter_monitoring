@@ -1115,9 +1115,36 @@ function calculateReportPeriod(dateString) {
                       extend: 'excelHtml5',
                       text: 'Excel Olarak İndir',
                       title: reportTitle,
-                      filename: reportTitle
+                      filename: reportTitle,
+                      customize: function (xlsx) {
+                        var sheet = xlsx.xl.worksheets['sheet1.xml'];
+                        var rows = sheet.getElementsByTagName('row');
+
+                        for (let i = 1; i < rows.length; i++) {
+                          const cells = rows[i].getElementsByTagName('c');
+                          // Değer sütununun sırası. Örneğin 'J' sütunuysa 10. sütun oluyor, ona göre ayarlanmalı
+                          const valueCell = cells[headers.findIndex(h => h.includes('Değeri'))]; 
+                          if (valueCell && valueCell.textContent === '-') {
+                            for (let j = 0; j < cells.length; j++) {
+                              cells[j].setAttribute('s', '20'); // 20 numaralı stil kırmızı font olarak tanımlanacak
+                            }
+                          }
+                        }
+                      }
                   }
               ],
+              exportOptions: {
+                columns: ':visible'
+              },
+              excelStyles: {
+                template: ['blue_medium'], // Opsiyonel: hazır şablonlar
+                cells: 'all',
+                style: {
+                  font: {
+                    color: 'FF0000' // kırmızı
+                  }
+                }
+              },
               columnDefs: hasOkumaZamani ? [{ targets: headers.indexOf('Okuma Zamanı'), type: 'custom-date' }] : [],
               order: [[0, 'asc']],
               language: {
