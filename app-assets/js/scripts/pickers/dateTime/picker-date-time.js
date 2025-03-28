@@ -74,11 +74,11 @@
 	$('.dateranges').daterangepicker({
 		ranges: {
 			'Bugün': [moment(), moment()],
-			'Dün': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-			'Son 7 Gün': [moment().subtract(6, 'days'), moment()],
-			'Son 1 Ay': [moment().subtract(29, 'days'), moment()],
+			'Dün': [moment().subtract('days', 1), moment().subtract('days', 1)],
+			'Son 7 Gün': [moment().subtract('days', 6), moment()],
+			'Son 1 Ay': [moment().subtract('days', 29), moment()],
 			'Bu Ay': [moment().startOf('month'), moment().endOf('month')],
-			'Geçen Ay': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+			'Geçen Ay': [moment().subtract('month', 1).startOf('month'), moment().subtract('month', 1).endOf('month')]
 		}
 	});
 
@@ -86,11 +86,11 @@
 	// $('.shawCalRanges').daterangepicker({
 	// 	ranges: {
 	// 		'Today': [moment(), moment()],
-	// 		'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-	// 		'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-	// 		'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+	// 		'Yesterday': [moment().subtract('days', 1), moment().subtract('days', 1)],
+	// 		'Last 7 Days': [moment().subtract('days', 6), moment()],
+	// 		'Last 30 Days': [moment().subtract('days', 29), moment()],
 	// 		'This Month': [moment().startOf('month'), moment().endOf('month')],
-	// 		'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+	// 		'Last Month': [moment().subtract('month', 1).startOf('month'), moment().subtract('month', 1).endOf('month')]
 	// 	},
 	// 	 alwaysShowCalendars: true,
 	// });
