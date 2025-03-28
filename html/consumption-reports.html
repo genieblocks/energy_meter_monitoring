@@ -1119,14 +1119,38 @@ function calculateReportPeriod(dateString) {
                       customize: function (xlsx) {
                         var sheet = xlsx.xl.worksheets['sheet1.xml'];
                         var rows = sheet.getElementsByTagName('row');
-
+                        
+                        // Determine latest "Okuma Zamanı" date from all rows
+                        const okumaZamaniIndex = headers.findIndex(h => h.includes('Okuma Zamanı'));
+                        let latestDateStr = null;
+                        for (let i = 1; i < rows.length; i++) {
+                          const cells = rows[i].getElementsByTagName('c');
+                          const okumaCell = cells[okumaZamaniIndex];
+                          if (okumaCell && okumaCell.textContent !== '-') {
+                            latestDateStr = okumaCell.textContent;
+                          }
+                        }
+                        let latestDate = moment(latestDateStr, "DD.MM.YYYY HH:mm");
+                        
                         for (let i = 1; i < rows.length; i++) {
                           const cells = rows[i].getElementsByTagName('c');
                           // Değer sütununun sırası. Örneğin 'J' sütunuysa 10. sütun oluyor, ona göre ayarlanmalı
-                          const valueCell = cells[headers.findIndex(h => h.includes('Değeri'))]; 
+                          const valueCell = cells[headers.findIndex(h => h.includes('Değeri'))];
                           if (valueCell && valueCell.textContent === '-') {
                             for (let j = 0; j < cells.length; j++) {
                               cells[j].setAttribute('s', '20'); // 20 numaralı stil kırmızı font olarak tanımlanacak
+                            }
+                          } else {
+                            // New logic: if "Değeri" is not '-', compare "Okuma Zamanı" with the latest date
+                            const okumaCell = cells[okumaZamaniIndex];
+                            if (okumaCell && okumaCell.textContent !== '-') {
+                              const currentDate = moment(okumaCell.textContent, "DD.MM.YYYY HH:mm");
+                              // Compare only the date part (YYYY-MM-DD)
+                              if (currentDate.format("YYYY-MM-DD") !== latestDate.format("YYYY-MM-DD")) {
+                                for (let j = 0; j < cells.length; j++) {
+                                  cells[j].setAttribute('s', '25'); // apply alternate tone for different day
+                                }
+                              }
                             }
                           }
                         }
