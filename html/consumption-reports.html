@@ -1148,7 +1148,7 @@ function calculateReportPeriod(dateString) {
                               // Compare only the date part (YYYY-MM-DD)
                               if (currentDate.format("YYYY-MM-DD") !== latestDate.format("YYYY-MM-DD")) {
                                 for (let j = 0; j < cells.length; j++) {
-                                  cells[j].setAttribute('s', '25'); // apply alternate tone for different day
+                                  cells[j].setAttribute('s', '10'); // apply alternate tone for different day
                                 }
                               }
                             }
