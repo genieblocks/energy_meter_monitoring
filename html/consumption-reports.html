@@ -996,10 +996,12 @@ function calculateReportPeriod(dateString) {
 
               // Okuma Zamanı
               const queryStartTimeCell = document.createElement('td');
-              if (item.MeterValue === null || item.MeterValue === undefined) {
-                queryStartTimeCell.textContent = '-';
+              if (item.MeterValue === null || item.MeterValue === undefined || item.QueryStartTime === null || item.QueryStartTime === undefined) {
+                queryStartTimeCell.textContent = '';
               } else {
-                queryStartTimeCell.textContent = (item.QueryStartTime === null || item.QueryStartTime === undefined) ? '-' : formatDate(item.QueryStartTime);
+                const queryStartDate = new Date(item.QueryStartTime);
+                queryStartTimeCell.setAttribute('data-order', queryStartDate.getTime());
+                queryStartTimeCell.textContent = formatDate(item.QueryStartTime);
               }
               row.appendChild(queryStartTimeCell);
           } else if (reportTableName === 'SubscribersMeterListReport') {
