@@ -999,8 +999,6 @@ function calculateReportPeriod(dateString) {
               if (item.MeterValue === null || item.MeterValue === undefined || item.QueryStartTime === null || item.QueryStartTime === undefined) {
                 queryStartTimeCell.textContent = '';
               } else {
-                const queryStartDate = new Date(item.QueryStartTime);
-                queryStartTimeCell.setAttribute('data-order', queryStartDate.getTime());
                 queryStartTimeCell.textContent = formatDate(item.QueryStartTime);
               }
               row.appendChild(queryStartTimeCell);
