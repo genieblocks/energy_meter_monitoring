@@ -645,6 +645,10 @@ function calculateReportPeriod(dateString) {
       if ($.fn.DataTable.isDataTable(`#${tableId}`)) {
         $(`#${tableId}`).DataTable().destroy();
       }
+      // Enable Turkish date format sorting (DD.MM.YYYY HH:mm)
+      if (typeof moment !== 'undefined' && $.fn.dataTable.moment) {
+          $.fn.dataTable.moment('DD.MM.YYYY HH:mm');
+      }
       $(`#${tableId}`).DataTable({
         paging: true,
         searching: true,
