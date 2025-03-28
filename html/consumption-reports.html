@@ -640,15 +640,24 @@ function calculateReportPeriod(dateString) {
       initializeDataTables();
     }
 
+    // Özel sıralama fonksiyonu: "custom-date" türü
+    $.fn.dataTable.ext.type.order['custom-date-pre'] = function (d) {
+        if (d.trim() === "-" || d.trim() === "") {
+            return 0;
+        }
+        var parsedDate = moment(d, "DD.MM.YYYY HH:mm");
+        return parsedDate.isValid() ? parsedDate.unix() : 0;
+    };
+
     function initializeDataTables() {
       const tableId = 'reports-list-table';
       if ($.fn.DataTable.isDataTable(`#${tableId}`)) {
         $(`#${tableId}`).DataTable().destroy();
       }
       // Enable Turkish date format sorting (DD.MM.YYYY HH:mm)
-      if (typeof moment !== 'undefined' && $.fn.dataTable.moment) {
-          $.fn.dataTable.moment('DD.MM.YYYY HH:mm');
-      }
+      // if (typeof moment !== 'undefined' && $.fn.dataTable.moment) {
+      //     $.fn.dataTable.moment('DD.MM.YYYY HH:mm');
+      // }
       $(`#${tableId}`).DataTable({
         paging: true,
         searching: true,
@@ -672,7 +681,9 @@ function calculateReportPeriod(dateString) {
         },
         columnDefs: [
           { targets: 1, type: 'num' }, // Bina No sayısal sıralama
-          { targets: 2, type: 'num' }  // Daire sayısal sıralama
+          { targets: 2, type: 'num' },  // Daire sayısal sıralama
+          { targets: 4, type: 'custom-date' }, // İstek Zamanı
+          { targets: 5, type: 'custom-date' }  // Oluşturulma Zamanı
         ]
       });
     }
