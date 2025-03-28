@@ -999,7 +999,7 @@ function calculateReportPeriod(dateString) {
               if (item.MeterValue === null || item.MeterValue === undefined) {
                 queryStartTimeCell.textContent = '-';
               } else {
-                queryStartTimeCell.textContent = (item.QueryStartTime === null || item.QueryStartTime === undefined) ? '-' : item.QueryStartTime;
+                queryStartTimeCell.textContent = (item.QueryStartTime === null || item.QueryStartTime === undefined) ? '-' : formatDate(item.QueryStartTime);
               }
               row.appendChild(queryStartTimeCell);
           } else if (reportTableName === 'SubscribersMeterListReport') {
