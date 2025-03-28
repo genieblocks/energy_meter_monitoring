@@ -1083,6 +1083,9 @@ function calculateReportPeriod(dateString) {
       });
 
       const tableId = '#modal-report-table';
+      if (typeof moment !== 'undefined' && $.fn.dataTable.moment) {
+          $.fn.dataTable.moment('DD.MM.YYYY HH:mm');
+      }
       if (!$.fn.DataTable.isDataTable(tableId)) {
           $(tableId).DataTable({
               dom: '<"top"fl>rt<"bottom"Bp>',
@@ -1104,6 +1107,9 @@ function calculateReportPeriod(dateString) {
                       title: reportTitle,  // Dosya ismini reportTitle olarak kullan
                       filename: reportTitle  // Dosya ismi
                   }
+              ],
+              columnDefs: [
+                  { targets: -1, type: 'datetime-moment' }
               ],
               order: [[0, 'asc']],
               language: {
