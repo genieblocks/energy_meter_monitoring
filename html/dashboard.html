@@ -2448,7 +2448,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
 document.addEventListener('DOMContentLoaded', () => {
   $('#generatorEventsModal').on('shown.bs.modal', function () {
-      fetch(`${baseWebhookURL}/webhook/get-generator-event-history`)
+      fetch(`${baseWebhookURL}/webhook/get-generator-event-history`, {
+            method: "POST",
+            headers: {
+            "Content-Type": "application/json"
+            }
+        })
           .then(response => response.json())
           .then(data => {
               console.log("Gelen Jeneratör Olayları:", data);
@@ -2516,12 +2521,14 @@ function calculateDuration(start, end) {
             </thead>
             <tbody>
               <tr>
+                <td>1</td>
                 <td>2025-03-24 11:40</td>
                 <td>2025-03-24 12:05</td>
                 <td>25 dakika</td>
                 <td><button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#generatorEnergyModal">Enerji Detayı</button></td>
               </tr>
               <tr>
+                <td>2</td>
                 <td>2025-03-25 09:00</td>
                 <td>-</td>
                 <td>Şu anda aktif</td>
