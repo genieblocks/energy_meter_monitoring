@@ -2498,22 +2498,44 @@ document.addEventListener("DOMContentLoaded", () => {
         <div class="modal-body">
           <table class="table table-striped">
             <thead>
-              <tr>
-                <th>Devreye Giriş Zamanı</th>
-                <th>Başlangıç Sayaç (kWh)</th>
-                <th>Çıkış Zamanı</th>
-                <th>Bitiş Sayaç (kWh)</th>
-                <th>Tüketim (kWh)</th>
-              </tr>
+                <tr>
+                    <th>Seri Numarası</th>
+                    <th>Blok</th>
+                    <th>Bina No</th>
+                    <th>Daire</th>
+                    <th>Abone</th>
+                    <th>Devreye Girdiği Zaman</th>
+                    <th>Girdiği Sayaç Değeri</th>
+                    <th>Devreden Çıktığı Zaman</th>
+                    <th>Çıktığı Sayaç Değeri</th>
+                    <th>Toplam Tüketim</th>
+                </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>2025-03-24 11:40</td>
-                <td>12250.0</td>
-                <td>2025-03-24 12:05</td>
-                <td>12275.0</td>
-                <td>25.0</td>
-              </tr>
+                <tr>
+                    <td>00000001</td>
+                    <td>A</td>
+                    <td>2</td>
+                    <td>3</td>
+                    <td>Ayşe Yılmaz</td>
+                    <td>2025-03-24 11:40</td>
+                    <td>5231.2 kWh</td>
+                    <td>2025-03-24 13:20</td>
+                    <td>5288.4 kWh</td>
+                    <td>57.2 kWh</td>
+                </tr>
+                <tr>
+                    <td>00000002</td>
+                    <td>B</td>
+                    <td>1</td>
+                    <td>5</td>
+                    <td>Mehmet Kılıç</td>
+                    <td>2025-03-25 08:00</td>
+                    <td>620.0 kWh</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>Aktif Devrede</td>
+                </tr>
             </tbody>
           </table>
         </div>
