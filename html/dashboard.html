@@ -2446,41 +2446,43 @@ document.addEventListener("DOMContentLoaded", () => {
     scheduleGraphGunUpdate(); // replaces or complements existing update mechanism
 });
 
-$('#generatorEventsModal').on('shown.bs.modal', function () {
-    fetch(`${baseWebhookURL}/webhook/get-generator-event-history`)
-        .then(response => response.json())
-        .then(data => {
-            console.log("Gelen Jeneratör Olayları:", data);
+document.addEventListener('DOMContentLoaded', () => {
+  $('#generatorEventsModal').on('shown.bs.modal', function () {
+      fetch(`${baseWebhookURL}/webhook/get-generator-event-history`)
+          .then(response => response.json())
+          .then(data => {
+              console.log("Gelen Jeneratör Olayları:", data);
 
-            const tableBody = document.querySelector("#generatorEventsTable tbody");
-            if (!tableBody) return;
+              const tableBody = document.querySelector("#generatorEventsTable tbody");
+              if (!tableBody) return;
 
-            tableBody.innerHTML = ""; // Eski satırları temizle
+              tableBody.innerHTML = ""; // Eski satırları temizle
 
-            data.forEach((event, index) => {
-                const startTime = new Date(event.StartTime).toLocaleString("tr-TR");
-                const endTime = event.EndTime ? new Date(event.EndTime).toLocaleString("tr-TR") : "-";
-                const duration = event.EndTime 
-                ? calculateDuration(event.StartTime, event.EndTime)
-                : new Date() - new Date(event.StartTime) > 0 
-                    ? calculateDuration(event.StartTime, new Date())
-                    : "-";
+              data.forEach((event, index) => {
+                  const startTime = new Date(event.StartTime).toLocaleString("tr-TR");
+                  const endTime = event.EndTime ? new Date(event.EndTime).toLocaleString("tr-TR") : "-";
+                  const duration = event.EndTime 
+                      ? calculateDuration(event.StartTime, event.EndTime)
+                      : new Date() - new Date(event.StartTime) > 0 
+                          ? calculateDuration(event.StartTime, new Date())
+                          : "-";
 
-                const row = `
-                <tr>
-                    <td>${index + 1}</td>
-                    <td>${startTime}</td>
-                    <td>${endTime}</td>
-                    <td>${duration}</td>
-                    <td>${event.EndTime ? '<button class="btn btn-sm btn-info">Detay</button>' : ''}</td>
-                </tr>
-                `;
-                tableBody.insertAdjacentHTML('beforeend', row);
-            });
-        })
-        .catch(error => {
-            console.error("Veri çekme hatası:", error);
-        });
+                  const row = `
+                      <tr>
+                          <td>${index + 1}</td>
+                          <td>${startTime}</td>
+                          <td>${endTime}</td>
+                          <td>${duration}</td>
+                          <td>${event.EndTime ? '<button class="btn btn-sm btn-info">Detay</button>' : ''}</td>
+                      </tr>
+                  `;
+                  tableBody.insertAdjacentHTML('beforeend', row);
+              });
+          })
+          .catch(error => {
+              console.error("Veri çekme hatası:", error);
+          });
+  });
 });
 
 function calculateDuration(start, end) {
