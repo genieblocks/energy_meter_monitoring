@@ -252,7 +252,10 @@
                         </p>
                         <a class="heading-elements-toggle"><i class="ft-more-horizontal font-medium-3"></i></a>
                         <div class="heading-elements">
-                          <ul class="list-inline mb-0">
+                        <ul class="list-inline mb-0">
+                              <li>
+                                <button class="btn btn-sm btn-outline-info" data-toggle="modal" data-target="#generatorEventsModal">Geçmiş Olaylar</button>
+                              </li>
                           </ul>
                         </div>
                     </div>
@@ -2443,3 +2446,77 @@ document.addEventListener("DOMContentLoaded", () => {
     scheduleGraphGunUpdate(); // replaces or complements existing update mechanism
 });
 </script>
+  <!-- Generator Events Modal -->
+  <div class="modal fade" id="generatorEventsModal" tabindex="-1" role="dialog" aria-labelledby="generatorEventsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="generatorEventsModalLabel">Geçmiş Jeneratör Olayları</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Devreye Girdiği Zaman</th>
+                <th>Devreden Çıktığı Zaman</th>
+                <th>Toplam Devrede Kalma Süresi</th>
+                <th>İşlem</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>2025-03-24 11:40</td>
+                <td>2025-03-24 12:05</td>
+                <td>25 dakika</td>
+                <td><button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#generatorEnergyModal">Enerji Detayı</button></td>
+              </tr>
+              <tr>
+                <td>2025-03-25 09:00</td>
+                <td>-</td>
+                <td>Şu anda aktif</td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Generator Energy Modal -->
+  <div class="modal fade" id="generatorEnergyModal" tabindex="-1" role="dialog" aria-labelledby="generatorEnergyModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="generatorEnergyModalLabel">Jeneratör Enerji Detayı</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Devreye Giriş Zamanı</th>
+                <th>Başlangıç Sayaç (kWh)</th>
+                <th>Çıkış Zamanı</th>
+                <th>Bitiş Sayaç (kWh)</th>
+                <th>Tüketim (kWh)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>2025-03-24 11:40</td>
+                <td>12250.0</td>
+                <td>2025-03-24 12:05</td>
+                <td>12275.0</td>
+                <td>25.0</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
