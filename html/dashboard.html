@@ -2445,6 +2445,51 @@ function scheduleGraphGunUpdate() {
 document.addEventListener("DOMContentLoaded", () => {
     scheduleGraphGunUpdate(); // replaces or complements existing update mechanism
 });
+
+$('#generatorEventsModal').on('shown.bs.modal', function () {
+    fetch(`${baseWebhookURL}/webhook/get-generator-event-history`)
+        .then(response => response.json())
+        .then(data => {
+            console.log("Gelen Jeneratör Olayları:", data);
+
+            const tableBody = document.querySelector("#generatorEventsTable tbody");
+            if (!tableBody) return;
+
+            tableBody.innerHTML = ""; // Eski satırları temizle
+
+            data.forEach((event, index) => {
+                const startTime = new Date(event.StartTime).toLocaleString("tr-TR");
+                const endTime = event.EndTime ? new Date(event.EndTime).toLocaleString("tr-TR") : "-";
+                const duration = event.EndTime 
+                ? calculateDuration(event.StartTime, event.EndTime)
+                : new Date() - new Date(event.StartTime) > 0 
+                    ? calculateDuration(event.StartTime, new Date())
+                    : "-";
+
+                const row = `
+                <tr>
+                    <td>${index + 1}</td>
+                    <td>${startTime}</td>
+                    <td>${endTime}</td>
+                    <td>${duration}</td>
+                    <td>${event.EndTime ? '<button class="btn btn-sm btn-info">Detay</button>' : ''}</td>
+                </tr>
+                `;
+                tableBody.insertAdjacentHTML('beforeend', row);
+            });
+        })
+        .catch(error => {
+            console.error("Veri çekme hatası:", error);
+        });
+});
+
+function calculateDuration(start, end) {
+    const diffMs = new Date(end) - new Date(start);
+    const minutes = Math.floor(diffMs / 60000);
+    const hours = Math.floor(minutes / 60);
+    const remainingMinutes = minutes % 60;
+    return `${hours} saat ${remainingMinutes} dakika`;
+}
 </script>
   <!-- Generator Events Modal -->
   <div class="modal fade" id="generatorEventsModal" tabindex="-1" role="dialog" aria-labelledby="generatorEventsModalLabel" aria-hidden="true">
@@ -2457,12 +2502,13 @@ document.addEventListener("DOMContentLoaded", () => {
           </button>
         </div>
         <div class="modal-body">
-          <table class="table table-bordered">
+            <table id="generatorEventsTable" class="table table-striped table-bordered">
             <thead>
               <tr>
-                <th>Devreye Girdiği Zaman</th>
-                <th>Devreden Çıktığı Zaman</th>
-                <th>Toplam Devrede Kalma Süresi</th>
+                <th>#</th>
+                <th>Devreye Giriş</th>
+                <th>Devreden Çıkış</th>
+                <th>Toplam Süre</th>
                 <th>İşlem</th>
               </tr>
             </thead>
