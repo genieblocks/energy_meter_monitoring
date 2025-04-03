@@ -1,364 +1,4 @@
-<!DOCTYPE html>
-<html class="loading" lang="en" data-textdirection="ltr">
-
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
-  <meta name="description" content="GenieBlocks Cloud Platform is flexable IoT platform that manage your devices.">
-  <meta name="keywords" content="GenieBlocks, IoT Platform, cloud, IoT device, edge device, ota, secure, aiot">
-  <meta name="author" content="GenieBlocks">
-  <title>GenieBlocks Cloud Platform</title>
-  <link rel="apple-touch-icon" href="../app-assets/images/ico/apple-icon-120.png">
-  <link rel="shortcut icon" type="image/x-icon" href="../app-assets/images/ico/favicon.ico">
-  <link
-    href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i%7CMuli:300,400,500,700"
-    rel="stylesheet">
-    
-  <!-- BEGIN VENDOR CSS-->
-  <link rel="stylesheet" type="text/css" href="../app-assets/css/bootstrap.css">
-  <link rel="stylesheet" type="text/css" href="../app-assets/vendors/css/tables/datatable/jquery.dataTables.min.css">
-  <!-- font icons-->
-  <link rel="stylesheet" type="text/css" href="../app-assets/fonts/icomoon.css">
-  <link rel="stylesheet" type="text/css" href="../app-assets/vendors/css/sliders/slick/slick.css">
-  <link rel="stylesheet" type="text/css" href="../app-assets/vendors/css/extensions/pace.css">
-  <link rel="stylesheet" type="text/css" href="../app-assets/fonts/feather/style.min.css">
-  <link rel="stylesheet" type="text/css" href="../app-assets/fonts/font-awesome/css/font-awesome.min.css">
-  <!-- END VENDOR CSS-->
-  <!-- BEGIN TEMPLATE CSS-->
-  <link rel="stylesheet" type="text/css" href="../app-assets/css/bootstrap-extended.css">
-  <link rel="stylesheet" type="text/css" href="../app-assets/css/app.css">
-  <link rel="stylesheet" type="text/css" href="../app-assets/css/colors.css">
-  <link rel="stylesheet" type="text/css" href="../app-assets/css/components.css">
-  <!-- END TEMPLATE CSS-->
-  <!-- BEGIN Page Level CSS-->
-  <link rel="stylesheet" type="text/css" href="../app-assets/css/core/menu/menu-types/vertical-menu.css">
-  <!-- END Page Level CSS-->
-  <!-- BEGIN Custom CSS-->
-  <link rel="stylesheet" type="text/css" href="../assets/css/fonts/google/font-google.css">
-  <link rel="stylesheet" type="text/css" href="../assets/css/style.css">
-  <!-- END Custom CSS-->
-</head>
-
-<body class="vertical-layout vertical-menu 2-columns menu-collapsed" data-open="click" data-menu="vertical-menu"
-  data-col="2-columns">
-
-  <!-- ////////////////////////////////////////////////////////////////////////////-->
-
-
-  <div class="main-menu menu-fixed menu-dark menu-accordion menu-shadow" data-scroll-to-active="true">
-    <div class="main-menu-content">
-      <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
-        <li class="nav-item"><a style="padding-left: 9px" href="#">
-            <img class="brand-logo" alt="GenieBlocks logo" src="../app-assets/images/logo/logo-light-sm.png">
-            <span class="mt-1" data-i18n="">
-              <h3 class="brand-text"><span class="white">&nbsp;&nbsp;&nbsp;&nbsp;Genie</span><span
-                  class="font-weight-bold blue accent-4">Blocks</span></h3>
-            </span>
-          </a>
-        </li>
-        <li class="active"><a href="dashboard.html"><i class="icon-home3"></i><span class="menu-title"
-          data-i18n="">Durum Panosu</span></a>
-        </li>
-        <li class="nav-item"><a href="consumption-overview.html"><i class="icon-stats-dots"></i><span class="menu-title"
-          data-i18n="">Tüketim İzleme</span></a>
-        </li>
-        <li class="nav-item"><a href="consumption-reports.html"><i class="fa fa-clipboard"></i><span class="menu-title"
-            data-i18n="">Tüketim Raporları</span></a>
-        </li>
-        <li class="nav-item"><a href="devices-device-list.html"><i class="icon-sliders"></i><span class="menu-title"
-          data-i18n="">Sayaç Yönetimi</span></a>
-        </li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="app-content content bg-white">
-    <div class="content-body">
-      <nav
-        class="header-navbar navbar-expand-md navbar navbar-with-menu navbar-light navbar-border navbar-brand-center">
-        <div class="navbar-wrapper">
-          <div class="navbar-header">
-            <ul class="nav navbar-nav flex-row">
-              <li class="nav-item mobile-menu d-md-none mr-auto"><a
-                  class="nav-link nav-menu-main menu-toggle hidden-xs is-active" href="#"><i
-                    class="ft-menu font-large-1"></i></a></li>
-              <li class="nav-item d-md-none"><a class="navbar-brand" href="#"><img class="brand-logo"
-                    alt="genieblocks logo" src="../app-assets/images/logo/logo-light-sm.png">
-                </a></li>
-              <li class="nav-item d-md-none"><a class="nav-link open-navbar-container collapsed" data-toggle="collapse"
-                  data-target="#navbar-mobile" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a></li>
-            </ul>
-          </div>
-          <div class="navbar-container content">
-            <div class="collapse navbar-collapse" id="navbar-mobile">
-              <ul class="nav navbar-nav mr-auto float-left">
-                <li class="nav-item d-none d-md-block"><a class="nav-link nav-menu-main menu-toggle hidden-xs" 
-                    href="#"><i class="ft-menu"></i></a>
-                </li>
-                <li class="nav-item"><a class="nav-link" href="#" role="button" aria-haspopup="true" 
-                    aria-expanded="false">Durum Panosu</a>
-                </li>
-              </ul>
-              <ul class="nav navbar-nav float-right">
-                <li class="dropdown dropdown-notification nav-item"><a href="#" data-toggle="dropdown" class="nav-link nav-link-label"><i class="ficon icon-bell4"></i><span class="badge badge-pill badge-default badge-danger badge-default badge-up">5</span></a>
-                    <ul class="dropdown-menu dropdown-menu-media dropdown-menu-right">
-                      <li class="dropdown-menu-header">
-                        <h6 class="dropdown-header m-0"><span class="grey darken-2">BİLDİRİMLER</span></h6><span class="notification-tag badge badge-default badge-danger float-right m-0">5 Yeni</span>
-                      </li>
-
-                      <li class="scrollable-container media-list w-100">
-                        <a href="javascript:void(0)">
-                            <div class="media">
-                                <div class="media-left align-self-center"><i class="ft-download-cloud icon-bg-circle bg-red bg-darken-1"></i></div>
-                                <div class="media-body">
-                                  <h6 class="media-heading">Elektrik sayaç saat hatası</h6>
-                                  <p class="notification-text font-small-3 text-muted">Lorem ipsum dolor sit amet, consectetuer elit.</p>
-                                    <small><time class="media-meta text-muted" datetime="2015-06-11T18:29:20+08:00">30 dakika önce</time></small>
-                                </div>
-                            </div></a>
-                            
-                            <a href="javascript:void(0)">
-                            <div class="media">
-                                <div class="media-left align-self-center"><i class="ft-download-cloud icon-bg-circle bg-red bg-darken-1"></i></div>
-                                <div class="media-body">
-                                  <h6 class="media-heading red darken-1">Kapasitif enerji limit aşımı</h6>
-                                  <p class="notification-text font-small-3 text-muted">Lorem ipsum dolor sit amet, consectetuer elit.</p>
-                                    <small><time class="media-meta text-muted" datetime="2015-06-11T18:29:20+08:00">5 saat önce</time></small>
-                                </div>
-                            </div></a>
-                            
-                            <a href="javascript:void(0)">
-                            <div class="media">
-                                <div class="media-left align-self-center"><i class="ft-alert-triangle icon-bg-circle bg-yellow bg-darken-3"></i></div>
-                                <div class="media-body">
-                                  <h6 class="media-heading yellow darken-3">Jeneratör devrede</h6>
-                                  <p class="notification-text font-small-3 text-muted">Lorem ipsum dolor sit amet, consectetuer elit.</p>
-                                    <small><time class="media-meta text-muted" datetime="2015-06-11T18:29:20+08:00">Bugün</time></small>
-                                </div>
-                            </div></a>
-                            
-                            <a href="javascript:void(0)">
-                            <div class="media">
-                                <div class="media-left align-self-center"><i class="ft-plus-square icon-bg-circle bg-cyan"></i></div>
-                                <div class="media-body">
-                                  <h6 class="media-heading">Jeneratör devre dışı</h6>
-                                    <small><time class="media-meta text-muted" datetime="2015-06-11T18:29:20+08:00">Gecen hafta</time></small>
-                                </div>
-                            </div></a>
-
-                          <a href="javascript:void(0)">
-                            <div class="media">
-                            <div class="media-left align-self-center"><i class="icon-bar-graph-2 icon-bg-circle bg-teal"></i></div>
-                            <div class="media-body">
-                                <h6 class="media-heading">Aylık rapor oluşturuldu</h6>
-                                <small><time class="media-meta text-muted" datetime="2015-06-11T18:29:20+08:00">Gecen ay</time></small>
-                            </div>
-                          </div></a>
-                        </li>
-                      <li class="dropdown-menu-footer"><a class="dropdown-item text-muted text-center" href="javascript:void(0)">Tüm bildirimleri gör</a></li>
-                    </ul>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </nav>
-      <div class="content-wrapper" style="background-color: #f5f5f5;">
-        <section id="card-overlay">
-
-          <div class="row">
-            <div class="col-xl-8 col-md-8 col-sm-12 left-card">
-              <div class="card">
-                <div class="card-content">
-                  <div id="image-map-pro"></div>
-                </div>
-              </div>
-            </div>
-            <div class="col-xl-4 col-md-4 col-sm-12 right-cards">
-              <div class="card half-card" style="height: 330px;">
-                  <div class="card-header no-border">
-                      <h4 class="card-title">Cihaz Raporu</h4>
-                      <p class="card-subtitle text-muted pt-1">
-                        <span class="font-small-3">05 Mart 2025 08:00</span>
-                      </p>
-                      <a class="heading-elements-toggle"><i class="ft-more-horizontal font-medium-3"></i></a>
-                      <div class="heading-elements">
-                          <ul class="list-inline mb-0">
-                              <li><button id="list-button" class="btn btn-sm btn-genie">Listele</button></li>
-                          </ul>
-                      </div>
-                  </div>
-                  <div class="card-content">
-                      <div id="audience-list-scroll" class="table-responsive height-300 position-relative">
-                          <table class="table mb-0">
-                              <tbody>
-                                    <tr>
-                                        <td>Online Elektrik Sayaç Sayısı</td>
-                                        <td class="text-center font-small-2 w-50">
-                                            <span id="count-electricity">0/0</span>
-                                            <div class="progress mt-1 mb-0" style="height: 7px;">
-                                                <div id="progress-electricity" class="progress-bar bg-success" role="progressbar" style="width: 0%" aria-valuemin="0" aria-valuemax="100"></div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Online Su Sayaç Sayısı</td>
-                                        <td class="text-center font-small-2 w-50">
-                                            <span id="count-water">0/0</span>
-                                            <div class="progress mt-1 mb-0" style="height: 7px;">
-                                                <div id="progress-water" class="progress-bar bg-success" role="progressbar" style="width: 0%" aria-valuemin="0" aria-valuemax="100"></div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Online Kalorimetre Sıcak Sayaç Sayısı</td>
-                                        <td class="text-center font-small-2 w-50">
-                                            <span id="count-hot_calorimeter">0/0</span>
-                                            <div class="progress mt-1 mb-0" style="height: 7px;">
-                                                <div id="progress-hot_calorimeter" class="progress-bar bg-success" role="progressbar" style="width: 0%" aria-valuemin="0" aria-valuemax="100"></div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Online Kalorimetre Soğuk Sayaç Sayısı</td>
-                                        <td class="text-center font-small-2 w-50">
-                                            <span id="count-cold_calorimeter">0/0</span>
-                                            <div class="progress mt-1 mb-0" style="height: 7px;">
-                                                <div id="progress-cold_calorimeter" class="progress-bar bg-success" role="progressbar" style="width: 0%" aria-valuemin="0" aria-valuemax="100"></div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <!-- <tr>
-                                        <td>Online Moxa Sayısı</td>
-                                        <td class="text-center font-small-2 w-50">
-                                            8/10
-                                            <div class="progress mt-1 mb-0" style="height: 7px;">
-                                                <div class="progress-bar bg-success" role="progressbar" style="width: 80%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-                                            </div>
-                                        </td>
-                                    </tr> -->
-                              </tbody>
-                          </table>
-                        <div id="offline-meters-list" class="mt-2"></div>
-                      </div>
-                  </div>
-              </div>
-              <div class="card half-card" style="height: 400px;">
-                    <div class="card-header no-border">
-                        <h4 class="card-title">Jeneratör Durumu</h4>
-                        <p class="card-subtitle text-muted pt-1">
-                          <span class="font-small-3">Son 15 Dakika</span>
-                        </p>
-                        <a class="heading-elements-toggle"><i class="ft-more-horizontal font-medium-3"></i></a>
-                        <div class="heading-elements">
-                        <ul class="list-inline mb-0">
-                              <li>
-                                <button class="btn btn-sm btn-genie" data-toggle="modal" data-target="#generatorEventsModal">Geçmiş Olaylar</button>
-                              </li>
-                          </ul>
-                        </div>
-                    </div>
-                    <div class="card-content">
-                        <div class="card-body" style="height: 320px;">
-                            <div id="generator-status-chart" style="height: 100%;"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-content">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-xl-3 col-lg-6 col-md-12 border-right-grey border-right-lighten-3 clearfix">
-                                  <div class="pb-1">
-                                    <div class="d-flex align-items-center">
-                                      <div class="pl-2">
-                                        <span class="grey darken-1 block">Elektrik</span>
-                                        <span class="font-large-3 line-height-1 text-bold-300">25</span>
-                                      </div>
-                                      <span class="ml-auto grey darken-1 block">MWh</span>
-                                    </div>
-                                    <div class="progress mt-1" style="height: 7px;">
-                                      <div class="progress-bar bg-info" role="progressbar" style="width: 80%;" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                  </div>
-                                </div>
-
-                                <div class="col-xl-3 col-lg-6 col-md-12 border-right-grey border-right-lighten-3 clearfix">
-                                  <div class="pb-1">
-                                    <div class="d-flex align-items-center">
-                                      <div class="pl-2">
-                                        <span class="grey darken-1 block">Su</span>
-                                        <span class="font-large-3 line-height-1 text-bold-300">185</span>
-                                      </div>
-                                      <span class="ml-auto grey darken-1 block">m³</span>
-                                    </div>
-                                    <div class="progress mt-1" style="height: 7px;">
-                                      <div class="progress-bar bg-danger" role="progressbar" style="width: 45%;" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                  </div>
-                                </div>
-
-                                <div class="col-xl-3 col-lg-6 col-md-12 border-right-grey border-right-lighten-3 clearfix">
-                                  <div class="pb-1">
-                                    <div class="d-flex align-items-center">
-                                      <div class="pl-2">
-                                        <span class="grey darken-1 block">Kalorimetre(Sıcak)</span>
-                                        <span class="font-large-3 line-height-1 text-bold-300">64</span>
-                                      </div>
-                                      <div class="float-left mt-2">
-                                        <span class="grey darken-1 block">MWh</span>
-                                        <span class="block"><i class="ft-arrow-down deep-orange accent-3"></i></span>
-                                      </div>
-                                    </div>
-                                    <div class="progress mt-1" style="height: 7px;">
-                                      <div class="progress-bar bg-success" role="progressbar" style="width: 75%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                  </div>
-                                </div>
-
-                                <div class="col-xl-3 col-lg-6 col-md-12 clearfix">
-                                  <div class="pb-1">
-                                    <div class="d-flex align-items-center">
-                                      <div class="pl-2">
-                                        <span class="grey darken-1 block">Kalorimetre(Soğuk)</span>
-                                        <span class="font-large-3 line-height-1 text-bold-300">22.3</span>
-                                      </div>
-                                      <div class="float-left mt-2">
-                                        <span class="grey darken-1 block">MWh</span>
-                                        <span class="block"><i class="ft-arrow-up success"></i></span>
-                                      </div>
-                                    </div>
-                                    <div class="progress mt-1" style="height: 7px;">
-                                      <div class="progress-bar bg-warning" role="progressbar" style="width: 60%;" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                  </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-          </div>
-
-        </section>
-      </div>
-    </div>
-  </div>
-  <!-- ////////////////////////////////////////////////////////////////////////////-->
-
-  <footer class="footer footer-static footer-light navbar-border">
-        <p class="clearfix blue-grey lighten-2 text-sm-center mb-0 px-2">
-            <span class="float-md-left d-block d-md-inline-block">
-                Copyright &copy; <span id="footer-dynamic-year"></span> <a class="text-bold-800 darken-2"
-                href="http://www.genieblocks.com" target="_blank">GenieBlocks</a>, All rights reserved.
-            </span>
-            <span class="float-md-none d-block d-md-inline-block red">Production</span>
+<truncated__content/>loat-md-none d-block d-md-inline-block red">Production</span>
             <span class="float-md-right d-block d-md-inline-block d-none d-lg-block">Made with <i
                 class="ft-heart pink"></i></span>
         </p>
@@ -2446,48 +2086,46 @@ document.addEventListener("DOMContentLoaded", () => {
     scheduleGraphGunUpdate(); // replaces or complements existing update mechanism
 });
 
-document.addEventListener('DOMContentLoaded', () => {
-  $('#generatorEventsModal').on('shown.bs.modal', function () {
-      fetch(`${baseWebhookURL}/webhook/get-generator-event-history`, {
-            method: "POST",
-            headers: {
+$('#generatorEventsModal').on('shown.bs.modal', function () {
+    fetch(`${baseWebhookURL}/webhook/get-generator-event-history`, {
+        method: "POST",
+        headers: {
             "Content-Type": "application/json"
-            }
-        })
-          .then(response => response.json())
-          .then(data => {
-              console.log("Gelen Jeneratör Olayları:", data);
-
-              const tableBody = document.querySelector("#generatorEventsTable tbody");
-              if (!tableBody) return;
-
-              tableBody.innerHTML = ""; // Eski satırları temizle
-
-              data.forEach((event, index) => {
-                  const startTime = new Date(event.StartTime).toLocaleString("tr-TR");
-                  const endTime = event.EndTime ? new Date(event.EndTime).toLocaleString("tr-TR") : "-";
-                  const duration = event.EndTime 
-                      ? calculateDuration(event.StartTime, event.EndTime)
-                      : new Date() - new Date(event.StartTime) > 0 
-                          ? calculateDuration(event.StartTime, new Date())
-                          : "-";
-
-                  const row = `
-                      <tr>
-                          <td>${index + 1}</td>
-                          <td>${startTime}</td>
-                          <td>${endTime}</td>
-                          <td>${duration}</td>
-                          <td>${event.EndTime ? '<button class="btn btn-sm btn-info">Detay</button>' : ''}</td>
-                      </tr>
-                  `;
-                  tableBody.insertAdjacentHTML('beforeend', row);
-              });
-          })
-          .catch(error => {
-              console.error("Veri çekme hatası:", error);
-          });
-  });
+        }
+    })
+    .then(response => response.json())
+    .then(responseData => {
+        const data = responseData[0]?.data || [];
+ 
+        const tableBody = document.querySelector("#generatorEventsTable tbody");
+        if (!tableBody) return;
+ 
+        tableBody.innerHTML = ""; // Clear previous rows
+ 
+        data.forEach((event, index) => {
+            const startTime = new Date(event.StartTime).toLocaleString("tr-TR");
+            const endTime = event.EndTime ? new Date(event.EndTime).toLocaleString("tr-TR") : "-";
+            const duration = event.EndTime 
+                ? calculateDuration(event.StartTime, event.EndTime)
+                : new Date() - new Date(event.StartTime) > 0 
+                    ? calculateDuration(event.StartTime, new Date())
+                    : "-";
+ 
+            const row = `
+                <tr>
+                    <td>${index + 1}</td>
+                    <td>${startTime}</td>
+                    <td>${endTime}</td>
+                    <td>${duration}</td>
+                    <td>${event.EndTime ? '<button class="btn btn-sm btn-info">Detay</button>' : ''}</td>
+                </tr>
+            `;
+            tableBody.insertAdjacentHTML('beforeend', row);
+        });
+    })
+    .catch(error => {
+        console.error("Veri çekme hatası:", error);
+    });
 });
 
 function calculateDuration(start, end) {
@@ -2521,14 +2159,12 @@ function calculateDuration(start, end) {
             </thead>
             <tbody>
               <tr>
-                <td>1</td>
                 <td>2025-03-24 11:40</td>
                 <td>2025-03-24 12:05</td>
                 <td>25 dakika</td>
                 <td><button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#generatorEnergyModal">Enerji Detayı</button></td>
               </tr>
               <tr>
-                <td>2</td>
                 <td>2025-03-25 09:00</td>
                 <td>-</td>
                 <td>Şu anda aktif</td>
