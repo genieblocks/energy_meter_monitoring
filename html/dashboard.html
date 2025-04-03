@@ -2448,25 +2448,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
 document.addEventListener('DOMContentLoaded', () => {
   $('#generatorEventsModal').on('shown.bs.modal', function () {
-      fetch(`${baseWebhookURL}/webhook/get-generator-event-history`, {
+        fetch(`${baseWebhookURL}/webhook/get-generator-event-history`, {
             method: "POST",
             headers: {
-            "Content-Type": "application/json"
+                "Content-Type": "application/json"
             }
         })
-          .then(response => response.json())
-          .then(data => {
-              console.log("Gelen Jeneratör Olayları:", data);
-
-              const tableBody = document.querySelector("#generatorEventsTable tbody");
-              if (!tableBody) return;
-
-              tableBody.innerHTML = ""; // Eski satırları temizle
-
-              data.forEach((event, index) => {
-                  const startTime = new Date(event.StartTime).toLocaleString("tr-TR");
-                  const endTime = event.EndTime ? new Date(event.EndTime).toLocaleString("tr-TR") : "-";
-                  const duration = event.EndTime 
+        .then(response => response.json())
+        .then(responseData => {
+            const data = responseData[0]?.data || [];
+    
+            const tableBody = document.querySelector("#generatorEventsTable tbody");
+            if (!tableBody) return;
+    
+            tableBody.innerHTML = ""; // Clear previous rows
+    
+            data.forEach((event, index) => {
+                const startTime = new Date(event.StartTime).toLocaleString("tr-TR");
+                const endTime = event.EndTime ? new Date(event.EndTime).toLocaleString("tr-TR") : "-";
+                const duration = event.EndTime 
                       ? calculateDuration(event.StartTime, event.EndTime)
                       : new Date() - new Date(event.StartTime) > 0 
                           ? calculateDuration(event.StartTime, new Date())
