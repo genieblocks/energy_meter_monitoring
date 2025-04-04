@@ -2578,7 +2578,7 @@ function calculateDuration(start, end) {
 
             tbody.appendChild(row);
         });
-        const startTime = StartTime?.replace(/[: ]/g, '-');
+        const filenameStartTime = startTime?.replace(/[: ]/g, '-');
         $('#generatorEnergyTable').DataTable({
             dom: 'rt<"bottom"B>',
             paging: false,
@@ -2588,7 +2588,7 @@ function calculateDuration(start, end) {
                 extend: 'excelHtml5',
                 text: 'Excel Olarak İndir',
                 title: 'Jeneratör Enerji Tüketimi Detayları',
-                filename: 'jenerator_enerji_tuketim_detayı_${startTime}'
+                filename: `jenerator_enerji_tuketim_detayı_${filenameStartTime}`
                 }
             ],
             destroy: true
