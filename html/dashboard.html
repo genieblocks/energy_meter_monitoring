@@ -2582,10 +2582,24 @@ function calculateDuration(start, end) {
         });
         const filenameStartTime = startTime?.replace(/[: ]/g, '-');
         $('#generatorEnergyTable').DataTable({
-            dom: 'rt<"bottom"B>',
+            dom: '<"top"fl>rt<"bottom"Bp>',
             paging: false,
             autoWidth: false,
             order: [[0, 'asc']],
+            language: {
+                search: "Ara:",
+                lengthMenu: "Gösterilecek Kayıt Sayısı _MENU_",
+                info: "Toplam _TOTAL_ kayıt içinden _START_ ile _END_ arası gösteriliyor.",
+                infoEmpty: "Gösterilecek kayıt yok",
+                infoFiltered: "(toplam _MAX_ kayıt içinde filtrelendi)",
+                paginate: {
+                    first: "İlk",
+                    last: "Son",
+                    next: "Sonraki",
+                    previous: "Önceki"
+                },
+                zeroRecords: "Eşleşen kayıt bulunamadı"
+            },
             buttons: [
                 {
                 extend: 'excelHtml5',
