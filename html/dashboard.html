@@ -2583,7 +2583,7 @@ function calculateDuration(start, end) {
         const filenameStartTime = startTime?.replace(/[: ]/g, '-');
         $('#generatorEnergyTable').DataTable({
             dom: '<"top"fl>rt<"bottom"Bp>',
-            paging: false,
+            paging: true,
             autoWidth: false,
             order: [[0, 'asc']],
             language: {
