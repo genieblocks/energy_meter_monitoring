@@ -2534,6 +2534,7 @@ function calculateDuration(start, end) {
     .then(response => response.json())
     .then(result => {
         const meterData = result[0]?.data || [];
+        const sortedMeterData = sortDataAndAddIndex([...meterData]);
         const tbody = document.querySelector("#generatorEnergyTable tbody");
         tbody.innerHTML = "";
 
@@ -2553,7 +2554,7 @@ function calculateDuration(start, end) {
             return `${hours} saat ${remainingMinutes} dakika`;
         };
 
-        meterData.forEach(item => {
+        sortedMeterData.forEach(item => {
             const row = document.createElement("tr");
 
             const energyUsed = (item.EndMeterValue != null && item.StartMeterValue != null)
