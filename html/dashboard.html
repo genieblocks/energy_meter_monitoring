@@ -2564,6 +2564,7 @@ function calculateDuration(start, end) {
             const duration = durationText(item.StartTime, item.EndTime);
 
             row.innerHTML = `
+                <td>${item.index}</td>
                 <td>${item.SerialNumber || "-"}</td>
                 <td>${item.Block || "-"}</td>
                 <td>${item.BuildingNo || "-"}</td>
@@ -2730,7 +2731,8 @@ function compareMixed(a, b) {
         <div class="modal-body">
           <table id="generatorEnergyTable" class="table table-striped">
             <thead>
-                <tr>
+                <tr>        
+                    <th>#</th>
                     <th>Seri Numarası</th>
                     <th>Blok</th>
                     <th>Bina No</th>
