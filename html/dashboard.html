@@ -2487,6 +2487,20 @@ document.addEventListener('DOMContentLoaded', () => {
                   `;
                   tableBody.insertAdjacentHTML('beforeend', row);
               });
+              $('#generatorEventsTable').DataTable({
+                    dom: 'rt<"bottom"B>',
+                    paging: false,
+                    autoWidth: false,
+                    buttons: [
+                        {
+                        extend: 'excelHtml5',
+                        text: 'Excel Olarak İndir',
+                        title: 'Jeneratör Olay Geçmişi',
+                        filename: 'generator_event_history'
+                        }
+                    ],
+                    destroy: true
+                });
           })
           .catch(error => {
               console.error("Veri çekme hatası:", error);
@@ -2564,7 +2578,20 @@ function calculateDuration(start, end) {
 
             tbody.appendChild(row);
         });
-
+        $('#generatorEnergyTable').DataTable({
+            dom: 'rt<"bottom"B>',
+            paging: false,
+            autoWidth: false,
+            buttons: [
+                {
+                extend: 'excelHtml5',
+                text: 'Excel Olarak İndir',
+                title: 'Jeneratör Enerji Tüketimi Detayları',
+                filename: 'generator_energy_details'
+                }
+            ],
+            destroy: true
+        });
         $('#generatorEnergyModal').modal('show');
     })
     .catch(error => {
