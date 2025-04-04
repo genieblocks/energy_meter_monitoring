@@ -2527,6 +2527,18 @@ function calculateDuration(start, end) {
             const d = new Date(new Date(isoString).getTime() - 3 * 60 * 60 * 1000);
             return `${d.getFullYear()}-${(d.getMonth() + 1).toString().padStart(2, '0')}-${d.getDate().toString().padStart(2, '0')} ${d.getHours().toString().padStart(2, '0')}:${d.getMinutes().toString().padStart(2, '0')}:${d.getSeconds().toString().padStart(2, '0')}.000`;
         };
+        
+        const durationText = (start, end) => {
+            if (!start) return "-";
+            const startTime = new Date(start);
+            const endTime = end ? new Date(end) : new Date();
+            const diff = endTime - startTime;
+            const minutes = Math.floor(diff / 60000);
+            const hours = Math.floor(minutes / 60);
+            const remainingMinutes = minutes % 60;
+            return `${hours} saat ${remainingMinutes} dakika`;
+        };
+
         meterData.forEach(item => {
             const row = document.createElement("tr");
 
@@ -2545,6 +2557,7 @@ function calculateDuration(start, end) {
                 <td>${item.EndTime ? formatDateTime(item.EndTime) : "Aktif Devrede"}</td>
                 <td>${item.EndMeterValue ?? "-"}</td>
                 <td>${energyUsed}</td>
+                <td>${duration}</td>
             `;
 
             tbody.appendChild(row);
@@ -2623,6 +2636,7 @@ function calculateDuration(start, end) {
                     <th>Devreden Çıktığı Zaman</th>
                     <th>Çıktığı Sayaç Değeri</th>
                     <th>Toplam Tüketim</th>
+                    <th>Toplam Süre</th>
                 </tr>
             </thead>
             <tbody>
