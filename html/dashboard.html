@@ -2520,6 +2520,13 @@ function calculateDuration(start, end) {
         const row = $(this).closest("tr");
         const startTime = row.find("td:nth-child(1)").text(); // Devreye Giriş zamanı
         const endTime = row.find("td:nth-child(2)").text(); // Devreden Çıkış zamanı
+        
+        const energyTable = $('#generatorEnergyTable');
+
+        // Önceden yüklenen tabloyu temizle
+        if ($.fn.DataTable.isDataTable(energyTable)) {
+            energyTable.DataTable().clear().destroy();
+        }
 
     fetch(`${baseWebhookURL}/webhook/get-generator-energy-detail`, {
         method: "POST",
