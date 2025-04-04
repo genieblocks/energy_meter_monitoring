@@ -2499,7 +2499,44 @@ function calculateDuration(start, end) {
 }
 
 $(document).on('click', '.btn-energy-detail', function () {
-    $('#generatorEnergyModal').modal('show');
+    const row = $(this).closest("tr");
+    const startTime = row.find("td:nth-child(2)").text(); // Devreye Giriş zamanı
+
+    fetch(`${baseWebhookURL}/webhook/get-generator-energy-detail`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            startTime: startTime
+        })
+    })
+    .then(response => response.json())
+    .then(devices => {
+        const tbody = document.querySelector("#generatorEnergyTable tbody");
+        tbody.innerHTML = "";
+        devices.forEach(device => {
+            const totalConsumption = (parseFloat(device.EndMeterValue || device.CurrentMeterValue) - parseFloat(device.StartMeterValue)).toFixed(2);
+            const tr = `
+                  <tr>
+                      <td>${device.SerialNumber}</td>
+                      <td>${device.Block}</td>
+                      <td>${device.BuildingNo}</td>
+                      <td>${device.Flat}</td>
+                      <td>${device.Subscriber}</td>
+                      <td>${device.StartTime}</td>
+                      <td>${device.StartMeterValue} kWh</td>
+                      <td>${device.EndTime || "-"}</td>
+                      <td>${device.EndMeterValue || device.CurrentMeterValue} kWh</td>
+                      <td>${totalConsumption} kWh</td>
+                  </tr>`;
+            tbody.insertAdjacentHTML("beforeend", tr);
+        });
+        $('#generatorEnergyModal').modal('show');
+    })
+    .catch(error => {
+        console.error("Enerji detayı alınamadı:", error);
+    });
 });
 </script>
   <!-- Generator Events Modal -->
