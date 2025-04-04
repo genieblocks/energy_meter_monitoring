@@ -2477,8 +2477,8 @@ document.addEventListener('DOMContentLoaded', () => {
                           <td>${index + 1}</td>
                           <td>${startTime}</td>
                           <td>${endTime}</td>
-                          <td>${duration}</td>
-                          <td>${event.EndTime ? '<button class="btn btn-sm btn-info">Detay</button>' : ''}</td>
+                          <td>${event.EndTime ? duration : 'Şu anda aktif'}</td>
+                          <td>${event.EndTime ? '<button class="btn btn-sm btn-info btn-energy-detail" data-toggle="modal" data-target="#generatorEnergyModal">Detay</button>' : ''}</td>
                       </tr>
                   `;
                   tableBody.insertAdjacentHTML('beforeend', row);
@@ -2497,6 +2497,10 @@ function calculateDuration(start, end) {
     const remainingMinutes = minutes % 60;
     return `${hours} saat ${remainingMinutes} dakika`;
 }
+
+$(document).on('click', '.btn-energy-detail', function () {
+    $('#generatorEnergyModal').modal('show');
+});
 </script>
   <!-- Generator Events Modal -->
   <div class="modal fade" id="generatorEventsModal" tabindex="-1" role="dialog" aria-labelledby="generatorEventsModalLabel" aria-hidden="true">
@@ -2551,7 +2555,7 @@ function calculateDuration(start, end) {
           </button>
         </div>
         <div class="modal-body">
-          <table class="table table-striped">
+          <table id="generatorEnergyTable" class="table table-striped">
             <thead>
                 <tr>
                     <th>Seri Numarası</th>
