@@ -2518,8 +2518,8 @@ function calculateDuration(start, end) {
 
     $(document).on('click', '.btn-energy-detail', function () {
         const row = $(this).closest("tr");
-        const startTime = row.find("td:nth-child(2)").text(); // Devreye Giriş zamanı
-        const endTime = row.find("td:nth-child(3)").text(); // Devreden Çıkış zamanı
+        const startTime = row.find("td:nth-child(1)").text(); // Devreye Giriş zamanı
+        const endTime = row.find("td:nth-child(2)").text(); // Devreden Çıkış zamanı
 
     fetch(`${baseWebhookURL}/webhook/get-generator-energy-detail`, {
         method: "POST",
