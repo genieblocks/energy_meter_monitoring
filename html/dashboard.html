@@ -2534,7 +2534,7 @@ function calculateDuration(start, end) {
     .then(response => response.json())
     .then(result => {
         const meterData = result[0]?.data || [];
-        const sortedMeterData = sortDataAndAddIndex([...meterData]);
+        const sortedMeterData = sortDataAndAddIndex(meterData);
         const tbody = document.querySelector("#generatorEnergyTable tbody");
         tbody.innerHTML = "";
 
@@ -2585,6 +2585,7 @@ function calculateDuration(start, end) {
             dom: 'rt<"bottom"B>',
             paging: false,
             autoWidth: false,
+            order: [[0, 'asc']],
             buttons: [
                 {
                 extend: 'excelHtml5',
