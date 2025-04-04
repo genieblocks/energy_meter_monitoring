@@ -700,6 +700,11 @@ document.addEventListener('DOMContentLoaded', () => {
 });
   </script>
   <script>
+    $('#generatorEventsModal').on('show.bs.modal', function() {
+        $('#generatorEventsTable').DataTable().clear().draw();
+    });
+  </script>
+  <script>
       const imageMapProSettings = {
       "id": "6a9b4235-e000-4087-b038-3b68c6f358e5",
       "general": {
