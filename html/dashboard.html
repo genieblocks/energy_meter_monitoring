@@ -2448,6 +2448,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
 document.addEventListener('DOMContentLoaded', () => {
   $('#generatorEventsModal').on('shown.bs.modal', function () {
+        const eventsTable = $('#generatorEventsTable');
+        if ($.fn.DataTable.isDataTable(eventsTable)) {
+            eventsTable.DataTable().clear().destroy();
+        }
+        document.querySelector("#generatorEventsTable tbody").innerHTML = "";
+
         fetch(`${baseWebhookURL}/webhook/get-generator-event-history`, {
             method: "POST",
             headers: {
