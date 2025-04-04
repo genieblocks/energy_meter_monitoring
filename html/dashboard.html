@@ -2512,26 +2512,34 @@ $(document).on('click', '.btn-energy-detail', function () {
         })
     })
     .then(response => response.json())
-    .then(devices => {
+    .then(result => {
+        const meterData = result[0]?.data || [];
         const tbody = document.querySelector("#generatorEnergyTable tbody");
         tbody.innerHTML = "";
-        devices.forEach(device => {
-            const totalConsumption = (parseFloat(device.EndMeterValue || device.CurrentMeterValue) - parseFloat(device.StartMeterValue)).toFixed(2);
-            const tr = `
-                  <tr>
-                      <td>${device.SerialNumber}</td>
-                      <td>${device.Block}</td>
-                      <td>${device.BuildingNo}</td>
-                      <td>${device.Flat}</td>
-                      <td>${device.Subscriber}</td>
-                      <td>${device.StartTime}</td>
-                      <td>${device.StartMeterValue} kWh</td>
-                      <td>${device.EndTime || "-"}</td>
-                      <td>${device.EndMeterValue || device.CurrentMeterValue} kWh</td>
-                      <td>${totalConsumption} kWh</td>
-                  </tr>`;
-            tbody.insertAdjacentHTML("beforeend", tr);
+
+        meterData.forEach(item => {
+            const row = document.createElement("tr");
+
+            const energyUsed = (item.EndMeterValue != null && item.StartMeterValue != null)
+                ? (item.EndMeterValue - item.StartMeterValue).toFixed(2)
+                : "-";
+
+            row.innerHTML = `
+                <td>${item.SerialNumber || "-"}</td>
+                <td>${item.Block || "-"}</td>
+                <td>${item.BuildingNo || "-"}</td>
+                <td>${item.Flat || "-"}</td>
+                <td>${item.Subscriber || "-"}</td>
+                <td>${item.StartTime || "-"}</td>
+                <td>${item.StartMeterValue ?? "-"}</td>
+                <td>${item.EndTime || "Aktif Devrede"}</td>
+                <td>${item.EndMeterValue ?? "-"}</td>
+                <td>${energyUsed}</td>
+            `;
+
+            tbody.appendChild(row);
         });
+
         $('#generatorEnergyModal').modal('show');
     })
     .catch(error => {
