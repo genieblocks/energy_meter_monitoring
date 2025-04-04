@@ -2578,7 +2578,7 @@ function calculateDuration(start, end) {
 
             tbody.appendChild(row);
         });
-        const startTime = data[0]?.StartTime?.replace(/[: ]/g, '-');
+        const startTime = StartTime?.replace(/[: ]/g, '-');
         $('#generatorEnergyTable').DataTable({
             dom: 'rt<"bottom"B>',
             paging: false,
