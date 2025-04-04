@@ -2618,27 +2618,27 @@ function calculateDuration(start, end) {
 });
 
 function customSort(a, b) {
-    console.log("---------------");
-    console.log(`Karşılaştırılan öğeler:\nA: ${JSON.stringify(a)}\nB: ${JSON.stringify(b)}`);
+    // console.log("---------------");
+    // console.log(`Karşılaştırılan öğeler:\nA: ${JSON.stringify(a)}\nB: ${JSON.stringify(b)}`);
 
     // Blok sıralaması (alfabetik ve sayısal olarak `compareMixed` kullanarak)
     const blockComparison = compareMixed(a.Block, b.Block);
     if (blockComparison !== 0) {
-        console.log(`Blok sıralaması: ${blockComparison < 0 ? "A daha önce" : "B daha önce"}`);
+        // console.log(`Blok sıralaması: ${blockComparison < 0 ? "A daha önce" : "B daha önce"}`);
         return blockComparison;
     }
 
     // Bina No sıralaması (`compareMixed` kullanılarak)
     const buildingComparison = compareMixed(a.BuildingNo, b.BuildingNo);
     if (buildingComparison !== 0) {
-        console.log(`Bina numarası sıralaması: ${buildingComparison < 0 ? "A daha önce" : "B daha önce"}`);
+        // console.log(`Bina numarası sıralaması: ${buildingComparison < 0 ? "A daha önce" : "B daha önce"}`);
         return buildingComparison;
     }
 
     // Daire No sıralaması (`compareMixed` kullanılarak)
     const flatComparison = compareMixed(a.Flat, b.Flat);
     if (flatComparison !== 0) {
-        console.log(`Daire numarası sıralaması: ${flatComparison < 0 ? "A daha önce" : "B daha önce"}`);
+        // console.log(`Daire numarası sıralaması: ${flatComparison < 0 ? "A daha önce" : "B daha önce"}`);
         return flatComparison;
     }
 
@@ -2655,27 +2655,27 @@ function customSort(a, b) {
     const bPriority = getOrderPriority(b.CustomName);
 
     if (aPriority !== bPriority) {
-        console.log(`Sayaç İsmi sıralaması: ${aPriority < bPriority ? "A daha önce" : "B daha önce"}`);
+        // console.log(`Sayaç İsmi sıralaması: ${aPriority < bPriority ? "A daha önce" : "B daha önce"}`);
         return aPriority - bPriority;
     }
 
-    console.log("Öğeler eşit");
+    // console.log("Öğeler eşit");
     return 0; // Eğer tüm karşılaştırmalar eşitse
 }
 
 function sortDataAndAddIndex(data) {
     // Veriyi Blok, Bina No ve Daire'ye göre sıralama
-    console.log("Orijinal veri:", data); // Debug amacıyla orijinal veriyi logla
+    // console.log("Orijinal veri:", data); // Debug amacıyla orijinal veriyi logla
 
     data.sort(customSort);
 
-    console.log("Sıralanmış veri:", data); // Debug amacıyla sıralanmış veriyi logla
+    // console.log("Sıralanmış veri:", data); // Debug amacıyla sıralanmış veriyi logla
 
     // Sıra numarası ekle
     data.forEach((item, index) => {
     item.Index = index + 1;
     });
-    console.log("Sıra numarası eklenmiş veri:", data); // Debug amacıyla sıra numarası eklenmiş veriyi logla
+    // console.log("Sıra numarası eklenmiş veri:", data); // Debug amacıyla sıra numarası eklenmiş veriyi logla
 
     return data;
 }
