@@ -2464,8 +2464,12 @@ document.addEventListener('DOMContentLoaded', () => {
             tableBody.innerHTML = ""; // Clear previous rows
     
             data.forEach((event, index) => {
-                const startTime = new Date(event.StartTime).toLocaleString("tr-TR");
-                const endTime = event.EndTime ? new Date(event.EndTime).toLocaleString("tr-TR") : "-";
+                const formatDateTime = (isoString) => {
+                    const d = new Date(isoString);
+                    return `${d.getFullYear()}-${(d.getMonth() + 1).toString().padStart(2, '0')}-${d.getDate().toString().padStart(2, '0')} ${d.getHours().toString().padStart(2, '0')}:${d.getMinutes().toString().padStart(2, '0')}:${d.getSeconds().toString().padStart(2, '0')}.000`;
+                };
+                const startTime = formatDateTime(event.StartTime);
+                const endTime = event.EndTime ? formatDateTime(event.EndTime) : "-";
                 const duration = event.EndTime 
                       ? calculateDuration(event.StartTime, event.EndTime)
                       : new Date() - new Date(event.StartTime) > 0 
@@ -2498,10 +2502,10 @@ function calculateDuration(start, end) {
     return `${hours} saat ${remainingMinutes} dakika`;
 }
 
-$(document).on('click', '.btn-energy-detail', function () {
-    const row = $(this).closest("tr");
-    const startTime = row.find("td:nth-child(2)").text(); // Devreye Giriş zamanı
-    const endTime = row.find("td:nth-child(3)").text(); // Devreden Çıkış zamanı
+    $(document).on('click', '.btn-energy-detail', function () {
+        const row = $(this).closest("tr");
+        const startTime = row.find("td:nth-child(2)").text(); // Devreye Giriş zamanı
+        const endTime = row.find("td:nth-child(3)").text(); // Devreden Çıkış zamanı
 
     fetch(`${baseWebhookURL}/webhook/get-generator-energy-detail`, {
         method: "POST",
@@ -2519,6 +2523,10 @@ $(document).on('click', '.btn-energy-detail', function () {
         const tbody = document.querySelector("#generatorEnergyTable tbody");
         tbody.innerHTML = "";
 
+        const formatDateTime = (isoString) => {
+            const d = new Date(isoString);
+            return `${d.getFullYear()}-${(d.getMonth() + 1).toString().padStart(2, '0')}-${d.getDate().toString().padStart(2, '0')} ${d.getHours().toString().padStart(2, '0')}:${d.getMinutes().toString().padStart(2, '0')}:${d.getSeconds().toString().padStart(2, '0')}.000`;
+        };
         meterData.forEach(item => {
             const row = document.createElement("tr");
 
@@ -2532,9 +2540,9 @@ $(document).on('click', '.btn-energy-detail', function () {
                 <td>${item.BuildingNo || "-"}</td>
                 <td>${item.Flat || "-"}</td>
                 <td>${item.Subscriber || "-"}</td>
-                <td>${item.StartTime || "-"}</td>
+                <td>${item.StartTime ? formatDateTime(item.StartTime) : "-"}</td>
                 <td>${item.StartMeterValue ?? "-"}</td>
-                <td>${item.EndTime || "Aktif Devrede"}</td>
+                <td>${item.EndTime ? formatDateTime(item.EndTime) : "Aktif Devrede"}</td>
                 <td>${item.EndMeterValue ?? "-"}</td>
                 <td>${energyUsed}</td>
             `;
