@@ -2091,7 +2091,7 @@ function removeDefinedMeter(tableName, meterIDFieldNameData, meterIDData) {
     const fieldsToUpdate = {};
 
     targetRecord[meterIDFieldNameData] = meterIDData;
-    fieldsToUpdate["RelatedID"] = ""; 
+    fieldsToUpdate["RelatedID"] = null; 
 
     const jsonData = {
         tableName: tableName,
